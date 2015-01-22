@@ -1,0 +1,1453 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"cat",
+				"cat_fid"
+			],
+			[
+				"def",
+				"default"
+			],
+			[
+				"SI",
+				"SITE_TY_B101"
+			],
+			[
+				"B",
+				"BUOY_ID"
+			],
+			[
+				"comb",
+				"compass_heading_before"
+			],
+			[
+				"com",
+				"compass_heading"
+			],
+			[
+				"qu",
+				"queryReq_M0"
+			],
+			[
+				"de",
+				"debugprintf"
+			],
+			[
+				"_",
+				"_28673_M_00100_34785"
+			],
+			[
+				"in",
+				"init_flag"
+			],
+			[
+				"re",
+				"req_init"
+			],
+			[
+				"mod",
+				"modem_cmd"
+			],
+			[
+				"gp",
+				"gps_time"
+			],
+			[
+				"val",
+				"val_SR10"
+			],
+			[
+				"i",
+				"idx_Clk"
+			],
+			[
+				"tick_1",
+				"tick_1ms"
+			],
+			[
+				"USE",
+				"USE_MOSE"
+			],
+			[
+				"tic",
+				"tick_start"
+			],
+			[
+				"ti",
+				"tick_s2"
+			],
+			[
+				"BA",
+				"BAT_20"
+			],
+			[
+				"deb",
+				"debugprintf"
+			],
+			[
+				"PR",
+				"PRINTLINE"
+			],
+			[
+				"sh",
+				"shock_line"
+			],
+			[
+				"m",
+				"mbuf_L"
+			],
+			[
+				"e",
+				"e30_idx"
+			],
+			[
+				"debug",
+				"debugprintf"
+			],
+			[
+				"y",
+				"year-2000"
+			],
+			[
+				"rtc",
+				"rtc_time"
+			],
+			[
+				"s_",
+				"s_msg_e30"
+			],
+			[
+				"ca",
+				"calculated_humidity_true"
+			],
+			[
+				"wif",
+				"wifiprintf"
+			],
+			[
+				"rcv",
+				"rcv_cnt"
+			],
+			[
+				"wi",
+				"wifi_cmd"
+			],
+			[
+				"cmd_st",
+				"cmd_str4"
+			],
+			[
+				"pr",
+				"pressure"
+			],
+			[
+				"init",
+				"init_dpData"
+			],
+			[
+				"dp",
+				"dp_stk"
+			],
+			[
+				"p",
+				"p_data"
+			],
+			[
+				"at",
+				"atm1_data"
+			],
+			[
+				"BU",
+				"BUOY_SPEC"
+			],
+			[
+				"f",
+				"f_lat"
+			],
+			[
+				"a_",
+				"a_result"
+			],
+			[
+				"c_",
+				"c_code"
+			],
+			[
+				"file",
+				"fileSize"
+			],
+			[
+				"fi",
+				"fileSize"
+			],
+			[
+				"PRINT",
+				"PRINTLINE"
+			],
+			[
+				"SH_PIN_DATA_",
+				"SH_PIN_DATA_INPUT"
+			],
+			[
+				"en",
+				"enableHeartbeat"
+			],
+			[
+				"deg",
+				"debugprintf"
+			],
+			[
+				"po",
+				"pos_cnt"
+			],
+			[
+				"do",
+				"double"
+			],
+			[
+				"pos",
+				"pos_valid"
+			],
+			[
+				"d",
+				"double"
+			],
+			[
+				"ref",
+				"ref_lon"
+			],
+			[
+				"set",
+				"set_mt_status"
+			],
+			[
+				"iri_",
+				"iri_port"
+			],
+			[
+				"f_",
+				"f_lon"
+			],
+			[
+				"get_sb",
+				"get_sbdring2"
+			],
+			[
+				"tm",
+				"tm_chk_sbdreg"
+			],
+			[
+				"ri",
+				"ring1"
+			],
+			[
+				"get",
+				"get_mt_status"
+			],
+			[
+				"C",
+				"C_IRIDIUM_1"
+			],
+			[
+				"mo",
+				"mo_status"
+			],
+			[
+				"t",
+				"t_day"
+			],
+			[
+				"ini",
+				"init_flag"
+			],
+			[
+				"temp",
+				"temp_t"
+			],
+			[
+				"mose",
+				"mose_lat"
+			],
+			[
+				"se",
+				"send_intval"
+			],
+			[
+				"t_",
+				"t_lon"
+			],
+			[
+				"ch",
+				"ch4_switch"
+			],
+			[
+				"SDC",
+				"SDC_TIME_TAG"
+			],
+			[
+				"debu",
+				"debugprintf"
+			],
+			[
+				"ret",
+				"return"
+			],
+			[
+				"sb2_",
+				"sb2_ok_cnt"
+			],
+			[
+				"sb",
+				"sb1_ok_cnt"
+			],
+			[
+				"sb2",
+				"sb2_ok_cnt"
+			],
+			[
+				"pre",
+				"pressure_a"
+			],
+			[
+				"ws",
+				"ws_a"
+			],
+			[
+				"s",
+				"s_msg"
+			],
+			[
+				"m_",
+				"m_system_robust_proc"
+			],
+			[
+				"main_",
+				"main_step_000"
+			],
+			[
+				"mai",
+				"main_step_001"
+			],
+			[
+				"sta",
+				"static"
+			],
+			[
+				"BAT",
+				"BAT_STEP"
+			],
+			[
+				"v",
+				"valid"
+			],
+			[
+				"lon",
+				"longitude"
+			],
+			[
+				"b",
+				"buoyNo"
+			],
+			[
+				"TM_watchMO",
+				"TM_watchMOSE1"
+			],
+			[
+				"WT_M",
+				"WT_MOSE1"
+			],
+			[
+				"is",
+				"is_special_ch_aio"
+			],
+			[
+				"P",
+				"PRINTVAR"
+			],
+			[
+				"PRIN",
+				"PRINTLINE"
+			],
+			[
+				"GP",
+				"GPS_LINE_MAX"
+			],
+			[
+				"ne",
+				"newMsg"
+			],
+			[
+				"iri",
+				"iri_port"
+			],
+			[
+				"rt",
+				"rt_now"
+			],
+			[
+				"IM_",
+				"IM_RCV"
+			],
+			[
+				"IM",
+				"IM_SEND"
+			],
+			[
+				"st",
+				"stMFP"
+			],
+			[
+				"tim",
+				"time_var"
+			],
+			[
+				"SB",
+				"SB_UART_MCR"
+			],
+			[
+				"sb_get",
+				"sb_get_register"
+			],
+			[
+				"SB_UART_G",
+				"SB_UART_GISR"
+			],
+			[
+				"reg",
+				"reg"
+			],
+			[
+				"SB_UART_",
+				"SB_UART_IER"
+			],
+			[
+				"a",
+				"a_baud"
+			],
+			[
+				"debugp",
+				"debugprintf"
+			],
+			[
+				"te",
+				"testbuf1"
+			],
+			[
+				"at24",
+				"at24cxx_eeprom_read"
+			],
+			[
+				"str",
+				"strlen"
+			],
+			[
+				"AT",
+				"at24cxx_eeprom_write"
+			],
+			[
+				"cl",
+				"clearHeartbeatEvent"
+			],
+			[
+				"fl",
+				"flagHeartbeatOn"
+			],
+			[
+				"uar",
+				"uart"
+			],
+			[
+				"cmd_c",
+				"cmd_cc"
+			],
+			[
+				"SB_se",
+				"SB_setSPR"
+			],
+			[
+				"SB_g",
+				"SB_getREG"
+			],
+			[
+				"SB_s",
+				"SB_setPortMode_DataOutput"
+			],
+			[
+				"0x",
+				"0xFF"
+			],
+			[
+				"SB_P",
+				"SB_PIN_IOW_H"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "Packages/Python/Python.sublime-build",
+	"command_palette":
+	{
+		"height": 312.0,
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: List Packages"
+			],
+			[
+				"pi",
+				"Package Control: Install Package"
+			],
+			[
+				"pin",
+				"Package Control: Install Package"
+			],
+			[
+				"sublime",
+				"Preferences: SublimeLinter Settings – User"
+			],
+			[
+				"sublimelinter",
+				"Preferences: SublimeLinter Settings – Default"
+			],
+			[
+				"ca",
+				"File: Close All"
+			],
+			[
+				":help",
+				"Set Syntax: Shell Script (Bash)"
+			],
+			[
+				":w",
+				":w - Save"
+			]
+		],
+		"width": 400.0
+	},
+	"console":
+	{
+		"height": 111.0,
+		"history":
+		[
+			"a",
+			"a=3",
+			"2",
+			"ctags -R -f .tags",
+			"exit"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+	],
+	"file_history":
+	[
+		"/E/GitHub/KOGA14/source/k_ct3919.c",
+		"/E/GitHub/KOGA14/source/k_main.c",
+		"/E/GitHub/KOGA14/source/k_dcs.c",
+		"/E/GitHub/KOGA14/source/k_aio.c",
+		"/E/GitHub/KOGA14/source/k_main.h",
+		"/E/GitHub/KOGA14/source/k_mose.c",
+		"/E/GitHub/KOGA14/source/k_sb16c1058.c",
+		"/E/GitHub/KOGA14/source/k_config.h",
+		"/C/Users/YOUNGKIL/Desktop/W03.log",
+		"/C/Users/YOUNGKIL/Desktop/log.log",
+		"/E/GitHub/KOGA14/source/k_sb16c1058.h",
+		"/E/GitHub/KOGA14/source/obj/k_sb16c1058.d",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/temp/util/WC_FW/Transfer/bin/Release/mose_101.txt",
+		"/E/GitHub/KOGA14/source/k_ct3919.h",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/KOGA14-지원/Util/Raw Data 받기/mose_001.txt",
+		"/E/GitHub/KOGA14/source/k_cli.c",
+		"/E/GitHub/KOGA14/source/buoy_waves2.h",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/temp/util/WC_FW/Transfer/bin/Release/mose_021.txt",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/temp/util/WC_FW/Transfer/bin/Release/mose_001.txt",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/temp/util/WC_FW/Transfer/bin/Release/mose_002.txt",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/temp/util/WC_FW/Transfer/bin/Release/mose_003.txt",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/temp/util/WC_FW/Transfer/bin/Release/mose_011.txt",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/temp/util/WC_FW/Transfer/bin/Release/mose_008.txt",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/temp/util/WC_FW/Transfer/bin/Release/mose_006.txt",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/shock_1411.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/rawData(2013_E01_SDCARD Backup)/sh.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/atm2_1411.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/rawData(2013_E01_SDCARD Backup)/t2.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/send_1411.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/rawData(2013_E01_SDCARD Backup)/se.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/history_1411.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/rawData(2013_E01_SDCARD Backup)/hi.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/pt100_1411.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/rawData(2013_E01_SDCARD Backup)/pt.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/rawData(2013_E01_SDCARD Backup)/gp.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/gps_1411.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/atm1_1411.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/rawData(2013_E01_SDCARD Backup)/t1.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/rawData(2013_E01_SDCARD Backup)/zp.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/zpulse_1411.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/rawData(2013_E01_SDCARD Backup)/hm.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/hmp155_1411.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/rawData(2013_E01_SDCARD Backup)/ai.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/aio_1411.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/rawData(2013_E01_SDCARD Backup)/ct.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/ct3919_1411.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/rawData(2013_E01_SDCARD Backup)/mo.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/mose_1411.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/aio_1410.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/zpulse_1409.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/atm1_1409.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/atm2_1409.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/ct3919_1410.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/gps_1410.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/history_1410.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/hmp155_1410.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/mose_1410.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/pt100_1409.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/send_1409.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/shock_1409.dat",
+		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/rawData(2013_E02_SDCARD Backup)/zp.dat",
+		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/새 폴더/zpulse_1410.dat",
+		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/rawData(2013_E02_SDCARD Backup)/t2.dat",
+		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/새 폴더/atm2_1410.dat",
+		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/rawData(2013_E02_SDCARD Backup)/t1.dat",
+		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/새 폴더/atm1_1311.dat",
+		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/rawData(2013_E02_SDCARD Backup)/sh.dat",
+		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/새 폴더/shock_1410.dat",
+		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/rawData(2013_E02_SDCARD Backup)/pt.dat",
+		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/새 폴더/pt100_1410.dat",
+		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/rawData(2013_E02_SDCARD Backup)/hi.dat",
+		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/rawData(2013_E02_SDCARD Backup)/gp.dat",
+		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/새 폴더/gps_1409.dat",
+		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/rawData(2013_E02_SDCARD Backup)/ai.dat",
+		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/새 폴더/aio_1410.dat",
+		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/rawData(2013_E02_SDCARD Backup)/hm.dat",
+		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/새 폴더/hmp155_1410.dat",
+		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/rawData(2013_E02_SDCARD Backup)/ct.dat",
+		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/새 폴더/ct3919_1410.dat",
+		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/rawData(2013_E02_SDCARD Backup)/se.dat",
+		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/새 폴더/send_1409.dat",
+		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/rawData(2013_E02_SDCARD Backup)/mo.dat",
+		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/새 폴더/mose_1410.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/sdcard_merge/history_1405.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/sdcard_merge/history_1404.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/sdcard_merge/history_1403.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/sdcard_merge/history_1402.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/sdcard_merge/history_1401.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/sdcard_merge/history_1312.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/sdcard_merge/history_1311.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/sdcard_merge/history_1310.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/sdcard_merge/history_1411.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/sdcard_merge/history_1410.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/sdcard_merge/history_1409.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/sdcard_merge/history_1406.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/sdcard_merge/history_1407.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/sdcard_merge/history_1408.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/rawData(2013_S02_SDCARD Backup)/hmp155_1411.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/rawData(2013_S02_SDCARD Backup)/hm.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/rawData(2013_S02_SDCARD Backup)/history_1411.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/rawData(2013_S02_SDCARD Backup)/hi.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/rawData(2013_S02_SDCARD Backup)/gps_1411.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/rawData(2013_S02_SDCARD Backup)/gp.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/rawData(2013_S02_SDCARD Backup)/ct.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/rawData(2013_S02_SDCARD Backup)/ct3919_1411.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/rawData(2013_S02_SDCARD Backup)/mose_1411.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/rawData(2013_S02_SDCARD Backup)/mo.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/rawData(2013_S02_SDCARD Backup)/sh.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/rawData(2013_S02_SDCARD Backup)/shock_1411.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/rawData(2013_S02_SDCARD Backup)/se.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/rawData(2013_S02_SDCARD Backup)/send_1411.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/rawData(2013_S02_SDCARD Backup)/pt.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/rawData(2013_S02_SDCARD Backup)/pt100_1411.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/rawData(2013_S02_SDCARD Backup)/zp.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/rawData(2013_S02_SDCARD Backup)/zpulse_1411.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/rawData(2013_S02_SDCARD Backup)/t2.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/rawData(2013_S02_SDCARD Backup)/atm2_1411.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/rawData(2013_S02_SDCARD Backup)/t1.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/rawData(2013_S02_SDCARD Backup)/atm1_1411.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/rawData(2013_S02_SDCARD Backup)/ai.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/rawData(2013_S02_SDCARD Backup)/aio_1411.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/1_E02/rawData/E02_141019-1245-투하전후.log",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/rawData(2013_E01_SDCARD Backup)/E01_1409_MOSE.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/rawData(2013_S02_SDCARD Backup)/S02_1411_MOSE.dat",
+		"/J/1410/hi_1410010000.dat",
+		"/J/hi.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/rawData(2013_S02_SDCARD Backup)/1410/t1_1410010000.dat",
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/3_S02/rawData(2013_S02_SDCARD Backup)/1411/t1_1411010000.dat"
+	],
+	"find":
+	{
+		"height": 27.0
+	},
+	"find_in_files":
+	{
+		"height": 90.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"SHOCK_W02",
+			"E02_BAT_ADJUST",
+			"dec_wifi_reset_tm",
+			"WIFI_ON_TM",
+			"100000",
+			"boot",
+			"KOGA_VER_STRING",
+			"special",
+			"is_special_ch_atm",
+			"get_mose_Hmax",
+			"SB_S_PTB210",
+			"cat",
+			"$PDTWL,MOT,HF,14,10,30,04,12,18.75,   0.035,   0.138,  -0.180,0*10",
+			"fileSize",
+			"Task_cat",
+			"task_",
+			"tick_fileTx",
+			"wifi_reset_tm",
+			"wifi_reset",
+			"uart_getch(4",
+			"R_GPOHIGH(5)",
+			"cat_next",
+			"m_sensor_proc",
+			"E02_BAT_ADJUST",
+			"E01_SHOCK",
+			"DEBUG_SENSOR_SHOCK",
+			"ctrl_sensor",
+			"cmdSensorControl",
+			"cmdSensorControl_1",
+			"cmdSensorControl",
+			"CONFIG_UART_TX_INTERRUPT",
+			"();\n",
+			"$PDTWL,MOT,HF,14,10,19,00,53,47.75",
+			"$PDTWL,MOT,HF,14,10,19,00,48,32.25,",
+			"$PDTWL,MOT,HF,14,10,19,00,14,48.75",
+			"$PDTWL,MOT,HF,14,10,19,00,03,55.75,",
+			"$PDTWL,MOT,HF,14,10,18,22,41,26.25,",
+			"MOT,HF,14,10,18,22,41,24.25,  -0.053",
+			"$PDTWL,POS,14,10,18,22,45,40.00,37,44.3712,N,130,35.0400,E,  26.0,0.9,1.4*1F",
+			"HF,14,10,18,22,41,26.25",
+			" \n",
+			"1",
+			"10",
+			"set_debug_channel",
+			"cat",
+			"SensorBakSize.b.mose",
+			"CMD_MV",
+			"cmd_mv",
+			"cmd_aa",
+			"cmd_sbr",
+			"cmd_sbw",
+			"chk_file_size",
+			"SensorBakSize.b.mose",
+			"BUOY_ID",
+			"get_battery_level",
+			"SHT ACK Error",
+			"BUOY_WEST",
+			"W01",
+			"make_msg_k1",
+			"call_mose",
+			"init",
+			"sbinit",
+			"init",
+			"rtc",
+			"rtc_init",
+			"init",
+			"Max",
+			"tmr_AIO_data_display",
+			"task_atm1",
+			"spi_master_init",
+			"TEST_TIDAL",
+			"env_ini",
+			"cmd_dd",
+			"cmd_bb",
+			"cmd_fs",
+			"cmd_get",
+			"cmd_env",
+			"cmd_baud",
+			"cmd_syscmd",
+			"env.mode",
+			"SB_UART",
+			"SB_UART_RCR",
+			"\n#",
+			"task_sysMCU",
+			"R_P4oLOW",
+			"R_P4oHIGH",
+			"R_P5oHIGH",
+			"R_P5oLOW",
+			"setscreen",
+			"SCREENRES",
+			"enum",
+			"set_rtc_sysclk_sync_req",
+			"SensorBakSize.b.ct3919",
+			"SensorBakSize.b.",
+			"get_rdcp_ch_valid_flag",
+			"u32",
+			"u8",
+			"u32",
+			"tickCnt",
+			"make_msg_00",
+			"README_unix",
+			"critical",
+			"getTick",
+			"tick_iri0",
+			"get_iri1_init",
+			"PRINT_LINE",
+			"gps_neo6q_init",
+			"UART0_GPS",
+			"UartPutCh",
+			"sb1_high_cnt",
+			"sb1_ok_cnt",
+			"temp",
+			"sb_set_register",
+			"sb_test_readAll",
+			"sb_write_SPR",
+			"EIRQ0_ISR",
+			"INTNUM_EIRQ0",
+			"EIRQ1_ISR",
+			"m_get_time_pos_proc",
+			"BAT_STEP",
+			"get_battery_level",
+			"K1W010131221",
+			"DEBUG_SENSOR_SHOCK",
+			"iri1_rcv_q_init",
+			"set_iri1_init",
+			"FLAG_FOR_DEBUGGING",
+			"K1W0101312",
+			"IRIDIUM_NOT_SENDING"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 29.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": false,
+	"output.exec":
+	{
+		"height": 88.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "echo2.sublime-project",
+	"replace":
+	{
+		"height": 50.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"con",
+				"source\\k_config.h"
+			],
+			[
+				"msg",
+				"source\\k_msg.c"
+			],
+			[
+				"sb",
+				"source\\k_sb16c1058.c"
+			],
+			[
+				"ct",
+				"source\\k_ct3919.c"
+			],
+			[
+				"mai",
+				"source\\k_main.c"
+			],
+			[
+				"mo",
+				"source\\k_mose.c"
+			],
+			[
+				"aio",
+				"source\\k_aio.c"
+			],
+			[
+				"bu",
+				"source\\buoy_waves2.c"
+			],
+			[
+				"kmose",
+				"source\\k_mose.c"
+			],
+			[
+				"cli",
+				"source\\k_cli.c"
+			],
+			[
+				"clih",
+				"source\\k_cli.h"
+			],
+			[
+				"ma",
+				"source\\k_main.c"
+			],
+			[
+				"ti",
+				"source\\k_timer.h"
+			],
+			[
+				"tim",
+				"source\\k_timer.c"
+			],
+			[
+				"kcli",
+				"source\\k_cli.h"
+			],
+			[
+				"atm",
+				"source\\k_atm.c"
+			],
+			[
+				"hmp",
+				"source\\k_hmp155.c"
+			],
+			[
+				"sho",
+				"source\\k_shock.c"
+			],
+			[
+				"uart",
+				"SDK2.0\\include\\adstar\\uart.h"
+			],
+			[
+				"iri",
+				"source\\k_iridium.c"
+			],
+			[
+				"main",
+				"source\\k_main.c"
+			],
+			[
+				"cl",
+				"source\\k_cli.c"
+			],
+			[
+				"rtc",
+				"source\\k_rtc.c"
+			],
+			[
+				"mos",
+				"source\\k_mose.c"
+			],
+			[
+				"wa",
+				"source\\buoy_waves2.c"
+			],
+			[
+				"wave",
+				"source\\obj\\buoy_waves2.d"
+			],
+			[
+				"kin",
+				"source\\k_includes.h"
+			],
+			[
+				"kdch",
+				"source\\k_dcs.h"
+			],
+			[
+				"gp",
+				"source\\k_gps.c"
+			],
+			[
+				"ksr",
+				"source\\k_SR10.h"
+			],
+			[
+				"k_.h",
+				"source\\k_aio.h"
+			],
+			[
+				"confi",
+				"source\\k_config.h"
+			],
+			[
+				"ms",
+				"source\\k_msg.c"
+			],
+			[
+				"conf",
+				"source\\k_config.h"
+			],
+			[
+				"ir",
+				"source\\k_iridium.c"
+			],
+			[
+				"ptb",
+				"source\\k_ptb210.c"
+			],
+			[
+				"kms",
+				"source\\k_msg.c"
+			],
+			[
+				"ksb",
+				"source\\k_sb16c1058.c"
+			],
+			[
+				"kptb",
+				"source\\k_ptb210.c"
+			],
+			[
+				"kaio",
+				"source\\k_aio.c"
+			],
+			[
+				"wm",
+				"source\\k_WM800.h"
+			],
+			[
+				"lm",
+				"source\\k_LMP90100.c"
+			],
+			[
+				"sr",
+				"source\\k_SR10.c"
+			],
+			[
+				"dcs",
+				"source\\k_dcs.h"
+			],
+			[
+				"lmp",
+				"source\\k_LMP90100.c"
+			],
+			[
+				"kma",
+				"source\\k_main.c"
+			],
+			[
+				"kwm",
+				"source\\k_WM800.h"
+			],
+			[
+				"kwc",
+				"source\\k_WM800.c"
+			],
+			[
+				"gps",
+				"source\\k_gps.c"
+			],
+			[
+				"rdc",
+				"source\\k_rdcp.c"
+			],
+			[
+				"rdcp",
+				"source\\c4_rdcp.c"
+			],
+			[
+				"kmsg",
+				"source\\k_msg.c"
+			],
+			[
+				"kct",
+				"source\\k_ct3919.c"
+			],
+			[
+				"pt",
+				"source\\k_ptb210.c"
+			],
+			[
+				"kti",
+				"source\\k_timer.h"
+			],
+			[
+				"kmai",
+				"source\\k_main.c"
+			],
+			[
+				"kt",
+				"source\\k_timer.h"
+			],
+			[
+				"kinc",
+				"source\\k_includes.h"
+			],
+			[
+				"timer",
+				"source\\k_timer.c"
+			],
+			[
+				"mose",
+				"source\\k_mose.h"
+			],
+			[
+				"inc",
+				"source\\k_includes.h"
+			],
+			[
+				"16",
+				"source\\k_sb16c1058.c"
+			],
+			[
+				"kcon",
+				"source\\k_config.h"
+			],
+			[
+				"kir",
+				"source\\k_iridium.h"
+			],
+			[
+				"k_in",
+				"source\\k_includes.h"
+			],
+			[
+				"k_w",
+				"source\\k_WM800.c"
+			],
+			[
+				"kg",
+				"source\\k_gps.c"
+			],
+			[
+				"kht",
+				"source\\k_HT01.h"
+			],
+			[
+				"kgp",
+				"source\\k_gps.c"
+			],
+			[
+				"ksh",
+				"source\\k_shock.c"
+			],
+			[
+				"ksho",
+				"source\\k_shock.c"
+			],
+			[
+				"kmain",
+				"source\\k_main.c"
+			],
+			[
+				"kat",
+				"source\\k_atm.c"
+			],
+			[
+				"ai",
+				"source\\k_aio.c"
+			],
+			[
+				"kai",
+				"source\\k_aio.c"
+			],
+			[
+				"km",
+				"source\\k_msg.c"
+			],
+			[
+				"kmo",
+				"source\\k_mose.h"
+			],
+			[
+				"ks",
+				"source\\k_sdc.c"
+			],
+			[
+				"katm",
+				"source\\k_atm.c"
+			],
+			[
+				"kdc",
+				"source\\k_dcs.c"
+			],
+			[
+				"kh",
+				"source\\k_hmp155.c"
+			],
+			[
+				"khm",
+				"source\\k_hmp155.c"
+			],
+			[
+				"trip",
+				"source\\startup\\trip_board.c"
+			],
+			[
+				"tri",
+				"source\\startup\\trip_board.c"
+			],
+			[
+				"ktim",
+				"source\\k_timer.c"
+			],
+			[
+				"ki",
+				"source\\k_iridium.c"
+			],
+			[
+				"kmainh",
+				"source\\k_main.h"
+			],
+			[
+				"kclic",
+				"source\\k_cli.c"
+			],
+			[
+				"b",
+				"source\\buoy_waves2.c"
+			],
+			[
+				"kiri",
+				"source\\k_iridium.c"
+			],
+			[
+				"kc",
+				"source\\k_cli.h"
+			],
+			[
+				"sh11",
+				"source\\k_sh11.c"
+			],
+			[
+				"sh",
+				"source\\k_shock.c"
+			],
+			[
+				"kmsh",
+				"source\\k_msg.h"
+			],
+			[
+				"ktih",
+				"source\\k_timer.h"
+			],
+			[
+				"kmos",
+				"source\\k_mose.c"
+			],
+			[
+				"ksdc",
+				"source\\k_sdc.c"
+			],
+			[
+				"kmaih",
+				"source\\k_main.h"
+			],
+			[
+				"kclih",
+				"source\\k_cli.h"
+			],
+			[
+				"kwi",
+				"source\\k_wifi.c"
+			],
+			[
+				"k",
+				"source\\k_ct3919.c"
+			],
+			[
+				"kw",
+				"source\\k_wifi.c"
+			],
+			[
+				"at",
+				"source\\k_atm.c"
+			],
+			[
+				"kincl",
+				"source\\k_includes.h"
+			],
+			[
+				"mainh",
+				"source\\k_main.h"
+			],
+			[
+				"adst",
+				"SDK2.0\\include\\adstar.h"
+			],
+			[
+				"eglcon",
+				"SDK2.0\\include\\egl\\egl_config.h"
+			],
+			[
+				"stk",
+				"SDK2.0\\include\\stk_board.h"
+			],
+			[
+				"libc",
+				"SDK2.0\\include\\lib_config.h"
+			],
+			[
+				"kgps",
+				"source\\k_gps.h"
+			],
+			[
+				"155",
+				"source\\k_hmp155.c"
+			],
+			[
+				"ktimh",
+				"source\\k_timer.h"
+			],
+			[
+				"ksys",
+				"source\\k_sysMCU.h"
+			],
+			[
+				"kptbc",
+				"source\\k_ptb210.c"
+			],
+			[
+				"shh",
+				"source\\k_shock.h"
+			],
+			[
+				"kmsgc",
+				"source\\k_msg.c"
+			],
+			[
+				"kmsgh",
+				"source\\k_msg.h"
+			],
+			[
+				"kmaic",
+				"source\\k_main.c"
+			],
+			[
+				"timec",
+				"source\\k_timer.c"
+			],
+			[
+				"irih",
+				"source\\k_iridium.h"
+			],
+			[
+				"sysmh",
+				"source\\k_sysMCU.h"
+			],
+			[
+				"sysc",
+				"source\\k_sysMCU.c"
+			],
+			[
+				"k_",
+				"source\\k_gps.c"
+			],
+			[
+				"mainc",
+				"source\\k_main.c"
+			],
+			[
+				"iric",
+				"source\\k_iridium.c"
+			],
+			[
+				"g",
+				"source\\k_gps.c"
+			],
+			[
+				"rtcc",
+				"source\\k_rtc.c"
+			],
+			[
+				"sysh",
+				"source\\k_sysMCU.h"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+			[
+				"",
+				"E:\\GitHub\\StBuoy\\stBuoy.sublime-project"
+			]
+		],
+		"width": 646.0
+	},
+	"select_symbol":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+		],
+		"width": 392.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": false,
+	"side_bar_width": 202.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+		"max_columns": 2
+	}
+}

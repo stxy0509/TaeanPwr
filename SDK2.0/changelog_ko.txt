@@ -1,0 +1,247 @@
+ver 2.0.0  
+
+             * 추가된 내용
+                         1. EGL (Embedded Graphic Library) 추가.
+                            /doc/EGL_MANUA_ko.pdf 파일 추가.
+                            /example/GUI EGL 예제 추가. 
+
+             * 변경된 내용
+                         1. graphic 관련 함수명 변경.
+                            /doc/adStar_SDK_Reference_Manual_ko_v2.00.pdf의 history 참고.
+
+ 
+================================================================================
+ver 1.3.4  
+
+             * 추가된 내용
+                         1. lib_src/nandctrl.c
+                                    spansion NAND Flash 3종 추가. (S34ML01G, S34ML02G, S34ML04G)
+
+                         2. startup/adstar_8M.ld, startup/adstar_ram_8M.ld, startup/adStarInit_8M.c
+                                    adStar D8M 시리즈 init 파일과 linker script 파일 추가.
+
+             * 변경된 내용
+                         1. lib_src/soundmixer.c
+                                    wav파일 header chunck parsing부분 modify.                
+
+ 
+================================================================================
+ver 1.3.3
+            * fixed bug
+                          1. lib_src/fatfs/ff.c
+                                     f_read() 함수에서 cluster size에 따라 정상동작 하지 않는 버그 수정. 
+                             
+		          2. lib_src/surface.c 
+                                     frame buffer가 생성된 위치에 따라 image draw하는 속도 차이가 발생하는 버그 수정.
+                                     (createsurface() 함수에서 align에 맞춰 frame buffer 생성되도록 수정.)
+
+                          3. lib_src/drawutil.c
+                                     drawroundfill() 함수 몇몇 corner값에서 정상적으로 그려지지 않는 버그 수정.
+  
+                          4. example/bootloader
+                                     bin_execute mode에서 boot.bin파일이 없을 경우 멈추지 않고 계속 동작하는 버그 수정.
+
+             * 변경된 내용
+                         1. startup/adStarInit.c
+                                     BOD disable -> BOD enable.                        
+
+             * 추가된 내용
+                         1. lib_src/uart.c
+                                    UART ch 4 초기화 코드 추가.
+
+================================================================================
+ver 1.3.2
+            * fixed bug
+                          1. lib_src/serialflash.c
+                                       flash_erase_sector(), flash_write() 함수 버그 수정.
+		2. lib_src/timer.c
+                                        delayms() 함수에 MAX_TIMER_CHANNEL값 관련 버그 수정.
+                          3. lib_src/cache_util.S
+                                        CacheEnable() 버그 수정.
+
+             * 변경된 내용
+                         1. pc-util/MakeSurface2
+                                      JPG, PNG파일 변환 지원, 32bit surf 변환 지원.
+                         2. lib_src/surf.c
+                                     MakeSurface2 변경에 따른 코드 추가.
+
+             * 추가된 내용
+                         1. example/uCOS-Ⅲ 
+                                    uCOS-Ⅲ example 추가. (/doc에 Manual 참고)
+                         2. lib_src/interrupt.c
+                                    set_interrupt_direct( ) 함수 추가.
+
+================================================================================
+ver 1.3.1
+            * fixed bug
+                          1. lib_src/nandctrl.c
+                                       nand_phy_readpage에서 16bit align시 버그 수정.
+		2. example/bootloader
+                                       RemoteCommunication mode에서 Flash download 안되는 버그 수정.
+                          3. example/Image_view_from_usb 
+                                       이미지의 일부분이 출력되지 않는 버그 수정.
+
+            * 추가된 내용
+                          1. lib_src/spi.c에 nSS pin 제어 구문 추가.
+                          2. lib_src/loadImage.c 대문자 확장자 처리 추가.
+                          3. lib_src/loadsurf.c loadsurf() 함수 추가. suf 포맷 이미지 load함수.
+                          4. example/Demo_select 예제 추가.
+
+================================================================================
+ver 1.3.0
+	* 변경된 내용
+		1. include/crt.h, lib_src/crt.c의 getscreeenpitch() --> getscreenpitch()
+                                                                   getscreeenbpp() --> getscreenbpp()
+
+		2. example/Demo/SoundRec.c 118 line 
+                                                     surf_bg = loadjpg("/Microphone-bg.jpg"); -->surf_bg = loadbmp("/Microphone-bg.bmp");
+
+		3. include/uart.h, lib_src/uart.c 파일 변경.
+
+	* 추가된 내용
+                          1. include/stk_board.h추가.
+
+                          2. startup/stk_board.c, example/bootloader/main.c. example/Demo/main.c에 
+		    STK board version 2.0 호환을 위한 코드 추가.                                              
+                              
+                              STK board version 2.0 이상의 보드를 사용할 경우 stk_board.h의 #define STK_20을 정의해야 함. 
+                              veision 2.0 이하의 보드를 사용할 경우에는 정의를 주석처리 하고 사용해야 함.                               
+    
+                          3. example/flash_data에 Microphone-bg.bmp 파일 추가
+
+================================================================================
+ver 1.2.8
+	* fixed bug
+		1. lib_src/mp3play.c
+			mp3txisr 에서 f_close 제거, 버그 수정
+		2. lib_src/dma.c
+			dma_memcpy 의 bytelen 이 홀수일 경우 버그 수정
+
+	* 추가된 내용
+                          1. lib_src/spi.c , include/adstar/spi.h 추가
+
+================================================================================
+ver 1.2.7
+	* fixed bug
+		1. lib_src/sdcard.c
+			source buf address 가 4byte align 에 맞지 않을 경우 버그 수정
+		2. lib_src/mp3play.c
+			mp3txisr 에서 f_close 제거, 버그 수정
+
+
+
+================================================================================
+ver 1.2.6
+	* 변경된 내용
+		1. usb_storage:exampe/usb_mass_storage
+			불필요한 변수 제거,
+		2. startup/stk_board.c
+			serial flash controller 로 PIN 설정
+		3. example/ADC_rec/main.c
+			chunk size 수정
+	* fixed bug
+		1. lib_src/mp3play.c
+			mp3idtagssize 변수 초기화 추가.
+		2. include/adstar/timer.h 
+			F_TPCTRL_CLKSEL_CAP0 bit 오류 수정
+
+================================================================================
+ver 1.2.5
+	* 추가된 내용
+		1. bitmapfont: bitmapfont.h, bitmapfont.c
+			bool bmfont_setautokerning(bool b) : 폰트 1개가 차지 하는 폭을 일정하게 유지 여부
+			int bmfont_write_vleft( int x, int y, const char *text ): 좌측으로 90회전 출력
+			int bmfont_write_vright( int x, int y, const char *text ): 우측으로 90회전 출력
+			
+		2. bitfont: bit_font.h, bit_font.c
+			int bf_drawstring_vleft(int x, int y, char* str):좌측으로 90회전 출력
+			int bf_drawstring_vright(int x, int y, char* str):우측으로 90회전 출력
+
+		3. createsurface_from : surface_creaetfrom.c surface.h
+			surface 의 복사본을 만든다( 동일한 복사본, 좌/우90회전, 180 회전, 좌우/상하 뒤집기)
+		4. exception : interrupt.c
+			exeption 발생시 일정간격으로 계속 에러메시지 출력하도록 수정
+		5. lib_src/util.S ==> lib_src/util.c 로 파일명 변경
+			BOOL heap_stack_collision() 함수 추가 : heap 과 stack 이 충돌 났을 경우 return 1, 그렇지 않을 경우 0 반환.
+		6. sdhc_read, sdhc_write 제거 : lib_src/sdcard.c include/sdcard.h, example/usb_mass_storage/mass_stor.c
+			sdhc_read_sect,sdhc_write_sect 로 변경, sector 단위의 read/write 만 지원
+
+	* bug fix
+		1. sound play: lib_src/soundmixer.c, lib_src/mp3play.c
+			pause 상태에서 또 다른 음원 연주시 버그 수정
+	
+
+================================================================================
+ver 1.2.3
+	* 변경된 내용 
+		1. USB driver update(64bit)
+		2. USB Host 예제 제거(지원하지 않음)
+	* bug fix
+		1. sound play volume 설정시 버그 수정
+
+
+================================================================================
+ver 1.2.2
+	* 추가된 내용 
+		.SDK
+		  new feature
+			sound_loadwavp 함수 추가( 파일시스템이 아닌 메모리에 있는 wav 파일 사용가능)
+			sound_loadmp3p 함수 추가( 파일시스템이 아닌 메모리에 있는 mp3 파일 사용가능)
+			.example/bootloader,pc-util/RemoteManCLI.exe
+			. 부트로더를 사용할 경우 applcation 의 linker script 는 startup/adstar_ram.ld 를 사용해야 한다.
+			자세한 내용은 bootloader SDK 메뉴얼의 bootloader 참조
+			.example/MP3Play_Mem 추가
+			.example/WavPlay_Mem 추가
+			.Nand Boot code 추가
+
+		  optimize
+			sdcard.c
+
+		  bug fix
+			nandctrl.c : 같은 page에 write 와 read 를 할 경우 sync 문제 버그 수정
+
+================================================================================
+ver 1.2
+	* 추가된 내용 
+		.Nested Interrupt 지원, SDK 매뉴얼의 Interrupt 참조 (lib_config.h, interrupt.c)
+		.NAND : 4Bit ECC 지원
+
+
+	* bug fix
+		.mp3 stop, replay 시 버그 수정 (soundmixer.c/h, mp3pay.c)
+		.일부 sd-card 인식 오류 수정
+
+
+	* 변경된 내용
+		. cache mode 의 defautl 설정이 write-back 에서 write-through 모드로 변경됨 ( cache_util.S)
+		
+
+================================================================================
+ver 1.1
+	* lib_config.h
+	   sd-card 가 default 로 enable
+	   CONFIG_FAT_SDCARD ==> CONFIG_SDCARD 로 변경
+	* sdcard.c
+	   PAF 설정 부분 제거 됨
+	* diskio.c
+	   PAF 설정 부분 추가(lib_config.h 소스 참조)
+	* 예제 추가(timer, interrupt, gpio, uart, adc)
+	* uart.c uart.h : Flag 이름 변경
+	* drawsurfacescale :일부 버그 수정
+
+================================================================================
+ver 1.02
+	* drawsurfacescale :이미지 축소시 버그 수정
+	* dma.c
+	   get_free_dma : bug fix, don't check DMACFG register,this is auto-clear by HW
+	* soundmixer.c
+	   sound_stop : set_free_dma() added.
+
+================================================================================
+ver 1.01
+	* lib_confg.h
+	  OSC 10Mhz 
+	* adStarInit.c
+	  PLL settting value was modified (101Mhz)
+
+================================================================================

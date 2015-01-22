@@ -1,0 +1,2744 @@
+#define __K_IRIDIUM_C__
+
+#include "k_includes.h"
+
+#define poPwrIridiumON()
+#define poPwrIridiumOFF()
+
+
+#define Q_IRI1_MAX  100
+#define Q_IRI2_MAX  100
+
+void iri1_rcv_q_put(char ch);
+char iri1_rcv_q_get(void);
+
+void iri2_rcv_q_put(char ch);
+char iri2_rcv_q_get(void);
+void iri2_rcv_q_init(void);
+
+int iridium_init(int a_option);
+int sbdreg_check(int a_option);
+int sbdixa_check(int a_option);
+int sbdrb_check(int a_option);
+
+
+
+
+static int port_no = C_IRIDIUM_1;
+void change_iridium(void)
+{
+
+    if (port_no == C_IRIDIUM_1)
+    {
+        iri_port = C_IRIDIUM_2;
+    }
+    else
+    {
+        iri_port = C_IRIDIUM_1;
+    }
+    port_no = iri_port;
+
+    debugprintf("\r\n-------------->>> change iridium to [%d]\r\n", ((iri_port==C_IRIDIUM_1) ? 1:2));
+}
+void restore_iri_port(void)
+{
+    iri_port = port_no;
+}
+
+
+
+#define IRIDIUM_CMD_POWER_ON	1
+#define IRIDIUM_CMD_POWER_OFF	2
+#define IRIDIUM_CMD_SEND_NEW	3
+#define IRIDIUM_CMD_SEND_OLD	4
+
+
+// iridium operating mode.
+typedef enum {
+    IM_IDLE,
+    IM_INIT,
+    IM_SEND,
+    IM_RCV
+} IRI_MODE_T;
+
+//static IRI_MODE_T mode = IM_IDLE;
+
+static u32 iri_event;
+u32 iri_get_event(void)         {   return iri_event;   }
+void iri_clr_event(void)        {   iri_event = 0;      }
+void iri_set_event(u32 a_evt)   {   iri_event = a_evt;  }
+
+static int iri1_init = 1;
+int  get_iri1_init(void)        {   return iri1_init;   }
+void set_iri1_init(int a_val)   {   iri1_init = a_val;  }
+
+static int iri2_init = 1;
+int  get_iri2_init(void)        {   return iri2_init;   }
+void set_iri2_init(int a_val)   {   iri2_init = a_val;  }
+
+static int mt1_status = 0;
+static int mt2_status = 0;
+int  get_mt1_status(void)       {   return mt1_status;   }
+int  get_mt2_status(void)       {   return mt2_status;   }
+int  get_mt_status(void)
+{
+    if (iri_port == C_IRIDIUM_1)
+    {
+        return mt1_status;
+    }
+    else
+    {
+        return mt2_status;
+    }
+}
+void set_mt1_status(int a_val)   {   mt1_status = a_val; }
+void set_mt2_status(int a_val)   {   mt2_status = a_val; }
+void set_mt_status(int a_val)
+{
+    if (iri_port == C_IRIDIUM_1)
+    {
+        mt1_status = a_val;
+    }
+    else
+    {
+        mt2_status = a_val;
+    }
+}
+
+static int ring1 = 0;
+static int ring2 = 0;
+void set_sbdring1(int a_val)   {   ring1 = a_val; }
+void set_sbdring2(int a_val)   {   ring2 = a_val; }
+int  get_sbdring1(void)       {   return ring1;   }
+int  get_sbdring2(void)       {   return ring2;   }
+
+
+char ctrl_msg[50];
+
+static int iri_init_time_10sec = 1;     //맨 처음에는 10초만 전원 OFF 한다.
+
+//----------------------------------------
+// task_iridium()
+// 1    : OK
+//
+// 2    : Timeout error
+// 0    : NG
+// 999  : Waiting...
+//----------------------------------------
+void task_iridium(void)
+{
+    static u32 idx=100;
+
+    switch (idx)
+    {
+        case 0:
+        case 50:
+            // 이리듐 초기화(전원투입 후)
+
+
+        case 100:
+            // event 를 기다린다.
+            // 발생한 event에 따라 해당 모드로 진입하여 작업을 수행한 후
+            //   다시 돌아온다.
+
+            if ((get_iri1_init() == 1) || (get_iri2_init() == 1) )
+            {
+                idx = 500;      break;
+            }
+
+            // read mail
+            if (get_sbdring1() > 0)
+            {
+                iri_port=C_IRIDIUM_1; idx = 200;  break;
+            }
+            if (get_sbdring2() > 0)
+            {
+                iri_port=C_IRIDIUM_2; idx = 200;  break;
+            }
+
+            // if (get_mt1_status() > 0)    //(-)130904
+            if (get_mt1_status() == 1)      //(+)130904
+            {
+                iri_port=C_IRIDIUM_1; idx = 300;  break;
+            }
+            // if (get_mt2_status() > 0)    //(-)130904
+            if (get_mt2_status() == 1)      //(+)130904
+            {
+                iri_port=C_IRIDIUM_2; idx = 300;  break;
+            }
+
+            // send message
+            // if ( (0 == is_q_empty()) || (1==fgMsgC_ready) )    // not empty...
+            if ( (0 == is_q_empty()) )    // not empty...
+            {
+                if (get_fgFW_updating())
+                    return;
+
+                debugstring(    "-------------------------------\r\n");
+                debugstring(    "     Send msg \r\n");
+                debugstring(    "-------------------------------\r\n");
+
+                // if (fgMsgC_ready==1)
+                // {
+                //     int i;
+                //     // strcpy(newMsg, s_msg_c);
+                //     for (i=0;i<MSG_LENGTH; i++)
+                //     {
+                //         newMsg[i] = s_msg_c[i];
+                //     }
+                // }
+                // else
+                {
+                    int i;
+                    q_getData_only();
+                    // strcpy(newMsg, s_msg);
+                    for (i=0;i<MSG_LENGTH; i++)
+                    {
+                        newMsg[i] = s_msg[i];
+                    }
+                }
+                idx = 400;
+                break;
+            }
+
+            // SBDREG chk
+            if(get_tm_sbdreg()==1)
+            //if(get_tm_sbdreg() > (1*60))
+            {
+                set_tm_sbdreg(0);
+                idx = 700;
+                break;
+            }
+            break;
+
+
+            //---------------------------------------------------
+        case 200:
+            // sbdixa
+            sbdixa_check(1);
+            idx = 210;
+            break;
+        case 210:
+            if (sbdixa_check(0)==1)
+            {
+                idx = 8000;
+            }
+            break;
+
+
+            //---------------------------------------------------
+        case 300:
+            // mt2 msg
+            sbdrb_check(1);
+            idx = 310;
+            break;
+        case 310:
+            if (sbdrb_check(0)==1)
+            {
+                idx = 8000;
+                //idx = 200;
+            }
+            break;
+
+            //---------------------------------------------------
+        case 400:
+            iridium_Process_1(1);
+            idx = 900;
+            break;
+
+            //---------------------------------------------------// iridium-1 init
+        case 500:
+            // power OFF
+            if ((get_iri1_init() == 1))
+            {
+                debugstring("--## IRIDIUM-1 POWER_OFF for initialize ##--\r\n"); //(+)130905
+                cmdSensorControl(SYS_CMD_SENSOR_OFF, SYS_SENSOR_IRI1);
+                // cmdSensorControl(SYS_CMD_IRIDIUM_EXT_OFF, '1');                 //(+)130905
+                cmdSensorControl(SYS_CMD_IRIDIUM_EXT_ON, '1');                 //(+)130905
+            }
+            if ((get_iri2_init() == 1))
+            {
+                debugstring("--## IRIDIUM-2 POWER_OFF for initialize ##--\r\n"); //(+)130905
+                cmdSensorControl(SYS_CMD_SENSOR_OFF, SYS_SENSOR_IRI2);
+                // cmdSensorControl(SYS_CMD_IRIDIUM_EXT_OFF, '2');                 //(+)130905
+                cmdSensorControl(SYS_CMD_IRIDIUM_EXT_ON, '2');                 //(+)130905
+            }
+
+            if (iri_init_time_10sec == 1)
+                tick_iri0 = 10000/10;    //10000/10;   //10sec
+            else
+                tick_iri0 = 60000/10;    //60000/10;   //60sec
+
+            idx = 510;
+            break;
+        case 510:
+            // power ON
+            if (tick_iri0 == 0)
+            {
+                if ((get_iri1_init() == 1))
+                {
+                    idx = 520;
+                }
+                else if ((get_iri2_init() == 1))
+                {
+                    idx = 550;
+                }
+                //tick_iri0 = 10000/10;    //10000/10;   //10sec
+            }
+            break;
+        case 520:
+            debugstring("--## IRIDIUM-1 POWER_ON ##--\r\n");                 //(+)130905
+            cmdSensorControl(SYS_CMD_SENSOR_ON, SYS_SENSOR_IRI1);
+            // cmdSensorControl(SYS_CMD_IRIDIUM_EXT_ON, '1');              //(+)130905
+            cmdSensorControl(SYS_CMD_IRIDIUM_EXT_OFF, '1');              //(+)130905
+            tick_iri0 = 10000/10;    //10000/10;   //10sec
+            idx = 525;
+            break;
+        case 525:
+            if (tick_iri0 == 0)
+            {
+                iri_port = C_IRIDIUM_1;
+                iridium_init(1);
+                idx = 530;
+            }
+            break;
+        case 530:
+            if (iridium_init(0)==1)
+            {
+                // init IR1 is ended.
+                set_iri1_init(0);
+
+                // check IR2 init needed ?
+                if ((get_iri2_init() == 1))
+                {
+                    tick_iri0 = 1000/10;
+                    idx = 550;
+                }
+                else
+                {
+                    idx = 8000;
+                }
+            }
+            break;
+
+        // case 540:
+        //     if (iridium_init(0)==1)
+        //     {
+        //         // init IR2 is ended.
+        //         set_iri2_init(0);
+        //         idx = 8000;
+        //     }
+        //     break;
+
+        case 550:
+            debugstring("--## IRIDIUM-2 POWER_ON ##--\r\n");                 //(+)130905
+            cmdSensorControl(SYS_CMD_SENSOR_ON, SYS_SENSOR_IRI2);
+            // cmdSensorControl(SYS_CMD_IRIDIUM_EXT_ON, '2');              //(+)130905
+            cmdSensorControl(SYS_CMD_IRIDIUM_EXT_OFF, '2');              //(+)130905
+            tick_iri0 = 10000/10;    //10000/10;   //10sec
+            idx = 555;
+            break;
+        case 555:
+            if (tick_iri0 == 0)
+            {
+                iri_port = C_IRIDIUM_2;
+                iridium_init(1);
+                idx = 560;
+            }
+            break;
+        case 560:
+            if (iridium_init(0)==1)
+            {
+                // init IR1 is ended.
+                set_iri2_init(0);
+                idx = 8000;
+            }
+            break;
+
+
+
+            //---------------------------------------------------// SBDREG chk
+        case 700:
+            // SBDREG chk
+            debugprintf("===============>>>> SBDREG chk [1]\r\n");
+            iri_port = C_IRIDIUM_1;
+            sbdreg_check(1);
+            idx = 710;
+            break;
+        case 710:
+            if (sbdreg_check(0)==1)
+            {
+            debugprintf("===============>>>> SBDREG chk [2]\r\n");
+                iri_port = C_IRIDIUM_2;
+                sbdreg_check(1);
+                idx = 720;
+            }
+            break;
+        case 720:
+            if (sbdreg_check(0)==1)
+            {
+                idx = 8000;
+            }
+            break;
+
+
+
+
+        case 800:
+            idx = 8000;
+            break;
+
+            //---------------------------------------------------// wait Result
+        case 900:
+            {
+                //int i;
+                int iri_retval = iridium_Process_1(0);  //0: 상태체크용...
+                switch (iri_retval)
+                {
+                    case 0: //err
+                        debugprintf("\r\nSBD status :%d - send error\r\n",iri_retval);
+
+                        // q_pop();
+                        // for (i=0;i<MSG_LENGTH; i++)
+                        // {
+                        //     s_msg[i] = newMsg[i];
+                        // }
+                        // q_putData();
+                        // debugprintf("q_put --> Q[%d]\r\n",is_q_dataNum());
+
+
+                        idx = 8000;
+                        break;
+
+                    case 1:
+                        debugprintf("\r\nSBD status :%d - send success\r\n",iri_retval);
+                        // if (fgMsgC_ready==1)
+                        // {
+                        //     fgMsgC_ready = 0;
+                        // }
+                        // else
+                        {
+                            q_pop();
+                            debugprintf("q_pop --> Q[%d]\r\n",is_q_dataNum());
+                        }
+
+                        if (sdc_read_detectPin()==SDC_INSERTED)
+                        {
+                            u32 fsz;
+                            char t_item[130];
+
+                            rtc_isSecUpdate();
+                            sprintf(t_item,"%02d%02d%02d-%02d:%02d:%02d %s\r\n",rtc_time.year%100,rtc_time.mon,rtc_time.day,rtc_time.hour,rtc_time.min,rtc_time.sec,"send_ok");
+
+
+                            sdc_saveDataToFile(FN_HISTORY, t_item, &fsz);
+                            //PRINTVAR(fsz);
+                            // if (fsz > FSZ_MAX)
+                            // {
+                            //     SensorBakSize.b.mose = 1;
+                            // }
+                        }
+
+                        idx = 8000;
+                        break;
+
+                    case 2:
+                        debugprintf("\r\nSBD status :%d - Timeout...\r\n",iri_retval);
+
+
+                        // q_pop();
+                        // for (i=0;i<MSG_LENGTH; i++)
+                        // {
+                        //     s_msg[i] = newMsg[i];
+                        // }
+                        // q_putData();
+                        // debugprintf("q_put --> Q[%d]\r\n",is_q_dataNum());
+
+                        idx = 8000;
+                        break;
+                }
+            }
+            break;
+
+        case 8000:
+        default:
+            idx = 100;
+            break;
+    }
+
+}
+
+
+void setReqInitIridium(void)
+{
+    debugprintf("####### init iridium [");
+    if ( iri_port==C_IRIDIUM_1)
+    {
+        debugstring("1]\r\n");
+        set_iri1_init(1);
+    }
+    else if ( iri_port==C_IRIDIUM_2)
+    {
+        debugstring("2]\r\n");
+        set_iri2_init(1);
+    }
+}
+
+
+char iri_response[50];
+int mo_status;
+//int mt_status;
+int csq;
+//----------------------------------------
+// iridium_Process_1()
+// 1 	: OK
+//
+// 2	: Timeout error
+// 0 	: NG
+// 999  : Waiting...
+//----------------------------------------
+int iridium_Process_1(int a_option)
+{
+    static int idx = 0;
+    static int resp_idx = 0;
+    static int retry_cnt = 0;
+    //static char csq_value;
+    //static char sbdi_value;
+    static int sbdi_error;
+
+    static int at_cnt = 0;;
+
+    static int chg_n_retry=0;   // 이리듐을 교체하여  ATV 재시도 했는가??
+    static int chg_atv_retry=0;   // 이리듐을 교체하여  ATV 재시도 했는가??
+    static int chg_csq_retry=0;   // 이리듐을 교체하여  CSQ 재시도 했는가??
+    static int chg_sbdi_retry=0;  // 이리듐을 교체하여 SBDI 재시도 했는가??
+    char ch;
+    int i;
+    int ret_val = 999;
+    //char s_msg[100];
+
+    switch (a_option)
+    {
+        case 1:
+            // 새로 시작
+            idx = 0;
+            chg_n_retry = 0;
+            chg_atv_retry = 0;
+            chg_sbdi_retry = 0;
+            chg_csq_retry = 0;
+
+            break;
+        case 2:
+            idx = 100;
+            break;
+        case 0:
+            // idx는 현재값을 유지하고...---> 상태체크용.
+        default:
+            break;
+    }
+
+
+    switch (idx)
+    {
+        //ATV1 ------------------------------------------------ATV1
+        case 0:
+            at_cnt = 0;
+            restore_iri_port();
+
+            debugprintf("\r\nIridium-[%d] is active.\r\n", ((iri_port==C_IRIDIUM_1) ? 1:2) );
+            idx = 450;
+            break;
+
+        case 450:
+            resp_idx = 0;
+            debugprintf("AT ---> ");
+            iridium_printf("AT\r");
+            tick_iri0 = 1000/10;    //1000/10;   //1sec
+            idx = 500;
+            break;
+        case 500:
+            //wait 'OK'
+            if (UartGetCh(iri_port,&ch))
+            {
+                iri_response[resp_idx++] = ch;
+                //debugprintf("%c",ch);
+                if ( (ch=='K') || (ch=='0') )
+                {
+                    debugprintf("[OK]\r\n");
+                    idx = 505;
+                }
+            }
+            if (tick_iri0==0)
+            {
+                idx = 505;
+            }
+            break;
+
+        case 505:
+            at_cnt++;
+            if (at_cnt >5)
+            {
+                idx = 550;
+            }
+            else
+            {
+                idx = 450;
+            }
+            break;
+
+        case 550:
+            //PRINT_TIME;
+            //debugprintf("\r\n-----ATV1 [%d]\r\n", ((iri_port==C_IRIDIUM_1) ? 1:2) );
+            debugprintf("ATV0 ---> ");
+
+            resp_idx = 0;
+            //iridium_printf("ATV1\r");
+            iridium_printf("ATV0\r");
+            tick_iri0 = 5000/10;    //10000/10;   //10sec
+            idx = 2;
+            break;
+
+        case 2:
+            //wait 'OK'
+            if (UartGetCh(iri_port,&ch))
+            {
+                iri_response[resp_idx++] = ch;
+                //debugprintf("%c",ch);
+                if ( (ch=='K') || (ch=='0'))
+                {
+                    debugprintf("[OK]\r\n");
+                    //chg_n_retry = 0;    // 현재 단계를 통과했으므로 재시도 횟수 clear
+                    idx = 20;
+                }
+            }
+            else if (tick_iri0==0)
+            {
+                debugprintf("[NG]\r\n");
+                //debugprintf("\r\n----- ATV1 NG [%d]\r\n", ((iri_port==C_IRIDIUM_1) ? 1:2));
+
+                setReqInitIridium();
+
+                // debugprintf("####### init iridium [");
+                // if ( iri_port==C_IRIDIUM_1)
+                // {
+                //     debugstring("1]\r\n");
+                //     set_iri1_init(1);
+                // }
+                // else if ( iri_port==C_IRIDIUM_2)
+                // {
+                //     debugstring("2]\r\n");
+                //     set_iri2_init(1);
+                // }
+
+                // 이리듐 상태가 비정상일 경우 다른쪽을 변경후 재시도한다.
+                change_iridium();
+
+                if (chg_n_retry== 0)
+                {
+                    chg_n_retry = 1;
+                    idx = 0;
+                }
+                else
+                {
+                    //debugprintf("ATV1 NG [%d]\r\n", ((iri_port==C_IRIDIUM_1) ? 1:2));
+                    idx = 999;
+                }
+            }
+            break;
+
+        // case 4:
+        //     //PRINT_TIME;
+        //     debugprintf("ATV1 [%d]\r\n", ((iri_port==C_IRIDIUM_1) ? 1:2) );
+
+        //     iridium_printf("ATV1\r");
+        //     tick_iri0 = 5000/10;    //10000/10;   //10sec
+        //     idx = 6;
+        //     break;
+        // case 6:
+        //     //wait 'OK'
+        //     if (UartGetCh(iri_port,&ch))
+        //     {
+        //         debugprintf("%c",ch);
+        //         if (ch=='K')
+        //         {
+        //             idx = 20;
+        //         }
+        //     }
+        //     else if (tick_iri0==0)
+        //     {
+        //         debugprintf("ATV1 NG [%d]\r\n", ((iri_port==C_IRIDIUM_1) ? 1:2));
+        //         idx = 999;
+        //     }
+        //     break;
+
+
+            //ATE0 ------------------------------------------------ATE0
+        case 20:
+            //debugstring("\r\n-----ATE0\r\n");
+            debugstring("ATE0 ---> ");
+
+            //PRINT_TIME;
+            iridium_printf("ATE0\r");
+            tick_iri0 = 5000/10;    //5sec
+            idx = 25;
+            break;
+        case 25:
+            //wait 'OK'
+            if (UartGetCh(iri_port,&ch))
+            {
+                //debugprintf("%c",ch);
+                if (( ch=='K') || (ch=='0') )
+                {
+                    debugprintf("[OK]\r\n");
+                    idx = 30;
+                }
+            }
+            else if (tick_iri0==0)
+            {
+                //debugstring("ATE0 NG\r\n");
+                debugprintf("[NG]\r\n");
+                idx = 999;
+            }
+            break;
+
+            //AT&K0 ------------------------------------------------AT&K0
+        case 30:
+            for (i=0;i<10;i++) UartGetCh(iri_port,&ch);
+            //debugstring("\r\n-----AT&K0\r\n");
+            debugstring("AT&K0 ---> ");
+
+            //PRINT_TIME;
+            iridium_printf("AT&K0\r");
+            tick_iri0 = 5000/10;    //5sec
+            idx = 35;
+            break;
+        case 35:
+            //wait 'OK'
+            if (UartGetCh(iri_port,&ch))
+            {
+                //debugprintf("%c",ch);
+                if ( (ch=='K') || (ch=='0') )
+                {
+                    debugprintf("[OK]\r\n");
+                    //idx = 40;
+                    idx = 50;
+                }
+            }
+            else if (tick_iri0==0)
+            {
+                //debugstring("AT&K0 NG\r\n");
+                debugprintf("[NG]\r\n");
+                idx = 999;
+            }
+            break;
+
+            //AT&D0 ------------------------------------------------AT&D0
+        case 40:
+            for (i=0;i<10;i++) UartGetCh(iri_port,&ch);
+            debugstring("\r\n-----AT&D0\r\n");
+
+            //PRINT_TIME;
+            iridium_printf("AT&D0\r");
+            tick_iri0 = 5000/10;    //5sec
+            idx = 45;
+            break;
+        case 45:
+            //wait 'OK'
+            if (UartGetCh(iri_port,&ch))
+            {
+                debugprintf("%c",ch);
+                if ((ch=='K') || (ch=='0') )
+                {
+                    idx = 50;
+                }
+            }
+            else if (tick_iri0==0)
+            {
+                //PRINT_TIME;
+                debugstring("----AT&D0 NG\r\n");
+                idx = 999;
+            }
+            break;
+
+            // ------------------------------------------------------ATS0=2
+            //  자동응답 Autoanswer.
+        case 50:
+            for (i=0;i<10;i++) UartGetCh(iri_port,&ch);
+            //debugstring("\r\n-----ATS0=2\r\n");
+
+            debugstring("ATS0=2 ---> ");
+            //PRINT_TIME;
+            iridium_printf("ATS0=2\r");
+            tick_iri0 = 5000/10;    //5sec
+            idx = 55;
+            break;
+        case 55:
+            //wait 'OK'
+            if (UartGetCh(iri_port,&ch))
+            {
+                //debugprintf("%c",ch);
+                if ((ch=='K') || (ch=='0') )
+                {
+                    debugprintf("[OK]\r\n");
+                    idx = 56;
+                    //initial RETRY_CNT:  in case of 'CSQ=0'
+                    retry_cnt = 0;
+                }
+            }
+            else if (tick_iri0==0)
+            {
+                debugprintf("[NG]\r\n");
+                //debugstring("----ATS0=2 NG\r\n");
+                idx = 999;
+            }
+            break;
+
+            // ---------------------------------------------------AT+SBDMTA=1
+            //  Enable or disable ring indications for SBD Ring Alerts.
+            //      1 : Enable ring indication (default).
+        case 56:
+            for (i=0;i<10;i++) UartGetCh(iri_port,&ch);
+            //debugstring("\r\n-----AT+SBDMTA=1\r\n");
+            debugstring("AT+SBDMTA=1 ---> ");
+
+            //PRINT_TIME;
+            iridium_printf("AT+SBDMTA=1\r");
+            tick_iri0 = 5000/10;    //5sec
+            idx = 57;
+            break;
+        case 57:
+            //wait 'OK'
+            if (UartGetCh(iri_port,&ch))
+            {
+                //debugprintf("%c",ch);
+                if ((ch=='K') || (ch=='0') )
+                {
+                    debugprintf("[OK]\r\n");
+                    idx = 60;
+
+#if 0   // TESTONLY
+                    idx = 100;
+#endif
+
+
+                    //initial RETRY_CNT:  in case of 'CSQ=0'
+                    retry_cnt = 0;
+                }
+            }
+            else if (tick_iri0==0)
+            {
+                debugprintf("[NG]\r\n");
+                //debugstring("----AT+SBDMTA=1 NG\r\n");
+                idx = 999;
+            }
+            break;
+
+
+            // AT+CSQ? ------------------------------------------------AT+CSQ?
+        case 60:
+            for (i=0;i<10;i++) UartGetCh(iri_port,&ch);
+            //debugprintf("\r\n-----AT+CSQ?\r\n",ch);
+            debugprintf("AT+CSQ? ---> ");
+
+            //PRINT_TIME;
+            resp_idx = 0;
+            iridium_printf("AT+CSQ?\r\n");
+            tick_iri0 = 120000/10;  //120sec
+            idx = 65;
+            break;
+        case 65:
+            //wait '+CSQ:'
+            if (UartGetCh(iri_port,&ch))
+            {
+                iri_response[resp_idx++] = ch;
+
+                //debugprintf("%c",ch);
+                //if ((ch==':'))
+                // if ((ch==0x0A))
+                // {
+                //     iri_response[resp_idx++] = '\0';
+
+                //     debugstring("-----");
+                //     debugstring(iri_response);
+                //     debugstring("-----");
+
+
+                if ((ch==0x0D))
+                {
+                    iri_response[resp_idx++] = '\0';
+                    if (iri_response[0]=='+')
+                    {
+                        debugstring("\r\n");
+                        debugstring(iri_response);
+                        {
+                            int i=0;
+                            int j=0;
+                            int k=0;
+                            char ch1;
+                            char parsed_block[8][10];
+                            while (1)
+                            {
+                                ch1 = iri_response[k++];
+                                if ((ch1==0x0D) || (ch1==0x0A) || ch1=='\0')
+                                {
+                                    parsed_block[i][j] = '\0';
+                                    break;
+                                }
+                                else if ( (ch1==',') || (ch1==':') )
+                                {
+                                    parsed_block[i][j] = '\0';
+
+                                    //debugstring("\r\n");
+                                    //debugstring(parsed_block[i]);
+
+                                    i++;
+                                    j=0;
+                                }
+                                else
+                                {
+                                    parsed_block[i][j++] = ch1;
+                                }
+                            }
+                            // debugprintf("%s\r\n",parsed_block[0]);//sbdi
+                            // debugprintf("%s\r\n",parsed_block[1]);//mo-status
+                            // debugprintf("%s\r\n",parsed_block[2]);//mo-msn
+                            // debugprintf("%s\r\n",parsed_block[3]);//mt-status
+                            // debugprintf("%s\r\n",parsed_block[4]);//mt-msn
+                            // debugprintf("%s\r\n",parsed_block[5]);//mt-len
+                            // debugprintf("%s\r\n",parsed_block[6]);//mt-queue
+
+                            csq = atoi(parsed_block[1]);
+
+                        }
+                    }
+                    idx = 67;
+                    break;
+                }
+            }
+            else if (tick_iri0==0)
+            {
+                debugstring("\r\n----AT+CSQ timeout!!\r\n");
+                idx = 999;
+            }
+            break;
+        case 67:
+            //wait csq-value
+            //if (UartGetCh(iri_port,&ch))
+            {
+                //debugprintf("%c",ch);
+                // csq_value = iri_response[5];//ch;
+                // if (iri_response[5]=='0')
+                if (csq== 0)
+                {
+                    //csq == 0 : retry after 5sec
+                    retry_cnt++;
+                }
+                idx = 69;
+            }
+            if (tick_iri0==0)
+            {
+                debugstring("\r\n----AT+CSQ timeout!!\r\n");
+                idx = 999;
+            }
+            break;
+        case 69:
+            //if (UartGetCh(iri_port,&ch))
+            {
+                //debugprintf("%c",ch);
+                //if ((ch=='K'))
+                {
+                    // if (csq_value == '0')
+                    if (csq == 0)
+                    {
+                        if (retry_cnt < 3)
+                        {
+                            //goto delay 5sec for next CSQ check...
+                            tick_iri0 = 5000/10;    //5sec
+                            idx = 72;
+                        }
+                        if (retry_cnt >= 3)
+                        {
+
+                            debugprintf("\r\n----- AT+CSQ ERROR(0 for 3times!! [%d]\r\n", ((iri_port==C_IRIDIUM_1) ? 1:2));
+
+                            // 다른쪽을 변경후 재시도한다.
+
+                            if (chg_csq_retry== 0)
+                            {
+                                change_iridium();
+
+                                retry_cnt = 0;
+                                chg_csq_retry = 1;
+                                idx = 0;
+                            }
+                            else
+                            {
+                                //debugprintf("\r\n----- AT+CSQ ERROR(0 for 3times!! [%d]\r\n", ((iri_port==C_IRIDIUM_1) ? 1:2));
+                                idx = 999;
+                            }
+
+                            //// CSQ=0 for 3 times : goto error
+                            //debugstring("\r\n----AT+CSQ ERROR(0 for 3times!!\r\n");
+                            //idx = 999;
+                        }
+                    }
+                    else
+                    {
+                        //idx = 80;
+                        idx = 100;  //at+sbdreg skip...
+                    }
+                }
+            }
+            //else if (tick_iri0==0)
+            //{
+            //    debugstring("\r\n----AT+CSQ timeout!!\r\n");
+            //    idx = 999;
+            //}
+            break;
+        case 72:
+            if (tick_iri0==0)
+            {
+                debugprintf("\r\n----CSQ retry[%d]\r\n",retry_cnt);
+
+                idx = 60;
+            }
+            break;
+
+            // AT+SBDREG  ------------------------------------------------AT+SBDREG
+        case 80:
+            for (i=0;i<10;i++) UartGetCh(iri_port,&ch);
+            // debugstring("\r\n-----AT+SBDREG?\r\n");
+            debugstring("AT+SBDREG? ---> ");
+
+            //PRINT_TIME;
+            //iridium_printf("AT+SBDREG?\r\n");
+            resp_idx = 0;
+            iridium_printf("AT+SBDREG?\r\n");
+            tick_iri0 = 120000/10;  //120sec
+            idx = 85;
+            break;
+        case 85:
+            //wait 'OK'
+            if (UartGetCh(iri_port,&ch))
+            {
+                //debugprintf("%c",ch);
+                iri_response[resp_idx++] = ch;
+                //if (ch=='K')
+                if (ch== 0x0D)
+                {
+                    iri_response[resp_idx++] = '\0';
+                    if (iri_response[0]=='+')
+                    {
+                        //debugstring("-----");
+                        debugstring(iri_response);
+                        //debugstring("-----");
+
+                        tick_iri0 = 1000/10;    //1sec
+                        idx = 90;
+                    }
+                    else
+                    {
+                        resp_idx=0;
+                    }
+                }
+            }
+            else if (tick_iri0==0)
+            {
+                debugstring("\r\n-----AT+SBDREG timeout!!\r\n");
+                idx = 999;
+            }
+            break;
+
+        case 90:
+            if (tick_iri0==0)
+            {
+                idx = 100;
+            }
+            break;
+
+            // AT+SBDWB : data transfer to ISU  ------------------------------------------------AT+SBDWB
+        case 100:
+            for (i=0;i<10;i++) UartGetCh(iri_port,&ch);
+
+            debugstring("\r\n-----AT+SBDWB:\r\n");
+            debugstring(newMsg);
+            debugstring("\r\n");
+            //PRINT_TIME;
+
+            {
+                //int i;
+                int len = strlen(newMsg);
+                u8 buf[30];
+
+                sprintf(buf, "AT+SBDWB=%d\r", (len) );
+                debugprintf("%s\r\n",buf);
+
+                iridium_printf(buf);  //34
+            }
+
+            tick_iri0 = 120000/10;  //120sec
+            idx = 105;
+            break;
+
+        case 105:
+            //wait 0x0A
+            if (UartGetCh(iri_port,&ch))
+            {
+                debugprintf("%c",ch);
+                //if (ch== 0x0A)
+                if (ch== 'Y')   //READY
+                {
+                    tick_iri0 = 500/10;    //50msec
+#if 1
+                    idx = 107;
+#else
+                    idx = 108;
+#endif
+                }
+            }
+            else if (tick_iri0==0)
+            {
+                debugstring("-----AT+SBDWB timeout!!\r\n");
+                idx = 999;
+            }
+            break;
+
+        case 107:
+            if (tick_iri0==0)
+            {
+                u32 chksum=0;
+                char ch;
+                int len = strlen(newMsg);
+
+                //UartPutCh(0, '\r');
+                //UartPutCh(0, '\n');
+
+                for (i=0; i<len; i++)
+                {
+                    ch = newMsg[i];
+                    //UartPutCh(0, ch);
+                    //UartPutCh(0, ' ');
+
+                    UartPutCh(iri_port, ch);
+                    chksum += ch;
+                }
+                //chksum
+                //PRINTVAR(chksum);
+                unsigned char ch1, ch2;
+                chksum &= 0xFFFF;
+                ch1 = (unsigned char)((chksum / 256));
+                ch2 = (unsigned char)((chksum % 256));
+
+                UartPutCh(iri_port, ch1);
+                UartPutCh(iri_port, ch2);
+                UartPutCh(iri_port, '\r');
+
+                //debugprintf("\r\n ch1(%02X) ch2(%02X) \r\n",ch1,ch2);
+
+                tick_iri0 = 120000/10;  //120sec
+                idx = 108;
+            }
+            break;
+
+        case 108:
+        case 109:
+            //wait 'OK'
+            if (UartGetCh(iri_port,&ch))
+            {
+                debugprintf("%c",ch);
+                if (ch=='0')
+                {
+                    //debugstring("-----AT+SBDWB checksum OK!!\r\n");
+                    tick_iri0 = 5000/10;    //5sec
+                    idx = 110;
+                }
+                if (ch=='1')
+                {
+                    debugstring("-----AT+SBDWB time over!!\r\n");
+                    //tick_iri0 = 5000/10;    //5sec
+                    idx = 999;
+                }
+                if (ch=='2')
+                {
+                    debugstring("-----AT+SBDWB checksum error!!\r\n");
+                    //tick_iri0 = 5000/10;    //5sec
+                    idx = 999;
+                }
+            }
+            //else if (tick_iri0==0)
+            if (tick_iri0==0)
+            {
+                debugstring("-----AT+SBDWB timeout!!\r\n");
+                idx = 999;
+            }
+            break;
+
+        case 110:
+            if (tick_iri0==0)
+            {
+                debugprintf("\r\ndelay time(5sec) for start AT+SBDI\r\n");
+
+                retry_cnt = 0;
+                idx = 112;
+            }
+            break;
+
+            // AT+SBDI ------------------------------------------------AT+SBDI
+        case 112:
+            for (i=0;i<10;i++) UartGetCh(iri_port,&ch);
+            debugprintf("\r\n-AT+SBDIXA-");
+            //PRINT_TIME;
+
+            resp_idx=0;
+            iridium_printf("AT+SBDIXA\r\n");
+            // iridium_printf("AT+SBDIXA\r\n");
+            tick_iri0 = 120000/10;  //120sec
+            idx = 115;
+            break;
+        case 115:
+            //wait '+SBDI:'
+            if (UartGetCh(iri_port,&ch))
+            {
+                //debugprintf("%c",ch);
+                iri_response[resp_idx++] = ch;
+
+                //if ((ch==':'))
+                if ((ch==0x0D))
+                {
+                    iri_response[resp_idx++] = '\0';
+                    if (iri_response[0]=='+')
+                    {
+                        debugstring("\r\n");
+                        debugstring(iri_response);
+                        {
+                            int i=0;
+                            int j=0;
+                            int k=0;
+                            char ch1;
+                            char parsed_block[8][10];
+                            while (1)
+                            {
+                                ch1 = iri_response[k++];
+                                if ((ch1==0x0D) || (ch1==0x0A) || ch1=='\0')
+                                {
+                                    parsed_block[i][j] = '\0';
+                                    break;
+                                }
+                                else if ( (ch1==',') || (ch1==':') )
+                                {
+                                    parsed_block[i][j] = '\0';
+
+                                    //debugstring("\r\n");
+                                    //debugstring(parsed_block[i]);
+
+                                    i++;
+                                    j=0;
+                                }
+                                else
+                                {
+                                    parsed_block[i][j++] = ch1;
+                                }
+                            }
+                            // debugprintf("%s\r\n",parsed_block[0]);//sbdi
+                            // debugprintf("%s\r\n",parsed_block[1]);//mo-status
+                            // debugprintf("%s\r\n",parsed_block[2]);//mo-msn
+                            // debugprintf("%s\r\n",parsed_block[3]);//mt-status
+                            // debugprintf("%s\r\n",parsed_block[4]);//mt-msn
+                            // debugprintf("%s\r\n",parsed_block[5]);//mt-len
+                            // debugprintf("%s\r\n",parsed_block[6]);//mt-queue
+
+                            mo_status = atoi(parsed_block[1]);
+                            // mt_status = atoi(parsed_block[3]);
+                            set_mt_status(atoi(parsed_block[3]));
+
+                            debugprintf("mo_status= %d\r\n",mo_status);
+                            debugprintf("mt_status= %d\r\n",get_mt_status());
+
+
+                        }
+
+                        idx = 120;
+                        break;
+                    }
+                    else
+                    {
+                        resp_idx=0;
+                    }
+                }
+            }
+            else if (tick_iri0==0)
+            {
+                debugstring("\r\nAT+SBDI timeout!!\r\n");
+                idx = 999;
+            }
+            break;
+        case 120:
+            //wait +SBDI:' '  - space
+
+            // if (UartGetCh(iri_port,&ch))
+            // {
+            //     debugprintf("%c",ch);
+            //     if ((ch==' '))
+            //     {
+            //         idx = 125;
+            //         break;
+            //     }
+            // }
+            // else if (tick_iri0==0)
+            // {
+            //     debugstring("\r\nAT+SBDI timeout!!\r\n");
+            //     idx = 999;
+            // }
+            // break;
+        case 125:
+            //wait sbdi-value(MO-status)
+            //if (UartGetCh(iri_port,&ch))
+            {
+                //debugprintf("%c",ch);
+                //sbdi_value = ch;
+                // if (ch!='1')
+                if (mo_status < 3)
+                {
+                    sbdi_error = 0;
+                    idx = 150;
+                }
+                else
+                {
+                    if (mo_status >= 16 )       //(+)130904 --->
+                    {                           //
+                        setReqInitIridium();    //
+                    }                           // <-----
+
+                    //csq == 0 : retry after 5sec
+                    retry_cnt++;
+                    idx = 130;
+                }
+            }
+            // if (tick_iri0==0)
+            // {
+            //     debugstring("\r\nAT+SBDI timeout!!\r\n");
+            //     idx = 999;
+            // }
+            break;
+        case 130:
+            //if (UartGetCh(iri_port,&ch))
+            {
+                //debugprintf("%c",ch);
+                //if ((ch=='K'))
+                {
+                    //if (sbdi_value != '1')
+                    {
+                        if (retry_cnt < 3)
+                        {
+                            //goto delay 5sec for next SBDI check...
+                            tick_iri0 = 5000/10;    //5sec
+                            idx = 140;
+                        }
+                        if (retry_cnt >= 3)
+                        {
+                            // SBDI !=1 for 3 times : goto error
+                            sbdi_error = 1;
+                            debugstring("\r\nAT+SBDI ERROR(0 for 3times!!\r\n");
+
+
+                            //idx = 999;
+                            idx = 150;
+                        }
+                    }
+                    //else
+                    {
+                        // no error
+                        //sbdi_error = 0;
+                        //idx = 150;
+                    }
+                }
+            }
+            // else if (tick_iri0==0)
+            // {
+            //     debugstring("\r\nAT+SBDI timeout!!\r\n");
+            //     idx = 999;
+            // }
+            break;
+        case 140:
+            if (tick_iri0==0)
+            {
+                debugprintf("\r\nSBDI retry[%d]\r\n",retry_cnt);
+                idx = 112;  //110;
+            }
+            break;
+
+
+            // SBDD0  ------------------------------------------------AT+SBDD0
+        case 150:
+            for (i=0;i<10;i++) UartGetCh(iri_port,&ch);
+
+            // if (get_mt_status() >0)      // (-)130904
+            if (get_mt_status() == 1)       // (+)130904 <<--- 2(error) 는 제외시킴.
+            {
+                idx = 160;
+            }
+            else
+            {
+                debugstring("\r\n-AT+SBDD0-");
+                //PRINT_TIME;
+
+                iridium_printf("AT+SBDD0\r\n");
+                tick_iri0 = 50000/10;   //5sec
+                idx = 155;
+            }
+            break;
+        case 155:
+            //wait 'OK'
+            if (UartGetCh(iri_port,&ch))
+            {
+                debugprintf("%c",ch);
+                if ((ch=='K') || (ch=='0'))
+                {
+                    idx = 160;
+                }
+            }
+            else if (tick_iri0==0)
+            {
+                debugstring("AT+SBDD0 NG\r\n");
+                idx = 999;
+            }
+            break;
+
+            // post process  ------------------------------------------------
+        case 160:
+            if (sbdi_error==1)
+            {
+                ret_val = 0;    //sbdi error
+            }
+            else
+            {
+                ret_val = 1;    //success
+            }
+
+            change_iridium();
+            break;
+
+        case 999:
+            //timeout error
+            ret_val = 2;
+
+            change_iridium();
+            break;
+    }
+    return(ret_val);
+}
+
+
+//static int result_no = 999;
+//static int sbdring = 0;
+char result_s[30];
+char result_sbd[50];
+
+void task_iri_rcv(void)
+{
+    static int idx1=0;
+    static int idx2=0;
+    char ch;
+
+    //-----1-----------------------------------------
+    if (uart_getch(C_IRIDIUM_1,&ch))
+    {
+        iri1_rcv_q_put(ch);
+        switch(idx1)
+        {
+            case 0:
+                if (ch=='1')
+                    idx1 = 10;
+                break;
+            case 10:
+                if (ch=='2')
+                    idx1 = 20;
+                else
+                    idx1 = 0;
+                break;
+            case 20:
+                if (ch=='6')
+                {
+                    debugprintf("\r\n---------------------->>>> SBDRING(1) >>>>\r\n");
+                    set_sbdring1(1);
+
+                    idx1 = 70;
+                }
+                else
+                    idx1 = 0;
+                break;
+            case 70:
+            default:
+                idx1 = 0;
+                break;
+        }
+    }
+
+
+    //-----2-----------------------------------------
+    if (uart_getch(C_IRIDIUM_2,&ch))
+    {
+        iri2_rcv_q_put(ch);
+        switch(idx2)
+        {
+            case 0:
+                if (ch=='1')
+                    idx2 = 10;
+                break;
+            case 10:
+                if (ch=='2')
+                    idx2 = 20;
+                else
+                    idx2 = 0;
+                break;
+            case 20:
+                if (ch=='6')
+                {
+                    debugprintf("\r\n---------------------->>>> SBDRING(2) >>>>\r\n");
+                    set_sbdring2(1);
+                    idx2 = 70;
+                }
+                else
+                    idx2 = 0;
+                break;
+            case 70:
+            default:
+                idx2 = 0;
+                break;
+        }
+    }
+
+
+
+    // static int idx = 0;
+
+    // switch (idx)
+    // {
+    //     case 1000:
+    //         break;
+
+    // }
+}
+
+
+
+
+
+//-------------------------------------------------------------------
+t_SENSOR_Q iri1_q;
+t_SENSOR_Q iri2_q;
+
+ALIGN4 char iri1_q_buf[Q_IRI1_MAX];
+ALIGN4 char iri2_q_buf[Q_IRI2_MAX];
+
+
+int iri_rcv_get(int no, char *ch)
+{
+    char tmp;
+    if (no == C_IRIDIUM_1)
+    {
+        tmp = iri1_rcv_q_get();
+    }
+    else
+    {
+        tmp = iri2_rcv_q_get();
+    }
+
+    if (tmp != -1)
+    {
+        *ch = tmp;
+        return(1);
+    }
+    else
+    {
+        return(0);
+    }
+}
+
+void iri1_rcv_q_put(char ch)
+{
+    iri1_q_buf[iri1_q.rear] = ch;
+    ++iri1_q.rear;
+    iri1_q.rear %= Q_IRI1_MAX;
+    iri1_q.len++;
+}
+
+char iri1_rcv_q_get(void)
+{
+    char ch;
+    if (iri1_q.front == iri1_q.rear)
+    {
+        ch = -1;    //empty
+    }
+    else
+    {
+        ch = iri1_q_buf[iri1_q.front];
+        ++iri1_q.front;
+        iri1_q.front %= Q_IRI1_MAX;
+        iri1_q.len--;
+    }
+    return ch;
+}
+
+void iri1_rcv_q_init(void)
+{
+    iri1_q.rear = 0;
+    iri1_q.front = 0;
+    iri1_q.len = 0;
+}
+
+
+u32 get_iri1_rcv_len(void)
+{
+    return iri1_q.len;
+}
+
+//-------------------------------------------------------------------
+
+void iri2_rcv_q_put(char ch)
+{
+    iri2_q_buf[iri2_q.rear] = ch;
+    ++iri2_q.rear;
+    iri2_q.rear %= Q_IRI2_MAX;
+    iri2_q.len++;
+}
+
+char iri2_rcv_q_get(void)
+{
+    char ch;
+    if (iri2_q.front == iri2_q.rear)
+    {
+        ch = -1;    //empty
+    }
+    else
+    {
+        ch = iri2_q_buf[iri2_q.front];
+        ++iri2_q.front;
+        iri2_q.front %= Q_IRI2_MAX;
+        iri2_q.len--;
+    }
+    return ch;
+}
+
+void iri2_rcv_q_init(void)
+{
+    iri2_q.rear = 0;
+    iri2_q.front = 0;
+    iri2_q.len = 0;
+}
+
+u32 get_iri2_rcv_len(void)
+{
+    return iri2_q.len;
+}
+
+
+
+
+
+
+int iridium_init(int a_option)
+{
+    static int idx = 0;
+    static int resp_idx = 0;
+    static int retry_cnt = 0;
+    static int at_cnt = 0;;
+    char ch;
+    int i;
+    int ret_val = 999;
+
+    switch (a_option)
+    {
+        case 1:
+            // 새로 시작
+            idx = 0;
+            break;
+        case 2:
+            idx = 100;
+            break;
+        case 0:
+            // idx는 현재값을 유지하고...---> 상태체크용.
+            //break;  <--- 불필요...
+        default:
+            break;
+    }
+
+
+    switch (idx)
+    {
+        //ATV1 ------------------------------------------------ATV1
+        case 0:
+            at_cnt = 0;
+            debugprintf("\r\nIridium-[%d] init start.\r\n", ((iri_port==C_IRIDIUM_1) ? 1:2) );
+            idx = 450;
+            break;
+
+        case 450:
+            resp_idx = 0;
+            debugprintf("AT ---> ");
+            iridium_printf("AT\r");
+            tick_iri0 = 1000/10;    //1000/10;   //1sec
+            idx = 500;
+            break;
+        case 500:
+            //wait 'OK'
+            if (UartGetCh(iri_port,&ch))
+            {
+                // debugprintf("%c", ch);
+                iri_response[resp_idx++] = ch;
+                if ( (ch=='K') || (ch=='0') )
+                {
+                    debugprintf("[OK]\r\n");
+                    idx = 505;
+                }
+            }
+            if (tick_iri0==0)
+            {
+                idx = 505;
+            }
+            break;
+
+        case 505:
+            at_cnt++;
+            if (at_cnt >5)
+            {
+                idx = 550;
+            }
+            else
+            {
+                idx = 450;
+            }
+            break;
+
+        case 550:
+            //PRINT_TIME;
+            debugprintf("ATV0 ---> ");
+
+            resp_idx = 0;
+            //iridium_printf("ATV1\r");
+            iridium_printf("ATV0\r");
+            tick_iri0 = 5000/10;    //10000/10;   //10sec
+            idx = 2;
+            break;
+
+        case 2:
+            //wait 'OK'
+            if (UartGetCh(iri_port,&ch))
+            {
+                iri_response[resp_idx++] = ch;
+                // debugprintf("%c",ch);
+                if ( (ch=='K') || (ch=='0'))
+                {
+                    debugprintf("[OK]\r\n");
+                    idx = 20;
+                }
+            }
+            else if (tick_iri0==0)
+            {
+                debugprintf("[NG]\r\n");
+                idx = 999;
+            }
+            break;
+
+            //ATE0 ------------------------------------------------ATE0
+        case 20:
+            debugstring("ATE0 ---> ");
+
+            //PRINT_TIME;
+            iridium_printf("ATE0\r");
+            tick_iri0 = 5000/10;    //5sec
+            idx = 25;
+            break;
+        case 25:
+            //wait 'OK'
+            if (UartGetCh(iri_port,&ch))
+            {
+                // debugprintf("%c",ch);
+                if (( ch=='K') || (ch=='0') )
+                {
+                    debugprintf("[OK]\r\n");
+                    idx = 30;
+                }
+            }
+            else if (tick_iri0==0)
+            {
+                debugprintf("[NG]\r\n");
+                //debugstring("ATE0 NG\r\n");
+                idx = 999;
+            }
+            break;
+
+            //AT&K0 ------------------------------------------------AT&K0
+        case 30:
+            for (i=0;i<10;i++) UartGetCh(iri_port,&ch);
+            debugstring("AT&K0 ---> ");
+
+            //PRINT_TIME;
+            iridium_printf("AT&K0\r");
+            tick_iri0 = 5000/10;    //5sec
+            idx = 35;
+            break;
+        case 35:
+            //wait 'OK'
+            if (UartGetCh(iri_port,&ch))
+            {
+                // debugprintf("%c",ch);
+                if ( (ch=='K') || (ch=='0') )
+                {
+                    debugprintf("[OK]\r\n");
+                    idx = 40;
+                    //idx = 50;
+                }
+            }
+            else if (tick_iri0==0)
+            {
+                debugprintf("[NG]\r\n");
+                //debugstring("AT&K0 NG\r\n");
+                idx = 999;
+            }
+            break;
+
+            //AT&D0 ------------------------------------------------AT&D0
+        case 40:
+            for (i=0;i<10;i++) UartGetCh(iri_port,&ch);
+            debugstring("AT&D0 ---> ");
+
+            //PRINT_TIME;
+            iridium_printf("AT&D0\r");
+            tick_iri0 = 5000/10;    //5sec
+            idx = 45;
+            break;
+        case 45:
+            //wait 'OK'
+            if (UartGetCh(iri_port,&ch))
+            {
+                // debugprintf("%c",ch);
+                if ((ch=='K') || (ch=='0') )
+                {
+                    debugprintf("[OK]\r\n");
+                    idx = 50;
+                }
+            }
+            else if (tick_iri0==0)
+            {
+                //PRINT_TIME;
+                debugprintf("[NG]\r\n");
+                // debugstring("----AT&D0 NG\r\n");
+                idx = 999;
+            }
+            break;
+
+            // ------------------------------------------------------ATS0=2
+            //  자동응답 Autoanswer.
+        case 50:
+            for (i=0;i<10;i++) UartGetCh(iri_port,&ch);
+            debugstring("ATS0=2 ---> ");
+
+            //PRINT_TIME;
+            iridium_printf("ATS0=2\r");
+            tick_iri0 = 5000/10;    //5sec
+            idx = 55;
+            break;
+        case 55:
+            //wait 'OK'
+            if (UartGetCh(iri_port,&ch))
+            {
+                // debugprintf("%c",ch);
+                if ((ch=='K') || (ch=='0') )
+                {
+                    debugprintf("[OK]\r\n");
+                    idx = 56;
+                    //initial RETRY_CNT:  in case of 'CSQ=0'
+                    retry_cnt = 0;
+                }
+            }
+            else if (tick_iri0==0)
+            {
+                debugprintf("[NG]\r\n");
+                // debugstring("----ATS0=2 NG\r\n");
+                idx = 999;
+            }
+            break;
+
+            // ---------------------------------------------------AT+SBDMTA=1
+            //  Enable or disable ring indications for SBD Ring Alerts.
+            //      1 : Enable ring indication (default).
+        case 56:
+            for (i=0;i<10;i++) UartGetCh(iri_port,&ch);
+            debugstring("AT+SBDMTA=1 ---> ");
+
+            //PRINT_TIME;
+            iridium_printf("AT+SBDMTA=1\r");
+            tick_iri0 = 5000/10;    //5sec
+            idx = 57;
+            break;
+        case 57:
+            //wait 'OK'
+            if (UartGetCh(iri_port,&ch))
+            {
+                // debugprintf("%c",ch);
+                if ((ch=='K') || (ch=='0') )
+                {
+                    debugprintf("[OK]\r\n");
+                    idx = 60;
+                }
+            }
+            else if (tick_iri0==0)
+            {
+                debugprintf("[NG]\r\n");
+                // debugstring("----AT+SBDMTA=1 NG\r\n");
+                idx = 999;
+            }
+            break;
+
+        case 60:
+        case 999:
+        default:
+            ret_val = 1;
+            break;
+    }
+    return(ret_val);
+}
+
+
+//--------------------------------------------------------------
+int
+sbdreg_check(int a_option)
+{
+    static int idx = 0;
+    static int resp_idx = 0;
+    static int at_cnt = 0;;
+
+    char ch;
+    int i;
+    int ret_val = 999;
+
+    switch (a_option)
+    {
+        case 1:
+            // 새로 시작
+            idx = 0;
+            break;
+        case 0:
+            // idx는 현재값을 유지하고...---> 상태체크용.
+        default:
+            break;
+    }
+
+
+    switch (idx)
+    {
+        case 0:
+            at_cnt = 0;
+            debugprintf("\r\nIridium-[%d] is active.\r\n", ((iri_port==C_IRIDIUM_1) ? 1:2) );
+            idx = 450;
+            break;
+
+        case 450:
+            resp_idx = 0;
+            //debugprintf("AT ---> ");
+            iridium_printf("AT\r");
+            tick_iri0 = 1000/10;    //1000/10;   //1sec
+            idx = 500;
+            break;
+        case 500:
+            //wait 'OK'
+            if (UartGetCh(iri_port,&ch))
+            {
+                iri_response[resp_idx++] = ch;
+                //debugprintf("%c",ch);
+                if ( (ch=='K') || (ch=='0') )
+                {
+                    //debugprintf("[OK]\r\n");
+                    idx = 505;
+                }
+            }
+            if (tick_iri0==0)
+            {
+                idx = 505;
+            }
+            break;
+
+        case 505:
+            at_cnt++;
+            if (at_cnt >5)
+            {
+                idx = 550;
+            }
+            else
+            {
+                idx = 450;
+            }
+            break;
+        case 550:
+
+            // AT+SBDREG  ------------------------------------------------AT+SBDREG
+        case 80:
+            for (i=0;i<10;i++) UartGetCh(iri_port,&ch);
+            debugstring("AT+SBDREG? ---> ");
+
+            resp_idx = 0;
+            iridium_printf("AT+SBDREG?\r\n");
+            tick_iri0 = 60000/10;  //60sec
+            idx = 85;
+            break;
+        case 85:
+            //wait 'OK'
+            if (UartGetCh(iri_port,&ch))
+            {
+                if (ch=='+')
+                {
+                    resp_idx=0;
+                }
+
+                // debugprintf("%c",ch);
+                iri_response[resp_idx++] = ch;
+                //if (ch=='K')
+                if ( (ch== 0x0D) || (ch== 0x0A))
+                {
+                    iri_response[resp_idx++] = '\0';
+                    if (iri_response[0]=='+')
+                    {
+                        debugstring("\r\n");
+                        debugstring(iri_response);
+                        {
+                            int i=0;
+                            int j=0;
+                            int k=0;
+                            char ch1;
+                            char parsed_block[5][10];
+                            while (1)
+                            {
+                                ch1 = iri_response[k++];
+                                if ((ch1==0x0D) || (ch1==0x0A) || ch1=='\0')
+                                {
+                                    parsed_block[i][j] = '\0';
+                                    break;
+                                }
+                                else if ( (ch1==',') || (ch1==':') )
+                                {
+                                    parsed_block[i][j] = '\0';
+                                    i++;
+                                    j=0;
+                                }
+                                else
+                                {
+                                    parsed_block[i][j++] = ch1;
+                                }
+                            }
+                            // debugprintf("%s\r\n",parsed_block[0]);//sbdi
+                            // debugprintf("%s\r\n",parsed_block[1]);//mo-status
+                            // debugprintf("%s\r\n",parsed_block[2]);//mo-msn
+                            // debugprintf("%s\r\n",parsed_block[3]);//mt-status
+                            // debugprintf("%s\r\n",parsed_block[4]);//mt-msn
+                            // debugprintf("%s\r\n",parsed_block[5]);//mt-len
+                            // debugprintf("%s\r\n",parsed_block[6]);//mt-queue
+
+                            if (atoi(parsed_block[1]) != 2)
+                            {
+                                resp_idx = 0;
+                                iridium_printf("AT+SBDREG\r\n");
+                                tick_iri0 = 120000/10;  //60sec
+                                idx = 90;
+                            }
+                            else
+                            {
+                                idx = 999;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        resp_idx=0;
+                    }
+                }
+            }
+            else if (tick_iri0==0)
+            {
+                debugstring("\r\n-----AT+SBDREG timeout!!\r\n");
+                idx = 999;
+            }
+            break;
+
+        case 90:
+            if (UartGetCh(iri_port,&ch))
+            {
+                debugprintf("%c", ch);
+            }
+            if (tick_iri0==0)
+            {
+                idx = 999;
+            }
+            break;
+
+        case 999:
+        default:
+            ret_val = 1;
+            break;
+    }
+    return(ret_val);
+}
+
+
+
+int sbdixa_check(int a_option)
+{
+    static int idx = 0;
+    static int resp_idx = 0;
+    //static int retry_cnt = 0;
+    static int at_cnt = 0;;
+
+    char ch;
+    int i;
+    int ret_val = 999;
+
+    switch (a_option)
+    {
+        case 1:
+            // 새로 시작
+            idx = 0;
+            break;
+        case 0:
+            // idx는 현재값을 유지하고...---> 상태체크용.
+        default:
+            break;
+    }
+
+
+    switch (idx)
+    {
+        case 0:
+            at_cnt = 0;
+            debugprintf("\r\nIridium-[%d] is active.\r\n", ((iri_port==C_IRIDIUM_1) ? 1:2) );
+            idx = 450;
+            break;
+
+        case 450:
+            resp_idx = 0;
+            //debugprintf("AT ---> ");
+            iridium_printf("AT\r");
+            tick_iri0 = 1000/10;    //1000/10;   //1sec
+            idx = 500;
+            break;
+        case 500:
+            //wait 'OK'
+            if (UartGetCh(iri_port,&ch))
+            {
+                iri_response[resp_idx++] = ch;
+                //debugprintf("%c",ch);
+                if ( (ch=='K') || (ch=='0') )
+                {
+                    //debugprintf("[OK]\r\n");
+                    idx = 505;
+                }
+            }
+            if (tick_iri0==0)
+            {
+                idx = 505;
+            }
+            break;
+
+        case 505:
+            at_cnt++;
+            if (at_cnt >5)
+            {
+                idx = 550;
+            }
+            else
+            {
+                idx = 450;
+            }
+            break;
+        case 550:
+
+            // AT+SBDI ------------------------------------------------AT+SBDI
+        case 112:
+            for (i=0;i<10;i++) UartGetCh(iri_port,&ch);
+            debugprintf("AT+SBDIXA ---> ");
+
+            resp_idx=0;
+            iridium_printf("AT+SBDIXA\r\n");
+            // iridium_printf("AT+SBDIXA\r\n");
+            tick_iri0 = 60000/10;  //120sec
+            idx = 115;
+            break;
+        case 115:
+            //wait '+SBDI:'
+            if (UartGetCh(iri_port,&ch))
+            {
+                debugprintf("%c",ch);
+
+                if (ch=='+')
+                {
+                    resp_idx = 0;
+                }
+
+                iri_response[resp_idx++] = ch;
+
+                //if ((ch==':'))
+                if ((ch==0x0D) || (ch==0x0A))
+                {
+                    iri_response[resp_idx++] = '\0';
+                    if (iri_response[0]=='+')
+                    {
+                        debugstring("\r\n");
+                        debugstring(iri_response);
+                        {
+                            int i=0;
+                            int j=0;
+                            int k=0;
+                            char ch1;
+                            char parsed_block[8][10];
+                            while (1)
+                            {
+                                ch1 = iri_response[k++];
+                                if ((ch1==0x0D) || (ch1==0x0A) || ch1=='\0')
+                                {
+                                    parsed_block[i][j] = '\0';
+                                    break;
+                                }
+                                else if ( (ch1==',') || (ch1==':') )
+                                {
+                                    parsed_block[i][j] = '\0';
+
+                                    //debugstring("\r\n");
+                                    //debugstring(parsed_block[i]);
+
+                                    i++;
+                                    j=0;
+                                }
+                                else
+                                {
+                                    parsed_block[i][j++] = ch1;
+                                }
+                            }
+                            // debugprintf("%s\r\n",parsed_block[0]);//sbdi
+                            // debugprintf("%s\r\n",parsed_block[1]);//mo-status
+                            // debugprintf("%s\r\n",parsed_block[2]);//mo-msn
+                            // debugprintf("%s\r\n",parsed_block[3]);//mt-status
+                            // debugprintf("%s\r\n",parsed_block[4]);//mt-msn
+                            // debugprintf("%s\r\n",parsed_block[5]);//mt-len
+                            // debugprintf("%s\r\n",parsed_block[6]);//mt-queue
+
+                            mo_status = atoi(parsed_block[1]);
+                            // mt_status = atoi(parsed_block[3]);
+                            set_mt_status(atoi(parsed_block[3]));
+
+                            debugprintf("mo_status= %d\r\n",mo_status);
+                            debugprintf("mt_status= %d\r\n",get_mt_status());
+
+                            if (iri_port == C_IRIDIUM_1)    set_sbdring1(0);
+                            if (iri_port == C_IRIDIUM_2)    set_sbdring2(0);
+                        }
+
+                        idx = 120;
+                        break;
+                    }
+                    else
+                    {
+                        resp_idx=0;
+                    }
+                }
+            }
+            else if (tick_iri0==0)
+            {
+                debugstring("\r\nAT+SBDI timeout!!\r\n");
+                idx = 999;
+            }
+            break;
+        case 120:
+        case 125:
+        case 90:
+        case 999:
+        default:
+            ret_val = 1;
+            break;
+    }
+    return(ret_val);
+}
+
+
+void ctrl_sensor_set_env(char a_id, char a_code)
+{
+    if (a_code == '0')  return;
+
+    switch(a_id)
+    {
+        case '0': env.s0 = a_code;  break;
+        case '1': env.s1 = a_code;  break;
+        case '3': env.s3 = a_code;  break;
+        case '5': env.s5 = a_code;  break;
+        case '7': env.s7 = a_code;  break;
+        case '8': env.s8 = a_code;  break;
+        case '9': env.s9 = a_code;  break;
+        case 'a':
+        case 'A': env.sa = a_code;  break;
+        case 'b':
+        case 'B': env.sb = a_code;  break;
+        case 'c':
+        case 'C': env.sc = a_code;  break;
+        case 'e':
+        case 'E': env.se = a_code;  break;
+        case 'f':
+        case 'F': env.sf = a_code;  break;
+    }
+    env_save();
+}
+
+void ctrl_sensor(char a_id, char a_code)
+{
+    char cmd = '1';
+    //'0' : Reset, '1' : On, '2' : Off
+
+    switch (a_code)
+    {
+        case '0':   cmd = '4';  break;  // reset
+        case '1':   cmd = '1';  break;  // on
+        case '2':   cmd = '0';  break;  // off
+    }
+
+    debugstring("+++ control : ");
+    switch(a_id)
+    {
+        case '0': debugstring("AIO");    break;
+        case '1': debugstring("MOSE");   break;
+        case '3': debugstring("CT3919"); break;
+        case '5': debugstring("DCS");    break;
+        case '7': debugstring("GPS");    break;
+        case '8': debugstring("ATM1");   break;
+        case '9': debugstring("ATM2");   break;
+        case 'b':
+        case 'B': debugstring("HMP155"); break;
+        case 'c':
+        case 'C': debugstring("PTB210"); break;
+        case 'f':
+        case 'F': debugstring("SHOCK"); break;
+        case 'r':
+        case 'R': debugstring("SYSTEM"); break;
+    }
+    if      (a_code == '0')      debugstring(" RESET");
+    else if (a_code == '1')      debugstring(" ON");
+    else if (a_code == '2')      debugstring(" OFF");
+    debugstring("\r\n");
+
+    switch(a_id)
+    {
+        case '0': cmdSensorControl(cmd, SYS_SENSOR_AIO);    break;
+        case '1': cmdSensorControl(cmd, SYS_SENSOR_MOSE);   break;
+        case '3': cmdSensorControl(cmd, SYS_SENSOR_CT3919); break;
+        case '5': cmdSensorControl(cmd, SYS_SENSOR_DCS);    break;
+        case '7': cmdSensorControl(cmd, SYS_SENSOR_GPS);    break;
+        case '8': cmdSensorControl(cmd, SYS_SENSOR_ATM1);   break;
+        case '9': cmdSensorControl(cmd, SYS_SENSOR_ATM2);   break;
+        case 'b':
+        case 'B': cmdSensorControl(cmd, SYS_SENSOR_HMP155); break;
+        case 'c':
+        case 'C': cmdSensorControl(cmd, SYS_SENSOR_PTB210); break;
+        case 'f':
+        case 'F': cmdSensorControl(cmd, SYS_SENSOR_SHOCK); break;
+        case 'r':
+        case 'R': cmdSensorControl('8', '0');               break;
+    }
+}
+
+
+
+int sbdrb_check(int a_option)
+{
+    static int idx = 0;
+    static int resp_idx = 0;
+    //static int retry_cnt = 0;
+    static int at_cnt = 0;;
+
+    char ch;
+    int i;
+    int ret_val = 999;
+
+    switch (a_option)
+    {
+        case 1:
+            // 새로 시작
+            idx = 0;
+            break;
+        case 0:
+            // idx는 현재값을 유지하고...---> 상태체크용.
+        default:
+            break;
+    }
+
+
+    switch (idx)
+    {
+        case 0:
+            at_cnt = 0;
+            debugprintf("\r\nIridium-[%d] is active.\r\n", ((iri_port==C_IRIDIUM_1) ? 1:2) );
+            idx = 450;
+            break;
+
+        case 450:
+            resp_idx = 0;
+            //debugprintf("AT ---> ");
+            iridium_printf("AT\r");
+            tick_iri0 = 1000/10;    //1000/10;   //1sec
+            idx = 500;
+            break;
+        case 500:
+            //wait 'OK'
+            if (UartGetCh(iri_port,&ch))
+            {
+                iri_response[resp_idx++] = ch;
+                //debugprintf("%c",ch);
+                if ( (ch=='K') || (ch=='0') )
+                {
+                    //debugprintf("[OK]\r\n");
+                    idx = 505;
+                }
+            }
+            if (tick_iri0==0)
+            {
+                idx = 505;
+            }
+            break;
+
+        case 505:
+            at_cnt++;
+            if (at_cnt >5)
+            {
+                idx = 550;
+            }
+            else
+            {
+                idx = 450;
+            }
+            break;
+        case 550:
+
+            // AT+SBDRB ------------------------------------------------AT+SBDRB
+        case 112:
+
+            set_mt_status(0);       // flag clear   //(+)130904
+
+
+            for (i=0;i<10;i++) UartGetCh(iri_port,&ch);
+            debugprintf("AT+SBDRB ---> ");
+
+            resp_idx=0;
+            iridium_printf("AT+SBDRB\r\n");
+            tick_iri0 = 60000/10;  //120sec
+            idx = 115;
+            break;
+        case 115:
+            //wait '+SBDI:'
+            if (UartGetCh(iri_port,&ch))
+            {
+                // debugprintf("%c",ch);
+                debugprintf("%02X ",ch);
+
+                iri_response[resp_idx++] = ch;
+
+                if ((ch==0x0D) || (ch==0x0A))
+                {
+                    iri_response[resp_idx++] = '\0';
+                    debugstring("\r\n");
+                    debugstring(iri_response);
+
+                    // parsing
+                    {
+                        int xxx = 0;
+                        while(1)
+                        {
+                            if (iri_response[xxx]=='\0')
+                            {
+                                debugprintf("\r\n");
+                               break;
+                            }
+                            debugprintf("%x ", iri_response[xxx++]);
+
+                        }
+
+                        switch (iri_response[0+2])
+                        {
+                            //case 'K':
+                            //case 'k':
+                            case BUOY_SPEC:
+                                // set_mt_status(0);       // flag clear   //(-)130904
+
+
+                                // 유효시간 체크
+                                {
+//                                    int yr,mon,day,hr,min;
+//                                    u32 cur_t, nsg_t;
+
+
+                                }
+
+                                // 부이ID 확인
+                                {
+                                    char term[4];
+                                    term[0] = iri_response[4+2];
+                                    term[1] = iri_response[5+2];
+                                    term[2] = iri_response[6+2];
+                                    term[3] = '\0';
+
+                                    if ( strncmp( term, BUOY_ID, 3))
+                                    {
+                                        // 다르면...
+                                        break;
+                                    }
+
+                                }
+
+
+                                switch (iri_response[1+2])
+                                {
+                                    case 'A':   // command
+                                    case 'a':   // command
+                                        debugprintf("message type A\r\n");
+
+                                        // 0         1         2
+                                        // 0123456789012345678901
+                                        // KAA0S9112062621460000
+                                        {
+                                            char s_id, c_code;
+                                            s_id=   iri_response[19+2];
+                                            c_code= iri_response[20+2];
+
+                                            switch(c_code)
+                                            {
+                                                case '0':
+                                                case '1':
+                                                case '2':
+                                                    ctrl_sensor(s_id, c_code);
+                                                    ctrl_sensor_set_env(s_id, c_code);
+                                                    make_msg_ky('A',1);
+                                                    break;
+                                                default:
+                                                    make_msg_ky('A',0);
+                                                    break;
+                                            }
+                                        }
+                                        break;
+
+                                    case 'E':   // 전송주기
+                                    case 'e':   // 전송주기
+                                        debugprintf("message type E\r\n");
+                                        // 0         1         2
+                                        // 0123456789012345678901
+                                        // KEE0S91120607075000060
+                                        {
+                                            char term[4];
+                                            int i_term =30;
+                                            term[0] = iri_response[19+2];
+                                            term[1] = iri_response[20+2];
+                                            term[2] = iri_response[21+2];
+                                            term[3] = '\0';
+                                            i_term = atoi(term);
+
+                                            switch(i_term)
+                                            {
+                                                case 10:
+                                                case 20:
+                                                case 30:
+                                                case 60:
+                                                case 120:
+                                                    env_set_interval(i_term);
+                                                    make_msg_ky('E',1);
+                                                    break;
+                                                default:
+                                                    make_msg_ky('E',0);
+                                                    break;
+                                            }
+                                        }
+                                        break;
+
+                                    case 'F':   // 기준위치변경
+                                    case 'f':   // 기준위치변경
+                                        debugprintf("message type F\r\n");
+                                        // 0         1         2         3
+                                        // 01234567890123456789012345678901234
+                                        // KFF0S91120607075000370000012600000
+                                        {
+                                            char c_lat[8];
+                                            char c_lon[9];
+                                            double f_lat,f_lon;
+                                            c_lat[0]= iri_response[19+2];
+                                            c_lat[1]= iri_response[20+2];
+                                            c_lat[2]= iri_response[21+2];
+                                            c_lat[3]= iri_response[22+2];
+                                            c_lat[4]= iri_response[23+2];
+                                            c_lat[5]= iri_response[24+2];
+                                            c_lat[6]= iri_response[25+2];
+                                            c_lat[7]= '\0';
+
+                                            c_lon[0]= iri_response[26+2];
+                                            c_lon[1]= iri_response[27+2];
+                                            c_lon[2]= iri_response[28+2];
+                                            c_lon[3]= iri_response[29+2];
+                                            c_lon[4]= iri_response[30+2];
+                                            c_lon[5]= iri_response[31+2];
+                                            c_lon[6]= iri_response[32+2];
+                                            c_lon[7]= iri_response[33+2];
+                                            c_lon[8]= '\0';
+                                            f_lat= atof(c_lat)/100000.0f;
+                                            f_lon= atof(c_lon)/100000.0f;
+
+                                            {
+                                                int valid = 0;
+                                                if ( (f_lat >= 0.0f)&&(f_lat <= 89.99999f) )
+                                                {
+                                                    if ( (f_lon >= 0.0f)&&(f_lon <= 179.00000f) )
+                                                    {
+                                                        valid = 1;
+                                                    }
+                                                }
+                                                if (valid == 1)
+                                                {
+                                                    env_set_pos(f_lat, f_lon);
+                                                    make_msg_ky('F',1);
+                                                }
+                                                else
+                                                {
+                                                    make_msg_ky('F',0);
+                                                }
+                                            }
+                                        }
+                                        break;
+
+                                    case 'G':   // 위험반경변경
+                                    case 'g':   // 위험반경변경
+                                        debugprintf("message type G\r\n");
+                                        // 0         1         2
+                                        // 01234567890123456789012
+                                        // KGG0S91120607075000001
+                                        {
+                                            char term[4];
+                                            int i_term =30;
+                                            term[0] = iri_response[19+2];
+                                            term[1] = iri_response[20+2];
+                                            term[2] = iri_response[21+2];
+                                            term[3] = '\0';
+                                            i_term = atoi(term);
+
+                                            if ( (i_term >=1) && (i_term <=100))
+                                            {
+                                                env_set_distance(i_term);
+                                                make_msg_ky('G',1);
+                                            }
+                                            else
+                                            {
+                                                make_msg_ky('G',0);
+                                            }
+                                        }
+                                        break;
+
+                                    case 'I':   // 충격랑변경
+                                    case 'i':   // 충격랑변경
+                                        debugprintf("message type I\r\n");
+                                        // 0         1         2
+                                        // 01234567890123456789012
+                                        // KGG0S91120607075000001
+                                        {
+                                            char term[4];
+                                            int i_term =30;
+                                            term[0] = iri_response[19+2];
+                                            term[1] = iri_response[20+2];
+                                            term[2] = iri_response[21+2];
+                                            term[3] = '\0';
+                                            i_term = atoi(term);
+
+                                            if ( (i_term >=0) && (i_term <=999))
+                                            {
+                                                env_set_shock(i_term);
+                                                make_msg_ky('I', 1);
+                                            }
+                                            else
+                                            {
+                                                make_msg_ky('I', 0);
+                                            }
+                                        }
+                                        break;
+
+                                    case 'J':   // TRBM RESET
+                                    case 'j':   // TRBM RESET
+                                        debugprintf("message type J\r\n");
+                                        //DEBUGPRINTF("message type J\r\n");
+                                        // 0         1         2
+                                        // 01234567890123456789012
+                                        // KGG0S91120607075000001
+                                        {
+                                            char term[4];
+                                            int i_term =30;
+                                            term[0] = iri_response[19+2];
+                                            term[1] = iri_response[20+2];
+                                            term[2] = iri_response[21+2];
+                                            term[3] = '\0';
+                                            i_term = atoi(term);
+
+                                            switch (i_term)
+                                            {
+                                                case 1:
+                                                    sb_printstring(SB_S_ATM1, "%+RTRBM\r");
+                                                    // sb_printstring(SB_S_ATM2, "%+RTRBM\r");
+                                                    make_msg_ky('J',1);
+                                                    break;
+#if (BUOY_SPEC == 'D')
+                                                case 10:
+                                                    // 지진모드해제
+                                                    env_set_mode(0);
+                                                    make_msg_ky('J',1);
+                                                    break;
+                                                case 11:
+                                                    // 지진모드설정
+                                                    env_set_mode(1);
+                                                    make_msg_ky('J',1);
+                                                    break;
+#endif
+                                                default:
+                                                    make_msg_ky('J',0);
+                                                    break;
+                                            }
+                                            // if (i_term == 1)
+                                            // {
+                                            //     sb_printstring(SB_S_ATM2, "%+RTRBM\r");
+                                            //     make_msg_ky('J',1);
+                                            // }
+                                            // else
+                                            // {
+                                            //     make_msg_ky('J',0);
+                                            // }
+                                        }
+                                        break;
+                                    default:
+                                        break;
+
+                                }   //switch (iri_response[1+2])
+                                break;
+                            default:
+                                break;
+
+                        }   //switch (iri_response[0+2])
+
+                    }
+                    idx = 120;
+                }   //if ((ch==0x0D) || (ch==0x0A))
+            }   //if (UartGetCh(iri_port,&ch))
+
+            else if (tick_iri0==0)
+            {
+                debugstring("\r\nAT+SBDI timeout!!\r\n");
+                idx = 999;
+            }
+            break;
+        case 120:
+        case 125:
+        case 90:
+        case 999:
+        default:
+            ret_val = 1;
+            break;
+    }   //switch (idx)
+    return(ret_val);
+}
+
+
+

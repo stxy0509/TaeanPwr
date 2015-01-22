@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<EISCStudioProject version="3.00">
+    <Compile BUILDTYPE="library" CC="ae32000-elf-gcc" AS="ae32000-elf-as" LD="ae32000-elf-ld" AR="ae32000-elf-ar" OBJDUMP="ae32000-elf-objdump" OBJCOPY="ae32000-elf-objcopy" CFLAGS="-Wall" LDFLAGS="-Wall -nostartfiles -lgcc -lc -lm" ASFLAGS="" ARFLAGS="-rcv" DISFLAGS="-dShxl" OUTPUTDIR="../lib/" OBJDIR="obj/" DebugInfo="1" Wall="1" OPTLEVEL="2" OUTPUTFILE="libadStar.a" />
+    <Directory>
+        <INCDIR Name="../include" />
+        <INCDIR Name="../include/egl" />
+    </Directory>
+    <Files>
+        <Source Name="cache_util.S" />
+        <Source Name="crtc.c" />
+        <Source Name="dma.c" />
+        <Source Name="error.c" />
+        <Source Name="interrupt.c" />
+        <Source Name="mp3play.c" />
+        <Source Name="nandctrl.c" />
+        <Source Name="pmu.c" />
+        <Source Name="sdcard.c" />
+        <Source Name="serialflash.c" />
+        <Source Name="soundmixer.c" />
+        <Source Name="spi.c" />
+        <Source Name="timer.c" />
+        <Source Name="twi.c" />
+        <Source Name="uart.c" />
+        <Source Name="usb.c" />
+        <Source Name="util.c" />
+        <Source Name="egl/egl_base.c" />
+        <Source Name="egl/egl_private.c" />
+        <Source Name="egl/egl_window.c" />
+        <Source Name="egl/theme/default_theme.c" />
+        <Source Name="egl/primitives/colors.c" />
+        <Source Name="egl/primitives/draw_arc.c" />
+        <Source Name="egl/primitives/draw_line.c" />
+        <Source Name="egl/primitives/draw_poly.c" />
+        <Source Name="egl/primitives/draw_rect.c" />
+        <Source Name="egl/primitives/draw_thickline.c" />
+        <Source Name="egl/image/loadbmp.c" />
+        <Source Name="egl/image/loadjpg.c" />
+        <Source Name="egl/image/loadpng.c" />
+        <Source Name="egl/image/loadsurf.c" />
+        <Source Name="egl/image/loadtga.c" />
+        <Source Name="egl/font/textout.c" />
+        <Source Name="fatfs/diskio.c" />
+        <Source Name="fatfs/ff.c" />
+        <Source Name="egl/object/egl_button.c" />
+        <Source Name="egl/object/egl_checkbutton.c" />
+        <Source Name="egl/object/egl_custom_object.c" />
+        <Source Name="egl/object/egl_label.c" />
+        <Source Name="egl/object/egl_listbox.c" />
+        <Source Name="egl/object/egl_messagebox.c" />
+        <Source Name="egl/object/egl_picture.c" />
+        <Source Name="egl/object/egl_progressbar.c" />
+        <Source Name="egl/object/egl_scrollbar.c" />
+        <Source Name="egl/object/egl_slider.c" />
+        <Source Name="egl/object/egl_toggle_image.c" />
+        <Source Name="egl/object/egl_bar_gauge.c" />
+        <Source Name="egl/object/egl_circle_gauge.c" />
+        <Source Name="egl/object/egl_image_button.c" />
+        <Source Name="egl/primitives/draw_line_aa.c" />
+        <Source Name="egl/primitives/draw_polyfill.c" />
+        <Source Name="egl/font/bitmapfont.c" />
+        <Source Name="egl/font/egl_font.c" />
+        <Source Name="fatfs/readfile.c" />
+        <Source Name="egl/object/egl_animation.c" />
+        <Source Name="egl/font/unicode_codec.c" />
+        <Source Name="egl/util/fixed_sincos.c" />
+        <Source Name="egl/primitives/draw_legacy.c" />
+        <Source Name="egl/primitives/draw_roundrect.c" />
+        <Source Name="egl/surface/surface.c" />
+        <Source Name="egl/surface/surface_createfrom.c" />
+        <Source Name="egl/surface/drawsurfacescale.c" />
+        <Source Name="egl/font/bitfont.c" />
+        <Source Name="egl/font/textout_inbox.c" />
+        <Header Name="../include/adstar.h" />
+        <Header Name="../include/lib_config.h" />
+        <Header Name="../include/stk_board.h" />
+        <Header Name="../include/typedef.h" />
+        <Header Name="../include/egl/egl.h" />
+        <Header Name="../include/egl/egl_base.h" />
+        <Header Name="../include/egl/egl_config.h" />
+        <Header Name="../include/egl/egl_port.h" />
+        <Header Name="../include/egl/egl_private.h" />
+        <Header Name="../include/egl/egl_theme.h" />
+        <Header Name="../include/egl/egl_typedef.h" />
+        <Header Name="../include/egl/egl_window.h" />
+        <Header Name="../include/egl/surface.h" />
+        <Header Name="../include/adstar/uart.h" />
+        <Header Name="../include/egl/font/bitfont.h" />
+        <Header Name="../include/egl/font/bitmapfont.h" />
+        <Header Name="../include/egl/font/egl_font.h" />
+        <Header Name="../include/egl/font/textout.h" />
+        <Header Name="../include/egl/font/unicode_codec.h" />
+        <Header Name="../include/egl/primitives/draw_legacy.h" />
+    </Files>
+    <Event cmd="" desc="" enable="true" />
+    <Debug>
+        <Argument Name="" />
+        <UseGlobalOption Name="true" />
+    </Debug>
+</EISCStudioProject>

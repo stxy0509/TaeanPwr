@@ -1,0 +1,13 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "SDK2.0"
+		},
+		{
+			"follow_symlinks": true,
+			"path": "source"
+		}
+	]
+}
