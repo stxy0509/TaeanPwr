@@ -159,7 +159,7 @@ void timer0isr()
         decFwUpadateWaitTime();
 
 
-        // watchdog timer
+        /* watchdog timer */
         fgWATCHDOG_ResetTrigger = 0;
 
         //if (++TM_watchSMS     > WT_SMS)     fgWATCHDOG_ResetTrigger += 0x01;
@@ -173,13 +173,12 @@ void timer0isr()
 
         if (fgWATCHDOG_ResetTrigger > 0)
         {
-            // reset
+            /* reset */
 
-            debugprintf("\r\n\r\n !!!!************ WATCHDOG RESET ( %04X ) ****************!!!!\r\n", fgWATCHDOG_ResetTrigger);
-            //*R_WDCNT=WATCHDOG_V;
-            //*R_WDTCTRL = 1;
-            //while(1){;};
-
+            // debugprintf("\r\n\r\n !!!!************ WATCHDOG RESET ( %04X ) ****************!!!!\r\n", fgWATCHDOG_ResetTrigger);
+            // *R_WDCNT=WATCHDOG_V;
+            // *R_WDTCTRL = 1;
+            // while(1){;};
         }
 
 	}

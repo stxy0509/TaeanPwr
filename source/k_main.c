@@ -58,16 +58,19 @@ int main()
 
 	boardinit();
 
-#ifdef DEBUG_CH_0
-#else
-    set_debug_channel(4);
-#endif
+	sysWDT_init();
+
+
+// #ifdef DEBUG_CH_0
+// #else
+//     set_debug_channel(4);
+// #endif
 
 	debugstring("\r\n================================================\r\n");
-	debugprintf(    "      KOGA2014 \r\n");
+	debugprintf(    "      Echo Buoy \r\n");
 	debugstring(    "------------------------------------------------\r\n");
-	debugprintf(    "      Buoy : %s \r\n", BUOY_ID);
-	debugprintf(    "      Ver  : %s \r\n", KOGA_VER_STRING);
+	// debugprintf(    "      Buoy : %s \r\n", BUOY_ID);
+	// debugprintf(    "      Ver  : %s \r\n", KOGA_VER_STRING);
 	debugstring(    "================================================\r\n\r\n");
 
 
@@ -80,20 +83,22 @@ int main()
     }
 
     // init iridium
-    set_iri1_init(1);
-    set_iri2_init(1);
+    // set_iri1_init(1);
+    // set_iri2_init(1);
 
-#if (BUOY_SPEC == 'D')
-    memset(s_msg_e05,'9',MSG_LENGTH);
-    memset(s_msg_e30,'9',MSG_LENGTH);
-	dp_stk_init();
-#endif
+// #if (BUOY_SPEC == 'D')
+//     memset(s_msg_e05,'9',MSG_LENGTH);
+//     memset(s_msg_e30,'9',MSG_LENGTH);
+// 	dp_stk_init();
+// #endif
 
-	q_init_HF_mbuf();
-	q_init_LF_mbuf();
+	// q_init_HF_mbuf();
+	// q_init_LF_mbuf();
 
 	while (1)
 	{
+		sysWDT_CntClear();
+
 		switch (main_step)
 		{
 			case 0:
@@ -110,33 +115,48 @@ int main()
 				{
 					m_time_orinted_evt_proc();
 					m_env_orinted_evt_proc();
-					m_iridium_proc();
 			    	m_system_robust_proc();		// heartbeat, watchdog
-				    task_iridium();
-				    task_iri_rcv();
+
+
+					// m_iridium_proc();
+				    // task_iridium();
+				    // task_iri_rcv();
 				}
 				break;
-
 		}
 
-
+#if 1 	/* WM-211 */
         {
-        	// char ch;
-	        // if (uart_getch(4, &ch))
-	        // {
-	        // 	uart_putch(0, ch);
-	        // }
-	        // if (uart_getch(0, &ch))
-	        // {
-	        // 	uart_putch(4, ch);
-	        // }
+        	char ch;
+	        if (uart_getch(3, &ch))
+	        {
+	        	uart_putch(0, ch);
+	        }
+	        if (uart_getch(0, &ch))
+	        {
+	        	uart_putch(3, ch);
+	        }
         }
+#endif
+
+
+#if 1    /* SS510 */
+        {
+        	char ch;
+	        if (uart_getch(2, &ch))
+	        {
+	        	uart_putch(0, ch);
+	        }
+	        if (uart_getch(0, &ch))
+	        {
+	        	uart_putch(2, ch);
+	        }
+        }
+#endif
 
         task_cmdshell();
 	    task_sysMCU();
-	    task_wifi();
-
-	    // Task_cat();
+	    // task_wifi();
 	}
 }
 
@@ -150,20 +170,20 @@ void sensor_q_init(void)
 {
 	debugstring("\r\ninit ");
 
-    aio_q_init();		debugstring("AIO ");
-    mose_q_init();		debugstring("MOSE ");
-    ct_q_init();		debugstring("CT ");
-    dcs_q_init();		debugstring("DCS ");
+ //    aio_q_init();		debugstring("AIO ");
+ //    mose_q_init();		debugstring("MOSE ");
+ //    ct_q_init();		debugstring("CT ");
+ //    dcs_q_init();		debugstring("DCS ");
 
     gps_q_init();		debugstring("GPS ");
-    atm1_q_init();		debugstring("ATM1 ");
-    atm2_q_init();		debugstring("ATM2 ");
-    hmp155_q_init();	debugstring("HMP ");
-    ptb_q_init();		debugstring("PTB ");
-    // SHOCK, internal TEMP/HUMI
-	shock_q_init();		debugstring("SHOCK ");
-	iri1_rcv_q_init();	debugstring("IRI1 ");
-	iri2_rcv_q_init();	debugstring("IRI2 ");
+ //    atm1_q_init();		debugstring("ATM1 ");
+ //    atm2_q_init();		debugstring("ATM2 ");
+ //    hmp155_q_init();	debugstring("HMP ");
+ //    ptb_q_init();		debugstring("PTB ");
+ //    // SHOCK, internal TEMP/HUMI
+	// shock_q_init();		debugstring("SHOCK ");
+	// iri1_rcv_q_init();	debugstring("IRI1 ");
+	// iri2_rcv_q_init();	debugstring("IRI2 ");
 	debugstring(" queue..\r\n");
 }
 
@@ -192,8 +212,8 @@ void m_get_time_pos_proc(void)
 			//debugprintf("\r\npower_on : MOSE, GPS\r\n");
 			debugprintf("  ... checking TIME, POSITION\r\n");
 
-			cmdSensorControl(SYS_CMD_SENSOR_ON, SYS_SENSOR_CHK1);
-			cmdSensorControl(SYS_CMD_SENSOR_ON, SYS_SENSOR_CHK2);
+			// cmdSensorControl(SYS_CMD_SENSOR_ON, SYS_SENSOR_CHK1);
+			// cmdSensorControl(SYS_CMD_SENSOR_ON, SYS_SENSOR_CHK2);
 			//cmdSensorControl_All_ON();
 
 			tick_s2 = (3*1000)/10;	//3sec
@@ -201,13 +221,13 @@ void m_get_time_pos_proc(void)
 			break;
 
 		case 60:
-			if (tick_s2==0)
+			// if (tick_s2==0)
 			{
 				// output to CHK1,CHK2 port
-			    sb_printstring(SB_S_CHK1, "1234567890");
-			    sb_printstring(SB_S_CHK2, "1234567890");
+			    // sb_printstring(SB_S_CHK1, "1234567890");
+			    // sb_printstring(SB_S_CHK2, "1234567890");
 
-				tick_s2 = (3*1000)/10;	//3sec
+				// tick_s2 = (3*1000)/10;	//3sec
 				idx = 70;
 			}
 			break;
@@ -219,95 +239,99 @@ void m_get_time_pos_proc(void)
 			break;
 
 		case 110:
-			if ( (sb1_ok_cnt > 5) && (sb2_ok_cnt > 5) )
+			// if ( (sb1_ok_cnt > 5) && (sb2_ok_cnt > 5) )
 			{
-				debugprintf("%d %d\r\n", sb1_ok_cnt, sb2_ok_cnt);
+				// debugprintf("%d %d\r\n", sb1_ok_cnt, sb2_ok_cnt);
 
 				// tick_s2 = (120*1000)/10;	//20sec
 // PRINTLINE;
-				idx = 200;
+				// idx = 200;
 			}
-			else
-			{
-				if (tick_s2==0)
-				{
-				    SB_init();
-// PRINTLINE;
-					tick_s2 = (3*1000)/10;	//3sec
-					// idx = 100;
-					idx = 60;
-				}
-			}
-			break;
+// 			else
+// 			{
+// 				if (tick_s2==0)
+// 				{
+// 				    SB_init();
+// // PRINTLINE;
+// 					tick_s2 = (3*1000)/10;	//3sec
+// 					// idx = 100;
+// 					idx = 60;
+// 				}
+// 			}
+// 			break;
 
 
 		case 200:
-			sb1_high_cnt = 0;
-			sb2_high_cnt = 0;
+			// sb1_high_cnt = 0;
+			// sb2_high_cnt = 0;
 
 			// cmdSensorControl_All_ON();
 			cmdSensorControl_byEnv();
 
-#ifdef DEBUG_SPEED_BOOT
-			tick_s2 = (3*1000)/10;	//3sec
-#else
-			tick_s2 = (120*1000)/10;	//120sec
-#endif
+            cmdSensorControl(SYS_CMD_SENSOR_ON, SYS_SENSOR_IRI1);
+            cmdSensorControl(SYS_CMD_SENSOR_ON, SYS_SENSOR_IRI2);
+
+
+// #ifdef DEBUG_SPEED_BOOT
+// 			tick_s2 = (3*1000)/10;	//3sec
+// #else
+// 			tick_s2 = (120*1000)/10;	//120sec
+// #endif
 
 			idx = 210;
 			break;
 
 		case 210:
-			if (is_gps_valid())
-			{
-				debugstring("GPS: time & position - valid\r\n");
-				fg_start_sensing = 1;
-// PRINTLINE;
-				idx = 300;
-			}
-			else if (get_mose_pos_valid())
-			{
-				debugstring("MOSE: time & position - valid\r\n");
-				fg_start_sensing = 1;
-// PRINTLINE;
-				idx = 300;
-			}
-			else if (tick_s2 == 0)
-			{
-				idx = 300;
-			}
+// 			if (is_gps_valid())
+// 			{
+// 				debugstring("GPS: time & position - valid\r\n");
+// 				fg_start_sensing = 1;
+// // PRINTLINE;
+// 				idx = 300;
+// 			}
+// 			else if (get_mose_pos_valid())
+// 			{
+// 				debugstring("MOSE: time & position - valid\r\n");
+// 				fg_start_sensing = 1;
+// // PRINTLINE;
+// 				idx = 300;
+// 			}
+// 			else if (tick_s2 == 0)
+// 			{
+// 				idx = 300;
+// 			}
 
 
-#if 0
-			// **chk** time limit 130719-1151
-			if (tick_s2==0)
-			{
-			    SB_init();
-// PRINTLINE;
-				idx = 100;
-			}
-#endif
-			break;
+// #if 0
+// 			// **chk** time limit 130719-1151
+// 			if (tick_s2==0)
+// 			{
+// 			    SB_init();
+// // PRINTLINE;
+// 				idx = 100;
+// 			}
+// #endif
+// 			break;
 
 		case 300:
 		    printTimeTag();
 
 			fg_start_sensing = 1;	//(+)130828
-			fgReqTRBM_timeSync = 1;	//(+)130912
+			// fgReqTRBM_timeSync = 1;	//(+)130912
 			{
-	            char tmp_buf[50];
+	            // char tmp_buf[50];
 
-		        debugstring("TRBM timesync with RTC\r\n");
+		        // debugstring("TRBM timesync with RTC\r\n");
 	            //sb_printstring(SB_S_ATM1, "+++");
 	            // sb_printstring(SB_S_ATM2, "+++");
 	            // debugstring("+++\r\n");
 	            // delayms(500);
 	            // delayms(500);
 
-	            sprintf(tmp_buf,"%%+T1%02d%02d%02d%02d%02d%02d\r\n",rtc_time.year%100,rtc_time.mon,rtc_time.day,rtc_time.hour,rtc_time.min,rtc_time.sec);
-	            sb_printstring(SB_S_ATM1, tmp_buf);
+	            // sprintf(tmp_buf,"%%+T1%02d%02d%02d%02d%02d%02d\r\n",rtc_time.year%100,rtc_time.mon,rtc_time.day,rtc_time.hour,rtc_time.min,rtc_time.sec);
+	            // sb_printstring(SB_S_ATM1, tmp_buf);
 	            // sb_printstring(SB_S_ATM2, tmp_buf);
-	            debugstring(tmp_buf);
+	            // debugstring(tmp_buf);
 
 	            //fgReqTRBM_timeSync = 0;
 			}
@@ -352,7 +376,7 @@ void m_get_time_pos_proc(void)
 
 		case 800:
 			//make_msg_k0();		// start msg.
-			make_msg_kx('0');
+			// make_msg_kx('0');
 			idx = 850;
 			break;
 
@@ -535,11 +559,11 @@ void m_boot_proc(void)
 			set_timer(0,10);							// channel=0, interval=10ms, enable interrupt
 
 			//--< EINT (P5.4, P5.5) >
-			enable_interrupt(INTNUM_EIRQ0, FALSE);
-			enable_interrupt(INTNUM_EIRQ1, FALSE);
+			// enable_interrupt(INTNUM_EIRQ0, FALSE);
+			// enable_interrupt(INTNUM_EIRQ1, FALSE);
 
-			set_interrupt(INTNUM_EIRQ0, EIRQ0_ISR);
-			set_interrupt(INTNUM_EIRQ1, EIRQ1_ISR);
+			// set_interrupt(INTNUM_EIRQ0, EIRQ0_ISR);
+			// set_interrupt(INTNUM_EIRQ1, EIRQ1_ISR);
 
 
 			//-----< init Periperal >----------------------------------------
@@ -561,7 +585,7 @@ void m_boot_proc(void)
             sensor_q_init();
             init_q();			// queue for SEND data
 
-	        init_aio_data();
+	        // init_aio_data();
 
 
 // PRINTLINE;
@@ -577,26 +601,26 @@ void m_boot_proc(void)
 
 	    case 300:
 		    // SB16C1058 init
-		    SB_init();
-		    tick_s1 = (3000/10);
-		    idx = 340;
-		    break;
+		    // SB_init();
+		    // tick_s1 = (3000/10);
+		    // idx = 340;
+		    // break;
 
 		case 340:
-			if (tick_s1 == 0)
+			// if (tick_s1 == 0)
 			{
-			    SB_init();
-			    tick_s1 = (3000/10);
-			    idx = 350;
+			    // SB_init();
+			    // tick_s1 = (3000/10);
+			    // idx = 350;
 			}
-		    break;
+		    // break;
 
 		case 350:
-			if (tick_s1 == 0)
+			// if (tick_s1 == 0)
 			{
-			    idx = 400;
+			    // idx = 400;
 			}
-		    break;
+		    // break;
 
 	    case 400:
 		    // TestShell
@@ -648,20 +672,20 @@ void m_boot_proc(void)
 
 void m_sensor_proc(void)
 {
-	task_aio();
-	task_mose();
-	task_calc();
+	// task_aio();
+	// task_mose();
+	// task_calc();
 
-	task_ct3919();
-	task_dcs();
+	// task_ct3919();
+	// task_dcs();
 
 	task_gps();
-	task_atm1();
-	task_atm2();
-	task_hmp155();
-	task_ptb210();
-	Task_sh11();
-	task_shock();
+	// task_atm1();
+	// task_atm2();
+	// task_hmp155();
+	// task_ptb210();
+	// Task_sh11();
+	// task_shock();
 
 }
 
@@ -675,33 +699,33 @@ void m_system_robust_proc(void)
 
 
 
-    {
-    	if (fg_sb_high_10ms ==1)
-    	{
-    		fg_sb_high_10ms = 0;
+    // {
+    // 	if (fg_sb_high_10ms ==1)
+    // 	{
+    // 		fg_sb_high_10ms = 0;
 
-    		if((1<<4) == (*R_GP5ILEV & (1<<4)) )	// EIRQ0
-    		{
-    			if (sb2_high_cnt > (1000/10) )
-    			{
-        			//debugstring("\r\n.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+ SB2 HIGH .+.+.+.+.+.+\r\n");
-    				debugstring("call EIRQ0_ISR()\r\n");
-    				EIRQ0_ISR();
-    			}
-    		}
+    // 		if((1<<4) == (*R_GP5ILEV & (1<<4)) )	// EIRQ0
+    // 		{
+    // 			if (sb2_high_cnt > (1000/10) )
+    // 			{
+    //     			//debugstring("\r\n.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+ SB2 HIGH .+.+.+.+.+.+\r\n");
+    // 				debugstring("call EIRQ0_ISR()\r\n");
+    // 				EIRQ0_ISR();
+    // 			}
+    // 		}
 
-    		if((1<<5) == (*R_GP5ILEV & (1<<5)) )	// EIRQ1
-    		{
-    			if (sb1_high_cnt > (1000/10) )
-    			{
-        			//debugstring("\r\n.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.= SB1 HIGH .=.=.=.=.=.=\r\n");
-    				debugstring("call EIRQ1_ISR()\r\n");
-    				EIRQ1_ISR();
-    			}
-    		}
+    // 		if((1<<5) == (*R_GP5ILEV & (1<<5)) )	// EIRQ1
+    // 		{
+    // 			if (sb1_high_cnt > (1000/10) )
+    // 			{
+    //     			//debugstring("\r\n.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.= SB1 HIGH .=.=.=.=.=.=\r\n");
+    // 				debugstring("call EIRQ1_ISR()\r\n");
+    // 				EIRQ1_ISR();
+    // 			}
+    // 		}
 
-    	}
-    }
+    // 	}
+    // }
 
 }
 
@@ -826,6 +850,9 @@ void m_time_orinted_evt_proc(void)
 		clr_fg_SEC_elapsed();
 
 		// 여기는 매 1초마다 실행되는 곳이다.
+
+
+#if 0		
 		dec_shk_interval();		// 충돌메시지 전송간격
 
 
@@ -833,7 +860,7 @@ void m_time_orinted_evt_proc(void)
 		{
 			wifi_reset();
 		}
-
+#endif
 
 	}
 
@@ -841,17 +868,31 @@ void m_time_orinted_evt_proc(void)
 	if (is_checkTime4Send())
 	{
 		// 여기는 매 1분마다 실행되는 곳이다.
-
 		t_day = ( rtc_time.hour*60 + rtc_time.min);
+
+
+		debugprintf("It's time to send data : %02d:%02d:%02d\r\n",rtc_time.hour,rtc_time.min, rtc_time.sec);
+
+		/*
+		1. Make send-data.
+		2. Push data to STACK, Tringgering for Transfer
+
+		*/
+		make_msg_k1();
 
 	//----------------< 1 분마다 하는 작업 >----------------
 	// 	1)
+		#if 0
 		dec_lowbat_interval();
 		dec_pos_interval();		// 위치이탈 전송간격
+		#endif
 
 	// 	2) 이탈판정
+		#if 0
 		position_chk();
+		#endif
 
+		#if 0
 	//----------------< 매월 1일 데이타 백업  >----------------
 		if ( (t_day == 0) && (rtc_time.day==1))
 		{
@@ -867,11 +908,12 @@ void m_time_orinted_evt_proc(void)
 			SensorBakSize.b.gps = 1;
 			SensorBakSize.b.aio = 1;
 			SensorBakSize.b.mose = 1;
-
 		}
+		#endif
+
 
 	//----------------< 전송할 데이타를 만든다(주기적인것... 기상) >----------------
-
+		#if 0
 		// 센서데이타 clear.
 		if ( ((t_day % 60) == 20) || ((t_day % 60) == 50) )
 		{
@@ -886,8 +928,10 @@ void m_time_orinted_evt_proc(void)
             set_ptb210_valid(0);   //clear
             init_ptb210_data();
 		}
+		#endif
 
 
+		#if 0
 		// 기상데이타, 저전압감시
 		if ( (t_day % env.interval) == 0)
 		{
@@ -911,7 +955,7 @@ void m_time_orinted_evt_proc(void)
 				}
 			}
 		}
-
+		#endif
 
 
 		// 동해부이 (지진모드에서 5분)
@@ -1346,6 +1390,19 @@ void wifi_reset(void)
 
     revive_wifi();
 }
+
+
+void sysWDT_init(void) 
+{
+	;
+}
+
+void sysWDT_CntClear(void) 
+{
+	;
+}
+
+
 
 
 /*

@@ -110,6 +110,10 @@ env_data_T env;
 // functions
 void boardinit();
 
+void sysWDT_init(void);
+void sysWDT_CntClear(void);
+
+
 //-----------------------------------------------
 #else
 //-----------------------------------------------

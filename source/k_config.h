@@ -102,4 +102,4 @@
 // #define DEBUG_CH_0                  // change debug channel to uart_0
 // #define DEBUG_SENSOR_SHOCK          // Shock sensor test
 // #define DEBUG_SPEED_BOOT            // booting time : 120sec --> 3sec
-// #define RTC_INIT_AT_BOOT            // booting time : rtc init
+#define RTC_INIT_AT_BOOT            // booting time : rtc init

@@ -129,7 +129,7 @@ void boardinit()
 	//--- UART ---
 	uart_config(0,115200,DATABITS_8,STOPBITS_1,UART_PARNONE);	// debug
 	uart_config(1,  9600,DATABITS_8,STOPBITS_1,UART_PARNONE);	// sysMCU
-	uart_config(2,  9600,DATABITS_8,STOPBITS_1,UART_PARNONE);	// iridium1
+	uart_config(2,  4800,DATABITS_8,STOPBITS_1,UART_PARNONE);	// iridium1
 	uart_config(3,  9600,DATABITS_8,STOPBITS_1,UART_PARNONE);	// iridium2
 
 	uart_config(4,460800,DATABITS_8,STOPBITS_1,UART_PARNONE);	// iridium2

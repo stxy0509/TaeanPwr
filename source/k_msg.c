@@ -302,8 +302,51 @@ char * make_msg_k1(void)
     debugstring(    "     make msg K1\r\n");
     debugstring(    "-------------------------------\r\n");
 
-
     memset(s_msg,0,MSG_LENGTH);
+
+
+    rtc_isSecUpdate();
+    strncat(s_msg, "EB999", 5);
+
+    sprintf(tmp_buf,"%02d%02d%02d%02d%02d",rtc_time.year%100,rtc_time.mon,rtc_time.day,rtc_time.hour,rtc_time.min);
+    strncat(s_msg, tmp_buf, 10);
+
+    strncat(s_msg, "FFFFFFFFFF", 10);
+
+        // (-)131017   --->>>
+    if (is_q_full())
+    {
+        q_pop();
+    }
+    q_putData();
+    // <<<------
+
+
+    debugprintf("q_put --> Q[%d]\r\n",is_q_dataNum());
+    debugstring(s_msg);
+    // debugstring(s_msg_c);
+    debugstring("\r\n");
+
+
+    strcat(s_msg, "\r\n");
+
+    if (sdc_read_detectPin()==SDC_INSERTED)
+    {
+        u32 fsz;
+        //PRINTLINE;
+        sdc_saveDataToFile(FN_SEND, s_msg, &fsz);
+        //PRINTVAR(fsz);
+        if (fsz > FSZ_MAX)
+        {
+            SensorBakSize.b.send = 1;
+        }
+    }
+
+
+    return (s_msg);
+
+
+
 
     rtc_isSecUpdate();
     sprintf(tmp_buf,"%02d%02d%02d%02d%02d",rtc_time.year%100,rtc_time.mon,rtc_time.day,rtc_time.hour,rtc_time.min);
