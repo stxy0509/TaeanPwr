@@ -118,9 +118,9 @@ int main()
 			    	m_system_robust_proc();		// heartbeat, watchdog
 
 
-					// m_iridium_proc();
-				    // task_iridium();
-				    // task_iri_rcv();
+					m_iridium_proc();
+				    task_iridium();
+				    task_iri_rcv();
 				}
 				break;
 		}
@@ -1021,7 +1021,7 @@ void m_time_orinted_evt_proc(void)
 		// 	chk_file_size();
 		// }
 
-
+#if 0
 		//----------------< MOSE 파고계산 >----------------
 		if ( (t_day % 30) == 28)	// 매시 28 58분에 계산
 		{
@@ -1070,6 +1070,7 @@ void m_time_orinted_evt_proc(void)
 		{
 			set_tm_sbdreg(1);
 		}
+#endif		
 	}
 }
 
