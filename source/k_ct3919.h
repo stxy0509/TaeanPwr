@@ -8,8 +8,8 @@
 typedef struct _ct_data
 {
     u8 valid;
-    double cond;
-    double temp;
+    int cond;
+    int temp;
 } ct_data_T;
 
 

@@ -1275,38 +1275,6 @@ void task_iri_rcv(void)
     }
 
 
-    //-----2-----------------------------------------
-    if (uart_getch(C_IRIDIUM_2,&ch))
-    {
-        iri2_rcv_q_put(ch);
-        switch(idx2)
-        {
-            case 0:
-                if (ch=='1')
-                    idx2 = 10;
-                break;
-            case 10:
-                if (ch=='2')
-                    idx2 = 20;
-                else
-                    idx2 = 0;
-                break;
-            case 20:
-                if (ch=='6')
-                {
-                    debugprintf("\r\n---------------------->>>> SBDRING(2) >>>>\r\n");
-                    set_sbdring2(1);
-                    idx2 = 70;
-                }
-                else
-                    idx2 = 0;
-                break;
-            case 70:
-            default:
-                idx2 = 0;
-                break;
-        }
-    }
 
 
 

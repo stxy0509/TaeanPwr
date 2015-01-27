@@ -83,8 +83,7 @@ int main()
     }
 
     // init iridium
-    // set_iri1_init(1);
-    // set_iri2_init(1);
+    set_iri1_init(1);
 
 // #if (BUOY_SPEC == 'D')
 //     memset(s_msg_e05,'9',MSG_LENGTH);
@@ -125,7 +124,7 @@ int main()
 				break;
 		}
 
-#if 1 	/* WM-211 */
+#if 0 	/* WM-211 */
         {
         	char ch;
 	        if (uart_getch(3, &ch))
@@ -140,7 +139,7 @@ int main()
 #endif
 
 
-#if 1    /* SS510 */
+#if 0    /* SS510 */
         {
         	char ch;
 	        if (uart_getch(2, &ch))
@@ -156,7 +155,6 @@ int main()
 
         task_cmdshell();
 	    task_sysMCU();
-	    // task_wifi();
 	}
 }
 
@@ -172,7 +170,7 @@ void sensor_q_init(void)
 
  //    aio_q_init();		debugstring("AIO ");
  //    mose_q_init();		debugstring("MOSE ");
- //    ct_q_init();		debugstring("CT ");
+     ct_q_init();		debugstring("CT ");
  //    dcs_q_init();		debugstring("DCS ");
 
     gps_q_init();		debugstring("GPS ");
@@ -676,7 +674,7 @@ void m_sensor_proc(void)
 	// task_mose();
 	// task_calc();
 
-	// task_ct3919();
+	task_ct3919();
 	// task_dcs();
 
 	task_gps();
