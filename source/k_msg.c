@@ -284,6 +284,53 @@ PRINTVAR(strlen(s_msg));
 }
 
 
+
+// struct _echoData echoData[60];
+// echoData_bin_T echoData[60];
+echo1_T echoData[60];
+
+// echo1_T data1;
+// echoData_bin_T bb;
+
+void init_echoData(void)
+{
+    int i;
+
+    debugstring("init echoData buffer...\r\n");
+
+    for (i=0; i<60; i++)
+    {
+        echoData[i].s.gps_valid = 0; 
+        echoData[i].s.depth_valid = 0; 
+        echoData[i].s.temp_valid = 0; 
+    }
+}
+
+
+void make_msg_second(void)
+{
+    int i;
+
+    i = rtc_time.sec;
+
+    echoData[i].s.lat_d  = 32;
+    echoData[i].s.lat_md = 12;
+    echoData[i].s.lat_mf = 3456;
+
+    echoData[i].s.lon_d  = 126;
+    echoData[i].s.lon_md = 23;
+    echoData[i].s.lon_mf = 4567;
+
+    echoData[i].s.depth = 200+i;  //get_ct_cond();
+    echoData[i].s.temp  = get_ct_temp();
+
+    echoData[i].s.gps_valid = 1; 
+    echoData[i].s.depth_valid = 1; 
+    echoData[i].s.temp_valid = 1; 
+
+    debugprintf("echoData[%d] saved...\r\n", i);    
+}
+
 //------------------------------------------------------------------------
 //      char * make_msg_k1(void)
 //------------------------------------------------------------------------
@@ -303,6 +350,23 @@ char * make_msg_k1(void)
     debugstring(    "-------------------------------\r\n");
 
     memset(s_msg,0,MSG_LENGTH);
+
+
+    {
+        int i;
+        for (i=0; i<60; i++)
+        {
+            if (echoData[i].s.gps_valid ==1) {
+                debugprintf("%02d: %d%d.%d - %d%d.%d - %03d %03d\r\n", i, echoData[i].s.lat_d, echoData[i].s.lat_md, echoData[i].s.lat_mf, echoData[i].s.lon_d, echoData[i].s.lon_md, echoData[i].s.lon_mf, echoData[i].s.depth, echoData[i].s.temp);
+            }
+            else
+            {
+                debugprintf("%02d: \r\n", i);
+
+            }
+        }
+    }
+
 
 
     rtc_isSecUpdate();

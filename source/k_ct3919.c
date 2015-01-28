@@ -123,8 +123,8 @@ void init_ct_data(void)
 
 int is_ct_valid(void)   {    return ct.valid;}
 void set_ct_valid(int a_val)    { ct.valid = a_val;}
-double get_ct_cond(void)    {return ct.cond;}
-double get_ct_temp(void)    {return ct.temp;}
+int get_ct_cond(void)    {return ct.cond;}
+int get_ct_temp(void)    {return ct.temp;}
 
 
 void parsing_ct3919(char *a_str)
@@ -194,7 +194,7 @@ void parsing_ct3919(char *a_str)
         //PRINT_TIME;
     }
 
-    debugprintf(" **** Alti-meter: %d(c), %d(t) \r\n\r\n", ct.cond, ct.temp);
+    // debugprintf(" **** Alti-meter: %d(c), %d(t) \r\n\r\n", ct.cond, ct.temp);
 }
 
 

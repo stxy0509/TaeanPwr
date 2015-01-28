@@ -8,6 +8,7 @@
 
 
 int is_checkTime4Send(void);
+int is_lap_secend(void);
 
 void measure_BAT_leval(void);
 
@@ -438,6 +439,18 @@ int is_checkTime4Send(void)
 	return 1;
 }
 
+int is_lap_secend(void)
+{
+	static u8 saved = 100;
+	rtc_isSecUpdate();
+	if (rtc_time.sec == saved)
+	{
+		return 0;
+	}
+
+	saved = rtc_time.sec;
+	return 1;
+}
 
 
 
@@ -843,23 +856,19 @@ void m_time_orinted_evt_proc(void)
 {
 	int t_day;	//, t;
 
-	if (get_fg_SEC_elapsed()==1)
+	if (is_lap_secend())
 	{
-		clr_fg_SEC_elapsed();
+		// clr_fg_SEC_elapsed();
 
 		// 여기는 매 1초마다 실행되는 곳이다.
 
-
-#if 0		
-		dec_shk_interval();		// 충돌메시지 전송간격
-
-
-		if ( dec_wifi_reset_tm() <= 0)
+		if (rtc_time.sec == 0)
 		{
-			wifi_reset();
+			debugprintf("It's time to send data : %02d:%02d:%02d\r\n",rtc_time.hour,rtc_time.min, rtc_time.sec);
+			make_msg_k1();
+			init_echoData();
 		}
-#endif
-
+		make_msg_second();
 	}
 
 
@@ -869,14 +878,13 @@ void m_time_orinted_evt_proc(void)
 		t_day = ( rtc_time.hour*60 + rtc_time.min);
 
 
-		debugprintf("It's time to send data : %02d:%02d:%02d\r\n",rtc_time.hour,rtc_time.min, rtc_time.sec);
 
 		/*
 		1. Make send-data.
 		2. Push data to STACK, Tringgering for Transfer
 
 		*/
-		make_msg_k1();
+		// make_msg_k1();
 
 	//----------------< 1 분마다 하는 작업 >----------------
 	// 	1)

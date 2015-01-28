@@ -24,8 +24,8 @@ void ct_q_init(void);
 void ct_q_put(char ch);
 int is_ct_valid(void);
 void set_ct_valid(int a_val);
-double get_ct_cond(void);
-double get_ct_temp(void);
+int get_ct_cond(void);
+int get_ct_temp(void);
 
 
 //-----------------------------------------------

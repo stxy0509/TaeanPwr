@@ -4,6 +4,86 @@
 
 #define	DEFERD_Q_MAX	10
 
+
+struct _echoData {
+	int gps_valid;
+	int depth_valid;
+	int temp_valid;
+
+    int lat_d;
+    int lat_md;
+    int lat_mf;
+    int lon_d;
+    int lon_md;
+    int lon_mf;
+
+    int depth;
+    int temp;
+};
+
+typedef struct {
+    int gps_valid;
+    int depth_valid;
+    int temp_valid;
+
+    int lat_d;
+    int lat_md;
+    int lat_mf;
+    int lon_d;
+    int lon_md;
+    int lon_mf;
+
+    int depth;
+    int temp;
+} echoData_T;
+
+
+typedef struct  {
+    unsigned int lat_d:  7;
+    unsigned int lat_md: 6;
+    unsigned int lat_mf:14;
+    unsigned int lon_d:  8;
+    unsigned int lon_md: 6;
+    unsigned int lon_mf:14;
+
+    unsigned int depth: 10;
+    unsigned int temp:   9;     // 74 bit data
+
+    unsigned int gps_valid:  1;
+    unsigned int depth_valid:1;
+    unsigned int temp_valid: 1;
+
+    unsigned int dmy:   19;     // 19 bit dummy
+} echoData_bin_T;
+
+typedef union {
+    
+    struct  {
+        unsigned int lat_d:  7;
+        unsigned int lat_md: 6;
+        unsigned int lat_mf:14;
+        unsigned int lon_d:  8;
+        unsigned int lon_md: 6;
+        unsigned int lon_mf:14;
+
+        unsigned int depth: 10;
+        unsigned int temp:   9;     // 74 bit data
+
+        unsigned int gps_valid:  1;
+        unsigned int depth_valid:1;
+        unsigned int temp_valid: 1;
+
+        unsigned int dmy:   19;     // 19 bit dummy
+    } s;
+
+    // struct {
+    //     unsigned i;
+    // } s;
+    char str[12];
+} echo1_T;
+
+
+
 //-----------------------------------------------
 #ifdef __K_MSG_C__
 //-----------------------------------------------
@@ -79,6 +159,11 @@ char q_pop(void);
 char is_q_empty(void);
 char is_q_full(void);
 int is_q_dataNum(void);
+
+void make_msg_second(void);
+void init_echoData(void);
+
+
 
 extern float getShtTemp(void);
 extern float getShtHumi(void);
