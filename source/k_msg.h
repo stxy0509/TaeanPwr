@@ -79,7 +79,7 @@ typedef union {
     // struct {
     //     unsigned i;
     // } s;
-    char str[12];
+    unsigned char str[12];
 } echo1_T;
 
 

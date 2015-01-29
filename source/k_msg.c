@@ -284,6 +284,77 @@ PRINTVAR(strlen(s_msg));
 }
 
 
+int dp[][2]= {
+    {   6,  3}, // 0
+    {  15,  1}, // 1
+    {  25,  7}, // 2
+    {  34,  5}, // 3
+    {  43,  3}, // 4
+    {  52,  1}, // 5
+    {  62,  7}, // 6
+    {  71,  5}, // 7
+    {  80,  3}, // 8
+    {  89,  1}, // 9
+
+    {  99,  7}, // 10
+    { 108,  5}, // 11
+    { 117,  3}, // 12
+    { 126,  1}, // 13
+    { 136,  7}, // 14
+    { 145,  5}, // 15
+    { 154,  3}, // 16
+    { 163,  1}, // 17
+    { 173,  7}, // 18
+    { 182,  5}, // 19
+
+    { 191,  3}, // 20
+    { 200,  1}, // 1
+    { 210,  7}, // 2
+    { 219,  5}, // 3
+    { 228,  3}, // 4
+    { 237,  1}, // 5
+    { 247,  7}, // 6
+    { 256,  5}, // 7
+    { 265,  3}, // 8
+    { 274,  1}, // 9
+
+    { 284,  7}, // 30
+    { 293,  5}, // 1
+    { 302,  3}, // 2
+    { 311,  1}, // 3
+    { 321,  7}, // 4
+    { 330,  5}, // 5
+    { 339,  3}, // 6
+    { 348,  1}, // 7
+    { 358,  7}, // 8
+    { 367,  5}, // 9
+
+    { 376,  3}, // 40
+    { 385,  1}, // 1
+    { 395,  7}, // 2
+    { 404,  5}, // 3
+    { 413,  3}, // 4
+    { 422,  1}, // 5
+    { 432,  7}, // 6
+    { 441,  5}, // 7
+    { 450,  3}, // 8
+    { 459,  1}, // 9
+
+    { 469,  7}, // 50
+    { 478,  5}, // 1
+    { 487,  3}, // 2
+    { 496,  1}, // 3
+    { 506,  7}, // 4
+    { 515,  5}, // 5
+    { 524,  3}, // 6
+    { 533,  1}, // 7
+    { 543,  7}, // 8
+    { 552,  5} // 9
+};
+
+
+
+
 
 // struct _echoData echoData[60];
 // echoData_bin_T echoData[60];
@@ -309,35 +380,44 @@ void init_echoData(void)
 
 void make_msg_second(void)
 {
-    int i;
+    int i,j;
 
     i = rtc_time.sec;
 
-    echoData[i].s.lat_d  = 32;
-    echoData[i].s.lat_md = 12;
-    echoData[i].s.lat_mf = 3456;
+    for (j=0;j<12;j++)
+        echoData[i].str[j] = 0;
 
-    echoData[i].s.lon_d  = 126;
-    echoData[i].s.lon_md = 23;
-    echoData[i].s.lon_mf = 4567;
+    echoData[i].s.lat_d  = 0x12;//32;
+    echoData[i].s.lat_md = 0;//12;
+    echoData[i].s.lat_mf = 0x00;//3456;
 
-    echoData[i].s.depth = 200+i;  //get_ct_cond();
-    echoData[i].s.temp  = get_ct_temp();
+    echoData[i].s.lon_d  = 0;//126;
+    echoData[i].s.lon_md = 0;//23;
+    echoData[i].s.lon_mf = 0;//4567;
 
-    echoData[i].s.gps_valid = 1; 
-    echoData[i].s.depth_valid = 1; 
-    echoData[i].s.temp_valid = 1; 
+    echoData[i].s.depth = 0;//200+i;  //get_ct_cond();
+    echoData[i].s.temp  = 0;//get_ct_temp();
+
+    echoData[i].s.gps_valid     = 0; 
+    echoData[i].s.depth_valid   = 0; 
+    echoData[i].s.temp_valid    = 0; 
 
     debugprintf("echoData[%d] saved...\r\n", i);    
 }
+
+
+// char bin_header[7];
 
 //------------------------------------------------------------------------
 //      char * make_msg_k1(void)
 //------------------------------------------------------------------------
 char * make_msg_k1(void)
 {
-    char tmp_buf[50];
-    //char t_buf[15];
+    unsigned char tmp_buf[50];
+    unsigned char t_buf[15];
+
+    unsigned char s_msg2[575];
+
     // 38 byte + '\0'
 
     // 0.........1.........2.........3.........4.........5.........6.........7.........8.........9.........
@@ -350,32 +430,215 @@ char * make_msg_k1(void)
     debugstring(    "-------------------------------\r\n");
 
     memset(s_msg,0,MSG_LENGTH);
+    memset(s_msg2,0,575);
+    memset(t_buf,0,15);
 
+    rtc_isSecUpdate();
+
+    // Header
+    // memset(s_msg,0,7);
+
+
+    s_msg2[0] = 'E';
+    s_msg2[1] = 'B';
 
     {
-        int i;
+        int xx;
+        for (xx=0; xx<=1; xx++)
+        {
+            debugprintf("%02X ", s_msg2[xx]);
+        }
+        debugprintf("\r\n");
+    }
+
+    // Buoy ID
+    {
+        U16 id = 999 << 6;
+
+        s_msg2[2] = (char)( id>>8 );
+        s_msg2[3] = (char)( id & 0x00FF );
+    }
+
+    {
+        int xx;
+        for (xx=0; xx<=3; xx++)
+        {
+            debugprintf("%02X ", s_msg2[xx]);
+        }
+        debugprintf("\r\n");
+    }
+
+    // Date & Time
+    {
+        u8 i;
+        i= rtc_time.year;
+        s_msg2[3] |= ( i >> 1 );
+        s_msg2[4] |= ( i << 7 );
+
+        i= rtc_time.mon;
+        s_msg2[4] |= ( i << 3 );
+
+        i= rtc_time.day;
+        s_msg2[4] |= ( i >> 2 );
+        s_msg2[5] |= ( i << 6 );
+
+        i= rtc_time.hour;
+        s_msg2[5] |= ( i << 1 );
+
+        i= rtc_time.min;
+        s_msg2[5] |= ( i >> 5 );
+        s_msg2[6] |= ( i << 3 );
+    }
+
+    {
+        int xx;
+        for (xx=0; xx<=6; xx++)
+        {
+            debugprintf("%02X ", s_msg2[xx]);
+        }
+        debugprintf("\r\n");
+    }
+
+    // 1초 데이타 연결
+
+    {
+        int i,j,k, i1, j1; u16 d16bit;
+        unsigned char tbuf[5];
+
         for (i=0; i<60; i++)
         {
-            if (echoData[i].s.gps_valid ==1) {
-                debugprintf("%02d: %d%d.%d - %d%d.%d - %03d %03d\r\n", i, echoData[i].s.lat_d, echoData[i].s.lat_md, echoData[i].s.lat_mf, echoData[i].s.lon_d, echoData[i].s.lon_md, echoData[i].s.lon_mf, echoData[i].s.depth, echoData[i].s.temp);
-            }
-            else
+            if (echoData[i].s.gps_valid ==0) 
             {
-                debugprintf("%02d: \r\n", i);
+                echoData[i].s.lat_d  = 90;//32;
+                echoData[i].s.lat_md = 59;//12;
+                echoData[i].s.lat_mf = 9999;//3456;
+
+                echoData[i].s.lon_d  = 90;//126;
+                echoData[i].s.lon_md = 59;//23;
+                echoData[i].s.lon_mf = 9999;//4567;
 
             }
+            if (echoData[i].s.depth_valid ==0)
+            {
+                echoData[i].s.depth = 999;//200+i;  //get_ct_cond();
+
+            } 
+            if (echoData[i].s.temp_valid ==0) 
+            {
+                echoData[i].s.temp  = 511;//get_ct_temp();
+
+            }
+
+            {
+                debugprintf("%02d: %d%d.%d - %d%d.%d - %03d %03d\r\n", i, echoData[i].s.lat_d, echoData[i].s.lat_md, echoData[i].s.lat_mf, echoData[i].s.lon_d, echoData[i].s.lon_md, echoData[i].s.lon_mf, echoData[i].s.depth, echoData[i].s.temp);
+                {
+                    t_buf[0]  = echoData[i].s.lat_d  << 1;
+                    t_buf[0] |= echoData[i].s.lat_md >> 5;
+                    
+                    t_buf[1] |= echoData[i].s.lat_md << 3;
+                    
+                    d16bit = echoData[i].s.lat_mf;
+                    t_buf[1] |= (char)(d16bit >> 11);
+                    t_buf[2]  = (char)((d16bit >> 3) & 0x00FF);
+                    t_buf[3]  = (char)((d16bit << 5) & 0x00FF);
+
+                    t_buf[3] |= (char)(echoData[i].s.lon_d >> 3);
+                    t_buf[4]  = (char)(echoData[i].s.lon_d << 5);
+                    t_buf[4] |= (char)(echoData[i].s.lon_md >> 1);
+                    
+                    t_buf[5]  = (char)(echoData[i].s.lon_md << 7);
+                    t_buf[5] |= (char)(echoData[i].s.lon_mf >> 7);
+                    t_buf[6]  = (char)( (echoData[i].s.lon_mf << 1) & 0x00FF);
+                    t_buf[6] |= (char)( (echoData[i].s.depth >> 11) & 0x00FF);
+                    t_buf[7]  = (char)( (echoData[i].s.depth >> 1) & 0x00FF);
+                    t_buf[8]  = (char)( (echoData[i].s.depth << 7) & 0x00FF);
+                    t_buf[8] |= (char)( (echoData[i].s.depth >> 2) & 0x00FF);
+                    t_buf[9]  = (char)( (echoData[i].s.depth << 6) & 0x00FF);
+                }
+                debugprintf("%02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\r\n", t_buf[0], t_buf[1], t_buf[2], t_buf[3], t_buf[4], t_buf[5], t_buf[6], t_buf[7], t_buf[8], t_buf[9]);
+            }
+            // else
+            // {
+            //     debugprintf("%02d: \r\n", i);
+            // }
+            
+
+            j = dp[i][0];
+            k = dp[i][1];
+            debugprintf("pointer: %d %d\r\n", j,k);
+
+            for (i1=0; i1<10; i1++)
+            {
+                s_msg2[j] |= (t_buf[i1] >> (8-k));
+                j++;
+                s_msg2[j]  = (t_buf[i1] << k);
+            }
+
+            #if 0
+            {
+                int xx;
+                for (xx=0; xx<=j; xx++)
+                {
+                    debugprintf("%02X ", s_msg2[xx]);
+                }
+                debugprintf("\r\n");
+            }
+            #endif
         }
+
+        // BAT
+
+        i = get_battery_level();
+        s_msg2[561] |= (i >> 5);
+        j++;
+        s_msg2[562]  = (i << 3);
+        s_msg2[563]  = 0xCC;
+        s_msg2[564]  = 0xCC;
+        s_msg2[565]  = 0xCC;
+        s_msg2[566]  = 0xCC;
+
+
+    }
+
+    {
+        int i,j,k;
+        unsigned char ch;
+
+        j = 0;
+
+        for (i=0;i<567; i++)
+        {
+            ch = s_msg2[i];
+            // if ( (ch==0) || (ch==0x0A) || (ch==0x0D) )
+            // {
+            //     break;
+            // }
+            // else
+            {
+                unsigned char tbuf[5];
+                // debugprintf("%X",ch);
+                sprintf(tbuf,"%02X", ch);
+                // modem_printf(tbuf);
+                s_msg[j++] = tbuf[0];
+                s_msg[j++] = tbuf[1];
+            }
+
+        }
+        s_msg[--j] = '\0';
+
     }
 
 
 
-    rtc_isSecUpdate();
-    strncat(s_msg, "EB999", 5);
 
-    sprintf(tmp_buf,"%02d%02d%02d%02d%02d",rtc_time.year%100,rtc_time.mon,rtc_time.day,rtc_time.hour,rtc_time.min);
-    strncat(s_msg, tmp_buf, 10);
 
-    strncat(s_msg, "FFFFFFFFFF", 10);
+
+    // strncat(s_msg, "EB999", 5);
+
+    // sprintf(tmp_buf,"%02d%02d%02d%02d%02d",rtc_time.year%100,rtc_time.mon,rtc_time.day,rtc_time.hour,rtc_time.min);
+    // strncat(s_msg, tmp_buf, 10);
+
+    // strncat(s_msg, "FFFFFFFFFF", 10);
 
         // (-)131017   --->>>
     if (is_q_full())
@@ -409,7 +672,10 @@ char * make_msg_k1(void)
 
     return (s_msg);
 
-
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
 
 
     rtc_isSecUpdate();
