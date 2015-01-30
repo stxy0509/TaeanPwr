@@ -135,7 +135,7 @@ SDCARD_PIN_USE_67 를 1 로 선언 한다면 nand 와 sd card 가 서로 다른 
 		CONFIG_CODE_PAGE 949 로 설정
 		library 프로젝트에 lib_src/fatfs/option/cc949.c 파일을 추가 한 후 rebuild 한다
 */
-#define CONFIG_CODE_PAGE 949
+#define CONFIG_CODE_PAGE 437
 
 
 /******************************************************************************

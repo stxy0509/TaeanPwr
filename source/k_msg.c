@@ -387,20 +387,20 @@ void make_msg_second(void)
     for (j=0;j<12;j++)
         echoData[i].str[j] = 0;
 
-    echoData[i].s.lat_d  = 0x12;//32;
-    echoData[i].s.lat_md = 0;//12;
-    echoData[i].s.lat_mf = 0x00;//3456;
+    echoData[i].s.lat_d  = 32;
+    echoData[i].s.lat_md = 12;
+    echoData[i].s.lat_mf = 3456;
 
-    echoData[i].s.lon_d  = 0;//126;
-    echoData[i].s.lon_md = 0;//23;
-    echoData[i].s.lon_mf = 0;//4567;
+    echoData[i].s.lon_d  = 126;
+    echoData[i].s.lon_md = 23;
+    echoData[i].s.lon_mf = 4567;
 
-    echoData[i].s.depth = 0;//200+i;  //get_ct_cond();
-    echoData[i].s.temp  = 0;//get_ct_temp();
+    echoData[i].s.depth = get_ct_cond();
+    echoData[i].s.temp  = get_ct_temp();
 
-    echoData[i].s.gps_valid     = 0; 
-    echoData[i].s.depth_valid   = 0; 
-    echoData[i].s.temp_valid    = 0; 
+    echoData[i].s.gps_valid     = 1; 
+    echoData[i].s.depth_valid   = 1; 
+    echoData[i].s.temp_valid    = 1; 
 
     debugprintf("echoData[%d] saved...\r\n", i);    
 }
@@ -588,7 +588,7 @@ char * make_msg_k1(void)
 
         // BAT
 
-        i = get_battery_level();
+        i = 123;//get_battery_level();
         s_msg2[561] |= (i >> 5);
         j++;
         s_msg2[562]  = (i << 3);
@@ -596,6 +596,7 @@ char * make_msg_k1(void)
         s_msg2[564]  = 0xCC;
         s_msg2[565]  = 0xCC;
         s_msg2[566]  = 0xCC;
+        s_msg2[567]  = 0xCC;
 
 
     }

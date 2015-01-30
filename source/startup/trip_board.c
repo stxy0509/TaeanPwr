@@ -128,13 +128,11 @@ void boardinit()
 
 	//--- UART ---
 	uart_config(0,115200,DATABITS_8,STOPBITS_1,UART_PARNONE);	// debug
-	uart_config(1,  9600,DATABITS_8,STOPBITS_1,UART_PARNONE);	// sysMCU
-	uart_config(2,  4800,DATABITS_8,STOPBITS_1,UART_PARNONE);	// iridium1
-	uart_config(3,  9600,DATABITS_8,STOPBITS_1,UART_PARNONE);	// iridium2
+	uart_config(1,  9600,DATABITS_8,STOPBITS_1,UART_PARNONE);	// GPS
+	uart_config(2,  4800,DATABITS_8,STOPBITS_1,UART_PARNONE);	// Alti-meter
+	uart_config(3,115200,DATABITS_8,STOPBITS_1,UART_PARNONE);	// CDMA (WM-215)
 
-	uart_config(4,460800,DATABITS_8,STOPBITS_1,UART_PARNONE);	// iridium2
-	// uart_config(4,230400,DATABITS_8,STOPBITS_1,UART_PARNONE);	// iridium2
-	// uart_config(4,115200,DATABITS_8,STOPBITS_1,UART_PARNONE);	// iridium2
+	// uart_config(4,460800,DATABITS_8,STOPBITS_1,UART_PARNONE);	// WiFi
 
 }
 

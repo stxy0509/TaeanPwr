@@ -400,9 +400,9 @@ void task_gps(void)
         return;
     }
 
-    ch = gps_q_get();
-
-    if (ch != -1)
+    // ch = gps_q_get();
+    if (uart_getch(1,&ch)) //receive
+    // if (ch != -1)
     {
         //sensor_status.b.gps = 3;
         sensor_status.w |= (3<<(7*2));
@@ -433,9 +433,10 @@ void task_gps(void)
                 {
                     if ( gps_chksum() )
                     {
+                        #if 1
                         if (tmr_GPS_data_display >= 60)  //20)
                             debugstring(gps_line);
-
+                        #endif
 
                         //PRINTVAR(get_gps_q_len());
                         parsing_gps();

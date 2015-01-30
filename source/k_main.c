@@ -139,6 +139,19 @@ int main()
         }
 #endif
 
+#if 0    /* GPS */
+        {
+        	char ch;
+	        if (uart_getch(1, &ch))
+	        {
+	        	uart_putch(0, ch);
+	        }
+	        if (uart_getch(0, &ch))
+	        {
+	        	uart_putch(1, ch);
+	        }
+        }
+#endif
 
 #if 0    /* SS510 */
         {
@@ -155,7 +168,7 @@ int main()
 #endif
 
         task_cmdshell();
-	    task_sysMCU();
+	    // task_sysMCU();
 	}
 }
 
@@ -220,7 +233,7 @@ void m_get_time_pos_proc(void)
 			break;
 
 		case 60:
-			// if (tick_s2==0)
+			if (tick_s2==0)
 			{
 				// output to CHK1,CHK2 port
 			    // sb_printstring(SB_S_CHK1, "1234567890");
@@ -687,7 +700,7 @@ void m_sensor_proc(void)
 	// task_mose();
 	// task_calc();
 
-	task_ct3919();
+	task_ct3919();		// Alti-meter
 	// task_dcs();
 
 	task_gps();
