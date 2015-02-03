@@ -3,6 +3,8 @@
 
 #define Q_CT_MAX  1000
 
+#define PORT_ALTIMETER		2
+
 
 // typedef --------------------------------------------------------------------
 typedef struct _ct_data

@@ -113,16 +113,16 @@ void cmdSensorControl_All_ON(void)
 
 void cmdSensorControl_byEnv(void)
 {
-	ctrl_sensor('0', env.s0);	// AIO
-	ctrl_sensor('1', env.s1);	// MOSE
+	// ctrl_sensor('0', env.s0);	// AIO
+	// ctrl_sensor('1', env.s1);	// MOSE
 	ctrl_sensor('3', env.s3);	// CT
-	ctrl_sensor('5', env.s5);	// DCS
+	// ctrl_sensor('5', env.s5);	// DCS
 	ctrl_sensor('7', env.s7);	// GPS
-	ctrl_sensor('8', env.s8);	// ATM1
-	ctrl_sensor('9', env.s9);	// ATM2
-	ctrl_sensor('B', env.sb);	// HMP155
-	ctrl_sensor('C', env.sc);	// PTB
-	ctrl_sensor('F', env.sf);	// SHOCK
+	// ctrl_sensor('8', env.s8);	// ATM1
+	// ctrl_sensor('9', env.s9);	// ATM2
+	// ctrl_sensor('B', env.sb);	// HMP155
+	// ctrl_sensor('C', env.sc);	// PTB
+	// ctrl_sensor('F', env.sf);	// SHOCK
 
 }
 

@@ -284,6 +284,8 @@ PRINTVAR(strlen(s_msg));
 }
 
 
+//==========================================================================================================================
+
 int dp[][2]= {
     {   6,  3}, // 0
     {  15,  1}, // 1
@@ -358,7 +360,7 @@ int dp[][2]= {
 
 // struct _echoData echoData[60];
 // echoData_bin_T echoData[60];
-echo1_T echoData[60];
+echoData_T echoData[60];
 
 // echo1_T data1;
 // echoData_bin_T bb;
@@ -371,9 +373,9 @@ void init_echoData(void)
 
     for (i=0; i<60; i++)
     {
-        echoData[i].s.gps_valid = 0; 
-        echoData[i].s.depth_valid = 0; 
-        echoData[i].s.temp_valid = 0; 
+        echoData[i].gps_valid = 0; 
+        echoData[i].depth_valid = 0; 
+        echoData[i].temp_valid = 0; 
     }
 }
 
@@ -384,25 +386,22 @@ void make_msg_second(void)
 
     i = rtc_time.sec;
 
-    for (j=0;j<12;j++)
-        echoData[i].str[j] = 0;
+    echoData[i].lat_d  = 32;
+    echoData[i].lat_md = 12;
+    echoData[i].lat_mf = 3456;
 
-    echoData[i].s.lat_d  = 32;
-    echoData[i].s.lat_md = 12;
-    echoData[i].s.lat_mf = 3456;
+    echoData[i].lon_d  = 126;
+    echoData[i].lon_md = 23;
+    echoData[i].lon_mf = 4567;
 
-    echoData[i].s.lon_d  = 126;
-    echoData[i].s.lon_md = 23;
-    echoData[i].s.lon_mf = 4567;
+    echoData[i].depth = get_ct_cond();
+    echoData[i].temp  = get_ct_temp();
 
-    echoData[i].s.depth = get_ct_cond();
-    echoData[i].s.temp  = get_ct_temp();
+    echoData[i].gps_valid     = 1; 
+    echoData[i].depth_valid   = 1; 
+    echoData[i].temp_valid    = 1; 
 
-    echoData[i].s.gps_valid     = 1; 
-    echoData[i].s.depth_valid   = 1; 
-    echoData[i].s.temp_valid    = 1; 
-
-    debugprintf("echoData[%d] saved...\r\n", i);    
+    // debugprintf("echoData[%d] saved...\r\n", i);    
 }
 
 
@@ -442,6 +441,7 @@ char * make_msg_k1(void)
     s_msg2[0] = 'E';
     s_msg2[1] = 'B';
 
+#if 0
     {
         int xx;
         for (xx=0; xx<=1; xx++)
@@ -450,15 +450,17 @@ char * make_msg_k1(void)
         }
         debugprintf("\r\n");
     }
+#endif
 
     // Buoy ID
     {
-        U16 id = 999 << 6;
+        U16 id = 900 << 6;
 
         s_msg2[2] = (char)( id>>8 );
         s_msg2[3] = (char)( id & 0x00FF );
     }
 
+#if 0
     {
         int xx;
         for (xx=0; xx<=3; xx++)
@@ -467,29 +469,35 @@ char * make_msg_k1(void)
         }
         debugprintf("\r\n");
     }
-
+#endif
     // Date & Time
     {
         u8 i;
-        i= rtc_time.year;
+        debugprintf("%d.%d.%d %d:%d\r\n", rtc_time.year, rtc_time.mon, rtc_time.day, rtc_time.hour, rtc_time.min);
+        i= rtc_time.year%100;
+        // debugprintf("%02X ", i);
         s_msg2[3] |= ( i >> 1 );
-        s_msg2[4] |= ( i << 7 );
+        s_msg2[4] = ( i << 7 );
 
         i= rtc_time.mon;
+        // debugprintf("%02X ", i);
         s_msg2[4] |= ( i << 3 );
 
         i= rtc_time.day;
+        // debugprintf("%02X ", i);
         s_msg2[4] |= ( i >> 2 );
-        s_msg2[5] |= ( i << 6 );
+        s_msg2[5] = ( i << 6 );
 
         i= rtc_time.hour;
+        // debugprintf("%02X ", i);
         s_msg2[5] |= ( i << 1 );
 
         i= rtc_time.min;
+        // debugprintf("%02X\r\n", i);
         s_msg2[5] |= ( i >> 5 );
-        s_msg2[6] |= ( i << 3 );
+        s_msg2[6] = ( i << 3 );
     }
-
+#if 0
     {
         int xx;
         for (xx=0; xx<=6; xx++)
@@ -498,7 +506,7 @@ char * make_msg_k1(void)
         }
         debugprintf("\r\n");
     }
-
+#endif
     // 1초 데이타 연결
 
     {
@@ -507,55 +515,55 @@ char * make_msg_k1(void)
 
         for (i=0; i<60; i++)
         {
-            if (echoData[i].s.gps_valid ==0) 
+            if (echoData[i].gps_valid ==0) 
             {
-                echoData[i].s.lat_d  = 90;//32;
-                echoData[i].s.lat_md = 59;//12;
-                echoData[i].s.lat_mf = 9999;//3456;
+                echoData[i].lat_d  = 90;//32;
+                echoData[i].lat_md = 59;//12;
+                echoData[i].lat_mf = 9999;//3456;
 
-                echoData[i].s.lon_d  = 90;//126;
-                echoData[i].s.lon_md = 59;//23;
-                echoData[i].s.lon_mf = 9999;//4567;
+                echoData[i].lon_d  = 90;//126;
+                echoData[i].lon_md = 59;//23;
+                echoData[i].lon_mf = 9999;//4567;
 
             }
-            if (echoData[i].s.depth_valid ==0)
+            if (echoData[i].depth_valid ==0)
             {
-                echoData[i].s.depth = 999;//200+i;  //get_ct_cond();
+                echoData[i].depth = 999;//200+i;  //get_ct_cond();
 
             } 
-            if (echoData[i].s.temp_valid ==0) 
+            if (echoData[i].temp_valid ==0) 
             {
-                echoData[i].s.temp  = 511;//get_ct_temp();
+                echoData[i].temp  = 511;//get_ct_temp();
 
             }
 
             {
-                debugprintf("%02d: %d%d.%d - %d%d.%d - %03d %03d\r\n", i, echoData[i].s.lat_d, echoData[i].s.lat_md, echoData[i].s.lat_mf, echoData[i].s.lon_d, echoData[i].s.lon_md, echoData[i].s.lon_mf, echoData[i].s.depth, echoData[i].s.temp);
+                debugprintf("%02d: %d%d.%d - %d%d.%d - %03d %03d\r\n", i, echoData[i].lat_d, echoData[i].lat_md, echoData[i].lat_mf, echoData[i].lon_d, echoData[i].lon_md, echoData[i].lon_mf, echoData[i].depth, echoData[i].temp);
                 {
-                    t_buf[0]  = echoData[i].s.lat_d  << 1;
-                    t_buf[0] |= echoData[i].s.lat_md >> 5;
+                    t_buf[0]  = echoData[i].lat_d  << 1;
+                    t_buf[0] |= echoData[i].lat_md >> 5;
                     
-                    t_buf[1] |= echoData[i].s.lat_md << 3;
+                    t_buf[1] |= echoData[i].lat_md << 3;
                     
-                    d16bit = echoData[i].s.lat_mf;
+                    d16bit = echoData[i].lat_mf;
                     t_buf[1] |= (char)(d16bit >> 11);
                     t_buf[2]  = (char)((d16bit >> 3) & 0x00FF);
                     t_buf[3]  = (char)((d16bit << 5) & 0x00FF);
 
-                    t_buf[3] |= (char)(echoData[i].s.lon_d >> 3);
-                    t_buf[4]  = (char)(echoData[i].s.lon_d << 5);
-                    t_buf[4] |= (char)(echoData[i].s.lon_md >> 1);
+                    t_buf[3] |= (char)(echoData[i].lon_d >> 3);
+                    t_buf[4]  = (char)(echoData[i].lon_d << 5);
+                    t_buf[4] |= (char)(echoData[i].lon_md >> 1);
                     
-                    t_buf[5]  = (char)(echoData[i].s.lon_md << 7);
-                    t_buf[5] |= (char)(echoData[i].s.lon_mf >> 7);
-                    t_buf[6]  = (char)( (echoData[i].s.lon_mf << 1) & 0x00FF);
-                    t_buf[6] |= (char)( (echoData[i].s.depth >> 11) & 0x00FF);
-                    t_buf[7]  = (char)( (echoData[i].s.depth >> 1) & 0x00FF);
-                    t_buf[8]  = (char)( (echoData[i].s.depth << 7) & 0x00FF);
-                    t_buf[8] |= (char)( (echoData[i].s.depth >> 2) & 0x00FF);
-                    t_buf[9]  = (char)( (echoData[i].s.depth << 6) & 0x00FF);
+                    t_buf[5]  = (char)(echoData[i].lon_md << 7);
+                    t_buf[5] |= (char)(echoData[i].lon_mf >> 7);
+                    t_buf[6]  = (char)( (echoData[i].lon_mf << 1) & 0x00FF);
+                    t_buf[6] |= (char)( (echoData[i].depth >> 11) & 0x00FF);
+                    t_buf[7]  = (char)( (echoData[i].depth >> 1) & 0x00FF);
+                    t_buf[8]  = (char)( (echoData[i].depth << 7) & 0x00FF);
+                    t_buf[8] |= (char)( (echoData[i].depth >> 2) & 0x00FF);
+                    t_buf[9]  = (char)( (echoData[i].depth << 6) & 0x00FF);
                 }
-                debugprintf("%02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\r\n", t_buf[0], t_buf[1], t_buf[2], t_buf[3], t_buf[4], t_buf[5], t_buf[6], t_buf[7], t_buf[8], t_buf[9]);
+                // debugprintf("%02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\r\n", t_buf[0], t_buf[1], t_buf[2], t_buf[3], t_buf[4], t_buf[5], t_buf[6], t_buf[7], t_buf[8], t_buf[9]);
             }
             // else
             // {
@@ -565,7 +573,7 @@ char * make_msg_k1(void)
 
             j = dp[i][0];
             k = dp[i][1];
-            debugprintf("pointer: %d %d\r\n", j,k);
+            // debugprintf("pointer: %d %d\r\n", j,k);
 
             for (i1=0; i1<10; i1++)
             {
@@ -574,7 +582,8 @@ char * make_msg_k1(void)
                 s_msg2[j]  = (t_buf[i1] << k);
             }
 
-            #if 0
+#if 0
+            if (i==1)
             {
                 int xx;
                 for (xx=0; xx<=j; xx++)
@@ -583,7 +592,7 @@ char * make_msg_k1(void)
                 }
                 debugprintf("\r\n");
             }
-            #endif
+#endif
         }
 
         // BAT
@@ -651,7 +660,7 @@ char * make_msg_k1(void)
 
 
     debugprintf("q_put --> Q[%d]\r\n",is_q_dataNum());
-    debugstring(s_msg);
+    // debugstring(s_msg);
     // debugstring(s_msg_c);
     debugstring("\r\n");
 

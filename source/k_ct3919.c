@@ -220,7 +220,7 @@ void task_ct3919(void)
 
     if (fg_start_sensing == 0)  return;
 
-    if (uart_getch(C_IRIDIUM_2,&ch))
+    if (uart_getch( PORT_ALTIMETER, &ch))
     {
         //sensor_status.b.ct3919 = 3;
         sensor_status.w |= 3<<(3*2);

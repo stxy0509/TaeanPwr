@@ -24,13 +24,13 @@ int sbdrb_check(int a_option);
 
 
 
-static int port_no = C_IRIDIUM_1;
+// static int port_no = PORT_WM215;
 void change_iridium(void)
 {
 }
 void restore_iri_port(void)
 {
-    iri_port = port_no;
+    iri_port = PORT_WM215;
 }
 
 
@@ -62,7 +62,7 @@ void set_iri1_init(int a_val)   {   iri1_init = a_val;  }
 
 static int iri2_init = 1;
 int  get_iri2_init(void)        {   return iri2_init;   }
-void set_iri2_init(int a_val)   {   iri2_init = a_val;  }
+// void set_iri2_init(int a_val)   {   iri2_init = a_val;  }
 
 static int mt1_status = 0;
 static int mt2_status = 0;
@@ -215,7 +215,7 @@ void task_iridium(void)
             // power OFF
             if ((get_iri1_init() == 1))
             {
-                debugstring("--## IRIDIUM-1 POWER_OFF for initialize ##--\r\n"); //(+)130905
+                debugstring("--## MODEM POWER_OFF for initialize ##--\r\n"); //(+)130905
                 cmdSensorControl(SYS_CMD_SENSOR_OFF, SYS_SENSOR_IRI1);
                 cmdSensorControl(SYS_CMD_IRIDIUM_EXT_ON, '1');                 //(+)130905
             }
@@ -238,7 +238,7 @@ void task_iridium(void)
             }
             break;
         case 520:
-            debugstring("--## IRIDIUM-1 POWER_ON ##--\r\n");                 //(+)130905
+            debugstring("--## MODEM POWER_ON ##--\r\n");                 //(+)130905
             cmdSensorControl(SYS_CMD_SENSOR_ON, SYS_SENSOR_IRI1);
             cmdSensorControl(SYS_CMD_IRIDIUM_EXT_OFF, '1');              //(+)130905
             tick_iri0 = 10000/10;    //10000/10;   //10sec
@@ -247,7 +247,7 @@ void task_iridium(void)
         case 525:
             if (tick_iri0 == 0)
             {
-                iri_port = C_IRIDIUM_1;
+                // iri_port = C_IRIDIUM_1;
                 iridium_init(1);
                 idx = 530;
             }
@@ -351,16 +351,16 @@ void task_iridium(void)
 
 void setReqInitIridium(void)
 {
-    debugprintf("####### init iridium [");
-    if ( iri_port==C_IRIDIUM_1)
+    debugprintf("####### init MODEM [");
+    // if ( iri_port==C_IRIDIUM_1)
     {
         debugstring("1]\r\n");
         set_iri1_init(1);
     }
-    else if ( iri_port==C_IRIDIUM_2)
+    // else if ( iri_port==C_IRIDIUM_2)
     {
-        debugstring("2]\r\n");
-        set_iri2_init(1);
+        // debugstring("2]\r\n");
+        // set_iri2_init(1);
     }
 }
 
@@ -430,22 +430,28 @@ int iridium_Process_1(int a_option)
             break;
 
         case 450:
+// PRINTVAR(idx);            
             resp_idx = 0;
-            debugprintf("AT ---> ");
-            iridium_printf("AT\r");
+            while(1) {  if (uart_getch(3, &ch) == 0)   break; }
+            debugprintf("ATE0 ---> ");
+            iridium_printf("ATE0\r\n");
             tick_iri0 = 1000/10;    //1000/10;   //1sec
             idx = 500;
             break;
         case 500:
             //wait 'OK'
-            if (UartGetCh(iri_port,&ch))
+            if (uart_getch(3, &ch))
             {
-                iri_response[resp_idx++] = ch;
-                //debugprintf("%c",ch);
+                uart_putch(0, ch);
+        
+            // if (iri_rcv_get(iri_port,&ch))
+            // {
+                // iri_response[resp_idx++] = ch;
+                // debugprintf("%c",ch);
                 if ( (ch=='K') || (ch=='0') )
                 {
-                    debugprintf("[OK]\r\n");
-                    idx = 505;
+                    // debugprintf("[OK]\r\n");
+                    idx = 550;
                 }
             }
             if (tick_iri0==0)
@@ -455,6 +461,7 @@ int iridium_Process_1(int a_option)
             break;
 
         case 505:
+// PRINTVAR(idx);            
             at_cnt++;
             if (at_cnt >5)
             {
@@ -467,26 +474,30 @@ int iridium_Process_1(int a_option)
             break;
 
         case 550:
+            while(1) {  if (uart_getch(3, &ch) == 0)   break; }
             //PRINT_TIME;
             //debugprintf("\r\n-----ATV1 [%d]\r\n", ((iri_port==C_IRIDIUM_1) ? 1:2) );
             debugprintf("ATV0 ---> ");
 
             resp_idx = 0;
             //iridium_printf("ATV1\r");
-            iridium_printf("ATV0\r");
+            iridium_printf("ATV0\r\n");
             tick_iri0 = 5000/10;    //10000/10;   //10sec
             idx = 2;
             break;
 
         case 2:
             //wait 'OK'
-            if (UartGetCh(iri_port,&ch))
+            if (uart_getch(3, &ch))
             {
-                iri_response[resp_idx++] = ch;
-                //debugprintf("%c",ch);
+                uart_putch(0, ch);
+            // if (iri_rcv_get(iri_port,&ch))
+            // {
+                // iri_response[resp_idx++] = ch;
+                // debugprintf("%c",ch);
                 if ( (ch=='K') || (ch=='0'))
                 {
-                    debugprintf("[OK]\r\n");
+                    // debugprintf("[OK]\r\n");
                     //chg_n_retry = 0;    // 현재 단계를 통과했으므로 재시도 횟수 clear
                     idx = 20;
                 }
@@ -511,7 +522,7 @@ int iridium_Process_1(int a_option)
                 // }
 
                 // 이리듐 상태가 비정상일 경우 다른쪽을 변경후 재시도한다.
-                change_iridium();
+                // change_iridium();
 
                 if (chg_n_retry== 0)
                 {
@@ -526,99 +537,39 @@ int iridium_Process_1(int a_option)
             }
             break;
 
-        // case 4:
-        //     //PRINT_TIME;
-        //     debugprintf("ATV1 [%d]\r\n", ((iri_port==C_IRIDIUM_1) ? 1:2) );
-
-        //     iridium_printf("ATV1\r");
-        //     tick_iri0 = 5000/10;    //10000/10;   //10sec
-        //     idx = 6;
-        //     break;
-        // case 6:
-        //     //wait 'OK'
-        //     if (UartGetCh(iri_port,&ch))
-        //     {
-        //         debugprintf("%c",ch);
-        //         if (ch=='K')
-        //         {
-        //             idx = 20;
-        //         }
-        //     }
-        //     else if (tick_iri0==0)
-        //     {
-        //         debugprintf("ATV1 NG [%d]\r\n", ((iri_port==C_IRIDIUM_1) ? 1:2));
-        //         idx = 999;
-        //     }
-        //     break;
 
 
             //ATE0 ------------------------------------------------ATE0
         case 20:
-            //debugstring("\r\n-----ATE0\r\n");
-            debugstring("ATE0 ---> ");
-
-            //PRINT_TIME;
-            iridium_printf("ATE0\r");
-            tick_iri0 = 5000/10;    //5sec
-            idx = 25;
-            break;
-        case 25:
-            //wait 'OK'
-            if (UartGetCh(iri_port,&ch))
-            {
-                //debugprintf("%c",ch);
-                if (( ch=='K') || (ch=='0') )
-                {
-                    debugprintf("[OK]\r\n");
-                    idx = 30;
-
-                    ret_val = 1;
-                    idx = 160;
-                }
-            }
-            else if (tick_iri0==0)
-            {
-                //debugstring("ATE0 NG\r\n");
-                debugprintf("[NG]\r\n");
-                idx = 999;
-            }
-            break;
-
-
-
-
-
-
-            
-
-            //AT&K0 ------------------------------------------------AT&K0
         case 30:
             // ---------------------------------------------------AT+SBDMTA=1
             //  Enable or disable ring indications for SBD Ring Alerts.
             //      1 : Enable ring indication (default).
         case 56:
-            for (i=0;i<10;i++) UartGetCh(iri_port,&ch);
+            while(1) {  if (uart_getch(3, &ch) == 0)   break; }
+
+            // for (i=0;i<10;i++) iri_rcv_get(iri_port,&ch);
             //debugstring("\r\n-----AT+SBDMTA=1\r\n");
-            debugstring("AT+SBDMTA=1 ---> ");
+            debugstring("AT+ZIPCALL=1 ---> ");
 
             //PRINT_TIME;
-            iridium_printf("AT+SBDMTA=1\r");
+            iridium_printf("AT+ZIPCALL=1\r\n");
             tick_iri0 = 5000/10;    //5sec
             idx = 57;
             break;
         case 57:
             //wait 'OK'
-            if (UartGetCh(iri_port,&ch))
+            if (uart_getch(3, &ch))
             {
-                //debugprintf("%c",ch);
+                uart_putch(0, ch);
+            // if (iri_rcv_get(iri_port,&ch))
+            // {
+                // debugprintf("%c",ch);
                 if ((ch=='K') || (ch=='0') )
                 {
-                    debugprintf("[OK]\r\n");
+                    // debugprintf("[OK]\r\n");
                     idx = 60;
 
-#if 0   // TESTONLY
-                    idx = 100;
-#endif
 
 
                     //initial RETRY_CNT:  in case of 'CSQ=0'
@@ -636,19 +587,21 @@ int iridium_Process_1(int a_option)
 
             // AT+CSQ? ------------------------------------------------AT+CSQ?
         case 60:
-            for (i=0;i<10;i++) UartGetCh(iri_port,&ch);
+            while(1) {  if (uart_getch(3, &ch) == 0)   break; }
+                
             //debugprintf("\r\n-----AT+CSQ?\r\n",ch);
-            debugprintf("AT+CSQ? ---> ");
+            debugprintf("AT+ZIPOPEN=1,0,1.214.193.188,5005 ---> ");
 
             //PRINT_TIME;
             resp_idx = 0;
-            iridium_printf("AT+CSQ?\r\n");
-            tick_iri0 = 120000/10;  //120sec
+            iridium_printf("AT+ZIPOPEN=1,0,1.214.193.188,5005\r\n");
+            tick_iri0 = 10000/10;  //10sec
             idx = 65;
             break;
         case 65:
+#if 0
             //wait '+CSQ:'
-            if (UartGetCh(iri_port,&ch))
+            if (iri_rcv_get(iri_port,&ch))
             {
                 iri_response[resp_idx++] = ch;
 
@@ -699,13 +652,6 @@ int iridium_Process_1(int a_option)
                                     parsed_block[i][j++] = ch1;
                                 }
                             }
-                            // debugprintf("%s\r\n",parsed_block[0]);//sbdi
-                            // debugprintf("%s\r\n",parsed_block[1]);//mo-status
-                            // debugprintf("%s\r\n",parsed_block[2]);//mo-msn
-                            // debugprintf("%s\r\n",parsed_block[3]);//mt-status
-                            // debugprintf("%s\r\n",parsed_block[4]);//mt-msn
-                            // debugprintf("%s\r\n",parsed_block[5]);//mt-len
-                            // debugprintf("%s\r\n",parsed_block[6]);//mt-queue
 
                             csq = atoi(parsed_block[1]);
 
@@ -715,15 +661,25 @@ int iridium_Process_1(int a_option)
                     break;
                 }
             }
-            else if (tick_iri0==0)
+            else
+#endif             
+            if (tick_iri0==0)
             {
-                debugstring("\r\n----AT+CSQ timeout!!\r\n");
-                idx = 999;
+                debugstring("\r\n----zipopen..\r\n");
+                idx = 100;
+                // idx = 999;
+            }
+            else {
+                if (iri_rcv_get(iri_port,&ch))
+                {
+                    uart_putch(3, ch);
+                }
             }
             break;
+#if 0            
         case 67:
             //wait csq-value
-            //if (UartGetCh(iri_port,&ch))
+            //if (iri_rcv_get(iri_port,&ch))
             {
                 //debugprintf("%c",ch);
                 // csq_value = iri_response[5];//ch;
@@ -742,7 +698,7 @@ int iridium_Process_1(int a_option)
             }
             break;
         case 69:
-            //if (UartGetCh(iri_port,&ch))
+            //if (iri_rcv_get(iri_port,&ch))
             {
                 //debugprintf("%c",ch);
                 //if ((ch=='K'))
@@ -806,20 +762,20 @@ int iridium_Process_1(int a_option)
 
             // AT+SBDREG  ------------------------------------------------AT+SBDREG
         case 80:
-            for (i=0;i<10;i++) UartGetCh(iri_port,&ch);
+            for (i=0;i<10;i++) iri_rcv_get(iri_port,&ch);
             // debugstring("\r\n-----AT+SBDREG?\r\n");
-            debugstring("AT+SBDREG? ---> ");
+            debugstring("AT+ZIPSEND=1, data \r\n");
 
             //PRINT_TIME;
             //iridium_printf("AT+SBDREG?\r\n");
             resp_idx = 0;
-            iridium_printf("AT+SBDREG?\r\n");
+            iridium_printf("AT+ZIPSEND=1,");
             tick_iri0 = 120000/10;  //120sec
             idx = 85;
             break;
         case 85:
             //wait 'OK'
-            if (UartGetCh(iri_port,&ch))
+            if (iri_rcv_get(iri_port,&ch))
             {
                 //debugprintf("%c",ch);
                 iri_response[resp_idx++] = ch;
@@ -855,34 +811,35 @@ int iridium_Process_1(int a_option)
                 idx = 100;
             }
             break;
-
+#endif
             // AT+SBDWB : data transfer to ISU  ------------------------------------------------AT+SBDWB
         case 100:
-            for (i=0;i<10;i++) UartGetCh(iri_port,&ch);
+            while(1) {  if (uart_getch(3, &ch) == 0)   break; }
+            // for (i=0;i<10;i++) iri_rcv_get(iri_port,&ch);
 
-            debugstring("\r\n-----AT+SBDWB:\r\n");
-            debugstring(newMsg);
-            debugstring("\r\n");
+            debugstring("\r\n-----AT+ZIPSEND=1,data\r\n");
+            // debugstring(newMsg);
+            // debugstring("\r\n");
             //PRINT_TIME;
 
             {
                 //int i;
-                int len = strlen(newMsg);
-                u8 buf[30];
+                // int len = strlen(newMsg);
+                // u8 buf[30];
 
-                sprintf(buf, "AT+SBDWB=%d\r", (len) );
-                debugprintf("%s\r\n",buf);
+                // sprintf(buf, "AT+ZIPSEND=1,", (len) );
+                // debugprintf("%s\r\n",buf);
 
-                iridium_printf(buf);  //34
+                iridium_printf("AT+ZIPSEND=1,");  //34
             }
 
-            tick_iri0 = 120000/10;  //120sec
-            idx = 105;
+            // tick_iri0 = 120000/10;  //120sec
+            idx = 107;
             break;
-
+#if 0
         case 105:
             //wait 0x0A
-            if (UartGetCh(iri_port,&ch))
+            if (iri_rcv_get(iri_port,&ch))
             {
                 debugprintf("%c",ch);
                 //if (ch== 0x0A)
@@ -902,9 +859,10 @@ int iridium_Process_1(int a_option)
                 idx = 999;
             }
             break;
+#endif
 
         case 107:
-            if (tick_iri0==0)
+            // if (tick_iri0==0)
             {
                 u32 chksum=0;
                 char ch;
@@ -920,22 +878,23 @@ int iridium_Process_1(int a_option)
                     //UartPutCh(0, ' ');
 
                     UartPutCh(iri_port, ch);
-                    chksum += ch;
+                    // chksum += ch;
                 }
                 //chksum
                 //PRINTVAR(chksum);
-                unsigned char ch1, ch2;
-                chksum &= 0xFFFF;
-                ch1 = (unsigned char)((chksum / 256));
-                ch2 = (unsigned char)((chksum % 256));
+                // unsigned char ch1, ch2;
+                // chksum &= 0xFFFF;
+                // ch1 = (unsigned char)((chksum / 256));
+                // ch2 = (unsigned char)((chksum % 256));
 
-                UartPutCh(iri_port, ch1);
-                UartPutCh(iri_port, ch2);
+                // UartPutCh(iri_port, ch1);
+                // UartPutCh(iri_port, ch2);
                 UartPutCh(iri_port, '\r');
+                UartPutCh(iri_port, '\n');
 
                 //debugprintf("\r\n ch1(%02X) ch2(%02X) \r\n",ch1,ch2);
 
-                tick_iri0 = 120000/10;  //120sec
+                tick_iri0 = 10000/10;  //120sec
                 idx = 108;
             }
             break;
@@ -943,7 +902,8 @@ int iridium_Process_1(int a_option)
         case 108:
         case 109:
             //wait 'OK'
-            if (UartGetCh(iri_port,&ch))
+#if 0            
+            if (iri_rcv_get(iri_port,&ch))
             {
                 debugprintf("%c",ch);
                 if (ch=='0')
@@ -966,10 +926,12 @@ int iridium_Process_1(int a_option)
                 }
             }
             //else if (tick_iri0==0)
+#endif            
             if (tick_iri0==0)
             {
-                debugstring("-----AT+SBDWB timeout!!\r\n");
-                idx = 999;
+                // debugstring("-----AT+SBDWB timeout!!\r\n");
+                // idx = 999;
+                idx = 112;
             }
             break;
 
@@ -985,16 +947,51 @@ int iridium_Process_1(int a_option)
 
             // AT+SBDI ------------------------------------------------AT+SBDI
         case 112:
-            for (i=0;i<10;i++) UartGetCh(iri_port,&ch);
-            debugprintf("\r\n-AT+SBDIXA-");
+            for (i=0;i<10;i++) iri_rcv_get(iri_port,&ch);
+            debugprintf("\r\n-AT+ZIPCLOSE=1\r\n");
             //PRINT_TIME;
 
             resp_idx=0;
-            iridium_printf("AT+SBDIXA\r\n");
+            iridium_printf("AT+ZIPCLOSE=1\r\n");
             // iridium_printf("AT+SBDIXA\r\n");
-            tick_iri0 = 120000/10;  //120sec
-            idx = 115;
+            tick_iri0 = 5000/10;  //120sec
+            idx = 113;
             break;
+        case 113:
+            for (i=0;i<10;i++) UartGetCh(iri_port,&ch);
+            if (tick_iri0==0)
+            {
+                debugprintf("\r\n-AT+ZIPCALL=0\r\n");
+                //PRINT_TIME;
+
+                resp_idx=0;
+                iridium_printf("AT+ZIPCALL=0\r\n");
+                // iridium_printf("AT+SBDIXA\r\n");
+                tick_iri0 = 5000/10;  //120sec
+                idx = 114;
+
+            }
+            break;
+
+        case 114:
+            for (i=0;i<10;i++) UartGetCh(iri_port,&ch);
+            if (tick_iri0==0)
+            {
+                debugprintf("\r\nAT+CFUN=1,1\r\n");
+                //PRINT_TIME;
+
+                resp_idx=0;
+                iridium_printf("AT+CFUN=1,1\r\n");
+                // iridium_printf("AT+SBDIXA\r\n");
+                tick_iri0 = 5000/10;  //120sec
+                idx = 999;
+
+            }
+            break;
+
+
+
+
         case 115:
             //wait '+SBDI:'
             if (UartGetCh(iri_port,&ch))
@@ -1219,6 +1216,7 @@ int iridium_Process_1(int a_option)
             break;
 
         case 999:
+PRINTVAR(idx);            
             //timeout error
             ret_val = 2;
 
@@ -1241,8 +1239,11 @@ void task_iri_rcv(void)
     char ch;
 
     //-----1-----------------------------------------
-    if (uart_getch(C_IRIDIUM_1,&ch))
+    if (uart_getch(PORT_WM215,&ch))
+    
     {
+        uart_putch(PORT_WM215,ch);
+        
         iri1_rcv_q_put(ch);
         switch(idx1)
         {
@@ -1303,14 +1304,14 @@ ALIGN4 char iri2_q_buf[Q_IRI2_MAX];
 int iri_rcv_get(int no, char *ch)
 {
     char tmp;
-    if (no == C_IRIDIUM_1)
+    // if (no == C_IRIDIUM_1)
     {
         tmp = iri1_rcv_q_get();
     }
-    else
-    {
-        tmp = iri2_rcv_q_get();
-    }
+    // else
+    // {
+    //     tmp = iri2_rcv_q_get();
+    // }
 
     if (tmp != -1)
     {
@@ -1443,6 +1444,7 @@ int iridium_init(int a_option)
 
         case 450:
             resp_idx = 0;
+            while(1) {  if (uart_getch(3, &ch) == 0)   break; }
             debugprintf("AT ---> ");
             iridium_printf("AT\r");
             tick_iri0 = 1000/10;    //1000/10;   //1sec
@@ -1450,14 +1452,17 @@ int iridium_init(int a_option)
             break;
         case 500:
             //wait 'OK'
-            if (UartGetCh(iri_port,&ch))
+            if (uart_getch(3, &ch))
             {
+                uart_putch(0, ch);
+            // if (UartGetCh(iri_port,&ch))               
+            // {
                 // debugprintf("%c", ch);
-                iri_response[resp_idx++] = ch;
+                // iri_response[resp_idx++] = ch;
                 if ( (ch=='K') || (ch=='0') )
                 {
-                    debugprintf("[OK]\r\n");
-                    idx = 505;
+                    // debugprintf("[OK]\r\n");
+                    idx = 550;
                 }
             }
             if (tick_iri0==0)
@@ -1480,6 +1485,7 @@ int iridium_init(int a_option)
 
         case 550:
             //PRINT_TIME;
+            while(1) {  if (uart_getch(3, &ch) == 0)   break; }
             debugprintf("ATV0 ---> ");
 
             resp_idx = 0;
@@ -1491,13 +1497,16 @@ int iridium_init(int a_option)
 
         case 2:
             //wait 'OK'
-            if (UartGetCh(iri_port,&ch))
+            if (uart_getch(3, &ch))
             {
-                iri_response[resp_idx++] = ch;
+                uart_putch(0, ch);
+            // if (UartGetCh(iri_port,&ch))
+            // {
+                // iri_response[resp_idx++] = ch;
                 // debugprintf("%c",ch);
                 if ( (ch=='K') || (ch=='0'))
                 {
-                    debugprintf("[OK]\r\n");
+                    // debugprintf("[OK]\r\n");
                     idx = 20;
                 }
             }
@@ -1510,6 +1519,7 @@ int iridium_init(int a_option)
 
             //ATE0 ------------------------------------------------ATE0
         case 20:
+            while(1) {  if (uart_getch(3, &ch) == 0)   break; }
             debugstring("ATE0 ---> ");
 
             //PRINT_TIME;
@@ -1519,12 +1529,15 @@ int iridium_init(int a_option)
             break;
         case 25:
             //wait 'OK'
-            if (UartGetCh(iri_port,&ch))
+            if (uart_getch(3, &ch))
             {
+                uart_putch(0, ch);
+            // if (UartGetCh(iri_port,&ch))
+            // {
                 // debugprintf("%c",ch);
                 if (( ch=='K') || (ch=='0') )
                 {
-                    debugprintf("[OK]\r\n");
+                    // debugprintf("[OK]\r\n");
                     idx = 30;
                 }
             }

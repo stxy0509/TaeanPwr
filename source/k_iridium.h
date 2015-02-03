@@ -2,14 +2,15 @@
 
 
 #define C_IRIDIUM_1     3
-#define C_IRIDIUM_2     2
+#define C_IRIDIUM_2     3
 
+#define PORT_WM215		3
 
 //-----------------------------------------------
 #ifdef __K_IRIDIUM_C__
 //-----------------------------------------------
 
-//int iri_port = C_IRIDIUM_1;
+// int iri_port = C_IRIDIUM_1;
 int iri_port = C_IRIDIUM_2;
 
 

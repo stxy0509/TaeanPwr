@@ -109,7 +109,9 @@ int main()
 				m_get_time_pos_proc();		// main_step_100
 
 			case 200:
-				m_sensor_proc();
+				// m_sensor_proc();
+				task_ct3919();		// Alti-meter
+				task_gps();
 
 				if (main_step_200 == 1)
 				{
@@ -182,19 +184,9 @@ void sensor_q_init(void)
 {
 	debugstring("\r\ninit ");
 
- //    aio_q_init();		debugstring("AIO ");
- //    mose_q_init();		debugstring("MOSE ");
-     ct_q_init();		debugstring("CT ");
- //    dcs_q_init();		debugstring("DCS ");
-
+	ct_q_init();		debugstring("CT ");
     gps_q_init();		debugstring("GPS ");
- //    atm1_q_init();		debugstring("ATM1 ");
- //    atm2_q_init();		debugstring("ATM2 ");
- //    hmp155_q_init();	debugstring("HMP ");
- //    ptb_q_init();		debugstring("PTB ");
- //    // SHOCK, internal TEMP/HUMI
-	// shock_q_init();		debugstring("SHOCK ");
-	// iri1_rcv_q_init();	debugstring("IRI1 ");
+	iri1_rcv_q_init();	debugstring("WM-215 ");
 	// iri2_rcv_q_init();	debugstring("IRI2 ");
 	debugstring(" queue..\r\n");
 }
@@ -696,21 +688,8 @@ void m_boot_proc(void)
 
 void m_sensor_proc(void)
 {
-	// task_aio();
-	// task_mose();
-	// task_calc();
-
 	task_ct3919();		// Alti-meter
-	// task_dcs();
-
 	task_gps();
-	// task_atm1();
-	// task_atm2();
-	// task_hmp155();
-	// task_ptb210();
-	// Task_sh11();
-	// task_shock();
-
 }
 
 
