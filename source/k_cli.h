@@ -7,7 +7,6 @@
 
 #endif
 
-//#define UartGetCh	uart_getch
 #define UartGetCh	iri_rcv_get
 
 #define SH_PIN_CLK_H()		 (*R_GPOHIGH(6) |= (1<<3) )

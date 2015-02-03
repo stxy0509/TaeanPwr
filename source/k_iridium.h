@@ -61,4 +61,6 @@ int iri_rcv_get(int no, char *ch);
 u32 get_iri1_rcv_len(void);
 u32 get_iri2_rcv_len(void);
 
+int wm_rcv_get(char *ch);
+void wm_rcv_q_init(void);
 

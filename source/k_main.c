@@ -109,23 +109,23 @@ int main()
 				m_get_time_pos_proc();		// main_step_100
 
 			case 200:
-				// m_sensor_proc();
 				task_ct3919();		// Alti-meter
 				task_gps();
 
 				if (main_step_200 == 1)
 				{
 					m_time_orinted_evt_proc();
-					m_env_orinted_evt_proc();
+					// m_env_orinted_evt_proc();
 			    	m_system_robust_proc();		// heartbeat, watchdog
 
-
-					m_iridium_proc();
 				    task_iridium();
+					// m_iridium_proc();
 				    task_iri_rcv();
 				}
 				break;
 		}
+        task_cmdshell();
+	    // task_sysMCU();
 
 #if 0 	/* WM-211 */
         {
@@ -169,8 +169,6 @@ int main()
         }
 #endif
 
-        task_cmdshell();
-	    // task_sysMCU();
 	}
 }
 
@@ -186,7 +184,7 @@ void sensor_q_init(void)
 
 	ct_q_init();		debugstring("CT ");
     gps_q_init();		debugstring("GPS ");
-	iri1_rcv_q_init();	debugstring("WM-215 ");
+	wm_rcv_q_init();	debugstring("WM-215 ");
 	// iri2_rcv_q_init();	debugstring("IRI2 ");
 	debugstring(" queue..\r\n");
 }
@@ -1074,13 +1072,6 @@ void m_time_orinted_evt_proc(void)
 
 
 
-void m_env_orinted_evt_proc(void)
-{
-
-}
-
-void m_iridium_proc(void)
-{}
 
 
 

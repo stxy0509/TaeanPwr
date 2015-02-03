@@ -1367,6 +1367,11 @@ void cmd_sbw(void)
 */}
 
 
+static void cmd_at(void)
+{
+    print_string (3, "AT\r\n");
+}
+
 static void cmd_mv(void)
 {
     if (argc<2)
@@ -2969,6 +2974,7 @@ void App_TestShInit ()
 	//testSh_RegisterCmd ("hex", NULL, "hex --- command line radix hexa\n");			// 2
 	//testSh_RegisterCmd ("dec", NULL, "dec --- command line radix decimal\n");		// 3
 
+    testSh_RegisterCmd ("at", cmd_at,    "temp command aa\r\n"); //
     testSh_RegisterCmd ("mv", cmd_mv,    "temp command aa\r\n"); //
     testSh_RegisterCmd ("bb", cmd_bb,    "temp command bb\r\n"); //
     testSh_RegisterCmd ("cc", cmd_cc,    "temp command cc\r\n"); //
