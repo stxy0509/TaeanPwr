@@ -502,10 +502,14 @@ int iridium_Process_1(int a_option)
                     // debugprintf("[OK]\r\n");
                     idx = 60;
 
-
-
                     //initial RETRY_CNT:  in case of 'CSQ=0'
                     retry_cnt = 0;
+                }
+                else if ((ch == 'O') || (ch == '4') ) // ERROR
+                {
+                    // idx = 114;
+                    idx = 60;
+
                 }
             }
             else if (tick_iri0==0)
@@ -539,9 +543,10 @@ int iridium_Process_1(int a_option)
                 {
                     idx = 100;
                 }
-                else if ((ch=='R') )         // ERROR
+                else if ((ch=='R') || (ch == '4')  )         // ERROR
                 {
-                    idx = 999;
+                    // idx = 999;
+                    idx = 100;
                 }
             }
             else if (tick_iri0==0)
@@ -560,50 +565,63 @@ int iridium_Process_1(int a_option)
             //PRINT_TIME;
 
             resp_idx = 0;
-            iridium_printf("AT+ZIPSEND=1,");  //34
+            // iridium_printf("AT+ZIPSEND=1,4542E10790D045AEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCE81FB601F97475C0000207ED807E5D1D70603081FB601F97475C180C207ED807E5D1D70542A81FB601F97475C150AA07ED807E5D1D70542A81FB601F97475C0000207ED807E5D1D70000081FB601F97475C0000207ED807E5D1D70000081FB601F97475C0000207ED807E5D1D70542A81FB601F97475C180C207ED807E5D1D70603081FB601F97475C0000207ED807E5D1D70000081FB601F97475C0000207ED807E5D1D706C3681FB601F97475C1B0DA07ED807E5D1D706C3681FB601F97475C1B0DA07ED807E5D1D70000081FB601F97475C00003D8CCCCCCCC\r\n");  //34
 
             {
                 u32 chksum=0;
                 char ch;
+                
                 int len = strlen(newMsg);
 
-                //UartPutCh(0, '\r');
-                //UartPutCh(0, '\n');
+                debugprintf("len= %d\r\n", len);
 
-                for (i=0; i<len; i++)
+                iridium_printf("AT+ZIPSEND=1,");  //34
+
+                for (i=0; i<len+1; i++)
                 {
                     ch = newMsg[i];
                     uart_putch(PORT_WM215, ch);
+                    uart_putch(0, ch);
                 }
-                UartPutCh(iri_port, '\r');
-                UartPutCh(iri_port, '\n');
+                iridium_printf("\r\n");
 
-                tick_iri0 = 10000/10;  //120sec
+                tick_iri0 = 20000/10;  //120sec
                 idx = 108;
             }
             break;
 
         case 108:
-        case 109:
+            //wait 'OK'
+            if (wm_rcv_get(&ch))
+            {
+                uart_putch(0, ch);
+
+                if ((ch==',') )         // +ZIPSEND: 1,1
+                {
+                    idx = 109;
+                }
+                else if ((ch=='O') || (ch == '4')  )         // ERROR
+                {
+                    idx = 999;
+                }
+            }
+            else if (tick_iri0==0)
+            {
+                debugprintf("[NG]\r\n");
+                idx = 999;
+            }
+            break;
+   
+       case 109:
             if (tick_iri0==0)
             {
                 // debugstring("-----AT+SBDWB timeout!!\r\n");
-                // idx = 999;
-                idx = 112;
+                idx = 999;
+                // idx = 112;
             }
             break;
 
         case 110:
-            if (tick_iri0==0)
-            {
-                debugprintf("\r\ndelay time(5sec) for start AT+SBDI\r\n");
-
-                retry_cnt = 0;
-                idx = 112;
-            }
-            break;
-
-            // AT+SBDI ------------------------------------------------AT+SBDI
         case 112:
             for (i=0;i<10;i++) iri_rcv_get(iri_port,&ch);
             debugprintf("\r\n-AT+ZIPCLOSE=1\r\n");

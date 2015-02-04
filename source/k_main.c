@@ -118,16 +118,19 @@ int main()
 					// m_env_orinted_evt_proc();
 			    	m_system_robust_proc();		// heartbeat, watchdog
 
+#ifndef  MODEM_TEST_ONLY	 	/* WM-211 */
 				    task_iridium();
-					// m_iridium_proc();
 				    task_iri_rcv();
+#endif				    
 				}
 				break;
 		}
+#ifndef  MODEM_TEST_ONLY	 	/* WM-211 */
         task_cmdshell();
 	    // task_sysMCU();
+#endif				    
 
-#if 0 	/* WM-211 */
+#ifdef  MODEM_TEST_ONLY	 	/* WM-211 */
         {
         	char ch;
 	        if (uart_getch(3, &ch))
@@ -496,7 +499,7 @@ void measure_BAT_leval(void)
 		{
 			/* code */
 			val += ADC_Result;
-			//debugprintf("*** BAT : %x %x\r\n", ADC_Result, val);
+			debugprintf("*** BAT : %x %x\r\n", ADC_Result, val);
 			delayus(200);
 			if (count == (21+16) )
 			{

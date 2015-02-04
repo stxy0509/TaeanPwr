@@ -103,3 +103,4 @@
 // #define DEBUG_SENSOR_SHOCK          // Shock sensor test
 // #define DEBUG_SPEED_BOOT            // booting time : 120sec --> 3sec
 // #define RTC_INIT_AT_BOOT            // booting time : rtc init
+// #define MODEM_TEST_ONLY		           // booting time : rtc init
