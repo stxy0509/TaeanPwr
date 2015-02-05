@@ -435,8 +435,8 @@ int MODEM_Process(void)
         if (uart_getch(PORT_WM215,&ch))
         {
             iri_response[resp_idx++] = ch;
-
-#if 1            
+            uart_putch(0, ch);
+#if 0            
             debugprintf("%02X ", ch);
             if (ch == 0x0A)
             {
@@ -493,7 +493,7 @@ int MODEM_Process(void)
             {
                 if (iri_response[3] == 'K')
                 {
-                    debugprintf("-OK-\r\n");
+                    // debugprintf("-OK-\r\n");
                     s_stage++;
                 }
                 tick_iri0 = TM_1SEC;
@@ -518,7 +518,7 @@ int MODEM_Process(void)
                         m_stage = 2010;
                         break;
                     default:
-                        m_stage = 2500;
+                        m_stage = 3000;
                         break;
                         break;
                 }
@@ -526,13 +526,142 @@ int MODEM_Process(void)
             break;
 
 
-        // ----- INIT ------------------------------------------------
-        case 2500:
+        // ----- +ZIPCALL? (chk Data Call)---------------------------
+        case 3000:
+            s_stage = 0;
+            m_stage = 3010;
             break;
 
-        // ----- INIT ------------------------------------------------
-        case 3000:
+        case 3010:
+            resp_idx = 0;
+
+            iridium_printf("AT+ZIPCALL?\r\n");
+            debugprintf("AT+ZIPCALL? ---> ");
+
+            tick_iri0 = TM_20SEC;
+            m_stage = 3020;
             break;
+        
+        case 3020:
+            //wait 'OK'
+            if (resp_idx > 14)
+            {
+                if (iri_response[12] == '1')
+                {
+                    //debugprintf("-OK-\r\n");
+                    s_stage = 0;
+                }
+                else
+                {
+                    s_stage = 1;
+                }
+                tick_iri0 = TM_1SEC;
+                m_stage = 3030;
+            }
+            if (tick_iri0==0)
+            {
+                // over 20 sec
+                m_stage = 2000;
+            }
+            break;
+
+        case 3030:
+            if (tick_iri0==0)
+            {
+                switch(s_stage)
+                {
+                    case 0:
+                        // +zipcall = 1
+                        m_stage = 4000; 
+                        break;
+                    default:
+                        m_stage = 3040;
+                        break;
+                }
+            }
+            break;
+
+
+        // ----- +ZIPCALL=1 (setup Data Call)-------------------------
+        case 3040:
+            resp_idx = 0;
+
+            iridium_printf("AT+ZIPCALL=1\r\n");
+            debugprintf("AT+ZIPCALL=1 ---> ");
+
+            tick_iri0 = TM_20SEC;
+            m_stage = 3020;
+            break;
+        
+
+
+        // ----- +ZIPSTAT=1 (chk socket opened)------------------------
+        case 4000:
+            s_stage = 0;
+            m_stage = 4010;
+            break;
+
+        case 4010:
+            resp_idx = 0;
+
+            iridium_printf("AT+ZIPSTAT=1\r\n");
+            debugprintf("AT+ZIPSTAT=1 ---> ");
+
+            tick_iri0 = TM_20SEC;
+            m_stage = 4020;
+            break;
+        
+        case 4020:
+            //wait 'OK'
+            if (resp_idx > 20)
+            {
+                debugprintf("socket is ");
+                if (iri_response[14] == '1')
+                {
+                    debugprintf("opened.\r\n");
+                    s_stage = 0;
+                }
+                else
+                {
+                    debugprintf("closed.\r\n");
+                    s_stage = 1;
+                }
+                tick_iri0 = TM_1SEC;
+                m_stage = 4030;
+            }
+            if (tick_iri0==0)
+            {
+                // over 20 sec
+                m_stage = 2000;
+            }
+            break;
+
+        case 4030:
+            if (tick_iri0==0)
+            {
+                switch(s_stage)
+                {
+                    case 0:
+                        m_stage = 5000;     // opened
+                        break;
+                    default:
+                        m_stage = 6000;     // closed
+                        break;
+                }
+            }
+            break;
+
+
+        // ----- +ZIPCALL=1 (setup Data Call)-------------------------
+
+        case 5000:
+            break;
+
+
+
+        case 6000:
+            break;
+        
     }
 }
 
