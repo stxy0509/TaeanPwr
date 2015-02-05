@@ -435,8 +435,9 @@ int MODEM_Process(void)
         if (uart_getch(PORT_WM215,&ch))
         {
             iri_response[resp_idx++] = ch;
+#if 1            
             uart_putch(0, ch);
-#if 0            
+#else            
             debugprintf("%02X ", ch);
             if (ch == 0x0A)
             {
@@ -595,6 +596,8 @@ int MODEM_Process(void)
         
 
 
+
+
         // ----- +ZIPSTAT=1 (chk socket opened)------------------------
         case 4000:
             s_stage = 0;
@@ -652,16 +655,162 @@ int MODEM_Process(void)
             break;
 
 
-        // ----- +ZIPCALL=1 (setup Data Call)-------------------------
+        // ----- +ZIPSEND ----------------------------
 
-        case 5000:
+        case 5000:      //send
+            s_stage = 0;
+            m_stage = 5010;
             break;
 
+        case 5010:
+            resp_idx = 0;
 
+            debugprintf("len= %d\r\n", strlen(newMsg));
 
-        case 6000:
+            iridium_printf("AT+ZIPSEND=1,");  //34
+            debugprintf("AT+ZIPSEND=1,data ---> ");  //34
+            iridium_printf(newMsg);
+
+            tick_iri0 = TM_20SEC;
+            m_stage = 5020;
             break;
         
+        case 5020:
+            //wait 'OK'
+            if (resp_idx > 20)
+            {
+                if (iri_response[3] == 'K')
+                {
+                    // send ok
+                    s_stage = 0;
+                }
+                else
+                {
+                    // dens fail
+                    s_stage = 1;
+                }
+                tick_iri0 = TM_1SEC;
+                m_stage = 5030;
+            }
+            if (tick_iri0==0)
+            {
+                // over 20 sec
+                m_stage = 2000;
+            }
+            break;
+
+        case 5030:
+            if (tick_iri0==0)
+            {
+                switch(s_stage)
+                {
+                    case 0:
+                        q_pop();
+                        debugprintf("q_pop --> Q[%d]\r\n",is_q_dataNum());
+
+                        m_stage = 7000;
+                        break;
+                    default:
+                        m_stage = 2000;     
+                        break;
+                }
+            }
+            break;
+
+
+
+
+
+
+
+        // ----- +ZIPOPEN=1,0,1.214.193.188,2222----------------------
+        case 6000:      // open
+            s_stage = 0;
+            m_stage = 6010;
+            break;
+
+        case 6010:
+            resp_idx = 0;
+
+            iridium_printf("AT+ZIPOPEN=1,0,1.214.193.188,2222\r\n");
+            debugprintf("AT+ZIPOPEN=1,0,1.214.193.188,2222 ---> ");
+
+            tick_iri0 = TM_20SEC;
+            m_stage = 6020;
+            break;
+        
+        case 6020:
+            //wait 'OK'
+            if (resp_idx > 20)
+            {
+                debugprintf("socket is ");
+                if (iri_response[14+6] == '1')
+                {
+                    debugprintf("opened.\r\n");
+                    s_stage = 0;
+                }
+                else
+                {
+                    debugprintf("closed.\r\n");
+                    s_stage = 1;
+                }
+                tick_iri0 = TM_1SEC;
+                m_stage = 6030;
+            }
+            if (tick_iri0==0)
+            {
+                // over 20 sec
+                m_stage = 2000;
+            }
+            break;
+
+        case 6030:
+            if (tick_iri0==0)
+            {
+                switch(s_stage)
+                {
+                    case 0:
+                        m_stage = 7000;     // opened
+                        break;
+                    default:
+                        m_stage = 6000;     // closed
+                        break;
+                }
+            }
+            break;
+
+        case 7000:
+            if ( (0 == is_q_empty()) )    // not empty...
+            {
+                if (get_fgFW_updating())
+                    return;
+
+                debugstring(    "-------------------------------\r\n");
+                debugstring(    "     Send msg \r\n");
+                debugstring(    "-------------------------------\r\n");
+
+                // if (fgMsgC_ready==1)
+                // {
+                //     int i;
+                //     // strcpy(newMsg, s_msg_c);
+                //     for (i=0;i<MSG_LENGTH; i++)
+                //     {
+                //         newMsg[i] = s_msg_c[i];
+                //     }
+                // }
+                // else
+                {
+                    int i;
+                    q_getData_only();
+                    // strcpy(newMsg, s_msg);
+                    for (i=0;i<MSG_LENGTH; i++)
+                    {
+                        newMsg[i] = s_msg[i];
+                    }
+                }
+                m_stage = 2000;
+            }
+            break;
     }
 }
 

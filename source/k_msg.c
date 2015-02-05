@@ -605,7 +605,6 @@ char * make_msg_k1(void)
         s_msg2[564]  = 0xCC;
         s_msg2[565]  = 0xCC;
         s_msg2[566]  = 0xCC;
-        s_msg2[567]  = 0xCC;
 
 
     }
@@ -616,7 +615,7 @@ char * make_msg_k1(void)
 
         j = 0;
 
-        for (i=0;i<567; i++)
+        for (i=0; i<567; i++)
         {
             ch = s_msg2[i];
             // if ( (ch==0) || (ch==0x0A) || (ch==0x0D) )
@@ -629,12 +628,14 @@ char * make_msg_k1(void)
                 // debugprintf("%X",ch);
                 sprintf(tbuf,"%02X", ch);
                 // modem_printf(tbuf);
-                s_msg[j++] = tbuf[0];
-                s_msg[j++] = tbuf[1];
+                s_msg[i*2+0] = tbuf[0];
+                s_msg[i*2+1] = tbuf[1];
             }
 
         }
-        s_msg[--j] = '\0';
+        s_msg[567*2+0] = '\r';
+        s_msg[567*2+1] = '\n';
+        s_msg[568*2+0] = '\0';
 
     }
 
