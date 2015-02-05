@@ -119,8 +119,10 @@ int main()
 			    	m_system_robust_proc();		// heartbeat, watchdog
 
 #ifndef  MODEM_TEST_ONLY	 	/* WM-211 */
-				    task_iridium();
-				    task_iri_rcv();
+				    // task_iridium();
+				    // task_iri_rcv();
+
+				    MODEM_Process();
 #endif				    
 				}
 				break;

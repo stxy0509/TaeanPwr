@@ -32,6 +32,8 @@ int iridium_Process_1(int a_option);
 // void iridium_powerON(void);
 // void iridium_powerOFF(void);
 
+int MODEM_Process(void);
+
 void task_iridium(void);
 void task_iri_rcv(void);
 

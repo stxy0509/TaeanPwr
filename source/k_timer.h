@@ -7,6 +7,7 @@
 #define TM_5SEC     (5000/10)
 #define TM_8SEC     (8000/10)
 #define TM_10SEC    (10000/10)
+#define TM_20SEC    (20000/10)
 #define TM_30SEC    (30000/10)
 
 
