@@ -384,6 +384,9 @@ void make_msg_second(void)
 {
     int i,j;
 
+    static int fg_valid_before = 1;
+    static int sec_before = 99;
+
     i = rtc_time.sec;
 
     echoData[i].lat_d  = get_gps_lat_d();
@@ -524,19 +527,60 @@ char * make_msg_k1(void)
         {
             if (echoData[i].gps_valid ==0) 
             {
-                echoData[i].lat_d  = 90;//32;
-                echoData[i].lat_md = 59;//12;
-                echoData[i].lat_mf = 9999;//3456;
+                if ( (i==0) & (echoData[i+1].gps_valid ==1) ) 
+                {
+                    echoData[i].lat_d  = echoData[i+1].lat_d;
+                    echoData[i].lat_md = echoData[i+1].lat_md;
+                    echoData[i].lat_mf = echoData[i+1].lat_mf;
 
-                echoData[i].lon_d  = 180;//126;
-                echoData[i].lon_md = 59;//23;
-                echoData[i].lon_mf = 9999;//4567;
+                    echoData[i].lon_d  = echoData[i+1].lon_d;
+                    echoData[i].lon_md = echoData[i+1].lon_md;
+                    echoData[i].lon_mf = echoData[i+1].lon_mf;
 
+                    debugprintf("adjust-insert....\r\n");
+                }
+                else if (echoData[i-1].gps_valid ==1) 
+                {
+                    echoData[i].lat_d  = echoData[i-1].lat_d;
+                    echoData[i].lat_md = echoData[i-1].lat_md;
+                    echoData[i].lat_mf = echoData[i-1].lat_mf;
+
+                    echoData[i].lon_d  = echoData[i-1].lon_d;
+                    echoData[i].lon_md = echoData[i-1].lon_md;
+                    echoData[i].lon_mf = echoData[i-1].lon_mf;
+
+                    debugprintf("adjust-insert....\r\n");
+                }
+                else
+                {
+                    echoData[i].lat_d  = 90;//32;
+                    echoData[i].lat_md = 59;//12;
+                    echoData[i].lat_mf = 9999;//3456;
+
+                    echoData[i].lon_d  = 180;//126;
+                    echoData[i].lon_md = 59;//23;
+                    echoData[i].lon_mf = 9999;//4567;
+
+                }
             }
+
             if (echoData[i].depth_valid ==0)
             {
-                echoData[i].depth = 999;//200+i;  //get_ct_cond();
-                echoData[i].temp  = 511;//511;//get_ct_temp();
+                if ( (i==0) &  (echoData[i+1].depth_valid ==1)  )
+                {
+                    echoData[i].depth  = echoData[i+1].depth;
+                    echoData[i].temp = echoData[i+1].temp;
+                }
+                else if (echoData[i-1].depth_valid ==1) 
+                {
+                    echoData[i].depth  = echoData[i-1].depth;
+                    echoData[i].temp = echoData[i-1].temp;
+                }
+                else
+                {
+                    echoData[i].depth = 999;//200+i;  //get_ct_cond();
+                    echoData[i].temp  = 511;//511;//get_ct_temp();
+                }
             } 
 
 
