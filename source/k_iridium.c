@@ -732,9 +732,13 @@ int MODEM_Process(void)
         case 6010:
             resp_idx = 0;
 
+#if 0
             iridium_printf("AT+ZIPOPEN=1,0,1.214.193.188,2222\r\n");
             debugprintf("AT+ZIPOPEN=1,0,1.214.193.188,2222 ---> ");
-
+#else
+            iridium_printf("AT+ZIPOPEN=1,0,1.214.193.188,5005\r\n");
+            debugprintf("AT+ZIPOPEN=1,0,1.214.193.188,5005 ---> ");
+#endif
             tick_iri0 = TM_20SEC;
             m_stage = 6020;
             break;
@@ -1182,12 +1186,13 @@ int iridium_Process_1(int a_option)
             // AT+CSQ? ------------------------------------------------AT+CSQ?
         case 60:
             wm_rcv_q_init();
-            debugprintf("AT+ZIPOPEN=1,0,1.214.193.188,2222 ---> ");
+            // debugprintf("AT+ZIPOPEN=1,0,1.214.193.188,2222 ---> ");
+            debugprintf("AT+ZIPOPEN=1,0,1.214.193.188,5005 ---> ");
 
             //PRINT_TIME;
             resp_idx = 0;
-            // iridium_printf("AT+ZIPOPEN=1,0,1.214.193.188,5005\r\n");
-            iridium_printf("AT+ZIPOPEN=1,0,1.214.193.188,2222\r\n");
+            iridium_printf("AT+ZIPOPEN=1,0,1.214.193.188,5005\r\n");
+            // iridium_printf("AT+ZIPOPEN=1,0,1.214.193.188,2222\r\n");
             tick_iri0 = 20000/10;  //10sec
             idx = 62;
             break;

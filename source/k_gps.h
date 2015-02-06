@@ -14,6 +14,15 @@ u32 get_gps_q_len(void);
 
 
 void get_gps_time( rtcTime *a_time);
+
+int get_gps_lat_d(void);
+int get_gps_lat_m(void);
+int get_gps_lat_mf(void);
+int get_gps_lon_d(void);
+int get_gps_lon_m(void);
+int get_gps_lon_mf(void);
+
+
 double pos_distance(double P1_latitude/*C10*/, double P1_longitude/*C11*/, double P2_latitude/*C12*/, double P2_longitude/*C13*/);
 
 

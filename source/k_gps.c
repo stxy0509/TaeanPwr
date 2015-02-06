@@ -326,6 +326,34 @@ void clr_gps_valid()
     is_gprmc_valid = 0;
 }
 
+int lat_d, lat_m, lat_mf;
+int lon_d, lon_m, lon_mf;
+
+int get_gps_lat_d(void)
+{
+    return lat_d;   //(atoi(parsed_block[3][0])*  10 + atoi(parsed_block[3][1])); 
+}
+int get_gps_lat_m(void)
+{
+    return lat_m;   //( atoi(parsed_block[3][2])*  10 + atoi(parsed_block[3][3])); 
+}
+int get_gps_lat_mf(void)
+{
+    return lat_mf;  //(atoi(parsed_block[3][5])*1000 + atoi(parsed_block[3][6])*100 + atoi(parsed_block[3][7])*10 + atoi(parsed_block[3][8])); 
+}
+int get_gps_lon_d(void)
+{
+    return lon_d;   //( atoi(parsed_block[5][0])*100 + atoi(parsed_block[5][1])*10 + atoi(parsed_block[5][2]) ); 
+}
+int get_gps_lon_m(void)
+{
+    return lon_m;   //(atoi(parsed_block[5][3])*  10 + atoi(parsed_block[5][4])); 
+}
+int get_gps_lon_mf(void)
+{
+    return lon_mf;  //(atoi(parsed_block[5][6])*1000 + atoi(parsed_block[5][7])*100 + atoi(parsed_block[5][8])*10 + atoi(parsed_block[5][9])); 
+}
+
 
 /*
     0      1         2          3 4           5 6 7 8     9       11
@@ -461,11 +489,32 @@ void task_gps(void)
 
                                 {
                                     // latitude
-                                    gps.latitude = (u32)(convert_latitude(parsed_block[3])*100000);
-                                    gps.longitude = (u32)(convert_longitude(parsed_block[5])*100000);
-                                    sprintf(gps.s_lat, "%7d", gps.latitude);
-                                    sprintf(gps.s_lon, "%8d", gps.longitude);
-                                    //t1 = atof(parsed_block[3]);
+                                    // gps.latitude = (u32)(convert_latitude(parsed_block[3])*100000);
+                                    // gps.longitude = (u32)(convert_longitude(parsed_block[5])*100000);
+                                    // sprintf(gps.s_lat, "%7d", gps.latitude);
+                                    // sprintf(gps.s_lon, "%8d", gps.longitude);
+                                    //t1 = iatof(parsed_block[3]);
+                                    int i;
+                                    char tbuf[6];
+                                    for(i=0;i<2;i++)    tbuf[i] = parsed_block[3][i];   tbuf[2]='\0';       lat_d  =  atoi(tbuf);
+                                    for(i=0;i<2;i++)    tbuf[i] = parsed_block[3][i+2];   tbuf[2]='\0';     lat_m  =  atoi(tbuf);
+                                    for(i=0;i<4;i++)    tbuf[i] = parsed_block[3][i+5];   tbuf[4]='\0';     lat_mf =  atoi(tbuf);
+
+                                    for(i=0;i<3;i++)    tbuf[i] = parsed_block[5][i];   tbuf[3]='\0';       lon_d  =  atoi(tbuf);
+                                    for(i=0;i<2;i++)    tbuf[i] = parsed_block[5][i+3];   tbuf[2]='\0';     lon_m  =  atoi(tbuf);
+                                    for(i=0;i<4;i++)    tbuf[i] = parsed_block[5][i+6];   tbuf[4]='\0';     lon_mf =  atoi(tbuf);
+
+                                    // //parsed_block[3][0])*  10 + atoi(parsed_block[3][1])); 
+                                    // lat_m  = ( atoi(parsed_block[3][2])*  10 + atoi(parsed_block[3][3])); 
+                                    // lat_mf = (atoi(parsed_block[3][5])*1000 + atoi(parsed_block[3][6])*100 + atoi(parsed_block[3][7])*10 + atoi(parsed_block[3][8])); 
+                                    // lon_d  = ( atoi(parsed_block[5][0])*100 + atoi(parsed_block[5][1])*10 + atoi(parsed_block[5][2]) ); 
+                                    // lon_m  = (atoi(parsed_block[5][3])*  10 + atoi(parsed_block[5][4])); 
+                                    // lon_mf = (atoi(parsed_block[5][6])*1000 + atoi(parsed_block[5][7])*100 + atoi(parsed_block[5][8])*10 + atoi(parsed_block[5][9])); 
+
+                                    // debugprintf("lat= %d %d %d\r\n", lat_d, lat_m, lat_mf);
+                                    // debugprintf("%s \r\n", parsed_block[3]);
+                                    // debugprintf("%s \r\n", parsed_block[5]);
+
                                 }
 
                                 if (tmr_GPS_data_display >= 60)  //20)
@@ -475,7 +524,7 @@ void task_gps(void)
                                     // debugstring("\r\n");
                                     //PRINT_TIME;
                                     // debugstring(gps_line);
-                                    debugprintf(" **** GPS: lat : %7d,  longi : %8u\r\n", gps.latitude, gps.longitude);
+                                    // debugprintf(" **** GPS: lat : %7d,  longi : %8u\r\n", gps.latitude, gps.longitude);
 
                                     if (sdc_read_detectPin()==SDC_INSERTED)
                                     {
@@ -566,6 +615,8 @@ void get_gps_time( rtcTime *a_time)
 {
     *a_time = gps_time;
 }
+
+
 
 
 #define PI  ((float)3.1415926535898) /* (float)(4.0*atan(1.0)); */

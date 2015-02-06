@@ -386,20 +386,26 @@ void make_msg_second(void)
 
     i = rtc_time.sec;
 
-    echoData[i].lat_d  = 32;
-    echoData[i].lat_md = 12;
-    echoData[i].lat_mf = 3456;
+    echoData[i].lat_d  = get_gps_lat_d();
+    echoData[i].lat_md = get_gps_lat_m();
+    echoData[i].lat_mf = get_gps_lat_mf();
 
-    echoData[i].lon_d  = 126;
-    echoData[i].lon_md = 23;
-    echoData[i].lon_mf = 4567;
+    echoData[i].lon_d  = get_gps_lon_d();
+    echoData[i].lon_md = get_gps_lon_m();
+    echoData[i].lon_mf = get_gps_lon_mf();
 
     echoData[i].depth = get_ct_cond();
     echoData[i].temp  = get_ct_temp();
 
-    echoData[i].gps_valid     = 1; 
-    echoData[i].depth_valid   = 1; 
-    echoData[i].temp_valid    = 1; 
+#if 0
+    echoData[i].gps_valid     = is_gps_valid(); 
+    echoData[i].depth_valid   = is_ct_valid(); 
+    echoData[i].temp_valid    = is_ct_valid(); 
+#else
+    echoData[i].gps_valid     = 0;//is_gps_valid(); 
+    echoData[i].depth_valid   = 0;//is_ct_valid(); 
+    echoData[i].temp_valid    = 0;//is_ct_valid(); 
+#endif    
 
     // debugprintf("echoData[%d] saved...\r\n", i);    
 }
@@ -517,28 +523,28 @@ char * make_msg_k1(void)
         {
             if (echoData[i].gps_valid ==0) 
             {
-                echoData[i].lat_d  = 90;//32;
-                echoData[i].lat_md = 59;//12;
-                echoData[i].lat_mf = 9999;//3456;
+                echoData[i].lat_d  = 32;//90;//32;
+                echoData[i].lat_md = 12;//59;//12;
+                echoData[i].lat_mf = 3456;//9999;//3456;
 
-                echoData[i].lon_d  = 90;//126;
-                echoData[i].lon_md = 59;//23;
-                echoData[i].lon_mf = 9999;//4567;
+                echoData[i].lon_d  = 126;//90;//126;
+                echoData[i].lon_md = 34;//59;//23;
+                echoData[i].lon_mf = 5678;//9999;//4567;
 
             }
             if (echoData[i].depth_valid ==0)
             {
-                echoData[i].depth = 999;//200+i;  //get_ct_cond();
+                echoData[i].depth = 345;//200+i;  //get_ct_cond();
 
             } 
             if (echoData[i].temp_valid ==0) 
             {
-                echoData[i].temp  = 511;//get_ct_temp();
+                echoData[i].temp  = 234;//511;//get_ct_temp();
 
             }
 
             {
-                debugprintf("%02d: %d%d.%d - %d%d.%d - %03d %03d\r\n", i, echoData[i].lat_d, echoData[i].lat_md, echoData[i].lat_mf, echoData[i].lon_d, echoData[i].lon_md, echoData[i].lon_mf, echoData[i].depth, echoData[i].temp);
+                debugprintf("%02d: %d%02d.%04d - %d%02d.%04d - %03d %03d\r\n", i, echoData[i].lat_d, echoData[i].lat_md, echoData[i].lat_mf, echoData[i].lon_d, echoData[i].lon_md, echoData[i].lon_mf, echoData[i].depth, echoData[i].temp);
                 {
                     t_buf[0]  = echoData[i].lat_d  << 1;
                     t_buf[0] |= echoData[i].lat_md >> 5;
@@ -560,8 +566,8 @@ char * make_msg_k1(void)
                     t_buf[6] |= (char)( (echoData[i].depth >> 11) & 0x00FF);
                     t_buf[7]  = (char)( (echoData[i].depth >> 1) & 0x00FF);
                     t_buf[8]  = (char)( (echoData[i].depth << 7) & 0x00FF);
-                    t_buf[8] |= (char)( (echoData[i].depth >> 2) & 0x00FF);
-                    t_buf[9]  = (char)( (echoData[i].depth << 6) & 0x00FF);
+                    t_buf[8] |= (char)( (echoData[i].temp >> 2) & 0x00FF);
+                    t_buf[9]  = (char)( (echoData[i].temp << 6) & 0x00FF);
                 }
                 // debugprintf("%02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\r\n", t_buf[0], t_buf[1], t_buf[2], t_buf[3], t_buf[4], t_buf[5], t_buf[6], t_buf[7], t_buf[8], t_buf[9]);
             }
