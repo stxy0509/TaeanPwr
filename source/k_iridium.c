@@ -380,7 +380,7 @@ int csq;
 int MODEM_Process(void)
 {
     //static u32 idx = 0;
-    static u32 m_stage = 1000;
+    static u32 m_stage = 7000;  //1000;
     static u32 s_stage = 0;
 
     static int resp_idx = 0;
@@ -655,6 +655,9 @@ int MODEM_Process(void)
             break;
 
 
+
+
+
         // ----- +ZIPSEND ----------------------------
 
         case 5000:      //send
@@ -784,7 +787,7 @@ int MODEM_Process(void)
                 switch(s_stage)
                 {
                     case 0:
-                        m_stage = 7000;     // opened
+                        m_stage = 5000; //7000;     // opened
                         break;
                     default:
                         m_stage = 2000;     // closed

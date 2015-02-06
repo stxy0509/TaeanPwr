@@ -496,11 +496,11 @@ void task_gps(void)
                                     //t1 = iatof(parsed_block[3]);
                                     int i;
                                     char tbuf[6];
-                                    for(i=0;i<2;i++)    tbuf[i] = parsed_block[3][i];   tbuf[2]='\0';       lat_d  =  atoi(tbuf);
+                                    for(i=0;i<2;i++)    tbuf[i] = parsed_block[3][i];     tbuf[2]='\0';     lat_d  =  atoi(tbuf);
                                     for(i=0;i<2;i++)    tbuf[i] = parsed_block[3][i+2];   tbuf[2]='\0';     lat_m  =  atoi(tbuf);
                                     for(i=0;i<4;i++)    tbuf[i] = parsed_block[3][i+5];   tbuf[4]='\0';     lat_mf =  atoi(tbuf);
 
-                                    for(i=0;i<3;i++)    tbuf[i] = parsed_block[5][i];   tbuf[3]='\0';       lon_d  =  atoi(tbuf);
+                                    for(i=0;i<3;i++)    tbuf[i] = parsed_block[5][i];     tbuf[3]='\0';     lon_d  =  atoi(tbuf);
                                     for(i=0;i<2;i++)    tbuf[i] = parsed_block[5][i+3];   tbuf[2]='\0';     lon_m  =  atoi(tbuf);
                                     for(i=0;i<4;i++)    tbuf[i] = parsed_block[5][i+6];   tbuf[4]='\0';     lon_mf =  atoi(tbuf);
 

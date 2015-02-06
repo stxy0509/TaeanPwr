@@ -850,6 +850,14 @@ void set_tm_sbdreg(int a_val)  {   tm_chk_sbdreg = a_val;   }
 void m_time_orinted_evt_proc(void)
 {
 	int t_day;	//, t;
+	static int sec_before = 99;
+
+	if (rtc_time.sec != sec_before)
+	{
+		sec_before = rtc_time.sec;
+		make_msg_second();
+	}
+
 
 	if (is_lap_secend())
 	{
@@ -863,7 +871,7 @@ void m_time_orinted_evt_proc(void)
 			make_msg_k1();
 			init_echoData();
 		}
-		make_msg_second();
+		// make_msg_second();
 	}
 
 
