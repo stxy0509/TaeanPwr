@@ -402,6 +402,7 @@ void make_msg_second(void)
     echoData[i].depth_valid   = is_ct_valid(); 
     echoData[i].temp_valid    = is_ct_valid(); 
 #else
+    // test only
     echoData[i].gps_valid     = 0;//is_gps_valid(); 
     echoData[i].depth_valid   = 0;//is_ct_valid(); 
     echoData[i].temp_valid    = 0;//is_ct_valid(); 
@@ -535,13 +536,9 @@ char * make_msg_k1(void)
             if (echoData[i].depth_valid ==0)
             {
                 echoData[i].depth = 999;//200+i;  //get_ct_cond();
-
-            } 
-            if (echoData[i].temp_valid ==0) 
-            {
                 echoData[i].temp  = 511;//511;//get_ct_temp();
+            } 
 
-            }
 
             {
                 debugprintf("%02d: %d%02d.%04d - %d%02d.%04d - %03d %03d\r\n", i, echoData[i].lat_d, echoData[i].lat_md, echoData[i].lat_mf, echoData[i].lon_d, echoData[i].lon_md, echoData[i].lon_mf, echoData[i].depth, echoData[i].temp);
@@ -602,8 +599,13 @@ char * make_msg_k1(void)
         }
 
         // BAT
+        
+        measure_BAT_leval();
 
-        i = 123;//get_battery_level();
+        i = get_battery_level();
+
+        debugprintf("bat : %d\r\n", i);
+
         s_msg2[561] |= (i >> 5);
         j++;
         s_msg2[562]  = (i << 3);

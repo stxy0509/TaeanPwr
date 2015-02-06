@@ -480,7 +480,8 @@ void measure_BAT_leval(void)
 	volatile U32 status;
 
 	//debugstring("ADC Polling Mode \r\n");
-	*R_ADCCTRL = F_ADCCTRL_CH0 | F_ADCCTRL_PMS |F_ADCCTRL_APB256 | F_ADCCTRL_EN | F_ADCCTRL_FIFO;
+	// *R_ADCCTRL = F_ADCCTRL_CH0 | F_ADCCTRL_PMS |F_ADCCTRL_APB256 | F_ADCCTRL_EN | F_ADCCTRL_FIFO;
+	*R_ADCCTRL = F_ADCCTRL_CH2 | F_ADCCTRL_PMS |F_ADCCTRL_APB256 | F_ADCCTRL_EN | F_ADCCTRL_FIFO;
 	while(1)
 	{
 		status = *R_ADCSTAT;
@@ -501,7 +502,7 @@ void measure_BAT_leval(void)
 		{
 			/* code */
 			val += ADC_Result;
-			debugprintf("*** BAT : %x %x\r\n", ADC_Result, val);
+			// debugprintf("*** BAT : %x %x\r\n", ADC_Result, val);
 			delayus(200);
 			if (count == (21+16) )
 			{
@@ -529,6 +530,10 @@ void measure_BAT_leval(void)
 				// 25.1(Vin) --> 22.6(표출)
 				// 25.1 / 22.6 = 1.110619469026549
 				f *= 1.111f;
+#endif
+
+#if 1 		// ECHO Buoy constant 
+				f *= (12.06f/10.50f);
 #endif
 
 				bat = (int)floor(f+0.5);	//반올림
