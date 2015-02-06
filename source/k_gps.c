@@ -178,128 +178,6 @@ void parsing_gps(void)
     }
 }
 
-static void convert_time(char* a_data)
-{
-    char tmp_str[4];
-    int i,j;
-    //hour
-    j=0;
-    for (i=0;i<2;i++)
-    {
-        tmp_str[j++] = a_data[i];
-    }
-    tmp_str[i]='\0';
-    d1_GpsHour = atoi(tmp_str);
-
-    //min
-    j=0;
-    for (i=2;i<4;i++)
-    {
-        tmp_str[j++] = a_data[i];
-    }
-    tmp_str[i]='\0';
-    d1_GpsMin = atoi(tmp_str);
-
-    //sec
-    j=0;
-    for (i=4;i<6;i++)
-    {
-        tmp_str[j++] = a_data[i];
-    }
-    tmp_str[i]='\0';
-    d1_GpsSec = atoi(tmp_str);
-}
-
-static void convert_date(char* a_data)
-{
-    char tmp_str[4];
-    int i,j;
-    //date
-    j=0;
-    for (i=0;i<2;i++)
-    {
-        tmp_str[j++] = a_data[i];
-    }
-    tmp_str[i]='\0';
-    d1_GpsDay = atoi(tmp_str);
-
-    //month
-    j=0;
-    for (i=2;i<4;i++)
-    {
-        tmp_str[j++] = a_data[i];
-    }
-    tmp_str[i]='\0';
-    d1_GpsMonth = atoi(tmp_str);
-
-    //year
-    j=0;
-    for (i=4;i<6;i++)
-    {
-        tmp_str[j++] = a_data[i];
-    }
-    tmp_str[i]='\0';
-    d1_GpsYear = atoi(tmp_str)+2000;
-}
-
-static double convert_latitude(char* a_data)
-{
-    //latitude
-#if 1
-    int i;
-    int j = 0;
-    char tmp_str[15];
-    double ret_val;
-    for (i=0;i<2;i++)
-    {
-        tmp_str[j++] = a_data[i];
-    }
-    tmp_str[i]='\0';
-    ret_val = atof(tmp_str);
-
-    j=0;
-    for (i=2;i<9;i++)
-    {
-        tmp_str[j++] = a_data[i];
-    }
-    tmp_str[i]='\0';
-    ret_val += atof(tmp_str)/60;
-    return(ret_val);
-#else
-    return(atof(a_data));
-#endif
-}
-
-static double convert_longitude(char* a_data)
-{
-    //longitude
-#if 1
-    int i;
-    int j = 0;
-    char tmp_str[15];
-    double ret_val;
-
-    for (i=0;i<3;i++)
-    {
-        tmp_str[j++] = a_data[i];
-    }
-    tmp_str[i]='\0';
-    ret_val = atof(tmp_str);
-
-    j=0;
-    for (i=3;i<10;i++)
-    {
-        tmp_str[j++] = a_data[i];
-    }
-    tmp_str[i]='\0';
-    ret_val += atof(tmp_str)/60;
-
-    return(ret_val);
-#else
-    return(atof(a_data));
-#endif
-}
-
 
 
 
@@ -639,11 +517,11 @@ double pos_distance(double P1_latitude/*C10*/, double P1_longitude/*C11*/, doubl
     double c17 = 0.0033528107;
 
 
-    double f15 = c17 + c17 * c17;
-    double f16 = f15 / 2.0f;
-    double f17 = c17 * c17 / 2.0f;
-    double f18 = c17 * c17 / 8.0f;
-    double f19 = c17 * c17 / 16.0f;
+    // double f15 = c17 + c17 * c17;
+    // double f16 = f15 / 2.0f;
+    // double f17 = c17 * c17 / 2.0f;
+    // double f18 = c17 * c17 / 8.0f;
+    // double f19 = c17 * c17 / 16.0f;
 
     double c18 = e13 - e11;
     double c20 = (1 - c17) * tan(e10);
@@ -659,7 +537,7 @@ double pos_distance(double P1_latitude/*C10*/, double P1_longitude/*C11*/, doubl
     double c31 = (c27 * sin(c29) * c27 * sin(c29)) + (c23 * c26 - c22 * c27 * cos(c29)) * (c23 * c26 - c22 * c27 * cos(c29));
     double c33 = (c22 * c26) + (c23 * c27 * cos(c29));
     double c35 = sqrt(c31) / c33;
-    double c36 = atan(c35);
+    // double c36 = atan(c35);
     double c38 = 0;
     if (c31==0)
     {
@@ -680,8 +558,8 @@ double pos_distance(double P1_latitude/*C10*/, double P1_longitude/*C11*/, doubl
     double c43 = 1 + c41 / 16384.0f * (4096.0f + c41 * (-768.0f + c41 * (320.0f - 175.0f * c41)));
     double c45 = c41 / 1024.0f * (256.0f + c41 * (-128.0f + c41 * (74.0f - 47.0f * c41)));
     double c47 = c45 * sqrt(c31) * (c40 + c45 / 4.0f * (c33 * (-1 + 2.0f * c40 * c40) - c45 / 6.0f * c40 * (-3 + 4.0f * c31) * (-3 + 4.0f * c40 * c40)));
-    double c50 = c17 / 16.0f * cos(asin(c38)) * cos(asin(c38)) * (4 + c17 * (4 - 3.0f * cos(asin(c38)) * cos(asin(c38))));
-    double c52 = c18 + (1 - c50) * c17 * c38 * (acos(c33) + c50 * sin(acos(c33)) * (c40 + c50 * c33 * (-1 + 2.0f * c40 * c40)));
+    // double c50 = c17 / 16.0f * cos(asin(c38)) * cos(asin(c38)) * (4 + c17 * (4 - 3.0f * cos(asin(c38)) * cos(asin(c38))));
+    // double c52 = c18 + (1 - c50) * c17 * c38 * (acos(c33) + c50 * sin(acos(c33)) * (c40 + c50 * c33 * (-1 + 2.0f * c40 * c40)));
 
     double c54 = c16 * c43 * (atan(c35) - c47);
 

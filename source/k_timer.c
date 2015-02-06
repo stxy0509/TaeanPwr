@@ -144,18 +144,18 @@ void timer0isr()
         //tm_chk_sbdreg++;            // SBDREG 상태를 5분마다 주기적으로 모니터링하기 위해서
 
     // Raw Data Display interval-------
-        tmr_HMP_data_display++;
-        tmr_AIO_data_display++;
+        // tmr_HMP_data_display++;
+        // tmr_AIO_data_display++;
         tmr_GPS_data_display++;
-        tmr_MOSE_data_display++;
-        tmr_PTB_data_display++;
+        // tmr_MOSE_data_display++;
+        // tmr_PTB_data_display++;
         //tmr_GPS_data_display++;
-        tmr_SHOCK_data_display++;
+        // tmr_SHOCK_data_display++;
 
 		tm_stage++;
 		tick_1sec = 100;
 
-        setHeartbeatEvent();
+        // setHeartbeatEvent();
         decFwUpadateWaitTime();
 
 
@@ -163,11 +163,11 @@ void timer0isr()
         fgWATCHDOG_ResetTrigger = 0;
 
         //if (++TM_watchSMS     > WT_SMS)     fgWATCHDOG_ResetTrigger += 0x01;
-        if (++TM_watchAIO     > WT_AIO)     fgWATCHDOG_ResetTrigger += 0x02;
+        // if (++TM_watchAIO     > WT_AIO)     fgWATCHDOG_ResetTrigger += 0x02;
         if (++TM_watchCT3919  > WT_CT3919)  fgWATCHDOG_ResetTrigger += 0x04;
-        if (++TM_watchPTB210  > WT_PTB210)  fgWATCHDOG_ResetTrigger += 0x08;
-         if (++TM_watchHMP155 > WT_HMP155)  fgWATCHDOG_ResetTrigger += 0x10;
-        if (++TM_watchDCS     > WT_DCS)     fgWATCHDOG_ResetTrigger += 0x20;
+        // if (++TM_watchPTB210  > WT_PTB210)  fgWATCHDOG_ResetTrigger += 0x08;
+         // if (++TM_watchHMP155 > WT_HMP155)  fgWATCHDOG_ResetTrigger += 0x10;
+        // if (++TM_watchDCS     > WT_DCS)     fgWATCHDOG_ResetTrigger += 0x20;
         if (++TM_watchGPS     > WT_GPS)     fgWATCHDOG_ResetTrigger += 0x40;
         // if (++TM_watchMAIN    > WT_MAIN)    fgWATCHDOG_ResetTrigger += 0x80;
 

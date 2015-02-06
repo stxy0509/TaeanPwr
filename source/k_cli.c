@@ -508,7 +508,7 @@ static void get_cmd4()
                                 break;
                             // TRBM RESET
                             case 5800:
-                                sb_printstring(SB_S_ATM1, "%+RTRBM\r");
+                                // sb_printstring(SB_S_ATM1, "%+RTRBM\r");
                                 // sb_printstring(SB_S_ATM2, "%+RTRBM\r");
                                 wifistring("TRBM reset\r\n");
                                 break;
@@ -518,8 +518,8 @@ static void get_cmd4()
                                     char tmp_buf[25];
 
                                     wifistring("TRBM timesync with RTC\r\n");
-                                    sprintf(tmp_buf,"%%+T1%02d%02d%02d%02d%02d%02d\r",rtc_time.year%100,rtc_time.mon,rtc_time.day,rtc_time.hour,rtc_time.min,rtc_time.sec);
-                                    sb_printstring(SB_S_ATM1, tmp_buf);
+                                    // sprintf(tmp_buf,"%%+T1%02d%02d%02d%02d%02d%02d\r",rtc_time.year%100,rtc_time.mon,rtc_time.day,rtc_time.hour,rtc_time.min,rtc_time.sec);
+                                    // sb_printstring(SB_S_ATM1, tmp_buf);
                                     // sb_printstring(SB_S_ATM2, tmp_buf);
                                     // sb_uart_putch(SB_S_ATM2, 0x13);
                                     // sb_uart_putch(SB_S_ATM2, 0x10);
@@ -535,9 +535,9 @@ static void get_cmd4()
                             // 시스템 리셋
                             case 8001:
                                 // debugstring("system reset.\r\n");
-                                wifistring("system reset.\r\n");
-                                delayms(100);
-                                cmdSensorControl('8', '0');
+                                // wifistring("system reset.\r\n");
+                                // delayms(100);
+                                // cmdSensorControl('8', '0');
                                 break;
 
                             // data retrieve
@@ -1150,221 +1150,10 @@ static void cmd_pos()
 }
 
 void cmd_sbr(void)
-{/*
-    // sbr ch REG_NO
-    u8 ch = 0;
-    u8 regno = 0;
-    u8 page = 0;
-    u8 reg = 0;
-    u8 retval = 0;
-
-    u8 t1,t2;
-
-    if (argc<3)
-    {
-        debugstring ("  need <channel> <REG_NO>\r\n");
-        return;
-    }
-
-    ch = (u8)strtoul(args[1], NULL, 10);
-    if (ch > 15)
-    {
-        debugstring ("  invalid <channel>\r\n");
-        return;
-    }
-    //debugprintf ("ch : %d\r\n", ch);
-
-    regno = (u8)strtoul(args[2], NULL, 10);
-    page = regno / 10;
-    if (page > 4)
-    {
-        debugstring ("  invalid <REG_NO>\r\n");
-        return;
-    }
-    reg = regno % 10;
-    if (reg > 7)
-    {
-        debugstring ("  invalid <REG_NO>\r\n");
-        return;
-    }
-
-    switch (page)
-    {
-        case 0:
-            t1 = sb_get_register(ch, SB_UART_LCR);
-            sb_set_register(ch, SB_UART_LCR, (t1 & ~0x80) ) ;
-            t2 = sb_get_register(ch, SB_UART_MCR);
-            sb_set_register(ch, SB_UART_MCR, (t2 & ~0x40)) ;
-
-            retval = sb_get_register(ch, reg);
-
-            sb_set_register(ch, SB_UART_MCR, t2);
-            sb_set_register(ch, SB_UART_LCR, t1);
-            break;
-
-        case 1:
-            t1 = sb_get_register(ch, SB_UART_LCR);
-            sb_set_register(ch, SB_UART_LCR, 0x80) ;
-
-            retval = sb_get_register(ch, reg);
-
-            sb_set_register(ch, SB_UART_LCR, t1);
-            break;
-
-        case 2:
-            t1 = sb_get_register(ch, SB_UART_LCR);
-            sb_set_register(ch, SB_UART_LCR, 0x00) ;
-            t2 = sb_get_register(ch, SB_UART_MCR);
-            sb_set_register(ch, SB_UART_MCR, 0x40) ;
-
-            retval = sb_get_register(ch, reg);
-
-            sb_set_register(ch, SB_UART_MCR, t2);
-            sb_set_register(ch, SB_UART_LCR, t1);
-            break;
-
-        case 3:
-            t1 = sb_get_register(ch, SB_UART_LCR);
-            sb_set_register(ch, SB_UART_LCR, 0xBF) ;
-            t2 = sb_get_register(ch, SB_UART_PSR);
-            sb_set_register(ch, SB_UART_PSR, 0xA4) ;
-
-            retval = sb_get_register(ch, reg);
-
-            sb_set_register(ch, SB_UART_PSR, (0xA4+t2) );
-            sb_set_register(ch, SB_UART_LCR, t1);
-            break;
-
-        case 4:
-            t1 = sb_get_register(ch, SB_UART_LCR);
-            sb_set_register(ch, SB_UART_LCR, 0xBF) ;
-            t2 = sb_get_register(ch, SB_UART_PSR);
-            sb_set_register(ch, SB_UART_PSR, 0xA5) ;
-
-            retval = sb_get_register(ch, reg);
-
-            sb_set_register(ch, SB_UART_PSR, (0xA4+t2) );
-            sb_set_register(ch, SB_UART_LCR, t1);
-            break;
-
-    }
-    debugprintf ("[ %d %d:%d  %02X ]\r\n", ch, page, reg, retval);
-*/}
+{}
 
 void cmd_sbw(void)
-{/*
-    // sbr ch REG_NO
-    u8 ch = 0;
-    u8 regno = 0;
-    u32 data = 0;
-
-    u8 page = 0;
-    u8 reg = 0;
-    u8 retval = 0;
-
-    u8 t1,t2;
-
-    if (argc<4)
-    {
-        debugstring ("  need <channel> <REG_NO> <data>\r\n");
-        return;
-    }
-
-    ch = (u8)strtoul(args[1], NULL, 10);
-    if (ch > 15)
-    {
-        debugstring ("  invalid <channel>\r\n");
-        return;
-    }
-
-    regno = (u8)strtoul(args[2], NULL, 10);
-    page = regno / 10;
-    if (page > 4)
-    {
-        debugstring ("  invalid <REG_NO>\r\n");
-        return;
-    }
-    reg = regno % 10;
-    if (reg > 7)
-    {
-        debugstring ("  invalid <REG_NO>\r\n");
-        return;
-    }
-
-    data = strtoul(args[3], NULL, 16);
-    if (data > 0xFF)
-    {
-        debugstring ("  invalid <data>\r\n");
-        return;
-    }
-
-    switch (page)
-    {
-        case 0:
-            t1 = sb_get_register(ch, SB_UART_LCR);
-            sb_set_register(ch, SB_UART_LCR, (t1 & ~0x80) ) ;
-            t2 = sb_get_register(ch, SB_UART_MCR);
-            sb_set_register(ch, SB_UART_MCR, (t2 & ~0x40)) ;
-
-            sb_set_register(ch, reg, (u8)data );
-            retval = sb_get_register(ch, reg);
-
-            sb_set_register(ch, SB_UART_MCR, t2);
-            sb_set_register(ch, SB_UART_LCR, t1);
-            break;
-
-        case 1:
-            t1 = sb_get_register(ch, SB_UART_LCR);
-            sb_set_register(ch, SB_UART_LCR, 0x80) ;
-
-            sb_set_register(ch, reg, (u8)data );
-            retval = sb_get_register(ch, reg);
-
-            sb_set_register(ch, SB_UART_LCR, t1);
-            break;
-
-        case 2:
-            t1 = sb_get_register(ch, SB_UART_LCR);
-            sb_set_register(ch, SB_UART_LCR, 0x00) ;
-            t2 = sb_get_register(ch, SB_UART_MCR);
-            sb_set_register(ch, SB_UART_MCR, 0x40) ;
-
-            sb_set_register(ch, reg, (u8)data );
-            retval = sb_get_register(ch, reg);
-
-            sb_set_register(ch, SB_UART_MCR, t2);
-            sb_set_register(ch, SB_UART_LCR, t1);
-            break;
-
-        case 3:
-            t1 = sb_get_register(ch, SB_UART_LCR);
-            sb_set_register(ch, SB_UART_LCR, 0xBF) ;
-            t2 = sb_get_register(ch, SB_UART_PSR);
-            sb_set_register(ch, SB_UART_PSR, 0xA4) ;
-
-            sb_set_register(ch, reg, (u8)data );
-            retval = sb_get_register(ch, reg);
-
-            sb_set_register(ch, SB_UART_PSR, (0xA4+t2) );
-            sb_set_register(ch, SB_UART_LCR, t1);
-            break;
-
-        case 4:
-            t1 = sb_get_register(ch, SB_UART_LCR);
-            sb_set_register(ch, SB_UART_LCR, 0xBF) ;
-            t2 = sb_get_register(ch, SB_UART_PSR);
-            sb_set_register(ch, SB_UART_PSR, 0xA5) ;
-
-            sb_set_register(ch, reg, (u8)data );
-            retval = sb_get_register(ch, reg);
-
-            sb_set_register(ch, SB_UART_PSR, (0xA4+t2) );
-            sb_set_register(ch, SB_UART_LCR, t1);
-            break;
-
-    }
-    debugprintf ("[ %d %d:%d  %02X ]\r\n", ch, page, reg, retval);
-*/}
+{}
 
 
 static void cmd_at(void)
@@ -1411,94 +1200,12 @@ static void cmd_mv(void)
     chk_file_size();
 }
 
-static void cmd_bb(void)
-{
-    sb_test_readAll(0);
-}
-
-static void cmd_cc(void)
-{
-    sb_printf(12, "This is test string %d  %f  %s  %x", 123, 23.567, "string", 0x7a);
-}
-
-static void cmd_dd(void)
-{
-    sb_test_readAll(11);
-}
-
-// static void cmd_ee(void)
-// {
-//     sb_test_readAll(12);
-// }
-
 
 static void cmd_gg(void)
 {
     debugstring("hello wifi???");
 }
 
-static void cmd_mm(void)
-{
-#if 0
-    u8 *testbuf = "Hi! young.. Goog afternoon.";
-    u8 testbuf1[50];
-    int i;
-    float f;
-
-    struct tst
-    {
-        int i;
-        float j;
-        double k;
-        double l;
-        char m[10];
-        u32 n;
-    };
-
-    struct tst data;
-
-    data.i=-1234;
-    data.j=12.345;
-    data.k = -34.56789;
-    data.l=123.45678;
-    data.m[0]='H';
-    data.m[1]='e';
-    data.m[2]='l';
-    data.m[3]='l';
-    data.m[4]='o';
-    data.m[5]='\0';
-    data.n = 9876543;
-
-	debugstring("eeprom test\r\n");
-
-    at24cxx_eeprom_write(0, &data, sizeof(data));
-    at24cxx_eeprom_read(0, &data, sizeof(data));
-
-    debugprintf("%d\r\n",data.i);//=-1234;
-    debugprintf("%f\r\n",data.j);//=12.345;
-    debugprintf("%f\r\n",data.k);// = -34.56789;
-    debugprintf("%f\r\n",data.l);//=123.45678;
-    debugprintf("%s\r\n",data.m);//[0]='H';
-    debugprintf("%d\r\n",data.n);// = 9876543;
-
-    // string..
-    debugstring("1. string\r\n");
-    at24cxx_eeprom_write(0, testbuf, strlen(testbuf));
-    at24cxx_eeprom_read(0, testbuf1, strlen(testbuf));
-    debugprintf("%s\r\n", testbuf1);
-
-    debugstring("2. number\r\n");
-    i= -12345;
-    at24cxx_eeprom_write(0, &i, 4);
-    at24cxx_eeprom_read(0, &i, 4);
-    debugprintf("i = %d\r\n", i);
-
-    f= -123.45;
-    at24cxx_eeprom_write(0, &f, 4);
-    at24cxx_eeprom_read(0, &f, 4);
-    debugprintf("f = %f\r\n", f);
-#endif
-}
 
 static void cmd_qq(void)
 {
@@ -1507,22 +1214,8 @@ static void cmd_qq(void)
     (*R_GPOHIGH(5) |= (1<<2) );
 }
 
-static void cmd_rr(void)
-{
-    SB_init();
-}
 static void cmd_ss(void)
 {
-    sb_printstring(9, "+++\r\n");
-    delayms(20);
-    sb_printstring(9, "ats?\r\n");
-}
-static void cmd_tt(void)
-{
-    // sb_printstring(10, "+++\r\n");
-    // delayms(20);
-    // sb_printstring(10, "ats?\r\n");
-    sb_printstring(10, "ats15=1\r\n");
 }
 
 static void cmd_uu(void)
@@ -1566,14 +1259,6 @@ static void cmd_uu(void)
 //         make_msg_press_30();
 //     }
 // }
-static void cmd_vv(void)
-{
-    sb_printstring(10, "ATS?\r\n");
-}
-static void cmd_ww(void)
-{
-    sb_printstring(10, "+++\r\n");
-}
 static void cmd_xx(void)
 {
     if (get_ch4_switch())
@@ -1590,11 +1275,9 @@ static void cmd_xx(void)
 }
 static void cmd_yy(void)
 {
-    EIRQ0_ISR();
 }
 static void cmd_zz(void)
 {
-    EIRQ1_ISR();
 }
 
 
@@ -1645,7 +1328,7 @@ static void cmd_ts(void)
         char tmp_buf[50];
 
         sprintf(tmp_buf,"\r\n%%+T1%02d%02d%02d%02d%02d%02d",rtc_time.year%100,rtc_time.mon,rtc_time.day,rtc_time.hour,rtc_time.min,rtc_time.sec);
-        sb_printstring(SB_S_ATM1, tmp_buf);
+        // sb_printstring(SB_S_ATM1, tmp_buf);
         debugstring(tmp_buf);
     }
     else if (strncmp( args[1], "11", 2)==0)
@@ -1653,7 +1336,7 @@ static void cmd_ts(void)
         char tmp_buf[50];
 
         sprintf(tmp_buf,"\r\n%%+T1%02d%02d%02d%02d%02d%02d\r",rtc_time.year%100,rtc_time.mon,rtc_time.day,rtc_time.hour,rtc_time.min,rtc_time.sec);
-        sb_printstring(SB_S_ATM1, tmp_buf);
+        // sb_printstring(SB_S_ATM1, tmp_buf);
         debugstring(tmp_buf);
     }
     else if (strncmp( args[1], "12", 2)==0)
@@ -1661,7 +1344,7 @@ static void cmd_ts(void)
         char tmp_buf[50];
 
         sprintf(tmp_buf,"\r\n%%+T1%02d%02d%02d%02d%02d%02d\r\n",rtc_time.year%100,rtc_time.mon,rtc_time.day,rtc_time.hour,rtc_time.min,rtc_time.sec);
-        sb_printstring(SB_S_ATM1, tmp_buf);
+        // sb_printstring(SB_S_ATM1, tmp_buf);
         debugstring(tmp_buf);
     }
     else if (strncmp( args[1], "13", 2)==0)
@@ -1669,7 +1352,7 @@ static void cmd_ts(void)
         char tmp_buf[50];
 
         sprintf(tmp_buf,"\r\n%%+T1%02d%02d%02d%02d%02d%02d\r\n\r\n",rtc_time.year%100,rtc_time.mon,rtc_time.day,rtc_time.hour,rtc_time.min,rtc_time.sec);
-        sb_printstring(SB_S_ATM1, tmp_buf);
+        // sb_printstring(SB_S_ATM1, tmp_buf);
         debugstring(tmp_buf);
     }
 /*    else if (strncmp( args[1], "20", 2)==0)
@@ -1722,53 +1405,6 @@ void SHT7x_Connection_Reset_Sequence();
 unsigned char SHT7x_Read(int ack);
 void SHT7x_init();
 
-static void cmd_sh(void)
-{/*
-    //char buf[21];
-    if (argc<2)
-    {
-        debugstring ("  sh <[dh / dl / ch / cl]>\r\n");
-        return;
-    }
-
-    debugprintf("\r\nsh : %s\r\n", args[1]);
-
-    if (strncmp( args[1], "dh", 2)==0)
-    {
-        SH_PIN_DATA_H();
-    }
-    else if (strncmp( args[1], "dl", 2)==0)
-    {
-        SH_PIN_DATA_L();
-    }
-    else if (strncmp( args[1], "ch", 2)==0)
-    {
-        SH_PIN_CLK_H();
-    }
-    else if (strncmp( args[1], "cl", 2)==0)
-    {
-        SH_PIN_CLK_L();
-    }
-    else if (strncmp( args[1], "main", 4)==0)
-    {
-        SHT7x_main();
-    }
-    else if (strncmp( args[1], "rst", 3)==0)
-    {
-        SHT7x_Connection_Reset_Sequence();
-        SHT7x_Transmission_Start();
-    }
-    else if (strncmp( args[1], "init", 4)==0)
-    {
-        SHT7x_init();
-    }
-    else if (strncmp( args[1], "wr", 2)==0)
-    {
-        SHT7x_Connection_Reset_Sequence();
-        SHT7x_Transmission_Start();
-        SHT7x_Write(3);
-    }
-*/}
 
 
 static void cmd_msg(void)
@@ -1819,49 +1455,10 @@ static void cmd_msg(void)
 #endif
 }
 
-#if (BUOY_SPEC == 'D')
-static void cmd_stk(void)
-{
-    char buf[21];
-    if (argc<2)
-    {
-        debugstring ("  stk <[init] [save] [read]>\r\n");
-        return;
-    }
 
-    debugprintf("\r\nstk : %s", args[1]);
-
-    if (strncmp( args[1], "pop", 3)==0)
-    {
-        deepPressure_T t;
-        dp_stk_pop(&t);
-        debugprintf("t.date=%s\r\n", t.date);
-        dp_stk_print();
-    }
-    else if (strncmp( args[1], "init", 4)==0)
-    {
-        dp_stk_init();
-    }
-    else if ((!strncmp( args[1], "print", 5)) ||
-             (!strncmp( args[1], "pr", 2)) )
-    {
-        dp_stk_print();
-    }
-}
-#endif
 
 static void cmd_syscmd(void)
 {
-    //char buf[21];
-    if (argc<5)
-    {
-        debugstring ("  ex) syscmd a,b,c,d\r\n");
-        return;
-    }
-
-    debugprintf("\r\nsyscmd(%c,%c,%c,%c)", args[1][0], args[2][0], args[3][0], args[4][0]);
-
-    cmdSensorControl_1(args[1][0], args[2][0], args[3][0], args[4][0]);
 }
 
 static void cmd_set(void)
@@ -1886,8 +1483,8 @@ static void cmd_set(void)
         }
         switch(args[2][0])
         {
-            case '0':   setEnableHeartbeat(0);  break;
-            case '1':   setEnableHeartbeat(1);  break;
+            // case '0':   setEnableHeartbeat(0);  break;
+            // case '1':   setEnableHeartbeat(1);  break;
         }
     }
     else if ( (!strncmp( args[1], "env", 3)))
@@ -1996,8 +1593,8 @@ static void cmd_set(void)
                         case '0':
                         case '1':
                         case '2':
-                            ctrl_sensor(s_id, c_code);
-                            ctrl_sensor_set_env(s_id, c_code);
+                            // ctrl_sensor(s_id, c_code);
+                            // ctrl_sensor_set_env(s_id, c_code);
                             debugprintf("sensor control (%c, %c)\r\n", s_id, c_code);
                             break;
                     }
@@ -2976,39 +2573,36 @@ void App_TestShInit ()
 
     testSh_RegisterCmd ("at", cmd_at,    "temp command aa\r\n"); //
     testSh_RegisterCmd ("mv", cmd_mv,    "temp command aa\r\n"); //
-    testSh_RegisterCmd ("bb", cmd_bb,    "temp command bb\r\n"); //
-    testSh_RegisterCmd ("cc", cmd_cc,    "temp command cc\r\n"); //
+    // testSh_RegisterCmd ("bb", cmd_bb,    "temp command bb\r\n"); //
+    // testSh_RegisterCmd ("cc", cmd_cc,    "temp command cc\r\n"); //
     testSh_RegisterCmd ("chdir", cmd_chdir,  "sdc: chdir\r\n"); //
-    testSh_RegisterCmd ("dd", cmd_dd,    "temp command dd\r\n"); //
+    // testSh_RegisterCmd ("dd", cmd_dd,    "temp command dd\r\n"); //
     testSh_RegisterCmd ("bak", cmd_bak,    "temp command ee\r\n"); //
     testSh_RegisterCmd ("env", cmd_env,  "env [save init read print]\r\n"); //
     testSh_RegisterCmd ("msg", cmd_msg,  "msg\r\n"); //
-#if (BUOY_SPEC == 'D')
-    testSh_RegisterCmd ("stk", cmd_stk,  "stk\r\n"); //
-#endif
     testSh_RegisterCmd ("ts", cmd_ts,    "ATM timesync test\r\n"); //
     testSh_RegisterCmd ("fs", cmd_fs,    "command file system\r\n"); //
     testSh_RegisterCmd ("cat", cmd_cat,    "command file system\r\n"); //
     testSh_RegisterCmd ("del", cmd_del,    "command file delete\r\n"); //
     testSh_RegisterCmd ("gg", cmd_gg,    "temp command gg\r\n"); //
-    testSh_RegisterCmd ("mm", cmd_mm,    "temp command mm\r\n"); //
+    // testSh_RegisterCmd ("mm", cmd_mm,    "temp command mm\r\n"); //
     testSh_RegisterCmd ("qq", cmd_qq,    "temp command qq\r\n"); //
-    testSh_RegisterCmd ("rr", cmd_rr,    "temp command rr\r\n"); //
+    // testSh_RegisterCmd ("rr", cmd_rr,    "temp command rr\r\n"); //
     testSh_RegisterCmd ("ss", cmd_ss,    "temp command ss\r\n"); //
-    testSh_RegisterCmd ("tt", cmd_tt,    "temp command tt\r\n"); //
+    // testSh_RegisterCmd ("tt", cmd_tt,    "temp command tt\r\n"); //
     testSh_RegisterCmd ("uu", cmd_uu,    "temp command uu\r\n"); //
-    testSh_RegisterCmd ("vv", cmd_vv,    "temp command vv\r\n"); //
-    testSh_RegisterCmd ("ww", cmd_ww,    "temp command ww\r\n"); //
+    // testSh_RegisterCmd ("vv", cmd_vv,    "temp command vv\r\n"); //
+    // testSh_RegisterCmd ("ww", cmd_ww,    "temp command ww\r\n"); //
     testSh_RegisterCmd ("xx", cmd_xx,    "temp command xx\r\n"); //
     testSh_RegisterCmd ("yy", cmd_yy,    "temp command yy\r\n"); //
     testSh_RegisterCmd ("zz", cmd_zz,    "temp command zz\r\n"); //
-    testSh_RegisterCmd ("sbr", cmd_sbr,  "sb16c1058 get reg, sbr ch regno\r\n"); //
-    testSh_RegisterCmd ("sbw", cmd_sbw,  "sb16c1058 set reg, sbr ch regno data\r\n"); //
+    // testSh_RegisterCmd ("sbr", cmd_sbr,  "sb16c1058 get reg, sbr ch regno\r\n"); //
+    // testSh_RegisterCmd ("sbw", cmd_sbw,  "sb16c1058 set reg, sbr ch regno data\r\n"); //
     testSh_RegisterCmd ("set", cmd_set,  "set [heartbeat(hb)]\r\n"); //
 	testSh_RegisterCmd ("get", cmd_get,  "get [bat]\r\n"); //
     testSh_RegisterCmd ("pos", cmd_pos,  "pos --- position distance calc.\r\n");
     testSh_RegisterCmd ("rtc", cmd_rtc,  "rtc --- rtc .\r\n");
-    testSh_RegisterCmd ("sh",  cmd_sh,   "sh  --- sht11 port ctrl test.\r\n");
+    // testSh_RegisterCmd ("sh",  cmd_sh,   "sh  --- sht11 port ctrl test.\r\n");
     testSh_RegisterCmd ("syscmd", cmd_syscmd,     "syscmd --- sensor control command\r\n");
 }
 

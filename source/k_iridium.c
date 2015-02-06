@@ -103,7 +103,7 @@ int  get_sbdring2(void)       {   return ring2;   }
 
 char ctrl_msg[50];
 
-static int iri_init_time_10sec = 1;     //맨 처음에는 10초만 전원 OFF 한다.
+// static int iri_init_time_10sec = 1;     //맨 처음에는 10초만 전원 OFF 한다.
 
 //----------------------------------------
 // task_iridium()
@@ -216,8 +216,8 @@ void task_iridium(void)
             if ((get_iri1_init() == 1))
             {
                 debugstring("--## MODEM POWER_OFF for initialize ##--\r\n"); //(+)130905
-                cmdSensorControl(SYS_CMD_SENSOR_OFF, SYS_SENSOR_IRI1);
-                cmdSensorControl(SYS_CMD_IRIDIUM_EXT_ON, '1');                 //(+)130905
+                // cmdSensorControl(SYS_CMD_SENSOR_OFF, SYS_SENSOR_IRI1);
+                // cmdSensorControl(SYS_CMD_IRIDIUM_EXT_ON, '1');                 //(+)130905
             }
 
             // if (iri_init_time_10sec == 1)
@@ -239,8 +239,8 @@ void task_iridium(void)
             break;
         case 520:
             debugstring("--## MODEM POWER_ON ##--\r\n");                 //(+)130905
-            cmdSensorControl(SYS_CMD_SENSOR_ON, SYS_SENSOR_IRI1);
-            cmdSensorControl(SYS_CMD_IRIDIUM_EXT_OFF, '1');              //(+)130905
+            // cmdSensorControl(SYS_CMD_SENSOR_ON, SYS_SENSOR_IRI1);
+            // cmdSensorControl(SYS_CMD_IRIDIUM_EXT_OFF, '1');              //(+)130905
             tick_iri0 = 10000/10;    //10000/10;   //10sec
             idx = 525;
             break;
@@ -385,20 +385,20 @@ int MODEM_Process(void)
 
     static int resp_idx = 0;
     
-    static int retry_cnt = 0;
+    // static int retry_cnt = 0;
     //static char csq_value;
     //static char sbdi_value;
-    static int sbdi_error;
+    // static int sbdi_error;
 
-    static int at_cnt = 0;;
+    // static int at_cnt = 0;;
 
-    static int chg_n_retry=0;   // 이리듐을 교체하여  ATV 재시도 했는가??
-    static int chg_atv_retry=0;   // 이리듐을 교체하여  ATV 재시도 했는가??
-    static int chg_csq_retry=0;   // 이리듐을 교체하여  CSQ 재시도 했는가??
-    static int chg_sbdi_retry=0;  // 이리듐을 교체하여 SBDI 재시도 했는가??
+    // static int chg_n_retry=0;   // 이리듐을 교체하여  ATV 재시도 했는가??
+    // static int chg_atv_retry=0;   // 이리듐을 교체하여  ATV 재시도 했는가??
+    // static int chg_csq_retry=0;   // 이리듐을 교체하여  CSQ 재시도 했는가??
+    // static int chg_sbdi_retry=0;  // 이리듐을 교체하여 SBDI 재시도 했는가??
     char ch;
-    int i;
-    int ret_val = 999;
+    // int i;
+    // int ret_val = 999;
     //char s_msg[100];
 
 
@@ -890,231 +890,9 @@ int MODEM_Process(void)
 
             break;
     }
+    return(1);
 }
 
-
-
-
-#if 0
-
-
-
-// PRINTVAR(idx);            
-            at_cnt++;
-            if (at_cnt >5)
-            {
-                idx = 550;
-            }
-            else
-            {
-                idx = 450;
-            }
-            break;
-
-        case 550:
-        case 20:
-        case 30:
-        case 56:
-            wm_rcv_q_init();
-            resp_idx = 0;
-
-            debugstring("AT+ZIPCALL=1 ---> ");
-
-            //PRINT_TIME;
-            iridium_printf("AT+ZIPCALL=1\r\n");
-            tick_iri0 = 20000/10;    //5sec
-            idx = 57;
-            break;
-        case 57:
-            //wait 'OK'
-            if (wm_rcv_get(&ch))
-            // if (uart_getch(3, &ch))
-            {
-                uart_putch(0, ch);
-            // if (iri_rcv_get(iri_port,&ch))
-            // {
-                // debugprintf("%c",ch);
-                if ((ch=='K') || (ch=='0') )
-                {
-                    // debugprintf("[OK]\r\n");
-                    idx = 60;
-
-                    //initial RETRY_CNT:  in case of 'CSQ=0'
-                    retry_cnt = 0;
-                }
-                else if ((ch == 'O') || (ch == '4') ) // ERROR
-                {
-                    // idx = 114;
-                    idx = 60;
-
-                }
-            }
-            else if (tick_iri0==0)
-            {
-                debugprintf("[NG]\r\n");
-                //debugstring("----AT+SBDMTA=1 NG\r\n");
-                idx = 999;
-            }
-            break;
-
-
-            // AT+CSQ? ------------------------------------------------AT+CSQ?
-        case 60:
-            wm_rcv_q_init();
-            debugprintf("AT+ZIPOPEN=1,0,1.214.193.188,2222 ---> ");
-
-            //PRINT_TIME;
-            resp_idx = 0;
-            // iridium_printf("AT+ZIPOPEN=1,0,1.214.193.188,5005\r\n");
-            iridium_printf("AT+ZIPOPEN=1,0,1.214.193.188,2222\r\n");
-            tick_iri0 = 20000/10;  //10sec
-            idx = 62;
-            break;
-        case 62:
-            //wait 'OK'
-            if (wm_rcv_get(&ch))
-            {
-                uart_putch(0, ch);
-
-                if ((ch==',') )         // +ZIPSTAT: 1,1
-                {
-                    idx = 100;
-                }
-                else if ((ch=='R') || (ch == '4')  )         // ERROR
-                {
-                    // idx = 999;
-                    idx = 100;
-                }
-            }
-            else if (tick_iri0==0)
-            {
-                debugprintf("[NG]\r\n");
-                idx = 999;
-            }
-            break;
-
-
-
-            // AT+SBDWB : data transfer to ISU  ------------------------------------------------AT+SBDWB
-        case 100:
-            wm_rcv_q_init();
-            debugstring("\r\n-----AT+ZIPSEND=1,data\r\n");
-            //PRINT_TIME;
-
-            resp_idx = 0;
-            // iridium_printf("AT+ZIPSEND=1,4542E10790D045AEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCE81FB601F97475C0000207ED807E5D1D70603081FB601F97475C180C207ED807E5D1D70542A81FB601F97475C150AA07ED807E5D1D70542A81FB601F97475C0000207ED807E5D1D70000081FB601F97475C0000207ED807E5D1D70000081FB601F97475C0000207ED807E5D1D70542A81FB601F97475C180C207ED807E5D1D70603081FB601F97475C0000207ED807E5D1D70000081FB601F97475C0000207ED807E5D1D706C3681FB601F97475C1B0DA07ED807E5D1D706C3681FB601F97475C1B0DA07ED807E5D1D70000081FB601F97475C00003D8CCCCCCCC\r\n");  //34
-
-            {
-                u32 chksum=0;
-                char ch;
-                
-                int len = strlen(newMsg);
-
-                debugprintf("len= %d\r\n", len);
-
-                iridium_printf("AT+ZIPSEND=1,");  //34
-
-                for (i=0; i<len+1; i++)
-                {
-                    ch = newMsg[i];
-                    uart_putch(PORT_WM215, ch);
-                    uart_putch(0, ch);
-                }
-                iridium_printf("\r\n");
-
-                tick_iri0 = 20000/10;  //120sec
-                idx = 108;
-            }
-            break;
-
-        case 108:
-            //wait 'OK'
-            if (wm_rcv_get(&ch))
-            {
-                uart_putch(0, ch);
-
-                if ((ch==',') )         // +ZIPSEND: 1,1
-                {
-                    idx = 109;
-                }
-                else if ((ch=='O') || (ch == '4')  )         // ERROR
-                {
-                    idx = 999;
-                }
-            }
-            else if (tick_iri0==0)
-            {
-                debugprintf("[NG]\r\n");
-                idx = 999;
-            }
-            break;
-   
-       case 109:
-            if (tick_iri0==0)
-            {
-                // debugstring("-----AT+SBDWB timeout!!\r\n");
-                idx = 999;
-                // idx = 112;
-            }
-            break;
-
-        case 110:
-        case 112:
-            for (i=0;i<10;i++) iri_rcv_get(iri_port,&ch);
-            debugprintf("\r\n-AT+ZIPCLOSE=1\r\n");
-            //PRINT_TIME;
-
-            resp_idx=0;
-            iridium_printf("AT+ZIPCLOSE=1\r\n");
-            // iridium_printf("AT+SBDIXA\r\n");
-            tick_iri0 = 5000/10;  //120sec
-            idx = 113;
-            break;
-        case 113:
-            for (i=0;i<10;i++) UartGetCh(iri_port,&ch);
-            if (tick_iri0==0)
-            {
-                debugprintf("\r\n-AT+ZIPCALL=0\r\n");
-                //PRINT_TIME;
-
-                resp_idx=0;
-                iridium_printf("AT+ZIPCALL=0\r\n");
-                // iridium_printf("AT+SBDIXA\r\n");
-                tick_iri0 = 5000/10;  //120sec
-                idx = 114;
-
-            }
-            break;
-
-        case 114:
-            for (i=0;i<10;i++) UartGetCh(iri_port,&ch);
-            if (tick_iri0==0)
-            {
-                debugprintf("\r\nAT+CFUN=1,1\r\n");
-                //PRINT_TIME;
-
-                resp_idx=0;
-                iridium_printf("AT+CFUN=1,1\r\n");
-                // iridium_printf("AT+SBDIXA\r\n");
-                tick_iri0 = 5000/10;  //120sec
-                idx = 999;
-
-            }
-            break;
-
-
-
-        case 999:
-PRINTVAR(idx);            
-            //timeout error
-            ret_val = 2;
-
-            change_iridium();
-            break;
-    }
-    return(ret_val);
-}
-#endif
 
 int iridium_Process_1(int a_option)
 {
@@ -1123,7 +901,7 @@ int iridium_Process_1(int a_option)
     static int retry_cnt = 0;
     //static char csq_value;
     //static char sbdi_value;
-    static int sbdi_error;
+    // static int sbdi_error;
 
     static int at_cnt = 0;;
 
@@ -1308,7 +1086,7 @@ int iridium_Process_1(int a_option)
             // iridium_printf("AT+ZIPSEND=1,4542E10790D045AEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCF6BB9C3D6BB9C3DE7F3DAEE70F5AEE70F79FCE81FB601F97475C0000207ED807E5D1D70603081FB601F97475C180C207ED807E5D1D70542A81FB601F97475C150AA07ED807E5D1D70542A81FB601F97475C0000207ED807E5D1D70000081FB601F97475C0000207ED807E5D1D70000081FB601F97475C0000207ED807E5D1D70542A81FB601F97475C180C207ED807E5D1D70603081FB601F97475C0000207ED807E5D1D70000081FB601F97475C0000207ED807E5D1D706C3681FB601F97475C1B0DA07ED807E5D1D706C3681FB601F97475C1B0DA07ED807E5D1D70000081FB601F97475C00003D8CCCCCCCC\r\n");  //34
 
             {
-                u32 chksum=0;
+                // u32 chksum=0;
                 char ch;
                 
                 int len = strlen(newMsg);
@@ -1636,10 +1414,10 @@ int iridium_init(int a_option)
 {
     static int idx = 0;
     static int resp_idx = 0;
-    static int retry_cnt = 0;
+    // static int retry_cnt = 0;
     static int at_cnt = 0;;
     char ch;
-    int i;
+    // int i;
     int ret_val = 999;
 
     switch (a_option)
@@ -2169,58 +1947,7 @@ void ctrl_sensor_set_env(char a_id, char a_code)
 
 void ctrl_sensor(char a_id, char a_code)
 {
-    char cmd = '1';
-    //'0' : Reset, '1' : On, '2' : Off
 
-    switch (a_code)
-    {
-        case '0':   cmd = '4';  break;  // reset
-        case '1':   cmd = '1';  break;  // on
-        case '2':   cmd = '0';  break;  // off
-    }
-
-    debugstring("+++ control : ");
-    switch(a_id)
-    {
-        case '0': debugstring("AIO");    break;
-        case '1': debugstring("MOSE");   break;
-        case '3': debugstring("CT3919"); break;
-        case '5': debugstring("DCS");    break;
-        case '7': debugstring("GPS");    break;
-        case '8': debugstring("ATM1");   break;
-        case '9': debugstring("ATM2");   break;
-        case 'b':
-        case 'B': debugstring("HMP155"); break;
-        case 'c':
-        case 'C': debugstring("PTB210"); break;
-        case 'f':
-        case 'F': debugstring("SHOCK"); break;
-        case 'r':
-        case 'R': debugstring("SYSTEM"); break;
-    }
-    if      (a_code == '0')      debugstring(" RESET");
-    else if (a_code == '1')      debugstring(" ON");
-    else if (a_code == '2')      debugstring(" OFF");
-    debugstring("\r\n");
-
-    switch(a_id)
-    {
-        case '0': cmdSensorControl(cmd, SYS_SENSOR_AIO);    break;
-        case '1': cmdSensorControl(cmd, SYS_SENSOR_MOSE);   break;
-        case '3': cmdSensorControl(cmd, SYS_SENSOR_CT3919); break;
-        case '5': cmdSensorControl(cmd, SYS_SENSOR_DCS);    break;
-        case '7': cmdSensorControl(cmd, SYS_SENSOR_GPS);    break;
-        case '8': cmdSensorControl(cmd, SYS_SENSOR_ATM1);   break;
-        case '9': cmdSensorControl(cmd, SYS_SENSOR_ATM2);   break;
-        case 'b':
-        case 'B': cmdSensorControl(cmd, SYS_SENSOR_HMP155); break;
-        case 'c':
-        case 'C': cmdSensorControl(cmd, SYS_SENSOR_PTB210); break;
-        case 'f':
-        case 'F': cmdSensorControl(cmd, SYS_SENSOR_SHOCK); break;
-        case 'r':
-        case 'R': cmdSensorControl('8', '0');               break;
-    }
 }
 
 
@@ -2559,7 +2286,7 @@ int sbdrb_check(int a_option)
                                             switch (i_term)
                                             {
                                                 case 1:
-                                                    sb_printstring(SB_S_ATM1, "%+RTRBM\r");
+                                                    // sb_printstring(SB_S_ATM1, "%+RTRBM\r");
                                                     // sb_printstring(SB_S_ATM2, "%+RTRBM\r");
                                                     make_msg_ky('J',1);
                                                     break;

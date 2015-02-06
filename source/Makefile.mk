@@ -34,8 +34,6 @@ SOURCES	 += startup/startup_adstar.s
 SOURCES	 += startup/trip_board.c
 SOURCES	 += k_cli.c
 SOURCES	 += k_main.c
-SOURCES	 += k_sb16c1058.c
-SOURCES	 += k_sysMCU.c
 SOURCES	 += k_timer.c
 SOURCES	 += k_twi.c
 SOURCES	 += k_rtc.c
@@ -44,25 +42,14 @@ SOURCES	 += k_misc.c
 SOURCES	 += k_msg.c
 SOURCES	 += k_sdc.c
 SOURCES	 += k_ct3919.c
-SOURCES	 += k_dcs.c
-SOURCES	 += k_ptb210.c
 SOURCES	 += k_gps.c
-SOURCES	 += k_mose.c
-SOURCES	 += buoy_waves2.c
-SOURCES	 += k_aio.c
-SOURCES	 += k_hmp155.c
-SOURCES	 += k_atm.c
-SOURCES	 += k_shock.c
 SOURCES	 += k_wifi.c
-SOURCES	 += k_sh11.c
 
 OBJECTS	 += ${OBJDIR}adStarInit.o
 OBJECTS	 += ${OBJDIR}startup_adstar.o
 OBJECTS	 += ${OBJDIR}trip_board.o
 OBJECTS	 += ${OBJDIR}k_cli.o
 OBJECTS	 += ${OBJDIR}k_main.o
-OBJECTS	 += ${OBJDIR}k_sb16c1058.o
-OBJECTS	 += ${OBJDIR}k_sysMCU.o
 OBJECTS	 += ${OBJDIR}k_timer.o
 OBJECTS	 += ${OBJDIR}k_twi.o
 OBJECTS	 += ${OBJDIR}k_rtc.o
@@ -71,25 +58,14 @@ OBJECTS	 += ${OBJDIR}k_misc.o
 OBJECTS	 += ${OBJDIR}k_msg.o
 OBJECTS	 += ${OBJDIR}k_sdc.o
 OBJECTS	 += ${OBJDIR}k_ct3919.o
-OBJECTS	 += ${OBJDIR}k_dcs.o
-OBJECTS	 += ${OBJDIR}k_ptb210.o
 OBJECTS	 += ${OBJDIR}k_gps.o
-OBJECTS	 += ${OBJDIR}k_mose.o
-OBJECTS	 += ${OBJDIR}buoy_waves2.o
-OBJECTS	 += ${OBJDIR}k_aio.o
-OBJECTS	 += ${OBJDIR}k_hmp155.o
-OBJECTS	 += ${OBJDIR}k_atm.o
-OBJECTS	 += ${OBJDIR}k_shock.o
 OBJECTS	 += ${OBJDIR}k_wifi.o
-OBJECTS	 += ${OBJDIR}k_sh11.o
 
 DEPS	 += ${OBJDIR}adStarInit.d
 DEPS	 += ${OBJDIR}startup_adstar.d
 DEPS	 += ${OBJDIR}trip_board.d
 DEPS	 += ${OBJDIR}k_cli.d
 DEPS	 += ${OBJDIR}k_main.d
-DEPS	 += ${OBJDIR}k_sb16c1058.d
-DEPS	 += ${OBJDIR}k_sysMCU.d
 DEPS	 += ${OBJDIR}k_timer.d
 DEPS	 += ${OBJDIR}k_twi.d
 DEPS	 += ${OBJDIR}k_rtc.d
@@ -98,17 +74,8 @@ DEPS	 += ${OBJDIR}k_misc.d
 DEPS	 += ${OBJDIR}k_msg.d
 DEPS	 += ${OBJDIR}k_sdc.d
 DEPS	 += ${OBJDIR}k_ct3919.d
-DEPS	 += ${OBJDIR}k_dcs.d
-DEPS	 += ${OBJDIR}k_ptb210.d
 DEPS	 += ${OBJDIR}k_gps.d
-DEPS	 += ${OBJDIR}k_mose.d
-DEPS	 += ${OBJDIR}buoy_waves2.d
-DEPS	 += ${OBJDIR}k_aio.d
-DEPS	 += ${OBJDIR}k_hmp155.d
-DEPS	 += ${OBJDIR}k_atm.d
-DEPS	 += ${OBJDIR}k_shock.d
 DEPS	 += ${OBJDIR}k_wifi.d
-DEPS	 += ${OBJDIR}k_sh11.d
 
 
 
@@ -169,8 +136,6 @@ endif
 -include ${OBJDIR}trip_board.d
 -include ${OBJDIR}k_cli.d
 -include ${OBJDIR}k_main.d
--include ${OBJDIR}k_sb16c1058.d
--include ${OBJDIR}k_sysMCU.d
 -include ${OBJDIR}k_timer.d
 -include ${OBJDIR}k_twi.d
 -include ${OBJDIR}k_rtc.d
@@ -179,17 +144,8 @@ endif
 -include ${OBJDIR}k_msg.d
 -include ${OBJDIR}k_sdc.d
 -include ${OBJDIR}k_ct3919.d
--include ${OBJDIR}k_dcs.d
--include ${OBJDIR}k_ptb210.d
 -include ${OBJDIR}k_gps.d
--include ${OBJDIR}k_mose.d
--include ${OBJDIR}buoy_waves2.d
--include ${OBJDIR}k_aio.d
--include ${OBJDIR}k_hmp155.d
--include ${OBJDIR}k_atm.d
--include ${OBJDIR}k_shock.d
 -include ${OBJDIR}k_wifi.d
--include ${OBJDIR}k_sh11.d
 
 #============= TARGET ====================
 ${TARGET} : Makefile.mk ${OBJECTS} ${LIBS} startup/adstar_ram.ld
@@ -233,14 +189,6 @@ ${OBJDIR}k_main.o : k_main.c
 	@$(ECHO) 'Compile : $<'
 	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
 
-${OBJDIR}k_sb16c1058.o : k_sb16c1058.c
-	@$(ECHO) 'Compile : $<'
-	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
-
-${OBJDIR}k_sysMCU.o : k_sysMCU.c
-	@$(ECHO) 'Compile : $<'
-	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
-
 ${OBJDIR}k_timer.o : k_timer.c
 	@$(ECHO) 'Compile : $<'
 	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
@@ -273,47 +221,11 @@ ${OBJDIR}k_ct3919.o : k_ct3919.c
 	@$(ECHO) 'Compile : $<'
 	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
 
-${OBJDIR}k_dcs.o : k_dcs.c
-	@$(ECHO) 'Compile : $<'
-	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
-
-${OBJDIR}k_ptb210.o : k_ptb210.c
-	@$(ECHO) 'Compile : $<'
-	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
-
 ${OBJDIR}k_gps.o : k_gps.c
 	@$(ECHO) 'Compile : $<'
 	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
 
-${OBJDIR}k_mose.o : k_mose.c
-	@$(ECHO) 'Compile : $<'
-	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
-
-${OBJDIR}buoy_waves2.o : buoy_waves2.c
-	@$(ECHO) 'Compile : $<'
-	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
-
-${OBJDIR}k_aio.o : k_aio.c
-	@$(ECHO) 'Compile : $<'
-	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
-
-${OBJDIR}k_hmp155.o : k_hmp155.c
-	@$(ECHO) 'Compile : $<'
-	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
-
-${OBJDIR}k_atm.o : k_atm.c
-	@$(ECHO) 'Compile : $<'
-	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
-
-${OBJDIR}k_shock.o : k_shock.c
-	@$(ECHO) 'Compile : $<'
-	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
-
 ${OBJDIR}k_wifi.o : k_wifi.c
-	@$(ECHO) 'Compile : $<'
-	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
-
-${OBJDIR}k_sh11.o : k_sh11.c
 	@$(ECHO) 'Compile : $<'
 	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
 

@@ -273,10 +273,10 @@ void m_get_time_pos_proc(void)
 			// sb2_high_cnt = 0;
 
 			// cmdSensorControl_All_ON();
-			cmdSensorControl_byEnv();
+			// cmdSensorControl_byEnv();
 
-            cmdSensorControl(SYS_CMD_SENSOR_ON, SYS_SENSOR_IRI1);
-            cmdSensorControl(SYS_CMD_SENSOR_ON, SYS_SENSOR_IRI2);
+            // cmdSensorControl(SYS_CMD_SENSOR_ON, SYS_SENSOR_IRI1);
+            // cmdSensorControl(SYS_CMD_SENSOR_ON, SYS_SENSOR_IRI2);
 
 
 // #ifdef DEBUG_SPEED_BOOT
@@ -757,93 +757,6 @@ void dec_pos_interval(void)
 
 void position_chk(void)
 {
-	static int pos_cnt = 0;
-	double lat, lon;
-	int pos_valid = 0;
-
-    if (get_mose_pos_valid())
-    {
-    	pos_valid= 1;
-    	lat= get_mose_lat();
-    	lon= get_mose_lon();
-    }
-    else if (is_gps_valid())
-    {
-    	pos_valid= 1;
-    	lat= (double)(gps.latitude/100000.0f);
-    	lon= (double)(gps.longitude/100000.0f);
-    }
-
-#if 1
-	if ( (env.ref_flag == 1) && (pos_valid==1) )	// 기준위치 설정?
-	{
-		double k = 0.0f;
-		k = pos_distance(env.ref_lat, env.ref_lon, lat, lon);
-
-		debugprintf("\r\n++++++ %f, %f, %f, %f \r\n", env.ref_lat, env.ref_lon, lat, lon);
-		debugprintf("\r\n++++++ Distance : %f \r\n", k);
-		debugstring("+++++++++++++++++++++++++++++++++\r\n");
-		if (k > env.ref_distance)
-		{
-			// 위치를 이탈했음.
-			debugstring("++++++ Buoy is drifted...\r\n");
-			if (pos_interval==0)
-			{
-				if (++pos_cnt < 6)
-				{
-					pos_interval = (10);	// 10분 간격
-				}
-				else
-				{
-					pos_interval = (24*60);	// 1일 간격
-				}
-				make_msg_kx('8');
-			}
-		}
-		else
-		{
-			pos_cnt = 0;
-			pos_interval = 0;
-		}
-	}
-#else
-	//if ( (env.ref_flag == 1) && (pos_valid==1) )	// 기준위치 설정?
-	{
-		double k = 0.0f;
-
-
-		env.ref_lat= 32.070000;
-		env.ref_lon= 125.150000;
-		k = pos_distance(env.ref_lat, env.ref_lon, lat, lon);
-		debugprintf("\r\n++++++ %f, %f, %f, %f \r\n", env.ref_lat, env.ref_lon, lat, lon);
-		debugprintf("++++++ Distance : %f \r\n", k);
-		debugstring("+++++++++++++++++++++++++++++++++\r\n");
-
-		if (k > env.ref_distance)
-		{
-			// 위치를 이탈했음.
-			debugstring("++++++ Buoy is drifted...\r\n");
-			if (pos_interval==0)
-			{
-				if (++pos_cnt < 6)
-				{
-					pos_interval = (10);	// 10분 간격
-				}
-				else
-				{
-					pos_interval = (24*60);	// 1일 간격
-				}
-				//make_msg_kx('8');
-				debugstring("++++++ message SEND...\r\n");
-			}
-		}
-		else
-		{
-			pos_cnt = 0;
-			pos_interval = 0;
-		}
-	}
-#endif
 }
 
 static int tm_chk_sbdreg = 0;
@@ -1323,69 +1236,69 @@ void env_set_mode(int a_mode)
 
 void env_set_sensor(int a_sid, int a_val)
 {
-	//u8 cmd;
-	u8 sno;
+	// //u8 cmd;
+	// u8 sno;
 
 
-	switch (a_sid)
-	{
-		case '0': env.s0 = a_val;		break;
-		case '1': env.s1 = a_val;		break;
-		case '2': env.s2 = a_val;		break;
-		case '3': env.s3 = a_val;		break;
-		case '4': env.s4 = a_val;		break;
-		case '5': env.s5 = a_val;		break;
-		case '6': env.s6 = a_val;		break;
-		case '7': env.s7 = a_val;		break;
-		case '8': env.s8 = a_val;		break;
-		case '9': env.s9 = a_val;		break;
-		case 'A': env.sa = a_val;		break;
-		case 'B': env.sb = a_val;		break;
-		case 'C': env.sc = a_val;		break;
-		case 'D': env.sd = a_val;		break;
-		case 'E': env.se = a_val;		break;
-		case 'F': env.sf = a_val;		break;
-		case 'R': env.sr = a_val;		break;
-	}
-
-
-
-	switch (a_sid)
-	{
-		case '0': sno = SYS_SENSOR_AIO;		break; // AIO			'0'
-		case '1': sno = SYS_SENSOR_MOSE;	break; // MOSE G-1000	'1'
-		case '3': sno = SYS_SENSOR_CT3919;	break; // CT3919		'3'
-		case '5': sno = SYS_SENSOR_DCS;		break; // DCS-Z pulse	'5'
-		case '7': sno = SYS_SENSOR_GPS;		break; // GPS			'7'
-		case '8': sno = SYS_SENSOR_ATM1;	break; // ATM1			'8'
-		case '9': sno = SYS_SENSOR_ATM2;	break; // ATM2			'9'
-		case 'B': sno = SYS_SENSOR_HMP155;	break; // HMP155		'B'
-		case 'C': sno = SYS_SENSOR_PTB210;	break; // PTB210		'C'
-		case 'F': sno = SYS_SENSOR_SHOCK;	break; // 충돌			'F'
-			//if ( (a_val)
-
-
-		case '2': sno = SYS_SENSOR_RESERVED;break; // Reserved		'2'
-		case '4': sno = SYS_SENSOR_RESERVED;break; // Reserved		'4'
-		case '6': sno = SYS_SENSOR_RESERVED;break; // Reserved		'6'
-		case 'D': sno = SYS_SENSOR_RESERVED;break; // Reserved		'D'
-		//case 'A': sno = SYS_SENSOR_AIO;	break; // 온도/습도		'A'
-		//case 'E': sno = SYS_SENSOR_AIO;	break; // 위험반경이탈	'E'
-		//case 'R': sno = SYS_SENSOR_AIO;	break; // 시스템 Reset  'R'
-	}
+	// switch (a_sid)
+	// {
+	// 	case '0': env.s0 = a_val;		break;
+	// 	case '1': env.s1 = a_val;		break;
+	// 	case '2': env.s2 = a_val;		break;
+	// 	case '3': env.s3 = a_val;		break;
+	// 	case '4': env.s4 = a_val;		break;
+	// 	case '5': env.s5 = a_val;		break;
+	// 	case '6': env.s6 = a_val;		break;
+	// 	case '7': env.s7 = a_val;		break;
+	// 	case '8': env.s8 = a_val;		break;
+	// 	case '9': env.s9 = a_val;		break;
+	// 	case 'A': env.sa = a_val;		break;
+	// 	case 'B': env.sb = a_val;		break;
+	// 	case 'C': env.sc = a_val;		break;
+	// 	case 'D': env.sd = a_val;		break;
+	// 	case 'E': env.se = a_val;		break;
+	// 	case 'F': env.sf = a_val;		break;
+	// 	case 'R': env.sr = a_val;		break;
+	// }
 
 
 
-	switch (a_val)
-	{
-		case '0':	//reset
-			sno = SYS_SENSOR_RESERVED;
-			break;
+	// switch (a_sid)
+	// {
+	// 	case '0': sno = SYS_SENSOR_AIO;		break; // AIO			'0'
+	// 	case '1': sno = SYS_SENSOR_MOSE;	break; // MOSE G-1000	'1'
+	// 	case '3': sno = SYS_SENSOR_CT3919;	break; // CT3919		'3'
+	// 	case '5': sno = SYS_SENSOR_DCS;		break; // DCS-Z pulse	'5'
+	// 	case '7': sno = SYS_SENSOR_GPS;		break; // GPS			'7'
+	// 	case '8': sno = SYS_SENSOR_ATM1;	break; // ATM1			'8'
+	// 	case '9': sno = SYS_SENSOR_ATM2;	break; // ATM2			'9'
+	// 	case 'B': sno = SYS_SENSOR_HMP155;	break; // HMP155		'B'
+	// 	case 'C': sno = SYS_SENSOR_PTB210;	break; // PTB210		'C'
+	// 	case 'F': sno = SYS_SENSOR_SHOCK;	break; // 충돌			'F'
+	// 		//if ( (a_val)
 
-		case '1':	//ON
-		case '2':	//OFF
-			break;
-	}
+
+	// 	case '2': sno = SYS_SENSOR_RESERVED;break; // Reserved		'2'
+	// 	case '4': sno = SYS_SENSOR_RESERVED;break; // Reserved		'4'
+	// 	case '6': sno = SYS_SENSOR_RESERVED;break; // Reserved		'6'
+	// 	case 'D': sno = SYS_SENSOR_RESERVED;break; // Reserved		'D'
+	// 	//case 'A': sno = SYS_SENSOR_AIO;	break; // 온도/습도		'A'
+	// 	//case 'E': sno = SYS_SENSOR_AIO;	break; // 위험반경이탈	'E'
+	// 	//case 'R': sno = SYS_SENSOR_AIO;	break; // 시스템 Reset  'R'
+	// }
+
+
+
+	// switch (a_val)
+	// {
+	// 	case '0':	//reset
+	// 		sno = SYS_SENSOR_RESERVED;
+	// 		break;
+
+	// 	case '1':	//ON
+	// 	case '2':	//OFF
+	// 		break;
+	// }
 
 }
 
