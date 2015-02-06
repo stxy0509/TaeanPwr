@@ -397,7 +397,7 @@ void make_msg_second(void)
     echoData[i].depth = get_ct_cond();
     echoData[i].temp  = get_ct_temp();
 
-#if 0
+#if 1
     echoData[i].gps_valid     = is_gps_valid(); 
     echoData[i].depth_valid   = is_ct_valid(); 
     echoData[i].temp_valid    = is_ct_valid(); 
@@ -460,7 +460,7 @@ char * make_msg_k1(void)
 
     // Buoy ID
     {
-        U16 id = 900 << 6;
+        U16 id = 001 << 6;
 
         s_msg2[2] = (char)( id>>8 );
         s_msg2[3] = (char)( id & 0x00FF );
@@ -523,23 +523,23 @@ char * make_msg_k1(void)
         {
             if (echoData[i].gps_valid ==0) 
             {
-                echoData[i].lat_d  = 32;//90;//32;
-                echoData[i].lat_md = 12;//59;//12;
-                echoData[i].lat_mf = 3456;//9999;//3456;
+                echoData[i].lat_d  = 90;//32;
+                echoData[i].lat_md = 59;//12;
+                echoData[i].lat_mf = 9999;//3456;
 
-                echoData[i].lon_d  = 126;//90;//126;
-                echoData[i].lon_md = 34;//59;//23;
-                echoData[i].lon_mf = 5678;//9999;//4567;
+                echoData[i].lon_d  = 180;//126;
+                echoData[i].lon_md = 59;//23;
+                echoData[i].lon_mf = 9999;//4567;
 
             }
             if (echoData[i].depth_valid ==0)
             {
-                echoData[i].depth = 345;//200+i;  //get_ct_cond();
+                echoData[i].depth = 999;//200+i;  //get_ct_cond();
 
             } 
             if (echoData[i].temp_valid ==0) 
             {
-                echoData[i].temp  = 234;//511;//get_ct_temp();
+                echoData[i].temp  = 511;//511;//get_ct_temp();
 
             }
 

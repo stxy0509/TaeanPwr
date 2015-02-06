@@ -708,7 +708,16 @@ int MODEM_Process(void)
                         q_pop();
                         debugprintf("q_pop --> Q[%d]\r\n",is_q_dataNum());
 
-                        m_stage = 7000;
+                        if ( (0 == is_q_empty()) )    
+                        {
+                            // not empty...
+                            m_stage = 7000;
+                        }
+                        else
+                        {
+                            // empty...
+                            m_stage = 8000;     // ---> ZIPCLOSE
+                        }
                         break;
                     default:
                         m_stage = 2000;     
@@ -733,11 +742,12 @@ int MODEM_Process(void)
             resp_idx = 0;
 
 #if 0
+            //ezTerm
             iridium_printf("AT+ZIPOPEN=1,0,1.214.193.188,2222\r\n");
             debugprintf("AT+ZIPOPEN=1,0,1.214.193.188,2222 ---> ");
 #else
-            iridium_printf("AT+ZIPOPEN=1,0,1.214.193.188,5005\r\n");
-            debugprintf("AT+ZIPOPEN=1,0,1.214.193.188,5005 ---> ");
+            iridium_printf("AT+ZIPOPEN=1,0,124.243.127.180,5555\r\n");
+            debugprintf("AT+ZIPOPEN=1,0,124.243.127.180,5555 ---> ");
 #endif
             tick_iri0 = TM_20SEC;
             m_stage = 6020;
@@ -777,17 +787,20 @@ int MODEM_Process(void)
                         m_stage = 7000;     // opened
                         break;
                     default:
-                        m_stage = 6000;     // closed
+                        m_stage = 2000;     // closed
                         break;
                 }
             }
             break;
 
+
+
+        // -------------------------------------------------------------------------------
         case 7000:
             if ( (0 == is_q_empty()) )    // not empty...
             {
-                if (get_fgFW_updating())
-                    return;
+                // if (get_fgFW_updating())
+                    // return;
 
                 debugstring(    "-------------------------------\r\n");
                 debugstring(    "     Send msg \r\n");
@@ -815,8 +828,69 @@ int MODEM_Process(void)
                 m_stage = 2000;
             }
             break;
+
+
+        // -------------------------------------------------------------------------------
+        case 8000:
+            s_stage = 0;
+            m_stage = 8010;
+            break;
+
+        case 8010:
+            resp_idx = 0;
+
+            switch (s_stage)
+            {
+                case 0:
+                    iridium_printf("AT+ZIPCLOSE=1\r\n");
+                    debugprintf("AT+ZIPCLOSE=1 ---> ");
+                    break;
+                default:
+                    iridium_printf("AT+ZIPCALL=0\r\n");
+                    debugprintf("AT+ZIPCALL=0 ---> ");
+                    break;
+            }
+
+            tick_iri0 = TM_20SEC;
+            m_stage = 8020;
+            break;
+
+        case 8020:
+            //wait 'OK'
+            if (resp_idx > 8)
+            {
+                tick_iri0 = TM_2SEC;
+                m_stage = 8030;
+            }
+            if (tick_iri0==0)
+            {
+                // over 20 sec
+                m_stage = 8030;
+            }
+            break;
+
+        case 8030:
+
+            if (tick_iri0==0)
+            {
+                switch(s_stage)
+                {
+                    case 0:
+                        s_stage = 1;
+                        m_stage = 8010;     // opened
+                        break;
+                    default:
+                        m_stage = 7000;     // closed
+                        break;
+                }
+            }
+
+            break;
     }
 }
+
+
+
 
 #if 0
 
