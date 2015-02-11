@@ -266,10 +266,10 @@ char * make_msg_k1(void)
     // Buoy ID
     {
         u16 id;
-        id = env.id;
+        // id = env.id;
         // debugprintf("buoy_id: %03d\r\n", id);
 
-        id = 002 << 6;
+        id = env.id << 6;
 
         s_msg2[2] = (char)( id>>8 );
         s_msg2[3] = (char)( id & 0x00FF );
