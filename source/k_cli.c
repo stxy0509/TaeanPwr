@@ -391,13 +391,9 @@ static void get_cmd()
                         {
                             // LOG ON
                             case 5000:
-                                wifistring("debug message ON\r\n");
-                                set_ch4_switch(1);
                                 break;
                             // LOG OFF
                             case 5001:
-                                wifistring("debug message OFF\r\n");
-                                set_ch4_switch(0);
                                 break;
                             // 전송주기
                             case 5501:  env_set_interval(10);   break;
@@ -414,9 +410,6 @@ static void get_cmd()
                                 break;
                             // TRBM RESET
                             case 5800:
-                                // sb_printstring(SB_S_ATM1, "%+RTRBM\r");
-                                // sb_printstring(SB_S_ATM2, "%+RTRBM\r");
-                                wifistring("TRBM reset\r\n");
                                 break;
                             // TRBM Tync
                             case 5802:
@@ -775,17 +768,17 @@ static void get_cmd()
                 switch(fileSeletionID)
                 {
 
-                    case 1: strcpy(t_item,"1:ai.dat");  break;  // aio
-                    case 2: strcpy(t_item,"1:ct.dat");  break;  // aio
-                    case 3: strcpy(t_item,"1:zp.dat");  break;  // aio
-                    case 4: strcpy(t_item,"1:t1.dat");  break;  // aio
-                    case 5: strcpy(t_item,"1:t2.dat");  break;  // aio
-                    case 6: strcpy(t_item,"1:hm.dat");  break;  // aio
-                    case 7: strcpy(t_item,"1:pt.dat");  break;  // aio
-                    case 8: strcpy(t_item,"1:sh.dat");  break;  // aio
-                    case 9: strcpy(t_item,"1:gp.dat");  break;  // aio
-                    case 10: strcpy(t_item,"1:mo.dat");  break;  // aio
-                    case 11: strcpy(t_item,"1:se.dat");  break;  // aio
+                    case 1: strcpy(t_item,"1:ai.dat");  break;
+                    case 2: strcpy(t_item,"1:ct.dat");  break;
+                    case 3: strcpy(t_item,"1:zp.dat");  break;
+                    case 4: strcpy(t_item,"1:t1.dat");  break;
+                    case 5: strcpy(t_item,"1:t2.dat");  break;
+                    case 6: strcpy(t_item,"1:hm.dat");  break;
+                    case 7: strcpy(t_item,"1:pt.dat");  break;
+                    case 8: strcpy(t_item,"1:sh.dat");  break;
+                    case 9: strcpy(t_item,"1:gp.dat");  break;
+                    case 10: strcpy(t_item,"1:mo.dat");  break;
+                    case 11: strcpy(t_item,"1:se.dat");  break;
                 }
 
                 debugprintf("t_item(%s)\r\n",t_item);
@@ -2430,7 +2423,7 @@ static void cmd_cat(void)
         // wifiprintf("position( %d )\r\n", position);
 
         c = &buf[0];
-        sprintf(t_item,"1:%s.dat",args[1]);
+        sprintf(t_item,"1:%s_EB.TXT",args[1]);
         // debugprintf("t_item(%s)\r\n",t_item);
         // wifiprintf("t_item(%s)\r\n",t_item);
 

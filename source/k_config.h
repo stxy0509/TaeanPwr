@@ -2,7 +2,7 @@
 
 
 // MAIN----------------------------------------------
-#define KOGA_VER_STRING "2.0f  141107-1500"
+#define KOGA_VER_STRING "1.0  150211-1050"
 
 
 #if 0

@@ -73,7 +73,7 @@ int main()
 	debugprintf(    "      Echo Buoy \r\n");
 	debugstring(    "------------------------------------------------\r\n");
 	// debugprintf(    "      Buoy : %s \r\n", BUOY_ID);
-	// debugprintf(    "      Ver  : %s \r\n", KOGA_VER_STRING);
+	debugprintf(    "      Ver  : %s \r\n", KOGA_VER_STRING);
 	debugstring(    "================================================\r\n\r\n");
 
 
@@ -103,6 +103,9 @@ int main()
 	{
 		sysWDT_CntClear();
 
+//-------------------->>>>-------------------------------------------------
+// 세팅모드로 들어가기 위해 기다리는 중.
+
         if ( Tm_setting_mode < 11)
         {
         	char ch;
@@ -126,6 +129,7 @@ int main()
         		}
         	}
         }
+//--------------------<<<<-------------------------------------------------
 
 
 		switch (main_step)
@@ -403,7 +407,7 @@ void m_get_time_pos_proc(void)
 
 		case 700:
 			//
-			// if (sdc_read_detectPin()==SDC_INSERTED)
+			if (sdc_read_detectPin()==SDC_INSERTED)
 			{
 			    //u32 fsz;
 			    // sdc_set_time_tag(SDC_BOOT_TAG);
