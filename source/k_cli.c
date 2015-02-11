@@ -1553,6 +1553,57 @@ static void cmd_set(void)
                 }
             }
         }
+        else if ( (!strncmp( args[2], "port", 4)) /* || (!strncmp( args[2], "shk", 3)) */)
+        {
+            if (argc<4)
+            {
+                debugstring ("  ex) set env port [value]\r\n");
+                return;
+            }
+            {
+                int k = atoi(args[3]);
+                //switch(k)
+                {
+                    env.port = k;
+                    debugprintf("set : env.port = %04d\r\n", k);
+                    //break;
+                }
+            }
+        }
+        else if ( (!strncmp( args[2], "id", 2)) /* || (!strncmp( args[2], "shk", 3)) */)
+        {
+            if (argc<4)
+            {
+                debugstring ("  ex) set env id [value]\r\n");
+                return;
+            }
+            {
+                int k = atoi(args[3]);
+                //switch(k)
+                {
+                    env.id = k;
+                    debugprintf("set : env.id = %03d\r\n", k);
+                    //break;
+                }
+            }
+        }
+        else if ( (!strncmp( args[2], "ip", 2)) /* || (!strncmp( args[2], "shk", 3)) */)
+        {
+            if (argc<4)
+            {
+                debugstring ("  ex) set env ip [xxx.xxx.xxx.xxx]\r\n");
+                return;
+            }
+            {
+                //int k = atoi(args[3]);
+                //switch(k)
+                {
+                    strcpy(env.ip, args[3]);
+                    debugprintf("set : env.ip = %s\r\n", args[3]);
+                    //break;
+                }
+            }
+        }
 
     }
     else if ( (!strncmp( args[1], "sensor", 5)) ||

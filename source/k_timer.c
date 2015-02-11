@@ -125,11 +125,13 @@ void timer0isr()
     if (tick_s3>0) tick_s3--;
 
     if (tick_iri0>0) tick_iri0--;
-    if (tick_pt100>0) tick_pt100--;
-    if (tick_SHT>0) tick_SHT--;
+    // if (tick_pt100>0) tick_pt100--;
+    // if (tick_SHT>0) tick_SHT--;
 
     if (tick_fileTx>0) tick_fileTx--;
     // if (tick_cat>0) tick_cat--;
+
+
 
 
     if (tick_1sec>0)

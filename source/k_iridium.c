@@ -749,8 +749,14 @@ int MODEM_Process(void)
             iridium_printf("AT+ZIPOPEN=1,0,1.214.193.188,2222\r\n");
             debugprintf("AT+ZIPOPEN=1,0,1.214.193.188,2222 ---> ");
 #else
-            iridium_printf("AT+ZIPOPEN=1,0,124.243.127.180,5555\r\n");
-            debugprintf("AT+ZIPOPEN=1,0,124.243.127.180,5555 ---> ");
+            {
+                char ip_buf[50];
+                sprintf(ip_buf, "AT+ZIPOPEN=1,0,%s,%04d\r\n", env.ip, env.port);
+                iridium_printf(ip_buf);
+                debugprintf("%s ---> ", ip_buf);
+                // iridium_printf("AT+ZIPOPEN=1,0,124.243.127.180,5555\r\n");
+                // debugprintf("AT+ZIPOPEN=1,0,124.243.127.180,5555 ---> ");
+            }
 #endif
             tick_iri0 = TM_20SEC;
             m_stage = 6020;

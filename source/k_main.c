@@ -41,6 +41,7 @@ int sb2_ok_cnt = 0;
 int fgReqTRBM_timeSync = 0;
 int fgReqTRBM_timeSync_1st = 2;
 
+int MainMode = 0;	// 0: n0emal, 5: setting
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //			int main()
@@ -77,7 +78,7 @@ int main()
 
     // 환경변수 복원
     env_read();
-    if (env.init_flag != 0x55AA)
+    if (env.init_flag != 0x1235)
     {
     	env_init();
     	env_save();
@@ -111,6 +112,9 @@ int main()
 				m_get_time_pos_proc();		// main_step_100
 
 			case 200:
+			case 300:
+
+			case 400:
 				task_ct3919();		// Alti-meter
 				task_gps();
 
@@ -133,6 +137,9 @@ int main()
         task_cmdshell();
 	    // task_sysMCU();
 #endif
+
+
+
 
 #ifdef  MODEM_TEST_ONLY	 	/* WM-211 */
         {
@@ -1125,7 +1132,7 @@ void chk_file_size(void)
 void env_init(void)
 {
 	debugstring("env: init\r\n");
-    env.init_flag = 0x55AA;
+    env.init_flag = 0x1235;
 
     env.s0 = '1';		//'0'=Reset, '1'=On, '2'=Off
     env.s1 = '1';
@@ -1152,6 +1159,12 @@ void env_init(void)
     env.ref_distance = 10;	// 1km // 1(100m)~100(10km)
     env.ref_shock = 180;	// 0 ~ 999
     env.mode = 0;			// 지진모드= 2: 해제		3: 설정
+#if 0
+    // 부이마다 다른 고유의 설정이고 초기값의 개념이 없으므로 초기화하면 안된다.
+    env.id = 002;
+    env.port = 5555;
+    strcpy(env.ip,"124.243.127.180");
+#endif
 }
 
 
@@ -1169,34 +1182,61 @@ void env_read(void)
 
 void env_print(void)
 {
-	debugprintf("sizeof(env)=%d\r\n",sizeof(env));
+	// debugprintf("sizeof(env)=%d\r\n",sizeof(env));
 
-    debugprintf("env.init_flag : %x\r\n", env.init_flag);// = 0x55AA;
-    debugprintf("env.s0 : %c\r\n", env.s0);// = 3;		// [센서상태] 0=off  3=on 	1,2=비정상off
-    debugprintf("env.s1 : %c\r\n", env.s1);// = 3;
-    debugprintf("env.s2 : %c\r\n", env.s2);// = 3;
-    debugprintf("env.s3 : %c\r\n", env.s3);// = 3;
-    debugprintf("env.s4 : %c\r\n", env.s4);// = 3;
-    debugprintf("env.s5 : %c\r\n", env.s5);// = 3;
-    debugprintf("env.s6 : %c\r\n", env.s6);// = 3;
-    debugprintf("env.s7 : %c\r\n", env.s7);// = 3;
-    debugprintf("env.s8 : %c\r\n", env.s8);// = 3;
-    debugprintf("env.s9 : %c\r\n", env.s9);// = 3;
-    debugprintf("env.sa : %c\r\n", env.sa);// = 3;
-    debugprintf("env.sb : %c\r\n", env.sb);// = 3;
-    debugprintf("env.sc : %c\r\n", env.sc);// = 3;
-    debugprintf("env.sd : %c\r\n", env.sd);// = 3;
-    debugprintf("env.se : %c\r\n", env.se);// = 3;
-    debugprintf("env.sf : %c\r\n", env.sf);// = 3;
-    debugprintf("env.sr : %c\r\n", env.sr);// = 3;
+    // debugprintf("env.init_flag : %x\r\n", env.init_flag);// = 0x55AA;
+    // debugprintf("env.s0 : %c\r\n", env.s0);// = 3;		// [센서상태] 0=off  3=on 	1,2=비정상off
+    // debugprintf("env.s1 : %c\r\n", env.s1);// = 3;
+    // debugprintf("env.s2 : %c\r\n", env.s2);// = 3;
+    // debugprintf("env.s3 : %c\r\n", env.s3);// = 3;
+    // debugprintf("env.s4 : %c\r\n", env.s4);// = 3;
+    // debugprintf("env.s5 : %c\r\n", env.s5);// = 3;
+    // debugprintf("env.s6 : %c\r\n", env.s6);// = 3;
+    // debugprintf("env.s7 : %c\r\n", env.s7);// = 3;
+    // debugprintf("env.s8 : %c\r\n", env.s8);// = 3;
+    // debugprintf("env.s9 : %c\r\n", env.s9);// = 3;
+    // debugprintf("env.sa : %c\r\n", env.sa);// = 3;
+    // debugprintf("env.sb : %c\r\n", env.sb);// = 3;
+    // debugprintf("env.sc : %c\r\n", env.sc);// = 3;
+    // debugprintf("env.sd : %c\r\n", env.sd);// = 3;
+    // debugprintf("env.se : %c\r\n", env.se);// = 3;
+    // debugprintf("env.sf : %c\r\n", env.sf);// = 3;
+    // debugprintf("env.sr : %c\r\n", env.sr);// = 3;
+    // debugprintf("env.ref_lat      : %f\r\n", env.ref_lat);// = 0.0f;
+    // debugprintf("env.ref_lon      : %f\r\n", env.ref_lon);// = 0.0f;
+    // debugprintf("env.ref_flag     : %d\r\n", env.ref_flag);// = 0;		// 기준위치 설정유무
+    // debugprintf("env.ref_distance : %d\r\n", env.ref_distance);// = 10;	// 1km // 1(100m)~100(10km)
+    // debugprintf("env.ref_shock    : %d\r\n", env.ref_shock);// = 180;	// 0 ~ 999
+    // debugprintf("env.mode         : %d\r\n", env.mode);// = 2;			// 지진모드= 2: 해제		3: 설정
+
+    debugprintf("env.id         : %03d\r\n", env.id);// = 2;			// 지진모드= 2: 해제		3: 설정
+    debugprintf("env.ip         : %s\r\n", env.ip);// = 2;			// 지진모드= 2: 해제		3: 설정
+    debugprintf("env.port       : %04d\r\n", env.port);// = 2;			// 지진모드= 2: 해제		3: 설정
     debugprintf("env.interval     : %d\r\n", env.interval);//terval = 30;		// 전송주기 (10, 20, 30, 60, 120)
-    debugprintf("env.ref_lat      : %f\r\n", env.ref_lat);// = 0.0f;
-    debugprintf("env.ref_lon      : %f\r\n", env.ref_lon);// = 0.0f;
-    debugprintf("env.ref_flag     : %d\r\n", env.ref_flag);// = 0;		// 기준위치 설정유무
-    debugprintf("env.ref_distance : %d\r\n", env.ref_distance);// = 10;	// 1km // 1(100m)~100(10km)
-    debugprintf("env.ref_shock    : %d\r\n", env.ref_shock);// = 180;	// 0 ~ 999
-    debugprintf("env.mode         : %d\r\n", env.mode);// = 2;			// 지진모드= 2: 해제		3: 설정
+
 }
+
+void env_set_id(int a_id)
+{
+	env.id = (u16)a_id;
+	debugprintf("env: set_id (%d)\r\n", a_id);
+	env_save();
+}
+
+void env_set_port(int a_port)
+{
+	env.port = (u16)a_port;
+	debugprintf("env: set_port (%d)\r\n", a_port);
+	env_save();
+}
+
+void env_set_ip(char* a_ip)
+{
+	strcpy(env.ip, a_ip);
+	debugprintf("env: set_ip (%s)\r\n", env.ip);
+	env_save();
+}
+
 
 
 

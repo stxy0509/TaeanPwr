@@ -265,7 +265,11 @@ char * make_msg_k1(void)
 
     // Buoy ID
     {
-        U16 id = 002 << 6;
+        u16 id;
+        id = env.id;
+        // debugprintf("buoy_id: %03d\r\n", id);
+
+        id = 002 << 6;
 
         s_msg2[2] = (char)( id>>8 );
         s_msg2[3] = (char)( id & 0x00FF );
@@ -479,7 +483,8 @@ char * make_msg_k1(void)
                     t_buf[5]  = (char)(echoData[i].lon_md << 7);
                     t_buf[5] |= (char)(echoData[i].lon_mf >> 7);
                     t_buf[6]  = (char)( (echoData[i].lon_mf << 1) & 0x00FF);
-                    t_buf[6] |= (char)( (echoData[i].depth >> 11) & 0x00FF);
+                    // t_buf[6] |= (char)( (echoData[i].depth >> 11) & 0x00FF);
+                    t_buf[6] |= (char)( (echoData[i].depth >> 9) & 0x00FF);
                     t_buf[7]  = (char)( (echoData[i].depth >> 1) & 0x00FF);
                     t_buf[8]  = (char)( (echoData[i].depth << 7) & 0x00FF);
                     t_buf[8] |= (char)( (echoData[i].temp >> 2) & 0x00FF);

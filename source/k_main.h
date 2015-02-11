@@ -77,6 +77,10 @@ typedef struct
     u8      ref_distance;
     u16     ref_shock;
     u8      mode;
+
+    u16     id;
+    u16     port;
+    char    ip[20];
 } env_data_T;
 
 
