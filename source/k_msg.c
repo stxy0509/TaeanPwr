@@ -5,6 +5,24 @@
 #define DFLT_SENSOR     0x7D757775
 
 
+int fg_sec_data_display = 0;
+int fg_min_data_display = 0;
+void set_secData_display(void)
+{
+    if (fg_sec_data_display==0)
+        fg_sec_data_display = 1;
+    else
+        fg_sec_data_display = 0;
+}
+void set_minData_display(void)
+{
+    if (fg_min_data_display==0)
+        fg_min_data_display = 1;
+    else
+        fg_min_data_display = 0;
+}
+
+
 
 void strxch(char *dst, int st, int len, char *val)
 {
@@ -170,7 +188,7 @@ void init_echoData(void)
 {
     int i;
 
-    debugstring("init echoData buffer...\r\n");
+    // debugstring("init echoData buffer...\r\n");
 
     for (i=0; i<60; i++)
     {
@@ -183,10 +201,12 @@ void init_echoData(void)
 
 void make_msg_second(void)
 {
-    int i;
+    int i, bat1;
 
     // static int fg_valid_before = 1;
     // static int sec_before = 99;
+
+    measure_BAT_leval();
 
     i = rtc_time.sec;
 
@@ -213,6 +233,12 @@ void make_msg_second(void)
 #endif
 
     // debugprintf("echoData[%d] saved...\r\n", i);
+
+    if (fg_sec_data_display==1)
+    {
+        bat1 = get_battery_level();
+        debugprintf("%04d/%02d/%02d,%02d:%02d:%02d,%02d%02d.%04d,%03d%02d.%04d,%2.1f,%2.1f,%2.1f\r\n", rtc_time.year, rtc_time.mon, rtc_time.day, rtc_time.hour, rtc_time.min, i, echoData[i].lat_d, echoData[i].lat_md, echoData[i].lat_mf, echoData[i].lon_d, echoData[i].lon_md, echoData[i].lon_mf, echoData[i].depth/10.0f, echoData[i].temp/10.0f, bat1/10.0f);
+    }
 }
 
 
@@ -235,9 +261,9 @@ char * make_msg_k1(void)
     // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     // K0S010yymmddhhmmLat---Longi----1234123Sensor--ws-wd-at--ap---hu-2at-2ap--sc--st--dcs-dc-
 
-    debugstring(    "-------------------------------\r\n");
-    debugstring(    "     make msg K1\r\n");
-    debugstring(    "-------------------------------\r\n");
+    // debugstring(    "-------------------------------\r\n");
+    // debugstring(    "     make msg K1\r\n");
+    // debugstring(    "-------------------------------\r\n");
 
     memset(s_msg,0,MSG_LENGTH);
     memset(s_msg2,0,575);
@@ -288,7 +314,10 @@ char * make_msg_k1(void)
     // Date & Time
     {
         u8 i;
-        debugprintf("%d.%d.%d %d:%d\r\n", rtc_time.year, rtc_time.mon, rtc_time.day, rtc_time.hour, rtc_time.min);
+        if (fg_min_data_display==1)
+        {
+            debugprintf("%d.%d.%d %d:%d\r\n", rtc_time.year, rtc_time.mon, rtc_time.day, rtc_time.hour, rtc_time.min);
+        }
         i= rtc_time.year%100;
         // debugprintf("%02X ", i);
         s_msg2[3] |= ( i >> 1 );
@@ -325,7 +354,7 @@ char * make_msg_k1(void)
     // 1초 데이타 연결
 
 
-    measure_BAT_leval();
+    // measure_BAT_leval();
     bat1 = get_battery_level();
 
     {
@@ -453,7 +482,7 @@ char * make_msg_k1(void)
                 char wdata[100];
 
                 sprintf(fname, "%04d%02d%02d_EB.txt", rtc_time.year, rtc_time.mon, rtc_time.day);
-                sprintf(wdata, "%04d.%02d.%02d,%02d:%02d:%02d,%02d%02d.%04d,%03d%02d.%04d,%2.1f,%2.1f,%2.1f\r\n", rtc_time.year, rtc_time.mon, rtc_time.day, rtc_time.hour, rtc_time.min, i, echoData[i].lat_d, echoData[i].lat_md, echoData[i].lat_mf, echoData[i].lon_d, echoData[i].lon_md, echoData[i].lon_mf, echoData[i].depth/10.0f, echoData[i].temp/10.0f, bat1/10.0f);
+                sprintf(wdata, "%04d/%02d/%02d,%02d:%02d:%02d,%02d%02d.%04d,%03d%02d.%04d,%2.1f,%2.1f,%2.1f\r\n", rtc_time.year, rtc_time.mon, rtc_time.day, rtc_time.hour, rtc_time.min, i, echoData[i].lat_d, echoData[i].lat_md, echoData[i].lat_mf, echoData[i].lon_d, echoData[i].lon_md, echoData[i].lon_mf, echoData[i].depth/10.0f, echoData[i].temp/10.0f, bat1/10.0f);
 
                 sdc_saveDataToFile(fname, wdata, &fsz);
                 if (fsz > FSZ_MAX)
@@ -464,7 +493,11 @@ char * make_msg_k1(void)
 
 
             {
-                debugprintf("%02d: %d%02d.%04d - %d%02d.%04d - %03d %03d\r\n", i, echoData[i].lat_d, echoData[i].lat_md, echoData[i].lat_mf, echoData[i].lon_d, echoData[i].lon_md, echoData[i].lon_mf, echoData[i].depth, echoData[i].temp);
+                if (fg_min_data_display==1)
+                {
+                    debugprintf("%02d: %d%02d.%04d - %d%02d.%04d - %03d %03d\r\n", i, echoData[i].lat_d, echoData[i].lat_md, echoData[i].lat_mf, echoData[i].lon_d, echoData[i].lon_md, echoData[i].lon_mf, echoData[i].depth, echoData[i].temp);
+                }
+
                 {
                     t_buf[0]  = echoData[i].lat_d  << 1;
                     t_buf[0] |= echoData[i].lat_md >> 5;
@@ -526,7 +559,7 @@ char * make_msg_k1(void)
 
 
 
-        debugprintf("bat : %d\r\n", bat1);
+        // debugprintf("bat : %d\r\n", bat1);
 
         s_msg2[561] |= (bat1 >> 5);
         j++;

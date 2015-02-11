@@ -3,7 +3,7 @@
 #include "k_includes.h"
 
 /*
-typedef struct 
+typedef struct
 {
 	int	sec;
 	int	min;
@@ -151,7 +151,7 @@ void rtc_setAlarmTime_10min(int a_interval)
 		}
 
 	debugprintf("\r\n ----> ALM: after %d min\r\n\r\n",set_minValue);
-*/	
+*/
 }
 
 

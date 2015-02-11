@@ -593,7 +593,7 @@ void measure_BAT_leval(void)
 				// 	//debugprintf("*** BAT_val : %d (%x)\r\n", bat, val);
 				// 	bat += 200;
 				// }
-				debugprintf("*** BAT_val : %d (%x)\r\n", bat, val);
+				// debugprintf("*** BAT_val : %d (%x)\r\n", bat, val);
 				break;
 			}
 
@@ -841,6 +841,12 @@ void m_time_orinted_evt_proc(void)
 	{
 		// 여기는 매 1분마다 실행되는 곳이다.
 		t_day = ( rtc_time.hour*60 + rtc_time.min);
+
+		//----------------< 매시간마다  ---> RTC & sysTime sync >----------------
+		if ( t_day/69 == 0)
+		{
+			set_rtc_sysclk_sync_req(1);
+		}
 
 
 
