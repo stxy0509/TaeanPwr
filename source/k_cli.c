@@ -235,7 +235,8 @@ void wifistring ( const char *str )
 {
     while ( *str )
     {
-        uart_putch ( 4, *str );
+        // uart_putch ( 4, *str );
+        uart_putch ( 0, *str );
         str++;
     }
 }
@@ -469,7 +470,7 @@ static void get_cmd4()
                         cmd_str4[idx_cmdStr++] = '\0';
 
                         wifi_cmd= atoi(&cmd_str4[0]);
-                        // debugprintf("command(%s): %d\r\n", cmd_str4, wifi_cmd);
+                        debugprintf("command(%s): %d\r\n", cmd_str4, wifi_cmd);
                         wifiprintf("command(%s): %d\r\n", cmd_str4, wifi_cmd);
 
 
@@ -604,6 +605,7 @@ static void get_cmd4()
                             // FW update
                             case 9999:
                                 wifistring("FW update mode...\r\n");
+                                // deugstring("FW update mode...\r\n");
                                 fgFW_updateMode = 1;
 
                                 set_debug_channel(0);
@@ -2545,6 +2547,15 @@ PRINTLINE;
 }
 
 
+static void cmd_gps(void)
+{
+    set_gps_rawdata_display();
+}
+
+static void cmd_alti(void)
+{
+    set_alti_rawdata_display();
+}
 
 
 static void cmd_get(void)
@@ -2573,7 +2584,8 @@ void App_TestShInit ()
 
     testSh_RegisterCmd ("at", cmd_at,    "temp command aa\r\n"); //
     testSh_RegisterCmd ("mv", cmd_mv,    "temp command aa\r\n"); //
-    // testSh_RegisterCmd ("bb", cmd_bb,    "temp command bb\r\n"); //
+    testSh_RegisterCmd ("gps", cmd_gps,  "toggle GPS sensor data.\r\n"); //
+    testSh_RegisterCmd ("alti",cmd_alti, "toggle ALTI sensor data.\r\n"); //
     // testSh_RegisterCmd ("cc", cmd_cc,    "temp command cc\r\n"); //
     testSh_RegisterCmd ("chdir", cmd_chdir,  "sdc: chdir\r\n"); //
     // testSh_RegisterCmd ("dd", cmd_dd,    "temp command dd\r\n"); //

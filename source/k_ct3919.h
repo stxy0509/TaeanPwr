@@ -29,6 +29,9 @@ void set_ct_valid(int a_val);
 int get_ct_cond(void);
 int get_ct_temp(void);
 
+void set_alti_rawdata_display(void);
+int is_alti_rawdata_display(void);
+
 
 //-----------------------------------------------
 #ifdef __K_CT3919_C__

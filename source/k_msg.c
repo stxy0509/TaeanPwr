@@ -225,8 +225,8 @@ char * make_msg_k1(void)
 {
     // unsigned char tmp_buf[50];
     unsigned char t_buf[15];
-
     unsigned char s_msg2[575];
+    int bat1;
 
     // 38 byte + '\0'
 
@@ -265,7 +265,7 @@ char * make_msg_k1(void)
 
     // Buoy ID
     {
-        U16 id = 001 << 6;
+        U16 id = 002 << 6;
 
         s_msg2[2] = (char)( id>>8 );
         s_msg2[3] = (char)( id & 0x00FF );
@@ -320,17 +320,48 @@ char * make_msg_k1(void)
 #endif
     // 1초 데이타 연결
 
+
+    measure_BAT_leval();
+    bat1 = get_battery_level();
+
     {
-        int i,j,k, i1;
+        int i,j,k, i1, i2, i3;
         u16 d16bit;
         // unsigned char tbuf[5];
 
         for (i=0; i<60; i++)
         {
+
             if (echoData[i].gps_valid ==0)
             {
+                if (i == 0)
+                {
+                    /*
+                        이 경우는 i=0,i=0인 경우 모두 invalid인 경우, 이후 첫번째 valid한 값으로 채워넣기 위함이다.
+                        1분 데이타를 만들고 SD에 저장하는 시간 때문에 약 2초가량 데이타를 수신하지 못하는 경우가 발생하기 때문에
+                        궁여지책으로...
+                     */
+                    for (i2=1; i2<60; i2++)
+                    {
+                        if ( (echoData[i2].gps_valid ==1) )
+                        {
+                            echoData[0].gps_valid =1;
+                            echoData[1].gps_valid =1;
+
+                            echoData[1].lat_d  = echoData[i2].lat_d;
+                            echoData[1].lat_md = echoData[i2].lat_md;
+                            echoData[1].lat_mf = echoData[i2].lat_mf;
+
+                            echoData[1].lon_d  = echoData[i2].lon_d;
+                            echoData[1].lon_md = echoData[i2].lon_md;
+                            echoData[1].lon_mf = echoData[i2].lon_mf;
+                        }
+                    }
+                }
+
                 if ( (i==0) & (echoData[i+1].gps_valid ==1) )
                 {
+                    echoData[i].gps_valid =1;
                     echoData[i].lat_d  = echoData[i+1].lat_d;
                     echoData[i].lat_md = echoData[i+1].lat_md;
                     echoData[i].lat_mf = echoData[i+1].lat_mf;
@@ -339,10 +370,12 @@ char * make_msg_k1(void)
                     echoData[i].lon_md = echoData[i+1].lon_md;
                     echoData[i].lon_mf = echoData[i+1].lon_mf;
 
-                    debugprintf("adjust-insert....\r\n");
+                    // debugprintf("adjust-insert....\r\n");
                 }
                 else if (echoData[i-1].gps_valid ==1)
                 {
+                    echoData[i].gps_valid =1;
+
                     echoData[i].lat_d  = echoData[i-1].lat_d;
                     echoData[i].lat_md = echoData[i-1].lat_md;
                     echoData[i].lat_mf = echoData[i-1].lat_mf;
@@ -351,7 +384,7 @@ char * make_msg_k1(void)
                     echoData[i].lon_md = echoData[i-1].lon_md;
                     echoData[i].lon_mf = echoData[i-1].lon_mf;
 
-                    debugprintf("adjust-insert....\r\n");
+                    // debugprintf("adjust-insert....\r\n");
                 }
                 else
                 {
@@ -368,13 +401,37 @@ char * make_msg_k1(void)
 
             if (echoData[i].depth_valid ==0)
             {
+                if (i == 0)
+                {
+                    /*
+                        이 경우는 i=0,i=0인 경우 모두 invalid인 경우, 이후 첫번째 valid한 값으로 채워넣기 위함이다.
+                        1분 데이타를 만들고 SD에 저장하는 시간 때문에 약 2초가량 데이타를 수신하지 못하는 경우가 발생하기 때문에
+                        궁여지책으로...
+                     */
+                    for (i2=1; i2<60; i2++)
+                    {
+                        if ( (echoData[i2].depth_valid ==1) )
+                        {
+                            echoData[0].depth_valid =1;
+                            echoData[1].depth_valid =1;
+
+                            echoData[1].depth  = echoData[i2].depth;
+                            echoData[1].temp   = echoData[i2].temp;
+                        }
+                    }
+                }
+
                 if ( (i==0) &  (echoData[i+1].depth_valid ==1)  )
                 {
+                    echoData[i].depth_valid =1;
+
                     echoData[i].depth  = echoData[i+1].depth;
                     echoData[i].temp = echoData[i+1].temp;
                 }
                 else if (echoData[i-1].depth_valid ==1)
                 {
+                    echoData[i].depth_valid =1;
+
                     echoData[i].depth  = echoData[i-1].depth;
                     echoData[i].temp = echoData[i-1].temp;
                 }
@@ -382,6 +439,22 @@ char * make_msg_k1(void)
                 {
                     echoData[i].depth = 999;//200+i;  //get_ct_cond();
                     echoData[i].temp  = 511;//511;//get_ct_temp();
+                }
+            }
+
+            if (sdc_read_detectPin()==SDC_INSERTED)
+            {
+                u32 fsz;
+                char fname[20];
+                char wdata[100];
+
+                sprintf(fname, "%04d%02d%02d_EB.txt", rtc_time.year, rtc_time.mon, rtc_time.day);
+                sprintf(wdata, "%04d.%02d.%02d,%02d:%02d:%02d,%02d%02d.%04d,%03d%02d.%04d,%2.1f,%2.1f,%2.1f\r\n", rtc_time.year, rtc_time.mon, rtc_time.day, rtc_time.hour, rtc_time.min, i, echoData[i].lat_d, echoData[i].lat_md, echoData[i].lat_mf, echoData[i].lon_d, echoData[i].lon_md, echoData[i].lon_mf, echoData[i].depth/10.0f, echoData[i].temp/10.0f, bat1/10.0f);
+
+                sdc_saveDataToFile(fname, wdata, &fsz);
+                if (fsz > FSZ_MAX)
+                {
+                    SensorBakSize.b.gps = 1;
                 }
             }
 
@@ -442,19 +515,17 @@ char * make_msg_k1(void)
                 debugprintf("\r\n");
             }
 #endif
-        }
+        }  //  for (i=0; i<60; i++)
 
         // BAT
 
-        measure_BAT_leval();
 
-        i = get_battery_level();
 
-        debugprintf("bat : %d\r\n", i);
+        debugprintf("bat : %d\r\n", bat1);
 
-        s_msg2[561] |= (i >> 5);
+        s_msg2[561] |= (bat1 >> 5);
         j++;
-        s_msg2[562]  = (i << 3);
+        s_msg2[562]  = (bat1 << 3);
         s_msg2[563]  = 0xCC;
         s_msg2[564]  = 0xCC;
         s_msg2[565]  = 0xCC;

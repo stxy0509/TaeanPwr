@@ -12,6 +12,21 @@ ALIGN4 char ct_line[100];
 
 extern SensorBakSize_Type SensorBakSize;
 
+
+static int fg_alti_rawdata_display = 0;
+int is_alti_rawdata_display(void)
+{
+    return fg_alti_rawdata_display;
+}
+void set_alti_rawdata_display(void)
+{
+    if (fg_alti_rawdata_display==1)
+        fg_alti_rawdata_display = 0;
+    else
+        fg_alti_rawdata_display = 1;
+}
+
+
 char is_special_ch(char a_ch)
 {
 	switch (a_ch)
@@ -234,23 +249,13 @@ void task_ct3919(void)
                     ct_line[line_ptr++] = 0x0A;
                     ct_line[line_ptr] = '\0';
 
-                    // debugstring("\r\n");
-                    // debugstring(ct_line);
-                    //debugstring("\r\n");
-/*
-                    if (sdc_read_detectPin()==SDC_INSERTED)
+
+                    if (is_alti_rawdata_display() == 1)
                     {
-                        u32 fsz;
-                        //PRINTLINE;
-                        sdc_saveDataToFile(FN_CT3919, ct_line, &fsz);
-                        //PRINTVAR(fsz);
-                        if (fsz > FSZ_MAX)
-                        {
-                            SensorBakSize.b.ct3919 = 1;
-                        }
+                        debugstring(ct_line);
                     }
 
-*/                    // parsing
+                    // parsing
                     {
                         parsing_ct3919(ct_line);
                     }

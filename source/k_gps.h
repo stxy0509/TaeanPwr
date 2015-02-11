@@ -11,7 +11,7 @@ void gps_q_init(void);
 void init_gps_data(void);
 
 u32 get_gps_q_len(void);
-
+void gps_neo6q_init(void);
 
 void get_gps_time( rtcTime *a_time);
 
@@ -25,7 +25,8 @@ int get_gps_lon_mf(void);
 
 double pos_distance(double P1_latitude/*C10*/, double P1_longitude/*C11*/, double P2_latitude/*C12*/, double P2_longitude/*C13*/);
 
-
+void set_gps_rawdata_display(void);
+int is_gps_rawdata_display(void);
 
 //-----------------------------------------------
 #ifdef __K_GPS_C__

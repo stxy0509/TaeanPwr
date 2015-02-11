@@ -436,7 +436,7 @@ int MODEM_Process(void)
         {
             iri_response[resp_idx++] = ch;
 #if 1
-            uart_putch(0, ch);
+            // uart_putch(0, ch);
 #else
             debugprintf("%02X ", ch);
             if (ch == 0x0A)
@@ -476,12 +476,12 @@ int MODEM_Process(void)
             if (s_stage == 0)
             {
                 iridium_printf("ATE0\r\n");
-                debugprintf("ATE0 ---> ");
+                // debugprintf("ATE0 ---> ");
             }
             else
             {
                 iridium_printf("ATV1\r\n");
-                debugprintf("ATV1 ---> ");
+                // debugprintf("ATV1 ---> ");
             }
 
             tick_iri0 = TM_10SEC;
@@ -537,7 +537,7 @@ int MODEM_Process(void)
             resp_idx = 0;
 
             iridium_printf("AT+ZIPCALL?\r\n");
-            debugprintf("AT+ZIPCALL? ---> ");
+            // debugprintf("AT+ZIPCALL? ---> ");
 
             tick_iri0 = TM_20SEC;
             m_stage = 3020;
@@ -588,7 +588,7 @@ int MODEM_Process(void)
             resp_idx = 0;
 
             iridium_printf("AT+ZIPCALL=1\r\n");
-            debugprintf("AT+ZIPCALL=1 ---> ");
+            // debugprintf("AT+ZIPCALL=1 ---> ");
 
             tick_iri0 = TM_20SEC;
             m_stage = 3020;
@@ -608,7 +608,7 @@ int MODEM_Process(void)
             resp_idx = 0;
 
             iridium_printf("AT+ZIPSTAT=1\r\n");
-            debugprintf("AT+ZIPSTAT=1 ---> ");
+            // debugprintf("AT+ZIPSTAT=1 ---> ");
 
             tick_iri0 = TM_20SEC;
             m_stage = 4020;
@@ -618,15 +618,15 @@ int MODEM_Process(void)
             //wait 'OK'
             if (resp_idx > 20)
             {
-                debugprintf("socket is ");
+                // debugprintf("socket is ");
                 if (iri_response[14] == '1')
                 {
-                    debugprintf("opened.\r\n");
+                    // debugprintf("opened.\r\n");
                     s_stage = 0;
                 }
                 else
                 {
-                    debugprintf("closed.\r\n");
+                    // debugprintf("closed.\r\n");
                     s_stage = 1;
                 }
                 tick_iri0 = TM_1SEC;
@@ -668,10 +668,10 @@ int MODEM_Process(void)
         case 5010:
             resp_idx = 0;
 
-            debugprintf("len= %d\r\n", strlen(newMsg));
+            // debugprintf("len= %d\r\n", strlen(newMsg));
 
             iridium_printf("AT+ZIPSEND=1,");  //34
-            debugprintf("AT+ZIPSEND=1,data ---> ");  //34
+            // debugprintf("AT+ZIPSEND=1,data ---> ");  //34
             iridium_printf(newMsg);
 
             tick_iri0 = TM_20SEC;
@@ -760,7 +760,7 @@ int MODEM_Process(void)
             //wait 'OK'
             if (resp_idx > 20)
             {
-                debugprintf("socket is ");
+                // debugprintf("socket is ");
                 if (iri_response[14+6] == '1')
                 {
                     debugprintf("opened.\r\n");
@@ -846,11 +846,11 @@ int MODEM_Process(void)
             {
                 case 0:
                     iridium_printf("AT+ZIPCLOSE=1\r\n");
-                    debugprintf("AT+ZIPCLOSE=1 ---> ");
+                    // debugprintf("AT+ZIPCLOSE=1 ---> ");
                     break;
                 default:
                     iridium_printf("AT+ZIPCALL=0\r\n");
-                    debugprintf("AT+ZIPCALL=0 ---> ");
+                    // debugprintf("AT+ZIPCALL=0 ---> ");
                     break;
             }
 

@@ -77,6 +77,20 @@ ALIGN4 char gps_q_buf[Q_GPS_MAX];
 ALIGN4 char gps_line[GPS_LINE_MAX];
 
 
+static int fg_gps_rawdata_display = 0;
+int is_gps_rawdata_display(void)
+{
+    return fg_gps_rawdata_display;
+}
+void set_gps_rawdata_display(void)
+{
+    if (fg_gps_rawdata_display==1)
+        fg_gps_rawdata_display = 0;
+    else
+        fg_gps_rawdata_display = 1;
+}
+
+
 extern SensorBakSize_Type SensorBakSize;
 
 void gps_q_put(char ch)
@@ -124,6 +138,22 @@ u32 get_gps_q_len(void)
 
 void gps_neo6q_init(void)
 {
+    int i;
+    char init1[] = {0xB5,0x62,0x06,0x01,0x08,0x00,0xF0,0x00,0x00,0x00,0x00,0x00,0x00,0x01,0x00,0x24};
+    char init2[] = {0xB5,0x62,0x06,0x01,0x08,0x00,0xF0,0x01,0x00,0x00,0x00,0x00,0x00,0x01,0x01,0x2B};
+    char init3[] = {0xB5,0x62,0x06,0x01,0x08,0x00,0xF0,0x02,0x00,0x00,0x00,0x00,0x00,0x01,0x02,0x32};
+    char init4[] = {0xB5,0x62,0x06,0x01,0x08,0x00,0xF0,0x03,0x00,0x00,0x00,0x00,0x00,0x01,0x03,0x39};
+    char init5[] = {0xB5,0x62,0x06,0x01,0x08,0x00,0xF0,0x05,0x00,0x00,0x00,0x00,0x00,0x01,0x05,0x47};
+    char init6[] = {0xB5,0x62,0x06,0x01,0x08,0x00,0xF0,0x04,0x00,0x01,0x00,0x00,0x00,0x01,0x05,0x45};
+
+    // for (i=0;i<14;i++)  UartPutCh(UART0_GPS,init0[i]);    delayms(100);    *R_WDCNT=WATCHDOG_V;
+    for (i=0;i<16;i++)  uart_putch(1,init1[i]);    delayms(100);   // *R_WDCNT=WATCHDOG_V;
+    for (i=0;i<16;i++)  uart_putch(1,init2[i]);    delayms(100);   // *R_WDCNT=WATCHDOG_V;
+    for (i=0;i<16;i++)  uart_putch(1,init3[i]);    delayms(100);   // *R_WDCNT=WATCHDOG_V;
+    for (i=0;i<16;i++)  uart_putch(1,init4[i]);    delayms(100);   // *R_WDCNT=WATCHDOG_V;
+    for (i=0;i<16;i++)  uart_putch(1,init5[i]);    delayms(100);   // *R_WDCNT=WATCHDOG_V;
+    for (i=0;i<16;i++)  uart_putch(1,init6[i]);    delayms(100);   // *R_WDCNT=WATCHDOG_V;
+    // for (i=0;i<16;i++)  UartPutCh(UART0_GPS,init7[i]);
 }
 void gps_neo6q_init_pubx(void)
 {
@@ -164,10 +194,11 @@ void parsing_gps(void)
         else if ( (ch==',') || (ch=='*') )
         {
             parsed_block[i][j] = '\0';
-
-            //debugstring("\r\n");
-            //debugstring(parsed_block[i]);
-
+#if 0
+            debugstring("\r\n");
+            // debugstring(parsed_block[i]);
+            debugprintf("%02d: %s",i,parsed_block[i]);
+#endif
             i++;
             j=0;
         }
@@ -182,7 +213,7 @@ void parsing_gps(void)
 
 
     #if 0	//for test
-float adjHeight[20] = {0,1,2,3,4,5,4,3,2,1,0,-1,-2,-3,-4,-5,-4,-3,-2,-1};
+// float adjHeight[20] = {0,1,2,3,4,5,4,3,2,1,0,-1,-2,-3,-4,-5,-4,-3,-2,-1};
 int adj_idx = 0;
 float adj_lat = 0;
     #endif
@@ -310,8 +341,12 @@ void task_gps(void)
     if (uart_getch(1,&ch)) //receive
     // if (ch != -1)
     {
+#if 0
+        uart_putch(0,ch);
+#endif
+
         //sensor_status.b.gps = 3;
-        sensor_status.w |= (3<<(7*2));
+        // sensor_status.w |= (3<<(7*2));
 
         if (0 == is_special_ch(ch))
         {
@@ -330,19 +365,14 @@ void task_gps(void)
                 gps_line[line_ptr++] = 0x0A;
                 gps_line[line_ptr] = '\0';
 
-                // PRINTVAR(ref_cnt);
-                // PRINTVAR(ref_cnt_rmc);
-                 // debugstring(gps_line);
-
-
                 if (ref_cnt_rmc == 7)   //$GPRMC*
                 {
                     if ( gps_chksum() )
                     {
-                        #if 1
-                        if (tmr_GPS_data_display >= 60)  //20)
+                        if (is_gps_rawdata_display()==1)
+                        {
                             debugstring(gps_line);
-                        #endif
+                        }
 
                         //PRINTVAR(get_gps_q_len());
                         parsing_gps();
@@ -361,17 +391,7 @@ void task_gps(void)
                                 gps_time.week = 0;
                                 gps_time.mon =  (parsed_block[9][2]-'0')*10 + (parsed_block[9][3]-'0');
                                 gps_time.year = (parsed_block[9][4]-'0')*10 + (parsed_block[9][5]-'0') + 2000;
-
-                                //strcpy(gps.latitude, parsed_block[3]);
-                                //strcpy(gps.longitude, parsed_block[5]);
-
                                 {
-                                    // latitude
-                                    // gps.latitude = (u32)(convert_latitude(parsed_block[3])*100000);
-                                    // gps.longitude = (u32)(convert_longitude(parsed_block[5])*100000);
-                                    // sprintf(gps.s_lat, "%7d", gps.latitude);
-                                    // sprintf(gps.s_lon, "%8d", gps.longitude);
-                                    //t1 = iatof(parsed_block[3]);
                                     int i;
                                     char tbuf[6];
                                     for(i=0;i<2;i++)    tbuf[i] = parsed_block[3][i];     tbuf[2]='\0';     lat_d  =  atoi(tbuf);
@@ -382,40 +402,6 @@ void task_gps(void)
                                     for(i=0;i<2;i++)    tbuf[i] = parsed_block[5][i+3];   tbuf[2]='\0';     lon_m  =  atoi(tbuf);
                                     for(i=0;i<4;i++)    tbuf[i] = parsed_block[5][i+6];   tbuf[4]='\0';     lon_mf =  atoi(tbuf);
 
-                                    // //parsed_block[3][0])*  10 + atoi(parsed_block[3][1]));
-                                    // lat_m  = ( atoi(parsed_block[3][2])*  10 + atoi(parsed_block[3][3]));
-                                    // lat_mf = (atoi(parsed_block[3][5])*1000 + atoi(parsed_block[3][6])*100 + atoi(parsed_block[3][7])*10 + atoi(parsed_block[3][8]));
-                                    // lon_d  = ( atoi(parsed_block[5][0])*100 + atoi(parsed_block[5][1])*10 + atoi(parsed_block[5][2]) );
-                                    // lon_m  = (atoi(parsed_block[5][3])*  10 + atoi(parsed_block[5][4]));
-                                    // lon_mf = (atoi(parsed_block[5][6])*1000 + atoi(parsed_block[5][7])*100 + atoi(parsed_block[5][8])*10 + atoi(parsed_block[5][9]));
-
-                                    // debugprintf("lat= %d %d %d\r\n", lat_d, lat_m, lat_mf);
-                                    // debugprintf("%s \r\n", parsed_block[3]);
-                                    // debugprintf("%s \r\n", parsed_block[5]);
-
-                                }
-
-                                if (tmr_GPS_data_display >= 60)  //20)
-                                {
-                                    //tmr_GPS_data_display = 0;
-
-                                    // debugstring("\r\n");
-                                    //PRINT_TIME;
-                                    // debugstring(gps_line);
-                                    // debugprintf(" **** GPS: lat : %7d,  longi : %8u\r\n", gps.latitude, gps.longitude);
-/*
-                                    if (sdc_read_detectPin()==SDC_INSERTED)
-                                    {
-                                        u32 fsz;
-                                        //PRINTLINE;
-                                        sdc_saveDataToFile(FN_GPS, gps_line, &fsz);
-                                        //PRINTVAR(fsz);
-                                        if (fsz > FSZ_MAX)
-                                        {
-                                            SensorBakSize.b.gps = 1;
-                                        }
-                                    }
-*/
                                 }
 
 
@@ -423,23 +409,12 @@ void task_gps(void)
 
                                 if (1 == get_rtc_sysclk_sync_req())
                                 {
-
-                                    debugstring("RTC sync with GPS\r\n");
-                                    debugprintf("\r\nGPS time: %04d.%02d.%02d %02d:%02d:%02d \r\n",gps_time.year, gps_time.mon, gps_time.day, gps_time.hour,gps_time.min,gps_time.sec);
                                     rtc_settime(&gps_time);
-                                    //is_updated_min();
-                                    //PRINT_TIME;
-
                                     set_rtc_sysclk_sync_req(0);  //fg_RTC_sync_req = 0;
                                 }
 
                             }
 
-                        }
-
-                        if (tmr_GPS_data_display >= 60)  //20)
-                        {
-                            tmr_GPS_data_display = 0;
                         }
 
                     }

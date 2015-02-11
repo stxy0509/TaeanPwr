@@ -83,6 +83,8 @@ int main()
     	env_save();
     }
 
+	gps_neo6q_init();
+
     // init iridium
     set_iri1_init(1);
 
@@ -185,13 +187,14 @@ int main()
 
 void sensor_q_init(void)
 {
-	debugstring("\r\ninit ");
+	//debugstring("\r\ninit ");
 
-	ct_q_init();		debugstring("CT ");
-    gps_q_init();		debugstring("GPS ");
-	wm_rcv_q_init();	debugstring("WM-215 ");
+	ct_q_init();		//debugstring("CT ");
+    gps_q_init();		//debugstring("GPS ");
+	wm_rcv_q_init();	//debugstring("WM-215 ");
 	// iri2_rcv_q_init();	debugstring("IRI2 ");
-	debugstring(" queue..\r\n");
+
+	//debugstring(" queue..\r\n");
 }
 
 
