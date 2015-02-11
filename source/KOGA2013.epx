@@ -20,7 +20,6 @@
         <Source Name="k_sdc.c" />
         <Source Name="k_ct3919.c" />
         <Source Name="k_gps.c" />
-        <Source Name="k_wifi.c" />
         <Header Name="k_cli.h" />
         <Header Name="k_cli_func.h" />
         <Header Name="k_misc.h" />
@@ -51,7 +50,6 @@
         <Header Name="../SDK2.0/include/adstar.h" />
         <Header Name="k_ct3919.h" />
         <Header Name="k_gps.h" />
-        <Header Name="k_wifi.h" />
         <Header Name="k_config.h" />
         <LinkScript Name="startup/adstar_ram.ld" />
         <Library Name="../SDK2.0/lib/libadStar.a" />

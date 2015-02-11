@@ -43,7 +43,6 @@ SOURCES	 += k_msg.c
 SOURCES	 += k_sdc.c
 SOURCES	 += k_ct3919.c
 SOURCES	 += k_gps.c
-SOURCES	 += k_wifi.c
 
 OBJECTS	 += ${OBJDIR}adStarInit.o
 OBJECTS	 += ${OBJDIR}startup_adstar.o
@@ -59,7 +58,6 @@ OBJECTS	 += ${OBJDIR}k_msg.o
 OBJECTS	 += ${OBJDIR}k_sdc.o
 OBJECTS	 += ${OBJDIR}k_ct3919.o
 OBJECTS	 += ${OBJDIR}k_gps.o
-OBJECTS	 += ${OBJDIR}k_wifi.o
 
 DEPS	 += ${OBJDIR}adStarInit.d
 DEPS	 += ${OBJDIR}startup_adstar.d
@@ -75,7 +73,6 @@ DEPS	 += ${OBJDIR}k_msg.d
 DEPS	 += ${OBJDIR}k_sdc.d
 DEPS	 += ${OBJDIR}k_ct3919.d
 DEPS	 += ${OBJDIR}k_gps.d
-DEPS	 += ${OBJDIR}k_wifi.d
 
 
 
@@ -145,7 +142,6 @@ endif
 -include ${OBJDIR}k_sdc.d
 -include ${OBJDIR}k_ct3919.d
 -include ${OBJDIR}k_gps.d
--include ${OBJDIR}k_wifi.d
 
 #============= TARGET ====================
 ${TARGET} : Makefile.mk ${OBJECTS} ${LIBS} startup/adstar_ram.ld
@@ -222,10 +218,6 @@ ${OBJDIR}k_ct3919.o : k_ct3919.c
 	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
 
 ${OBJDIR}k_gps.o : k_gps.c
-	@$(ECHO) 'Compile : $<'
-	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
-
-${OBJDIR}k_wifi.o : k_wifi.c
 	@$(ECHO) 'Compile : $<'
 	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
 
