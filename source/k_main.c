@@ -41,13 +41,14 @@ int sb2_ok_cnt = 0;
 int fgReqTRBM_timeSync = 0;
 int fgReqTRBM_timeSync_1st = 2;
 
-int MainMode = 0;	// 0: n0emal, 5: setting
+int SettingMode = 1;	//
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //			int main()
 //.................................................................................
 int main()
 {
+	static u32 SettingModeTM_before= 0;
 	//char ch;
 
 
@@ -102,6 +103,31 @@ int main()
 	{
 		sysWDT_CntClear();
 
+        if ( Tm_setting_mode < 11)
+        {
+        	char ch;
+        	if (Tm_setting_mode != SettingModeTM_before)
+        	{
+        		SettingModeTM_before = Tm_setting_mode;
+        		debugstring("*");
+        		if (Tm_setting_mode >= 10)
+        		{
+	        		debugstring("\r\n");
+        			SettingMode = 0;						// normal mode
+
+        		}
+        	}
+        	if (uart_getch(0, &ch))
+        	{
+        		if ( (ch == '\r') || (ch == '\n') )
+        		{
+	        		debugstring("\r\n  >>> SETTING MODE <<<\r\n");
+    				Tm_setting_mode = 100;					// exit
+        		}
+        	}
+        }
+
+
 		switch (main_step)
 		{
 			case 0:
@@ -115,6 +141,10 @@ int main()
 			case 300:
 
 			case 400:
+				if (SettingMode == 1)
+					break;
+
+
 				task_ct3919();		// Alti-meter
 				task_gps();
 
@@ -227,7 +257,7 @@ void m_get_time_pos_proc(void)
 		case 50:
 			//cmdSensorControl_All_ON();
 			//debugprintf("\r\npower_on : MOSE, GPS\r\n");
-			debugprintf("  ... checking TIME, POSITION\r\n");
+			// debugprintf("  ... checking TIME, POSITION\r\n");
 
 			// cmdSensorControl(SYS_CMD_SENSOR_ON, SYS_SENSOR_CHK1);
 			// cmdSensorControl(SYS_CMD_SENSOR_ON, SYS_SENSOR_CHK2);
@@ -331,7 +361,7 @@ void m_get_time_pos_proc(void)
 // 			break;
 
 		case 300:
-		    printTimeTag();
+		    // printTimeTag();
 
 			fg_start_sensing = 1;	//(+)130828
 			// fgReqTRBM_timeSync = 1;	//(+)130912
@@ -373,7 +403,7 @@ void m_get_time_pos_proc(void)
 
 		case 700:
 			//
-			if (sdc_read_detectPin()==SDC_INSERTED)
+			// if (sdc_read_detectPin()==SDC_INSERTED)
 			{
 			    //u32 fsz;
 			    // sdc_set_time_tag(SDC_BOOT_TAG);
@@ -1018,7 +1048,7 @@ void m_time_orinted_evt_proc(void)
 
 void chk_file_size(void)
 {
-    char buf1[40];
+/*    char buf1[40];
 
 	if (SensorBakSize.w > 0)
     {
@@ -1125,7 +1155,7 @@ void chk_file_size(void)
             debugprintf(" <<<-------------\r\n\r\n");
             SensorBakSize.w = 0;    // flag all clear
         }//if (sdc_read_detectPin()==SDC_INSERTED)
-    }
+    }*/
 }
 
 
@@ -1209,7 +1239,7 @@ void env_print(void)
     // debugprintf("env.ref_shock    : %d\r\n", env.ref_shock);// = 180;	// 0 ~ 999
     // debugprintf("env.mode         : %d\r\n", env.mode);// = 2;			// 지진모드= 2: 해제		3: 설정
 
-    debugprintf("env.id         : %03d\r\n", env.id);// = 2;			// 지진모드= 2: 해제		3: 설정
+    debugprintf("\r\n\r\nenv.id         : %03d\r\n", env.id);// = 2;			// 지진모드= 2: 해제		3: 설정
     debugprintf("env.ip         : %s\r\n", env.ip);// = 2;			// 지진모드= 2: 해제		3: 설정
     debugprintf("env.port       : %04d\r\n", env.port);// = 2;			// 지진모드= 2: 해제		3: 설정
     debugprintf("env.interval     : %d\r\n", env.interval);//terval = 30;		// 전송주기 (10, 20, 30, 60, 120)

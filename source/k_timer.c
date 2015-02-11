@@ -27,24 +27,24 @@ static s32 tm_stage=0;
 //static int stMFP1=0;
 static int fg_rtc_updated=0;
 
-
+u32 Tm_setting_mode = 0;
 
 // ----> 130313-1534
 // Watcdog
 u32 fgWATCHDOG_ResetTrigger;
 
-u32 TM_watchSMS;
-u32 TM_watchAIO;
+// u32 TM_watchSMS;
+// u32 TM_watchAIO;
 u32 TM_watchCT3919;
-u32 TM_watchPTB210;
-u32 TM_watchWAVE;
-u32 TM_watchDCS;
-u32 TM_watchHMP155;
+// u32 TM_watchPTB210;
+// u32 TM_watchWAVE;
+// u32 TM_watchDCS;
+// u32 TM_watchHMP155;
 u32 TM_watchMAIN;
 u32 TM_watchGPS;
-u32 TM_watchATM1;
-u32 TM_watchATM2;
-u32 TM_watchSHOCK;
+// u32 TM_watchATM1;
+// u32 TM_watchATM2;
+// u32 TM_watchSHOCK;
 
 #define WT_SMS          ( 5*60)
 #define WT_AIO          ( 3*60)
@@ -153,6 +153,8 @@ void timer0isr()
         // tmr_PTB_data_display++;
         //tmr_GPS_data_display++;
         // tmr_SHOCK_data_display++;
+
+        Tm_setting_mode++;
 
 		tm_stage++;
 		tick_1sec = 100;

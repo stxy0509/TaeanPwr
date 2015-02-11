@@ -47,19 +47,20 @@ extern U32 tick_cat;
 // ----> 130313-1534
 // Watcdog
 
-extern u32 TM_watchSMS;
-extern u32 TM_watchAIO;
+// extern u32 TM_watchSMS;
+// extern u32 TM_watchAIO;
 extern u32 TM_watchCT3919;
-extern u32 TM_watchPTB210;
-extern u32 TM_watchWAVE;
-extern u32 TM_watchDCS;
-extern u32 TM_watchHMP155;
+// extern u32 TM_watchPTB210;
+// extern u32 TM_watchWAVE;
+// extern u32 TM_watchDCS;
+// extern u32 TM_watchHMP155;
 extern u32 TM_watchGPS;
 extern u32 TM_watchMAIN;
-extern u32 TM_watchATM1;
-extern u32 TM_watchATM2;
-extern u32 TM_watchSHOCK;
+// extern u32 TM_watchATM1;
+// extern u32 TM_watchATM2;
+// extern u32 TM_watchSHOCK;
 
+extern u32 Tm_setting_mode;
 //  <----
 
 
