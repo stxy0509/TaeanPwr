@@ -209,27 +209,27 @@ int lon_d, lon_m, lon_mf;
 
 int get_gps_lat_d(void)
 {
-    return lat_d;   //(atoi(parsed_block[3][0])*  10 + atoi(parsed_block[3][1])); 
+    return lat_d;   //(atoi(parsed_block[3][0])*  10 + atoi(parsed_block[3][1]));
 }
 int get_gps_lat_m(void)
 {
-    return lat_m;   //( atoi(parsed_block[3][2])*  10 + atoi(parsed_block[3][3])); 
+    return lat_m;   //( atoi(parsed_block[3][2])*  10 + atoi(parsed_block[3][3]));
 }
 int get_gps_lat_mf(void)
 {
-    return lat_mf;  //(atoi(parsed_block[3][5])*1000 + atoi(parsed_block[3][6])*100 + atoi(parsed_block[3][7])*10 + atoi(parsed_block[3][8])); 
+    return lat_mf;  //(atoi(parsed_block[3][5])*1000 + atoi(parsed_block[3][6])*100 + atoi(parsed_block[3][7])*10 + atoi(parsed_block[3][8]));
 }
 int get_gps_lon_d(void)
 {
-    return lon_d;   //( atoi(parsed_block[5][0])*100 + atoi(parsed_block[5][1])*10 + atoi(parsed_block[5][2]) ); 
+    return lon_d;   //( atoi(parsed_block[5][0])*100 + atoi(parsed_block[5][1])*10 + atoi(parsed_block[5][2]) );
 }
 int get_gps_lon_m(void)
 {
-    return lon_m;   //(atoi(parsed_block[5][3])*  10 + atoi(parsed_block[5][4])); 
+    return lon_m;   //(atoi(parsed_block[5][3])*  10 + atoi(parsed_block[5][4]));
 }
 int get_gps_lon_mf(void)
 {
-    return lon_mf;  //(atoi(parsed_block[5][6])*1000 + atoi(parsed_block[5][7])*100 + atoi(parsed_block[5][8])*10 + atoi(parsed_block[5][9])); 
+    return lon_mf;  //(atoi(parsed_block[5][6])*1000 + atoi(parsed_block[5][7])*100 + atoi(parsed_block[5][8])*10 + atoi(parsed_block[5][9]));
 }
 
 
@@ -382,12 +382,12 @@ void task_gps(void)
                                     for(i=0;i<2;i++)    tbuf[i] = parsed_block[5][i+3];   tbuf[2]='\0';     lon_m  =  atoi(tbuf);
                                     for(i=0;i<4;i++)    tbuf[i] = parsed_block[5][i+6];   tbuf[4]='\0';     lon_mf =  atoi(tbuf);
 
-                                    // //parsed_block[3][0])*  10 + atoi(parsed_block[3][1])); 
-                                    // lat_m  = ( atoi(parsed_block[3][2])*  10 + atoi(parsed_block[3][3])); 
-                                    // lat_mf = (atoi(parsed_block[3][5])*1000 + atoi(parsed_block[3][6])*100 + atoi(parsed_block[3][7])*10 + atoi(parsed_block[3][8])); 
-                                    // lon_d  = ( atoi(parsed_block[5][0])*100 + atoi(parsed_block[5][1])*10 + atoi(parsed_block[5][2]) ); 
-                                    // lon_m  = (atoi(parsed_block[5][3])*  10 + atoi(parsed_block[5][4])); 
-                                    // lon_mf = (atoi(parsed_block[5][6])*1000 + atoi(parsed_block[5][7])*100 + atoi(parsed_block[5][8])*10 + atoi(parsed_block[5][9])); 
+                                    // //parsed_block[3][0])*  10 + atoi(parsed_block[3][1]));
+                                    // lat_m  = ( atoi(parsed_block[3][2])*  10 + atoi(parsed_block[3][3]));
+                                    // lat_mf = (atoi(parsed_block[3][5])*1000 + atoi(parsed_block[3][6])*100 + atoi(parsed_block[3][7])*10 + atoi(parsed_block[3][8]));
+                                    // lon_d  = ( atoi(parsed_block[5][0])*100 + atoi(parsed_block[5][1])*10 + atoi(parsed_block[5][2]) );
+                                    // lon_m  = (atoi(parsed_block[5][3])*  10 + atoi(parsed_block[5][4]));
+                                    // lon_mf = (atoi(parsed_block[5][6])*1000 + atoi(parsed_block[5][7])*100 + atoi(parsed_block[5][8])*10 + atoi(parsed_block[5][9]));
 
                                     // debugprintf("lat= %d %d %d\r\n", lat_d, lat_m, lat_mf);
                                     // debugprintf("%s \r\n", parsed_block[3]);
@@ -403,7 +403,7 @@ void task_gps(void)
                                     //PRINT_TIME;
                                     // debugstring(gps_line);
                                     // debugprintf(" **** GPS: lat : %7d,  longi : %8u\r\n", gps.latitude, gps.longitude);
-
+/*
                                     if (sdc_read_detectPin()==SDC_INSERTED)
                                     {
                                         u32 fsz;
@@ -415,8 +415,8 @@ void task_gps(void)
                                             SensorBakSize.b.gps = 1;
                                         }
                                     }
+*/
                                 }
-
 
 
 

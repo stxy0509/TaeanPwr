@@ -174,9 +174,9 @@ void init_echoData(void)
 
     for (i=0; i<60; i++)
     {
-        echoData[i].gps_valid = 0; 
-        echoData[i].depth_valid = 0; 
-        echoData[i].temp_valid = 0; 
+        echoData[i].gps_valid = 0;
+        echoData[i].depth_valid = 0;
+        echoData[i].temp_valid = 0;
     }
 }
 
@@ -202,17 +202,17 @@ void make_msg_second(void)
     echoData[i].temp  = get_ct_temp();
 
 #if 1
-    echoData[i].gps_valid     = is_gps_valid(); 
-    echoData[i].depth_valid   = is_ct_valid(); 
-    echoData[i].temp_valid    = is_ct_valid(); 
+    echoData[i].gps_valid     = is_gps_valid();
+    echoData[i].depth_valid   = is_ct_valid();
+    echoData[i].temp_valid    = is_ct_valid();
 #else
     // test only
-    echoData[i].gps_valid     = 0;//is_gps_valid(); 
-    echoData[i].depth_valid   = 0;//is_ct_valid(); 
-    echoData[i].temp_valid    = 0;//is_ct_valid(); 
-#endif    
+    echoData[i].gps_valid     = 0;//is_gps_valid();
+    echoData[i].depth_valid   = 0;//is_ct_valid();
+    echoData[i].temp_valid    = 0;//is_ct_valid();
+#endif
 
-    // debugprintf("echoData[%d] saved...\r\n", i);    
+    // debugprintf("echoData[%d] saved...\r\n", i);
 }
 
 
@@ -321,15 +321,15 @@ char * make_msg_k1(void)
     // 1초 데이타 연결
 
     {
-        int i,j,k, i1;  
+        int i,j,k, i1;
         u16 d16bit;
         // unsigned char tbuf[5];
 
         for (i=0; i<60; i++)
         {
-            if (echoData[i].gps_valid ==0) 
+            if (echoData[i].gps_valid ==0)
             {
-                if ( (i==0) & (echoData[i+1].gps_valid ==1) ) 
+                if ( (i==0) & (echoData[i+1].gps_valid ==1) )
                 {
                     echoData[i].lat_d  = echoData[i+1].lat_d;
                     echoData[i].lat_md = echoData[i+1].lat_md;
@@ -341,7 +341,7 @@ char * make_msg_k1(void)
 
                     debugprintf("adjust-insert....\r\n");
                 }
-                else if (echoData[i-1].gps_valid ==1) 
+                else if (echoData[i-1].gps_valid ==1)
                 {
                     echoData[i].lat_d  = echoData[i-1].lat_d;
                     echoData[i].lat_md = echoData[i-1].lat_md;
@@ -373,7 +373,7 @@ char * make_msg_k1(void)
                     echoData[i].depth  = echoData[i+1].depth;
                     echoData[i].temp = echoData[i+1].temp;
                 }
-                else if (echoData[i-1].depth_valid ==1) 
+                else if (echoData[i-1].depth_valid ==1)
                 {
                     echoData[i].depth  = echoData[i-1].depth;
                     echoData[i].temp = echoData[i-1].temp;
@@ -383,7 +383,7 @@ char * make_msg_k1(void)
                     echoData[i].depth = 999;//200+i;  //get_ct_cond();
                     echoData[i].temp  = 511;//511;//get_ct_temp();
                 }
-            } 
+            }
 
 
             {
@@ -391,9 +391,9 @@ char * make_msg_k1(void)
                 {
                     t_buf[0]  = echoData[i].lat_d  << 1;
                     t_buf[0] |= echoData[i].lat_md >> 5;
-                    
+
                     t_buf[1] |= echoData[i].lat_md << 3;
-                    
+
                     d16bit = echoData[i].lat_mf;
                     t_buf[1] |= (char)(d16bit >> 11);
                     t_buf[2]  = (char)((d16bit >> 3) & 0x00FF);
@@ -402,7 +402,7 @@ char * make_msg_k1(void)
                     t_buf[3] |= (char)(echoData[i].lon_d >> 3);
                     t_buf[4]  = (char)(echoData[i].lon_d << 5);
                     t_buf[4] |= (char)(echoData[i].lon_md >> 1);
-                    
+
                     t_buf[5]  = (char)(echoData[i].lon_md << 7);
                     t_buf[5] |= (char)(echoData[i].lon_mf >> 7);
                     t_buf[6]  = (char)( (echoData[i].lon_mf << 1) & 0x00FF);
@@ -418,7 +418,7 @@ char * make_msg_k1(void)
             // {
             //     debugprintf("%02d: \r\n", i);
             // }
-            
+
 
             j = dp[i][0];
             k = dp[i][1];
@@ -445,7 +445,7 @@ char * make_msg_k1(void)
         }
 
         // BAT
-        
+
         measure_BAT_leval();
 
         i = get_battery_level();
@@ -522,6 +522,7 @@ char * make_msg_k1(void)
 
     strcat(s_msg, "\r\n");
 
+#if 0
     if (sdc_read_detectPin()==SDC_INSERTED)
     {
         u32 fsz;
@@ -533,7 +534,7 @@ char * make_msg_k1(void)
             SensorBakSize.b.send = 1;
         }
     }
-
+#endif
 
     return (s_msg);
 

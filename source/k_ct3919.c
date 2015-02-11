@@ -237,7 +237,7 @@ void task_ct3919(void)
                     // debugstring("\r\n");
                     // debugstring(ct_line);
                     //debugstring("\r\n");
-
+/*
                     if (sdc_read_detectPin()==SDC_INSERTED)
                     {
                         u32 fsz;
@@ -250,7 +250,7 @@ void task_ct3919(void)
                         }
                     }
 
-                    // parsing
+*/                    // parsing
                     {
                         parsing_ct3919(ct_line);
                     }

@@ -123,14 +123,14 @@ int main()
 				    // task_iri_rcv();
 
 				    MODEM_Process();
-#endif				    
+#endif
 				}
 				break;
 		}
 #ifndef  MODEM_TEST_ONLY	 	/* WM-211 */
         task_cmdshell();
 	    // task_sysMCU();
-#endif				    
+#endif
 
 #ifdef  MODEM_TEST_ONLY	 	/* WM-211 */
         {
@@ -366,7 +366,7 @@ void m_get_time_pos_proc(void)
 			if (sdc_read_detectPin()==SDC_INSERTED)
 			{
 			    //u32 fsz;
-			    sdc_set_time_tag(SDC_BOOT_TAG);
+			    // sdc_set_time_tag(SDC_BOOT_TAG);
 			}
 
 
@@ -532,7 +532,7 @@ void measure_BAT_leval(void)
 				f *= 1.111f;
 #endif
 
-#if 1 		// ECHO Buoy constant 
+#if 1 		// ECHO Buoy constant
 				f *= (12.06f/10.50f);
 #endif
 
@@ -997,7 +997,7 @@ void m_time_orinted_evt_proc(void)
 		{
 			set_tm_sbdreg(1);
 		}
-#endif		
+#endif
 	}
 }
 
@@ -1313,12 +1313,12 @@ void wifi_reset(void)
 }
 
 
-void sysWDT_init(void) 
+void sysWDT_init(void)
 {
 	;
 }
 
-void sysWDT_CntClear(void) 
+void sysWDT_CntClear(void)
 {
 	;
 }

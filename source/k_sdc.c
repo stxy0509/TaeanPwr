@@ -23,6 +23,7 @@ FRESULT scan_files (char* path);
 //void sdc_setTagMounted(int a_tag)
 void sdc_set_time_tag(int a_tag)
 {
+/*
     if (sdc_read_detectPin()!=SDC_INSERTED)
     {
         return;
@@ -68,7 +69,7 @@ void sdc_set_time_tag(int a_tag)
             sdc_saveDataToFile(FN_HISTORY,  t_item, &fsz);    delayms(5);
         }
     }
-
+*/
 }
 
 //-----------------------------------------------------------------------------

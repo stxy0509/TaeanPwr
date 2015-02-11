@@ -301,7 +301,7 @@ void task_iridium(void)
                             q_pop();
                             debugprintf("q_pop --> Q[%d]\r\n",is_q_dataNum());
                         }
-
+/*
                         if (sdc_read_detectPin()==SDC_INSERTED)
                         {
                             u32 fsz;
@@ -319,7 +319,7 @@ void task_iridium(void)
                             // }
                         }
 
-                        idx = 8000;
+*/                        idx = 8000;
                         break;
 
                     case 2:
@@ -384,7 +384,7 @@ int MODEM_Process(void)
     static u32 s_stage = 0;
 
     static int resp_idx = 0;
-    
+
     // static int retry_cnt = 0;
     //static char csq_value;
     //static char sbdi_value;
@@ -435,9 +435,9 @@ int MODEM_Process(void)
         if (uart_getch(PORT_WM215,&ch))
         {
             iri_response[resp_idx++] = ch;
-#if 1            
+#if 1
             uart_putch(0, ch);
-#else            
+#else
             debugprintf("%02X ", ch);
             if (ch == 0x0A)
             {
@@ -487,7 +487,7 @@ int MODEM_Process(void)
             tick_iri0 = TM_10SEC;
             m_stage = 2020;
             break;
-        
+
         case 2020:
             //wait 'OK'
             if (resp_idx > 5)
@@ -542,7 +542,7 @@ int MODEM_Process(void)
             tick_iri0 = TM_20SEC;
             m_stage = 3020;
             break;
-        
+
         case 3020:
             //wait 'OK'
             if (resp_idx > 14)
@@ -573,7 +573,7 @@ int MODEM_Process(void)
                 {
                     case 0:
                         // +zipcall = 1
-                        m_stage = 4000; 
+                        m_stage = 4000;
                         break;
                     default:
                         m_stage = 3040;
@@ -593,7 +593,7 @@ int MODEM_Process(void)
             tick_iri0 = TM_20SEC;
             m_stage = 3020;
             break;
-        
+
 
 
 
@@ -613,7 +613,7 @@ int MODEM_Process(void)
             tick_iri0 = TM_20SEC;
             m_stage = 4020;
             break;
-        
+
         case 4020:
             //wait 'OK'
             if (resp_idx > 20)
@@ -677,7 +677,7 @@ int MODEM_Process(void)
             tick_iri0 = TM_20SEC;
             m_stage = 5020;
             break;
-        
+
         case 5020:
             //wait 'OK'
             if (resp_idx > 20)
@@ -711,7 +711,7 @@ int MODEM_Process(void)
                         q_pop();
                         debugprintf("q_pop --> Q[%d]\r\n",is_q_dataNum());
 
-                        if ( (0 == is_q_empty()) )    
+                        if ( (0 == is_q_empty()) )
                         {
                             // not empty...
                             m_stage = 7000;
@@ -723,7 +723,7 @@ int MODEM_Process(void)
                         }
                         break;
                     default:
-                        m_stage = 2000;     
+                        m_stage = 2000;
                         break;
                 }
             }
@@ -755,7 +755,7 @@ int MODEM_Process(void)
             tick_iri0 = TM_20SEC;
             m_stage = 6020;
             break;
-        
+
         case 6020:
             //wait 'OK'
             if (resp_idx > 20)
@@ -952,7 +952,7 @@ int iridium_Process_1(int a_option)
             break;
 
         case 450:
-// PRINTVAR(idx);            
+// PRINTVAR(idx);
             resp_idx = 0;
             // while(1) {  if (uart_getch(3, &ch) == 0)   break; }
             debugprintf("ATE0 ---> ");
@@ -979,7 +979,7 @@ int iridium_Process_1(int a_option)
             break;
 
         case 505:
-// PRINTVAR(idx);            
+// PRINTVAR(idx);
             at_cnt++;
             if (at_cnt >5)
             {
@@ -1088,7 +1088,7 @@ int iridium_Process_1(int a_option)
             {
                 // u32 chksum=0;
                 char ch;
-                
+
                 int len = strlen(newMsg);
 
                 debugprintf("len= %d\r\n", len);
@@ -1129,7 +1129,7 @@ int iridium_Process_1(int a_option)
                 idx = 999;
             }
             break;
-   
+
        case 109:
             if (tick_iri0==0)
             {
@@ -1186,7 +1186,7 @@ int iridium_Process_1(int a_option)
 
 
         case 999:
-PRINTVAR(idx);            
+PRINTVAR(idx);
             //timeout error
             ret_val = 2;
 
@@ -1214,7 +1214,7 @@ void task_iri_rcv(void)
     if (uart_getch(PORT_WM215,&ch))
     {
         // uart_putch(PORT_WM215,ch);
-        
+
         iri1_rcv_q_put(ch);
 
         // switch(idx1)
