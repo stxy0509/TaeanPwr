@@ -843,7 +843,7 @@ void m_time_orinted_evt_proc(void)
 		t_day = ( rtc_time.hour*60 + rtc_time.min);
 
 		//----------------< 매시간마다  ---> RTC & sysTime sync >----------------
-		if ( t_day/69 == 0)
+		if ( t_day%60 == 0)
 		{
 			set_rtc_sysclk_sync_req(1);
 		}
@@ -936,7 +936,7 @@ void m_time_orinted_evt_proc(void)
 
 
 		// 동해부이 (지진모드에서 5분)
-#if (BUOY_SPEC == 'D')
+#if 0//(BUOY_SPEC == 'D')
 
 // #ifdef FLAG_FOR_DEBUGGING
 // 		//env.mode = 1;
