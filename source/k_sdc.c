@@ -102,6 +102,37 @@ void sdc_mount(void)
     }
 }
 
+//-----------------------------------------------------------------------------
+void sdc_clear(void)
+{
+    if (SDC_chkCardInPort()==0) //inserted
+    {
+        debugstring("\r\nSD Card check(format)...\r\n");
+
+        if (f_mount(DRIVE_SDCARD,&fs) != FR_OK)
+        {
+            debugstring("Mount Error");
+            set_sdc_mount(2);   // mount fail
+            fgSDC_diskFail = 1;
+        }
+        else
+        {
+            set_sdc_mount(1);   // mounted
+            fgSDC_diskFail = 0;
+            delayms(500);
+
+            f_mkfs(DRIVE_SDCARD,0,0);
+
+            // sdc_set_time_tag(SDC_MOUNT_TAG);
+            //sdc_setTagMounted();
+        }
+    }
+    else
+    {
+        set_sdc_mount(0);
+        fgSDC_diskFail = 0;
+    }
+}
 
 //-----------------------------------------------------------------------------
 void sdc_unmount(void)

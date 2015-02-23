@@ -50,3 +50,6 @@ void sdc_mount(void);
 
 void sdc_set_time_tag(int a_tag);
 
+void sdc_clear(void);
+
+
