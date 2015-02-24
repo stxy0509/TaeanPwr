@@ -1252,7 +1252,7 @@ void env_print(void)
     debugprintf("\r\n\r\nenv.id         : %03d\r\n", env.id);// = 2;			// 지진모드= 2: 해제		3: 설정
     debugprintf("env.ip         : %s\r\n", env.ip);// = 2;			// 지진모드= 2: 해제		3: 설정
     debugprintf("env.port       : %04d\r\n", env.port);// = 2;			// 지진모드= 2: 해제		3: 설정
-    debugprintf("env.interval     : %d\r\n", env.interval);//terval = 30;		// 전송주기 (10, 20, 30, 60, 120)
+    // debugprintf("env.interval     : %d\r\n", env.interval);//terval = 30;		// 전송주기 (10, 20, 30, 60, 120)
 
 }
 

@@ -1578,6 +1578,10 @@ static void cmd_rtc(void)
     {
         printTimeTag();
     }
+    else if ( (!strncmp( args[1], "sync", 4)) )
+    {
+        set_rtc_sysclk_sync_req(1);
+    }
     // SETTIME
     else if ( (!strncmp( args[1], "settime", 6)) ||
               (!strncmp( args[1], "st", 2)))
