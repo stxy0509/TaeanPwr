@@ -210,27 +210,48 @@ void make_msg_second(void)
 
     i = rtc_time.sec;
 
-    echoData[i].lat_d  = get_gps_lat_d();
-    echoData[i].lat_md = get_gps_lat_m();
-    echoData[i].lat_mf = get_gps_lat_mf();
-
-    echoData[i].lon_d  = get_gps_lon_d();
-    echoData[i].lon_md = get_gps_lon_m();
-    echoData[i].lon_mf = get_gps_lon_mf();
-
-    echoData[i].depth = get_ct_cond();
-    echoData[i].temp  = get_ct_temp();
-
 #if 1
     echoData[i].gps_valid     = is_gps_valid();
     echoData[i].depth_valid   = is_ct_valid();
     echoData[i].temp_valid    = is_ct_valid();
 #else
     // test only
-    echoData[i].gps_valid     = 0;//is_gps_valid();
-    echoData[i].depth_valid   = 0;//is_ct_valid();
-    echoData[i].temp_valid    = 0;//is_ct_valid();
+    echoData[i].gps_valid     = 0;
+    echoData[i].depth_valid   = 0;
+    echoData[i].temp_valid    = 0;
 #endif
+
+    if (echoData[i].gps_valid==1)
+    {
+        echoData[i].lat_d  = get_gps_lat_d();
+        echoData[i].lat_md = get_gps_lat_m();
+        echoData[i].lat_mf = get_gps_lat_mf();
+
+        echoData[i].lon_d  = get_gps_lon_d();
+        echoData[i].lon_md = get_gps_lon_m();
+        echoData[i].lon_mf = get_gps_lon_mf();
+    }
+    else
+    {
+        echoData[i].lat_d  = 90;
+        echoData[i].lat_md = 59;
+        echoData[i].lat_mf = 9999;
+
+        echoData[i].lon_d  = 180;
+        echoData[i].lon_md = 59;
+        echoData[i].lon_mf = 9999;
+    }
+
+    if (echoData[i].depth_valid==1)
+    {
+        echoData[i].depth = get_ct_cond();
+        echoData[i].temp  = get_ct_temp();
+    }
+    else
+    {
+        echoData[i].depth = 999;
+        echoData[i].temp  = 511;
+    }
 
     // debugprintf("echoData[%d] saved...\r\n", i);
 

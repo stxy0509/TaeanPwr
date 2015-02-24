@@ -2541,7 +2541,7 @@ static void cmd_get(void)
     if ( (!strncmp( args[1], "bat", 3)))
     {
         measure_BAT_leval();
-        //debugprintf("bat : %03d\r\n", get_battery_level());
+        debugprintf("bat : %03d\r\n", get_battery_level());
     }
 }
 
