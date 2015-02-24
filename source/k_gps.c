@@ -341,7 +341,7 @@ void task_gps(void)
     if (uart_getch(1,&ch)) //receive
     // if (ch != -1)
     {
-#if 0
+#if 0 
         uart_putch(0,ch);
 #endif
 
@@ -365,7 +365,7 @@ void task_gps(void)
                 gps_line[line_ptr++] = 0x0A;
                 gps_line[line_ptr] = '\0';
 
-                if (ref_cnt_rmc == 7)   //$GPRMC*
+                if (ref_cnt_rmc >= 6)   //$GPRMC*
                 {
                     if ( gps_chksum() )
                     {
@@ -438,7 +438,7 @@ void task_gps(void)
                 ref_cnt_rmc = 0;
                 gps_line[line_ptr++] = ch;
                 ref_cnt++;
-                ref_cnt_rmc++;
+                // ref_cnt_rmc++;
                 break;
 
               case 'G':

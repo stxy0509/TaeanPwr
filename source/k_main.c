@@ -117,7 +117,9 @@ int main()
         		{
 	        		debugstring("\r\n");
         			SettingMode = 0;						// normal mode
-
+		
+		            // sensor_q_init();
+		            // init_q();			// queue for SEND data
         		}
         	}
         	if (uart_getch(0, &ch))
@@ -145,12 +147,13 @@ int main()
 			case 300:
 
 			case 400:
+				task_ct3919();		// Alti-meter
+				task_gps();
+
 				if (SettingMode == 1)
 					break;
 
 
-				task_ct3919();		// Alti-meter
-				task_gps();
 
 				if (main_step_200 == 1)
 				{

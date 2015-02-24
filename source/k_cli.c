@@ -634,18 +634,18 @@ static void get_cmd()
 
                 wifistring("\r\nexit FW update mode...\r\n");
 
-                debugprintf("rcv_cnt= %d (279552)\r\n", rcv_cnt);
+                debugprintf("rcv_cnt= %d (273*1024)\r\n", rcv_cnt);  // 279552
                 // debugprintf("rcv_cnt= %d (358400)\r\n", rcv_cnt);
                 // wifiprintf("rcv_cnt= %d (358400)\r\n", rcv_cnt);
 
 
 
                 // if (rcv_cnt == 358400)
-                if (rcv_cnt == 279552)
+                if (rcv_cnt == 273*1024)
                 {
                     //extern const unsigned int bootloader_trip_elf_bin_len;
                     int i;
-                    int fileSize_bak = 279552;
+                    int fileSize_bak = 273*1024;
                     // int sectors = bootloader_trip_elf_bin_len/flash_get_sectorsize();
                     int sectors = fileSize_bak/flash_get_sectorsize();
                     // if(bootloader_trip_elf_bin_len % flash_get_sectorsize())
