@@ -645,8 +645,7 @@ void m_boot_proc(void)
 		    set_sdc_mount(0);   // sdc init status = unmount
 
 
-			// set_debug_channel(4);
-
+			// set_debug_channel(4); 
 
 
 			// enable interrupt
@@ -656,7 +655,7 @@ void m_boot_proc(void)
             sensor_q_init();
             init_q();			// queue for SEND data
 
-	        // init_aio_data();
+	        // init_aio_data(); 
 
 
 // PRINTLINE;

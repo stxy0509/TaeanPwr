@@ -413,7 +413,7 @@ char * make_msg_k1(void)
                     }
                 }
 
-                if ( (i==0) & (echoData[i+1].gps_valid ==1) )
+                if ( (i==0) && (echoData[i+1].gps_valid ==1) )
                 {
                     echoData[i].gps_valid =1;
                     echoData[i].lat_d  = echoData[i+1].lat_d;
@@ -475,7 +475,7 @@ char * make_msg_k1(void)
                     }
                 }
 
-                if ( (i==0) &  (echoData[i+1].depth_valid ==1)  )
+                if ( (i==0) &&  (echoData[i+1].depth_valid ==1)  )
                 {
                     echoData[i].depth_valid =1;
 
@@ -523,26 +523,35 @@ char * make_msg_k1(void)
                     t_buf[0]  = echoData[i].lat_d  << 1;
                     t_buf[0] |= echoData[i].lat_md >> 5;
 
-                    t_buf[1] |= echoData[i].lat_md << 3;
+/*error?? */     // t_buf[1] |= echoData[i].lat_md << 3;
+                    t_buf[1] = echoData[i].lat_md << 3;
 
                     d16bit = echoData[i].lat_mf;
-                    t_buf[1] |= (char)(d16bit >> 11);
-                    t_buf[2]  = (char)((d16bit >> 3) & 0x00FF);
-                    t_buf[3]  = (char)((d16bit << 5) & 0x00FF);
+                    t_buf[1] |= (char)((d16bit >> 11) & 0x00FF);
+                    t_buf[2]  = (char)((d16bit >>  3) & 0x00FF);
+                    t_buf[3]  = (char)((d16bit <<  5) & 0x00FF);
 
-                    t_buf[3] |= (char)(echoData[i].lon_d >> 3);
-                    t_buf[4]  = (char)(echoData[i].lon_d << 5);
+                    t_buf[3] |= (char)(echoData[i].lon_d  >> 3);
+                    t_buf[4]  = (char)(echoData[i].lon_d  << 5);
                     t_buf[4] |= (char)(echoData[i].lon_md >> 1);
 
                     t_buf[5]  = (char)(echoData[i].lon_md << 7);
-                    t_buf[5] |= (char)(echoData[i].lon_mf >> 7);
-                    t_buf[6]  = (char)( (echoData[i].lon_mf << 1) & 0x00FF);
+                    
+                    d16bit = echoData[i].lon_mf;
+                    t_buf[5] |= (char)((d16bit >> 7) & 0x00FF);
+                    t_buf[6]  = (char)((d16bit << 1) & 0x00FF);
+
+                    d16bit = echoData[i].depth;
+
                     // t_buf[6] |= (char)( (echoData[i].depth >> 11) & 0x00FF);
-                    t_buf[6] |= (char)( (echoData[i].depth >> 9) & 0x00FF);
-                    t_buf[7]  = (char)( (echoData[i].depth >> 1) & 0x00FF);
-                    t_buf[8]  = (char)( (echoData[i].depth << 7) & 0x00FF);
-                    t_buf[8] |= (char)( (echoData[i].temp >> 2) & 0x00FF);
-                    t_buf[9]  = (char)( (echoData[i].temp << 6) & 0x00FF);
+                    t_buf[6] |= (char)( (d16bit >> 9) & 0x00FF);
+                    t_buf[7]  = (char)( (d16bit >> 1) & 0x00FF);
+                    t_buf[8]  = (char)( (d16bit << 7) & 0x00FF);
+
+                    d16bit = echoData[i].temp;
+
+                    t_buf[8] |= (char)( (d16bit >> 2) & 0x00FF);
+                    t_buf[9]  = (char)( (d16bit << 6) & 0x00FF);
                 }
                 // debugprintf("%02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\r\n", t_buf[0], t_buf[1], t_buf[2], t_buf[3], t_buf[4], t_buf[5], t_buf[6], t_buf[7], t_buf[8], t_buf[9]);
             }
