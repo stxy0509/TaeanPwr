@@ -205,8 +205,16 @@ void parsing_ct3919(char *a_str)
         // ct.cond = d1;
         ct.temp = d2;
         ct.valid  = 1;
+    }
 
-        //PRINT_TIME;
+    if (!strcmp(ct_data[0],"$SDMTW"))
+    {
+        int d2;
+        // d2 = atof(ct_data[1])*10.0f;
+        d2 = (int)(atof(ct_data[1])*10.0f);
+        // ct.cond = d1;
+        ct.temp = d2;
+        ct.valid  = 1;
     }
 
     // debugprintf(" **** Alti-meter: %d(c), %d(t) \r\n\r\n", ct.cond, ct.temp);

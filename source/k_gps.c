@@ -138,7 +138,17 @@ u32 get_gps_q_len(void)
 
 void gps_neo6q_init(void)
 {
+/*
+1.      $GPGGA Disable HEX 값: B5 62 06 01 08 00 F0 00 00 00 00 00 00 01 00 24
+2.      $GPGLL Disable HEX 값: B5 62 06 01 08 00 F0 01 00 00 00 00 00 01 01 2B
+3.      $GPGSA Disable HEX 값: B5 62 06 01 08 00 F0 02 00 00 00 00 00 01 02 32
+4.      $GPGSA Disable HEX 값: B5 62 06 01 08 00 F0 03 00 00 00 00 00 01 03 39
+5.      $GPVTG Disable HEX 값: B5 62 06 01 08 00 F0 05 00 00 00 00 00 01 05 47
+6.      $GPRMC Enable HEX 값 : B5 62 06 01 08 00 F0 04 00 01 00 00 00 01 05 45
+7.      $PUBX Enable HEX 값  : B5 62 06 01 08 00 F1 00 00 01 01 00 00 00 02 34
+*/
     int i;
+    // char init0[] = {0xB5,0x62,0x06,0x08,0x06,0x00,0xF4,0x01,0x01,0x00,0x01,0x00,0x0B,0x77          };
     char init1[] = {0xB5,0x62,0x06,0x01,0x08,0x00,0xF0,0x00,0x00,0x00,0x00,0x00,0x00,0x01,0x00,0x24};
     char init2[] = {0xB5,0x62,0x06,0x01,0x08,0x00,0xF0,0x01,0x00,0x00,0x00,0x00,0x00,0x01,0x01,0x2B};
     char init3[] = {0xB5,0x62,0x06,0x01,0x08,0x00,0xF0,0x02,0x00,0x00,0x00,0x00,0x00,0x01,0x02,0x32};
@@ -146,7 +156,7 @@ void gps_neo6q_init(void)
     char init5[] = {0xB5,0x62,0x06,0x01,0x08,0x00,0xF0,0x05,0x00,0x00,0x00,0x00,0x00,0x01,0x05,0x47};
     char init6[] = {0xB5,0x62,0x06,0x01,0x08,0x00,0xF0,0x04,0x00,0x01,0x00,0x00,0x00,0x01,0x05,0x45};
 
-    // for (i=0;i<14;i++)  UartPutCh(UART0_GPS,init0[i]);    delayms(100);    *R_WDCNT=WATCHDOG_V;
+    //for (i=0;i<14;i++)  uart_putch(1,init0[i]);    delayms(10);   // *R_WDCNT=WATCHDOG_V;
     for (i=0;i<16;i++)  uart_putch(1,init1[i]);    delayms(100);   // *R_WDCNT=WATCHDOG_V;
     for (i=0;i<16;i++)  uart_putch(1,init2[i]);    delayms(100);   // *R_WDCNT=WATCHDOG_V;
     for (i=0;i<16;i++)  uart_putch(1,init3[i]);    delayms(100);   // *R_WDCNT=WATCHDOG_V;
@@ -317,12 +327,22 @@ int gps_chksum(void)
     return k;
 }
 
+int chk_GPRMC(void)
+{
+    int retval = 0;
+    if ( (gps_line[0]=='$') && (gps_line[3]=='R') &&
+         (gps_line[4]=='M') && (gps_line[5]=='C') )
+    {
+        retval=1;
+    }
+    return retval;
+}
 
 void task_gps(void)
 {
     static int line_ptr = 0;
-    static int ref_cnt = 0;
-    static int ref_cnt_rmc = 0;
+    // static int ref_cnt = 0;
+    // static int ref_cnt_rmc = 0;
     char ch;
     //int i;
 
@@ -365,10 +385,10 @@ void task_gps(void)
                 gps_line[line_ptr++] = 0x0A;
                 gps_line[line_ptr] = '\0';
 
-                if (ref_cnt_rmc >= 6)   //$GPRMC*
+                if (chk_GPRMC() == 1)   //$GPRMC*
                 {
-                    if ( gps_chksum() )
-                    {
+                    // if ( gps_chksum() )
+                    // {
                         if (is_gps_rawdata_display()==1)
                         {
                             debugstring(gps_line);
@@ -377,7 +397,7 @@ void task_gps(void)
                         //PRINTVAR(get_gps_q_len());
                         parsing_gps();
 
-                        if ( 'R' == parsed_block[0][3]) // $GPRMC
+                        // if ( 'R' == parsed_block[0][3]) // $GPRMC
                         {
                             if ( 'A' == parsed_block[2][0])
                             {
@@ -391,6 +411,7 @@ void task_gps(void)
                                 gps_time.week = 0;
                                 gps_time.mon =  (parsed_block[9][2]-'0')*10 + (parsed_block[9][3]-'0');
                                 gps_time.year = (parsed_block[9][4]-'0')*10 + (parsed_block[9][5]-'0') + 2000;
+
                                 {
                                     int i;
                                     char tbuf[6];
@@ -407,21 +428,49 @@ void task_gps(void)
 
 
 
-                                if (1 == get_rtc_sysclk_sync_req())
+                                if ( (1 == get_rtc_sysclk_sync_req()) &&
+                                     (30 == gps_time.sec) )
                                 {
                                     rtc_settime(&gps_time);
                                     set_rtc_sysclk_sync_req(0);  //fg_RTC_sync_req = 0;
                                 }
+#if 0
+                                if ( 
+                                     (0 == gps_time.sec) )
+                                {
+                                    debugprintf("It's time to send data : %02d:%02d:%02d\r\n",rtc_time.hour,rtc_time.min, rtc_time.sec);
+                                    make_msg_k1();
+                                    init_echoData();
+                                }
+
+                                make_msg_second();
+#endif
 
                             }
-
+                            
+#if 0
+                            {
+                                /*
+                                    GPS가 Active가 아닐지라도 시간정보를 사용한다..
+                                 */
+                                gps_time.hour = (parsed_block[1][0]-'0')*10 + (parsed_block[1][1]-'0');
+                                gps_time.min =  (parsed_block[1][2]-'0')*10 + (parsed_block[1][3]-'0');
+                                gps_time.sec =  (parsed_block[1][4]-'0')*10 + (parsed_block[1][5]-'0');
+                                gps_time.day =  (parsed_block[9][0]-'0')*10 + (parsed_block[9][1]-'0');
+                                gps_time.week = 0;
+                                gps_time.mon =  (parsed_block[9][2]-'0')*10 + (parsed_block[9][3]-'0');
+                                gps_time.year = (parsed_block[9][4]-'0')*10 + (parsed_block[9][5]-'0') + 2000;
+                                    
+                                rtc_settime(&gps_time);
+                            }
+#endif
                         }
 
-                    }
+                    // }
                 }
                 line_ptr = 0;
-                ref_cnt = 0;
-                ref_cnt_rmc = 0;
+                // ref_cnt = 0;
+                // ref_cnt_rmc = 0;
 
                 //PRINTLINE;
                 break;
@@ -435,24 +484,24 @@ void task_gps(void)
 
               case '$':
                 line_ptr = 0;
-                ref_cnt_rmc = 0;
-                gps_line[line_ptr++] = ch;
-                ref_cnt++;
+                // ref_cnt_rmc = 0;
+                // gps_line[line_ptr++] = ch;
+                // ref_cnt++;
                 // ref_cnt_rmc++;
-                break;
+                // break;
 
-              case 'G':
-              case 'P':
-              case 'R':
-              case 'M':
-              case 'C':
-              case '*':
-                ref_cnt_rmc++;
+              // case 'G':
+              // case 'P':
+              // case 'R':
+              // case 'M':
+              // case 'C':
+              // case '*':
+              //   ref_cnt_rmc++;
 
-              case ',':
-                gps_line[line_ptr++] = ch;
-                ref_cnt++;
-                break;
+              // case ',':
+              //   gps_line[line_ptr++] = ch;
+              //   // ref_cnt++;
+              //   break;
 
               default:
                 gps_line[line_ptr++] = ch;

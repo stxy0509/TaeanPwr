@@ -296,7 +296,7 @@ void sdc_saveDataToFile(char *a_fname, char *a_msg, u32 *fsz)
     strcat(t_item,a_fname);
 
     //
-    res = f_open(fp,t_item, FA_OPEN_ALWAYS|FA_WRITE);   delayms(5);
+    res = f_open(fp,t_item, FA_OPEN_ALWAYS|FA_WRITE);   //delayms(5);
     if (res != FR_OK)
     {
         // PRINTLINE;
@@ -305,12 +305,12 @@ void sdc_saveDataToFile(char *a_fname, char *a_msg, u32 *fsz)
         return;
     }
 
-	f_lseek(fp, (fp->fsize));   delayms(5);
+	f_lseek(fp, (fp->fsize));   //delayms(5);
     sz_msg = strlen(a_msg);
-	f_write(fp, a_msg, sz_msg, &bw);   delayms(5);
+	f_write(fp, a_msg, sz_msg, &bw);   //delayms(5);
 
     *fsz = (u32)(fp->fsize);
-    f_close(fp);   delayms(5);
+    f_close(fp);   //delayms(5);
 }
 
 //-----------------------------------------------------------------------------

@@ -819,7 +819,16 @@ void m_time_orinted_evt_proc(void)
 	if (rtc_time.sec != sec_before)
 	{
 		sec_before = rtc_time.sec;
+#if 1
+		if (rtc_time.sec == 0)
+		{
+			debugprintf("It's time to send data : %02d:%02d:%02d\r\n",rtc_time.hour,rtc_time.min, rtc_time.sec);
+			make_msg_k1();
+			init_echoData();
+		}
+
 		make_msg_second();
+#endif	
 	}
 
 
@@ -828,14 +837,15 @@ void m_time_orinted_evt_proc(void)
 		// clr_fg_SEC_elapsed();
 
 		// 여기는 매 1초마다 실행되는 곳이다.
-
+#if 0
 		if (rtc_time.sec == 0)
 		{
 			debugprintf("It's time to send data : %02d:%02d:%02d\r\n",rtc_time.hour,rtc_time.min, rtc_time.sec);
 			make_msg_k1();
 			init_echoData();
 		}
-		// make_msg_second();
+		make_msg_second();
+#endif		
 	}
 
 
@@ -844,8 +854,8 @@ void m_time_orinted_evt_proc(void)
 		// 여기는 매 1분마다 실행되는 곳이다.
 		t_day = ( rtc_time.hour*60 + rtc_time.min);
 
-		//----------------< 매시간마다  ---> RTC & sysTime sync >----------------
-		if ( t_day%60 == 0)
+		//----------------< 매 2분마다  ---> RTC & sysTime sync >----------------
+		if ( t_day%2 == 0)
 		{
 			set_rtc_sysclk_sync_req(1);
 		}
@@ -1254,7 +1264,7 @@ void env_print(void)
     debugprintf("\r\n\r\nenv.id         : %03d\r\n", env.id);// = 2;			// 지진모드= 2: 해제		3: 설정
     debugprintf("env.ip         : %s\r\n", env.ip);// = 2;			// 지진모드= 2: 해제		3: 설정
     debugprintf("env.port       : %04d\r\n", env.port);// = 2;			// 지진모드= 2: 해제		3: 설정
-    // debugprintf("env.interval     : %d\r\n", env.interval);//terval = 30;		// 전송주기 (10, 20, 30, 60, 120)
+    // debugprintf("env.alti       : %d\r\n", env.interval);//terval = 30;		// 전송주기 (10, 20, 30, 60, 120)
 
 }
 

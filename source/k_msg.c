@@ -233,13 +233,13 @@ void make_msg_second(void)
     }
     else
     {
-        echoData[i].lat_d  = 90;
-        echoData[i].lat_md = 59;
-        echoData[i].lat_mf = 9999;
+        echoData[i].lat_d  = 0;
+        echoData[i].lat_md = 0;
+        echoData[i].lat_mf = 0;
 
-        echoData[i].lon_d  = 180;
-        echoData[i].lon_md = 59;
-        echoData[i].lon_mf = 9999;
+        echoData[i].lon_d  = 0;
+        echoData[i].lon_md = 0;
+        echoData[i].lon_mf = 0;
     }
 
     if (echoData[i].depth_valid==1)
@@ -260,6 +260,21 @@ void make_msg_second(void)
         bat1 = get_battery_level();
         debugprintf("%04d/%02d/%02d,%02d:%02d:%02d,%02d%02d.%04d,%03d%02d.%04d,%2.1f,%2.1f,%2.1f\r\n", rtc_time.year, rtc_time.mon, rtc_time.day, rtc_time.hour, rtc_time.min, i, echoData[i].lat_d, echoData[i].lat_md, echoData[i].lat_mf, echoData[i].lon_d, echoData[i].lon_md, echoData[i].lon_mf, echoData[i].depth/10.0f, echoData[i].temp/10.0f, bat1/10.0f);
     }
+
+#if 1
+            if (sdc_read_detectPin()==SDC_INSERTED)
+            {
+                u32 fsz;
+                char fname[20];
+                char wdata[100];
+
+                sprintf(fname, "%04d%02d%02d_EB.txt", rtc_time.year, rtc_time.mon, rtc_time.day);
+                sprintf(wdata, "%04d/%02d/%02d,%02d:%02d:%02d,%02d%02d.%04d,%03d%02d.%04d,%2.1f,%2.1f,%2.1f\r\n", rtc_time.year, rtc_time.mon, rtc_time.day, rtc_time.hour, rtc_time.min, i, echoData[i].lat_d, echoData[i].lat_md, echoData[i].lat_mf, echoData[i].lon_d, echoData[i].lon_md, echoData[i].lon_mf, echoData[i].depth/10.0f, echoData[i].temp/10.0f, bat1/10.0f);
+
+                sdc_saveDataToFile(fname, wdata, &fsz);
+            }
+#endif
+
 }
 
 
@@ -388,6 +403,7 @@ char * make_msg_k1(void)
 
             if (echoData[i].gps_valid ==0)
             {
+#if 0                
                 if (i == 0)
                 {
                     /*
@@ -424,7 +440,7 @@ char * make_msg_k1(void)
                     echoData[i].lon_md = echoData[i+1].lon_md;
                     echoData[i].lon_mf = echoData[i+1].lon_mf;
 
-                    // debugprintf("adjust-insert....\r\n");
+                    debugprintf("%d-adjust-insert....\r\n",i);
                 }
                 else if (echoData[i-1].gps_valid ==1)
                 {
@@ -438,18 +454,29 @@ char * make_msg_k1(void)
                     echoData[i].lon_md = echoData[i-1].lon_md;
                     echoData[i].lon_mf = echoData[i-1].lon_mf;
 
-                    // debugprintf("adjust-insert....\r\n");
+                    debugprintf("%d-adjust-insert....\r\n",i);
                 }
                 else
+#endif                    
                 {
-                    echoData[i].lat_d  = 90;//32;
-                    echoData[i].lat_md = 59;//12;
-                    echoData[i].lat_mf = 9999;//3456;
+#if 1                    
+                    echoData[i].lat_d  = 0;//32;
+                    echoData[i].lat_md = 0;//12;
+                    echoData[i].lat_mf = 0;//3456;
 
-                    echoData[i].lon_d  = 180;//126;
-                    echoData[i].lon_md = 59;//23;
-                    echoData[i].lon_mf = 9999;//4567;
+                    echoData[i].lon_d  = 0;//126;
+                    echoData[i].lon_md = 0;//23;
+                    echoData[i].lon_mf = 0;//4567;
+#else
+        echoData[i].lat_d  = 37;//90;
+        echoData[i].lat_md = 24;//59;
+        echoData[i].lat_mf = 60;//9999;
 
+        echoData[i].lon_d  = 126;//180;
+        echoData[i].lon_md = 54;//59;
+        echoData[i].lon_mf = 1603;//9999;
+
+#endif
                 }
             }
 
@@ -496,6 +523,7 @@ char * make_msg_k1(void)
                 }
             }
 
+#if 0
             if (sdc_read_detectPin()==SDC_INSERTED)
             {
                 u32 fsz;
@@ -511,7 +539,7 @@ char * make_msg_k1(void)
                     SensorBakSize.b.gps = 1;
                 }
             }
-
+#endif
 
             {
                 if (fg_min_data_display==1)

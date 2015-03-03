@@ -520,14 +520,6 @@
 	"buffers":
 	[
 		{
-			"file": "source/k_gps.c",
-			"settings":
-			{
-				"buffer_size": 16815,
-				"line_ending": "Windows"
-			}
-		},
-		{
 			"file": "source/k_rtc.c",
 			"settings":
 			{
@@ -536,10 +528,28 @@
 			}
 		},
 		{
-			"file": "source/k_config.h",
+			"contents": "Searching 377 files for \"sdc_saveSendMsg\"\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\.tags:\n  778  sdc_saveDataToFile	.\\k_sdc.c	/^void sdc_saveDataToFile(char *a_fname, char *a_msg, u32 *fsz)$/;\"	f\n  779  sdc_saveDeferedMsg	.\\k_sdc.c	/^void sdc_saveDeferedMsg(char *a_msg)$/;\"	f\n  780: sdc_saveSendMsg	.\\k_sdc.c	/^void sdc_saveSendMsg(char *a_msg)$/;\"	f\n  781  sdc_set_time_tag	.\\k_sdc.c	/^void sdc_set_time_tag(int a_tag)$/;\"	f\n  782  sdc_unmount	.\\k_sdc.c	/^void sdc_unmount(void)$/;\"	f\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\.tags_sorted_by_file:\n  797  sdc_saveDataToFile	k_sdc.c	/^void sdc_saveDataToFile(char *a_fname, char *a_msg, u32 *fsz)$/;\"	f\n  798  sdc_saveDeferedMsg	k_sdc.c	/^void sdc_saveDeferedMsg(char *a_msg)$/;\"	f\n  799: sdc_saveSendMsg	k_sdc.c	/^void sdc_saveSendMsg(char *a_msg)$/;\"	f\n  800  sdc_set_time_tag	k_sdc.c	/^void sdc_set_time_tag(int a_tag)$/;\"	f\n  801  sdc_unmount	k_sdc.c	/^void sdc_unmount(void)$/;\"	f\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\k_sdc.c:\n  181  }\n  182  \n  183: void sdc_saveSendMsg(char *a_msg)\n  184  {\n  185      FRESULT  res;\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\k_sdc.h:\n   35  void set_sdc_mount(int a_mount);\n   36  \n   37: void sdc_saveSendMsg(char *a_msg);\n   38  void sdc_saveDataToFile(char *a_fname, char *a_msg, u32 *fsz);\n   39  void PrintFileSystem();\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\output\\koga2013.elf:\n    <binary>\n\n9 matches across 5 files\n\n\nSearching 377 files for \"sdc_saveDataToFile\"\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\.tags:\n  776  sdc_mount	.\\k_sdc.c	/^void sdc_mount(void)$/;\"	f\n  777  sdc_read_detectPin	.\\k_sdc.c	/^u32 sdc_read_detectPin(void)$/;\"	f\n  778: sdc_saveDataToFile	.\\k_sdc.c	/^void sdc_saveDataToFile(char *a_fname, char *a_msg, u32 *fsz)$/;\"	f\n  779  sdc_saveDeferedMsg	.\\k_sdc.c	/^void sdc_saveDeferedMsg(char *a_msg)$/;\"	f\n  780  sdc_saveSendMsg	.\\k_sdc.c	/^void sdc_saveSendMsg(char *a_msg)$/;\"	f\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\.tags_sorted_by_file:\n  795  sdc_mount	k_sdc.c	/^void sdc_mount(void)$/;\"	f\n  796  sdc_read_detectPin	k_sdc.c	/^u32 sdc_read_detectPin(void)$/;\"	f\n  797: sdc_saveDataToFile	k_sdc.c	/^void sdc_saveDataToFile(char *a_fname, char *a_msg, u32 *fsz)$/;\"	f\n  798  sdc_saveDeferedMsg	k_sdc.c	/^void sdc_saveDeferedMsg(char *a_msg)$/;\"	f\n  799  sdc_saveSendMsg	k_sdc.c	/^void sdc_saveSendMsg(char *a_msg)$/;\"	f\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\k_iridium.c:\n  312  \n  313  \n  314:                             sdc_saveDataToFile(FN_HISTORY, t_item, &fsz);\n  315                              //PRINTVAR(fsz);\n  316                              // if (fsz > FSZ_MAX)\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\k_msg.c:\n  516                  sprintf(wdata, \"%04d/%02d/%02d,%02d:%02d:%02d,%02d%02d.%04d,%03d%02d.%04d,%2.1f,%2.1f,%2.1f\\r\\n\", rtc_time.year, rtc_time.mon, rtc_time.day, rtc_time.hour, rtc_time.min, i, echoData[i].lat_d, echoData[i].lat_md, echoData[i].lat_mf, echoData[i].lon_d, echoData[i].lon_md, echoData[i].lon_mf, echoData[i].depth/10.0f, echoData[i].temp/10.0f, bat1/10.0f);\n  517  \n  518:                 sdc_saveDataToFile(fname, wdata, &fsz);\n  519                  if (fsz > FSZ_MAX)\n  520                  {\n  ...\n  677          u32 fsz;\n  678          //PRINTLINE;\n  679:         sdc_saveDataToFile(FN_SEND, s_msg, &fsz);\n  680          //PRINTVAR(fsz);\n  681          if (fsz > FSZ_MAX)\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\k_sdc.c:\n   54          strcat(t_item,\"\\r\\n\");\n   55  \n   56:         sdc_saveDataToFile(FN_AIO,      t_item, &fsz);    delayms(5);\n   57:         sdc_saveDataToFile(FN_CT3919,   t_item, &fsz);    delayms(5);\n   58:         sdc_saveDataToFile(FN_DCS,      t_item, &fsz);    delayms(5);\n   59:         sdc_saveDataToFile(FN_ATM1,     t_item, &fsz);    delayms(5);\n   60:         sdc_saveDataToFile(FN_ATM2,     t_item, &fsz);    delayms(5);\n   61:         sdc_saveDataToFile(FN_HMP155,   t_item, &fsz);    delayms(5);\n   62:         sdc_saveDataToFile(FN_PTB210,   t_item, &fsz);    delayms(5);\n   63:         sdc_saveDataToFile(FN_SHOCK,    t_item, &fsz);    delayms(5);\n   64          if (a_tag != SDC_TIME_TAG)\n   65          {\n   66:             sdc_saveDataToFile(FN_GPS,      t_item, &fsz);    delayms(5);\n   67:             sdc_saveDataToFile(FN_MOSE,     t_item, &fsz);    delayms(5);\n   68:             // sdc_saveDataToFile(FN_SEND,     t_item, &fsz);    delayms(5);\n   69:             sdc_saveDataToFile(FN_HISTORY,  t_item, &fsz);    delayms(5);\n   70          }\n   71      }\n   ..\n  282  \n  283  //-----------------------------------------------------------------------------\n  284: void sdc_saveDataToFile(char *a_fname, char *a_msg, u32 *fsz)\n  285  {\n  286      FRESULT  res;\n  ...\n  556  						if (sdc_read_detectPin()==SDC_INSERTED)\n  557  						{\n  558: 							sdc_saveDataToFile(\"rRdcp.dat\",\"$WIXDR,A,034,D,1,S,5.0,M,1,C,17.3,C,0,H,69.4,P,0,P,1024.8,H,0,C,17.3,C,2,U,0.0,#,0,U,25.1,V,1*13\\r\\n\");\n  559: 							sdc_saveDataToFile(\"rAdb.dat\",\"$PDTWL,POS,11,11,01,00,01,10.00,34,43.9136,N,128,22.6923,E,  25.1,0.9,1.2*19\\r\\n\");\n  560: 							sdc_saveDataToFile(\"rPtb210.dat\",\"%#	  3919	  1259	     0.0243	    18.647\\r\\n\");\n  561: 							sdc_saveDataToFile(\"sentMsg.dat\",\"%#	  3919	  1259	     0.0243	    18.647\\r\\n\");\n  562: 							sdc_saveDataToFile(\"deferMsg.dat\",\"%#	  3919	  1259	     0.0243	    18.647\\r\\n\");\n  563  							*R_WDCNT=WATCHDOG_V;\n  564  						}\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\k_sdc.h:\n   36  \n   37  void sdc_saveSendMsg(char *a_msg);\n   38: void sdc_saveDataToFile(char *a_fname, char *a_msg, u32 *fsz);\n   39  void PrintFileSystem();\n   40  FRESULT print_files (char* path);\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\output\\koga2013.elf:\n    <binary>\n\n29 matches across 7 files\n\n\nSearching 377 files for \"sdc_saveDeferedMsg\"\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\.tags:\n  777  sdc_read_detectPin	.\\k_sdc.c	/^u32 sdc_read_detectPin(void)$/;\"	f\n  778  sdc_saveDataToFile	.\\k_sdc.c	/^void sdc_saveDataToFile(char *a_fname, char *a_msg, u32 *fsz)$/;\"	f\n  779: sdc_saveDeferedMsg	.\\k_sdc.c	/^void sdc_saveDeferedMsg(char *a_msg)$/;\"	f\n  780  sdc_saveSendMsg	.\\k_sdc.c	/^void sdc_saveSendMsg(char *a_msg)$/;\"	f\n  781  sdc_set_time_tag	.\\k_sdc.c	/^void sdc_set_time_tag(int a_tag)$/;\"	f\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\.tags_sorted_by_file:\n  796  sdc_read_detectPin	k_sdc.c	/^u32 sdc_read_detectPin(void)$/;\"	f\n  797  sdc_saveDataToFile	k_sdc.c	/^void sdc_saveDataToFile(char *a_fname, char *a_msg, u32 *fsz)$/;\"	f\n  798: sdc_saveDeferedMsg	k_sdc.c	/^void sdc_saveDeferedMsg(char *a_msg)$/;\"	f\n  799  sdc_saveSendMsg	k_sdc.c	/^void sdc_saveSendMsg(char *a_msg)$/;\"	f\n  800  sdc_set_time_tag	k_sdc.c	/^void sdc_set_time_tag(int a_tag)$/;\"	f\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\k_sdc.c:\n  217  \n  218  \n  219: void sdc_saveDeferedMsg(char *a_msg)\n  220  {\n  221  /*    FRESULT  res;\n  ...\n  518              {\n  519                  q_getData(i);\n  520:                 sdc_saveDeferedMsg(s_msg);\n  521                  i++;\n  522                  if (i>=num)\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\k_sdc.h:\n   43  \n   44  void clearDeferedMsgFile(void);\n   45: void sdc_saveDeferedMsg(char *a_msg);\n   46  void saveDeferredMsgFile(void);\n   47  \n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\output\\koga2013.elf:\n    <binary>\n\n10 matches across 5 files\n",
 			"settings":
 			{
-				"buffer_size": 1984,
+				"buffer_size": 7422,
+				"line_ending": "Windows",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "source/k_sdc.h",
+			"settings":
+			{
+				"buffer_size": 1015,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "source/k_main.c",
+			"settings":
+			{
+				"buffer_size": 31839,
 				"line_ending": "Windows"
 			}
 		},
@@ -547,7 +557,23 @@
 			"file": "source/k_msg.c",
 			"settings":
 			{
-				"buffer_size": 21797,
+				"buffer_size": 22174,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "source/k_ct3919.c",
+			"settings":
+			{
+				"buffer_size": 5089,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "source/k_gps.c",
+			"settings":
+			{
+				"buffer_size": 18481,
 				"line_ending": "Windows"
 			}
 		}
@@ -633,21 +659,36 @@
 	],
 	"file_history":
 	[
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_ct3919.h",
+		"/F/30",
+		"/C/work/GitHub/Drifter/SDK 1.6/projects/buoy1209/c1_gps.c",
+		"/F/20150302_EB.txt",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_sdc.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_msg.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_iridium.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/lib_src/egl/image/loadbmp.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/lib_src/soundmixer.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/lib_src/mp3play.c",
+		"/C/work/projects/210_EchoBuoy/문서/20150227_GPS오류분석/20150226_EB(SD).txt",
+		"/C/work/projects/210_EchoBuoy/문서/20150227_GPS오류분석/20150227_EB(SD).txt",
+		"/C/work/projects/210_EchoBuoy/문서/20150227_GPS오류분석/View_20150227.dat",
+		"/C/work/projects/210_EchoBuoy/문서/20150227_GPS오류분석/0005_20150226.dat",
+		"/C/work/projects/210_EchoBuoy/문서/20150227_GPS오류분석/View_20150226.dat",
+		"/F/20150227_EB.txt",
+		"/C/work/projects/210_EchoBuoy/문서/20150227_GPS오류분석/0005_20150227.dat",
+		"/Z/30.팀_개인/02. 기술팀/ECHO.BUOY/20150226.dat",
+		"/C/work/projects/210_EchoBuoy/문서/20150227_GPS오류분석/View_20140610.dat",
 		"/C/Users/kychoX1/AppData/Roaming/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
 		"/C/Users/kychoX1/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
-		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_sdc.c",
 		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/lib_src/serialflash.c",
 		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_cli.c",
-		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_msg.c",
 		"/F/20150224_EB.txt",
 		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_includes.h",
 		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_gps.c",
 		"/C/work/projects/210_EchoBuoy/Firmware2/source/startup/trip_board.c",
-		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_iridium.c",
 		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_sdc.h",
 		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_timer.c",
 		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/lib_src/fatfs/ff.c",
-		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_ct3919.h",
 		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_msg.h",
 		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_timer.h",
 		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_main.h",
@@ -745,22 +786,7 @@
 		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/hmp155_1410.dat",
 		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/mose_1410.dat",
 		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/pt100_1409.dat",
-		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/send_1409.dat",
-		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/shock_1409.dat",
-		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/rawData(2013_E02_SDCARD Backup)/zp.dat",
-		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/새 폴더/zpulse_1410.dat",
-		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/rawData(2013_E02_SDCARD Backup)/t2.dat",
-		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/새 폴더/atm2_1410.dat",
-		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/rawData(2013_E02_SDCARD Backup)/t1.dat",
-		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/새 폴더/atm1_1311.dat",
-		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/rawData(2013_E02_SDCARD Backup)/sh.dat",
-		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/새 폴더/shock_1410.dat",
-		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/rawData(2013_E02_SDCARD Backup)/pt.dat",
-		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/새 폴더/pt100_1410.dat",
-		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/rawData(2013_E02_SDCARD Backup)/hi.dat",
-		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/rawData(2013_E02_SDCARD Backup)/gp.dat",
-		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/새 폴더/gps_1409.dat",
-		"/H/_KOGA14설치_/KOGA2014 설치작업과정 DATA/1_E02/rawData(2013_E02_SDCARD Backup)/ai.dat"
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/send_1409.dat"
 	],
 	"find":
 	{
@@ -779,6 +805,18 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"100",
+			"sdc_saveDeferedMsg",
+			"sdc_saveDataToFile",
+			"sdc_saveSendMsg",
+			"f_open",
+			"make_msg_second",
+			"2015-02-27 08:19:04",
+			"2015-02-27 08:20:04",
+			"EB005",
+			"echoData[i].temp",
+			"echoData[i].depth",
+			"echoData[i].lon_mf",
 			"int",
 			"SensorBakSize.b.gps",
 			"fwbuf",
@@ -894,19 +932,7 @@
 			"CMD_MV",
 			"cmd_mv",
 			"cmd_aa",
-			"cmd_sbr",
-			"cmd_sbw",
-			"chk_file_size",
-			"SensorBakSize.b.mose",
-			"BUOY_ID",
-			"get_battery_level",
-			"SHT ACK Error",
-			"BUOY_WEST",
-			"W01",
-			"make_msg_k1",
-			"call_mose",
-			"init",
-			"sbinit"
+			"cmd_sbr"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -924,116 +950,11 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 4,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "source/k_gps.c",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 16815,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								11796,
-								11796
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
-							[
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
-							],
-							"origin_encoding": "UTF-8",
-							"syntax": "Packages/C Improved/C Improved.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true,
-							"vintage":
-							{
-								"_vintageous_glue_until_normal_mode": false,
-								"action": null,
-								"action_count": "",
-								"mode": "mode_normal",
-								"motion": null,
-								"motion_count": "",
-								"must_capture_register_name": false,
-								"normal_insert_count": "1",
-								"partial_sequence": "",
-								"register": "\"",
-								"sequence": "",
-								"xpos": 0
-							}
-						},
-						"translation.x": 0.0,
-						"translation.y": 10139.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
 					"file": "source/k_rtc.c",
 					"semi_transient": false,
 					"settings":
@@ -1054,46 +975,11 @@
 							"BracketHighlighterBusy": false,
 							"bh_regions":
 							[
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
 								"bh_default",
 								"bh_default_center",
 								"bh_default_open",
 								"bh_default_close",
 								"bh_default_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
@@ -1104,11 +990,46 @@
 								"bh_tag_open",
 								"bh_tag_close",
 								"bh_tag_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
-								"bh_square_content"
+								"bh_square_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content"
 							],
 							"origin_encoding": "UTF-8",
 							"syntax": "Packages/C Improved/C Improved.tmLanguage",
@@ -1131,24 +1052,187 @@
 						"translation.y": 3696.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "source/k_config.h",
+					"buffer": 1,
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1984,
+						"buffer_size": 7422,
 						"regions":
 						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										291,
+										306
+									],
+									[
+										324,
+										339
+									],
+									[
+										754,
+										769
+									],
+									[
+										785,
+										800
+									],
+									[
+										1037,
+										1052
+									],
+									[
+										1217,
+										1232
+									],
+									[
+										1694,
+										1712
+									],
+									[
+										1730,
+										1748
+									],
+									[
+										2151,
+										2169
+									],
+									[
+										2185,
+										2203
+									],
+									[
+										2512,
+										2530
+									],
+									[
+										3131,
+										3149
+									],
+									[
+										3311,
+										3329
+									],
+									[
+										3537,
+										3555
+									],
+									[
+										3614,
+										3632
+									],
+									[
+										3691,
+										3709
+									],
+									[
+										3768,
+										3786
+									],
+									[
+										3845,
+										3863
+									],
+									[
+										3922,
+										3940
+									],
+									[
+										3999,
+										4017
+									],
+									[
+										4076,
+										4094
+									],
+									[
+										4216,
+										4234
+									],
+									[
+										4297,
+										4315
+									],
+									[
+										4381,
+										4399
+									],
+									[
+										4462,
+										4480
+									],
+									[
+										4667,
+										4685
+									],
+									[
+										4846,
+										4864
+									],
+									[
+										4996,
+										5014
+									],
+									[
+										5125,
+										5143
+									],
+									[
+										5220,
+										5238
+									],
+									[
+										5315,
+										5333
+									],
+									[
+										5566,
+										5584
+									],
+									[
+										6093,
+										6111
+									],
+									[
+										6129,
+										6147
+									],
+									[
+										6569,
+										6587
+									],
+									[
+										6603,
+										6621
+									],
+									[
+										6872,
+										6890
+									],
+									[
+										7027,
+										7045
+									],
+									[
+										7233,
+										7251
+									]
+								],
+								"scope": ""
+							}
 						},
 						"selection":
 						[
 							[
-								97,
-								97
+								7046,
+								7046
 							]
 						],
 						"settings":
@@ -1156,21 +1240,36 @@
 							"BracketHighlighterBusy": false,
 							"bh_regions":
 							[
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
 								"bh_round",
 								"bh_round_center",
 								"bh_round_open",
@@ -1186,42 +1285,234 @@
 								"bh_tag_open",
 								"bh_tag_close",
 								"bh_tag_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content"
+							],
+							"detect_indentation": false,
+							"line_numbers": false,
+							"output_tag": 3,
+							"result_base_dir": "",
+							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage",
+							"vintage":
+							{
+								"action": null,
+								"action_count": "",
+								"mode": "mode_normal",
+								"motion": null,
+								"motion_count": "",
+								"must_capture_register_name": false,
+								"partial_sequence": "",
+								"register": "\"",
+								"sequence": "",
+								"xpos": 42
+							}
+						},
+						"translation.x": 0.0,
+						"translation.y": 2639.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "source/k_sdc.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1015,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								736,
+								736
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
 								"bh_regex",
 								"bh_regex_center",
 								"bh_regex_open",
 								"bh_regex_close",
 								"bh_regex_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
 								"bh_curly",
 								"bh_curly_center",
 								"bh_curly_open",
 								"bh_curly_close",
 								"bh_curly_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
 								"bh_angle_close",
-								"bh_angle_content"
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content"
 							],
 							"origin_encoding": "ASCII",
 							"syntax": "Packages/C Improved/C Improved.tmLanguage",
 							"vintage":
 							{
-								"_vintageous_glue_until_normal_mode": true,
-								"_vintageous_non_interactive": false,
-								"_vintageous_processing_notation": false,
 								"action": null,
 								"action_count": "",
-								"mode": "mode_insert",
+								"mode": "mode_normal",
+								"motion": null,
+								"motion_count": "",
+								"must_capture_register_name": false,
+								"partial_sequence": "",
+								"register": "\"",
+								"sequence": "",
+								"xpos": 23
+							}
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "source/k_main.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 31839,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								28317,
+								28317
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content"
+							],
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/C Improved/C Improved.tmLanguage",
+							"translate_tabs_to_spaces": false,
+							"vintage":
+							{
+								"_vintageous_glue_until_normal_mode": false,
+								"action": null,
+								"action_count": "",
+								"mode": "mode_normal",
 								"motion": null,
 								"motion_count": "",
 								"must_capture_register_name": false,
@@ -1229,31 +1520,31 @@
 								"partial_sequence": "",
 								"register": "\"",
 								"sequence": "",
-								"xpos": 4
+								"xpos": 55
 							}
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 27000.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 4,
 					"file": "source/k_msg.c",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 21797,
+						"buffer_size": 22174,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								14517,
-								14517
+								11162,
+								11162
 							]
 						],
 						"settings":
@@ -1261,26 +1552,21 @@
 							"BracketHighlighterBusy": false,
 							"bh_regions":
 							[
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
 								"bh_unmatched",
 								"bh_unmatched_center",
 								"bh_unmatched_open",
 								"bh_unmatched_close",
 								"bh_unmatched_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
@@ -1296,26 +1582,249 @@
 								"bh_regex_open",
 								"bh_regex_close",
 								"bh_regex_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
 								"bh_curly",
 								"bh_curly_center",
 								"bh_curly_open",
 								"bh_curly_close",
 								"bh_curly_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content"
+							],
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/C Improved/C Improved.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true,
+							"vintage":
+							{
+								"_vintageous_glue_until_normal_mode": false,
+								"_vintageous_non_interactive": false,
+								"_vintageous_processing_notation": false,
+								"action": null,
+								"action_count": "",
+								"mode": "mode_normal",
+								"motion": null,
+								"motion_count": "",
+								"must_capture_register_name": false,
+								"normal_insert_count": "1",
+								"partial_sequence": "",
+								"register": "\"",
+								"sequence": "",
+								"xpos": 59
+							}
+						},
+						"translation.x": 0.0,
+						"translation.y": 7344.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 5,
+					"file": "source/k_ct3919.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5089,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2793,
+								2793
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
 								"bh_c_define",
 								"bh_c_define_center",
 								"bh_c_define_open",
 								"bh_c_define_close",
 								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content"
+							],
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/C Improved/C Improved.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true,
+							"vintage":
+							{
+								"_vintageous_glue_until_normal_mode": false,
+								"action": null,
+								"action_count": "",
+								"mode": "mode_normal",
+								"motion": null,
+								"motion_count": "",
+								"must_capture_register_name": false,
+								"normal_insert_count": "1",
+								"partial_sequence": "",
+								"register": "\"",
+								"sequence": "",
+								"xpos": 14
+							}
+						},
+						"translation.x": 0.0,
+						"translation.y": 3762.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "source/k_gps.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 18481,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3192,
+								3192
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
 								"bh_angle_close",
-								"bh_angle_content"
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content"
 							],
 							"origin_encoding": "UTF-8",
 							"syntax": "Packages/C Improved/C Improved.tmLanguage",
@@ -1338,7 +1847,7 @@
 							}
 						},
 						"translation.x": 0.0,
-						"translation.y": 11022.0,
+						"translation.y": 2772.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -1364,11 +1873,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.5,
 			1.0
 		],
 		"rows":
@@ -1398,12 +1914,16 @@
 		"selected_items":
 		[
 			[
-				"msg",
-				"source\\k_msg.c"
-			],
-			[
 				"gps",
 				"source\\k_gps.c"
+			],
+			[
+				"ct",
+				"source\\k_ct3919.c"
+			],
+			[
+				"msg",
+				"source\\k_msg.c"
 			],
 			[
 				"rtc",
@@ -1456,10 +1976,6 @@
 			[
 				"uart",
 				"SDK2.0\\lib_src\\uart.c"
-			],
-			[
-				"ct",
-				"source\\k_ct3919.h"
 			],
 			[
 				"ffcon",
