@@ -4,6 +4,58 @@
 		"selected_items":
 		[
 			[
+				"gps",
+				"gps_time"
+			],
+			[
+				"get_gpsTimr_m",
+				"get_gpsTimr_mon"
+			],
+			[
+				"M",
+				"Month"
+			],
+			[
+				"Y",
+				"Year"
+			],
+			[
+				"H",
+				"Hour"
+			],
+			[
+				"rtc",
+				"rtcTime"
+			],
+			[
+				"get",
+				"get_gps_time"
+			],
+			[
+				"gp",
+				"gps_time"
+			],
+			[
+				"mak",
+				"make_msg_k1"
+			],
+			[
+				"set_gp",
+				"set_gps_hasData"
+			],
+			[
+				"is_gps",
+				"is_gps_hasData"
+			],
+			[
+				"m",
+				"min"
+			],
+			[
+				"ret",
+				"retval"
+			],
+			[
 				"evt",
 				"evt_chged_min"
 			],
@@ -38,10 +90,6 @@
 			[
 				"lon",
 				"lon_mf"
-			],
-			[
-				"ret",
-				"return"
 			],
 			[
 				"T",
@@ -86,10 +134,6 @@
 			[
 				"la",
 				"lat_md"
-			],
-			[
-				"gp",
-				"gps_valid"
 			],
 			[
 				"l",
@@ -188,20 +232,12 @@
 				"shock_line"
 			],
 			[
-				"m",
-				"mbuf_L"
-			],
-			[
 				"e",
 				"e30_idx"
 			],
 			[
 				"y",
 				"year-2000"
-			],
-			[
-				"rtc",
-				"rtc_time"
 			],
 			[
 				"ca",
@@ -322,10 +358,6 @@
 			[
 				"ri",
 				"ring1"
-			],
-			[
-				"get",
-				"get_mt_status"
 			],
 			[
 				"C",
@@ -482,74 +514,42 @@
 			[
 				"a",
 				"a_baud"
-			],
-			[
-				"debugp",
-				"debugprintf"
-			],
-			[
-				"te",
-				"testbuf1"
-			],
-			[
-				"at24",
-				"at24cxx_eeprom_read"
-			],
-			[
-				"str",
-				"strlen"
-			],
-			[
-				"AT",
-				"at24cxx_eeprom_write"
-			],
-			[
-				"cl",
-				"clearHeartbeatEvent"
-			],
-			[
-				"fl",
-				"flagHeartbeatOn"
-			],
-			[
-				"cmd_c",
-				"cmd_cc"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "source/k_rtc.c",
+			"file": "source/k_main.c",
 			"settings":
 			{
-				"buffer_size": 3956,
+				"buffer_size": 31882,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"contents": "Searching 377 files for \"sdc_saveSendMsg\"\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\.tags:\n  778  sdc_saveDataToFile	.\\k_sdc.c	/^void sdc_saveDataToFile(char *a_fname, char *a_msg, u32 *fsz)$/;\"	f\n  779  sdc_saveDeferedMsg	.\\k_sdc.c	/^void sdc_saveDeferedMsg(char *a_msg)$/;\"	f\n  780: sdc_saveSendMsg	.\\k_sdc.c	/^void sdc_saveSendMsg(char *a_msg)$/;\"	f\n  781  sdc_set_time_tag	.\\k_sdc.c	/^void sdc_set_time_tag(int a_tag)$/;\"	f\n  782  sdc_unmount	.\\k_sdc.c	/^void sdc_unmount(void)$/;\"	f\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\.tags_sorted_by_file:\n  797  sdc_saveDataToFile	k_sdc.c	/^void sdc_saveDataToFile(char *a_fname, char *a_msg, u32 *fsz)$/;\"	f\n  798  sdc_saveDeferedMsg	k_sdc.c	/^void sdc_saveDeferedMsg(char *a_msg)$/;\"	f\n  799: sdc_saveSendMsg	k_sdc.c	/^void sdc_saveSendMsg(char *a_msg)$/;\"	f\n  800  sdc_set_time_tag	k_sdc.c	/^void sdc_set_time_tag(int a_tag)$/;\"	f\n  801  sdc_unmount	k_sdc.c	/^void sdc_unmount(void)$/;\"	f\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\k_sdc.c:\n  181  }\n  182  \n  183: void sdc_saveSendMsg(char *a_msg)\n  184  {\n  185      FRESULT  res;\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\k_sdc.h:\n   35  void set_sdc_mount(int a_mount);\n   36  \n   37: void sdc_saveSendMsg(char *a_msg);\n   38  void sdc_saveDataToFile(char *a_fname, char *a_msg, u32 *fsz);\n   39  void PrintFileSystem();\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\output\\koga2013.elf:\n    <binary>\n\n9 matches across 5 files\n\n\nSearching 377 files for \"sdc_saveDataToFile\"\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\.tags:\n  776  sdc_mount	.\\k_sdc.c	/^void sdc_mount(void)$/;\"	f\n  777  sdc_read_detectPin	.\\k_sdc.c	/^u32 sdc_read_detectPin(void)$/;\"	f\n  778: sdc_saveDataToFile	.\\k_sdc.c	/^void sdc_saveDataToFile(char *a_fname, char *a_msg, u32 *fsz)$/;\"	f\n  779  sdc_saveDeferedMsg	.\\k_sdc.c	/^void sdc_saveDeferedMsg(char *a_msg)$/;\"	f\n  780  sdc_saveSendMsg	.\\k_sdc.c	/^void sdc_saveSendMsg(char *a_msg)$/;\"	f\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\.tags_sorted_by_file:\n  795  sdc_mount	k_sdc.c	/^void sdc_mount(void)$/;\"	f\n  796  sdc_read_detectPin	k_sdc.c	/^u32 sdc_read_detectPin(void)$/;\"	f\n  797: sdc_saveDataToFile	k_sdc.c	/^void sdc_saveDataToFile(char *a_fname, char *a_msg, u32 *fsz)$/;\"	f\n  798  sdc_saveDeferedMsg	k_sdc.c	/^void sdc_saveDeferedMsg(char *a_msg)$/;\"	f\n  799  sdc_saveSendMsg	k_sdc.c	/^void sdc_saveSendMsg(char *a_msg)$/;\"	f\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\k_iridium.c:\n  312  \n  313  \n  314:                             sdc_saveDataToFile(FN_HISTORY, t_item, &fsz);\n  315                              //PRINTVAR(fsz);\n  316                              // if (fsz > FSZ_MAX)\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\k_msg.c:\n  516                  sprintf(wdata, \"%04d/%02d/%02d,%02d:%02d:%02d,%02d%02d.%04d,%03d%02d.%04d,%2.1f,%2.1f,%2.1f\\r\\n\", rtc_time.year, rtc_time.mon, rtc_time.day, rtc_time.hour, rtc_time.min, i, echoData[i].lat_d, echoData[i].lat_md, echoData[i].lat_mf, echoData[i].lon_d, echoData[i].lon_md, echoData[i].lon_mf, echoData[i].depth/10.0f, echoData[i].temp/10.0f, bat1/10.0f);\n  517  \n  518:                 sdc_saveDataToFile(fname, wdata, &fsz);\n  519                  if (fsz > FSZ_MAX)\n  520                  {\n  ...\n  677          u32 fsz;\n  678          //PRINTLINE;\n  679:         sdc_saveDataToFile(FN_SEND, s_msg, &fsz);\n  680          //PRINTVAR(fsz);\n  681          if (fsz > FSZ_MAX)\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\k_sdc.c:\n   54          strcat(t_item,\"\\r\\n\");\n   55  \n   56:         sdc_saveDataToFile(FN_AIO,      t_item, &fsz);    delayms(5);\n   57:         sdc_saveDataToFile(FN_CT3919,   t_item, &fsz);    delayms(5);\n   58:         sdc_saveDataToFile(FN_DCS,      t_item, &fsz);    delayms(5);\n   59:         sdc_saveDataToFile(FN_ATM1,     t_item, &fsz);    delayms(5);\n   60:         sdc_saveDataToFile(FN_ATM2,     t_item, &fsz);    delayms(5);\n   61:         sdc_saveDataToFile(FN_HMP155,   t_item, &fsz);    delayms(5);\n   62:         sdc_saveDataToFile(FN_PTB210,   t_item, &fsz);    delayms(5);\n   63:         sdc_saveDataToFile(FN_SHOCK,    t_item, &fsz);    delayms(5);\n   64          if (a_tag != SDC_TIME_TAG)\n   65          {\n   66:             sdc_saveDataToFile(FN_GPS,      t_item, &fsz);    delayms(5);\n   67:             sdc_saveDataToFile(FN_MOSE,     t_item, &fsz);    delayms(5);\n   68:             // sdc_saveDataToFile(FN_SEND,     t_item, &fsz);    delayms(5);\n   69:             sdc_saveDataToFile(FN_HISTORY,  t_item, &fsz);    delayms(5);\n   70          }\n   71      }\n   ..\n  282  \n  283  //-----------------------------------------------------------------------------\n  284: void sdc_saveDataToFile(char *a_fname, char *a_msg, u32 *fsz)\n  285  {\n  286      FRESULT  res;\n  ...\n  556  						if (sdc_read_detectPin()==SDC_INSERTED)\n  557  						{\n  558: 							sdc_saveDataToFile(\"rRdcp.dat\",\"$WIXDR,A,034,D,1,S,5.0,M,1,C,17.3,C,0,H,69.4,P,0,P,1024.8,H,0,C,17.3,C,2,U,0.0,#,0,U,25.1,V,1*13\\r\\n\");\n  559: 							sdc_saveDataToFile(\"rAdb.dat\",\"$PDTWL,POS,11,11,01,00,01,10.00,34,43.9136,N,128,22.6923,E,  25.1,0.9,1.2*19\\r\\n\");\n  560: 							sdc_saveDataToFile(\"rPtb210.dat\",\"%#	  3919	  1259	     0.0243	    18.647\\r\\n\");\n  561: 							sdc_saveDataToFile(\"sentMsg.dat\",\"%#	  3919	  1259	     0.0243	    18.647\\r\\n\");\n  562: 							sdc_saveDataToFile(\"deferMsg.dat\",\"%#	  3919	  1259	     0.0243	    18.647\\r\\n\");\n  563  							*R_WDCNT=WATCHDOG_V;\n  564  						}\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\k_sdc.h:\n   36  \n   37  void sdc_saveSendMsg(char *a_msg);\n   38: void sdc_saveDataToFile(char *a_fname, char *a_msg, u32 *fsz);\n   39  void PrintFileSystem();\n   40  FRESULT print_files (char* path);\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\output\\koga2013.elf:\n    <binary>\n\n29 matches across 7 files\n\n\nSearching 377 files for \"sdc_saveDeferedMsg\"\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\.tags:\n  777  sdc_read_detectPin	.\\k_sdc.c	/^u32 sdc_read_detectPin(void)$/;\"	f\n  778  sdc_saveDataToFile	.\\k_sdc.c	/^void sdc_saveDataToFile(char *a_fname, char *a_msg, u32 *fsz)$/;\"	f\n  779: sdc_saveDeferedMsg	.\\k_sdc.c	/^void sdc_saveDeferedMsg(char *a_msg)$/;\"	f\n  780  sdc_saveSendMsg	.\\k_sdc.c	/^void sdc_saveSendMsg(char *a_msg)$/;\"	f\n  781  sdc_set_time_tag	.\\k_sdc.c	/^void sdc_set_time_tag(int a_tag)$/;\"	f\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\.tags_sorted_by_file:\n  796  sdc_read_detectPin	k_sdc.c	/^u32 sdc_read_detectPin(void)$/;\"	f\n  797  sdc_saveDataToFile	k_sdc.c	/^void sdc_saveDataToFile(char *a_fname, char *a_msg, u32 *fsz)$/;\"	f\n  798: sdc_saveDeferedMsg	k_sdc.c	/^void sdc_saveDeferedMsg(char *a_msg)$/;\"	f\n  799  sdc_saveSendMsg	k_sdc.c	/^void sdc_saveSendMsg(char *a_msg)$/;\"	f\n  800  sdc_set_time_tag	k_sdc.c	/^void sdc_set_time_tag(int a_tag)$/;\"	f\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\k_sdc.c:\n  217  \n  218  \n  219: void sdc_saveDeferedMsg(char *a_msg)\n  220  {\n  221  /*    FRESULT  res;\n  ...\n  518              {\n  519                  q_getData(i);\n  520:                 sdc_saveDeferedMsg(s_msg);\n  521                  i++;\n  522                  if (i>=num)\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\k_sdc.h:\n   43  \n   44  void clearDeferedMsgFile(void);\n   45: void sdc_saveDeferedMsg(char *a_msg);\n   46  void saveDeferredMsgFile(void);\n   47  \n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\output\\koga2013.elf:\n    <binary>\n\n10 matches across 5 files\n",
+			"contents": "Searching 377 files for \"uart_putch\" (whole word)\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\SDK2.0\\.tags:\n 6837  uart_getch	.\\lib_src\\uart.c	/^BOOL uart_getch ( int n, char *ch )$/;\"	f\n 6838  uart_getdata	.\\lib_src\\uart.c	/^int uart_getdata ( int n, U8 *buf, int bufmax )$/;\"	f\n 6839: uart_putch	.\\lib_src\\uart.c	/^BOOL uart_putch ( int n, char ch )$/;\"	f\n 6840  uart_putdata	.\\lib_src\\uart.c	/^BOOL uart_putdata ( int n, U8 *buf, int len )$/;\"	f\n 6841  uart_putstring	.\\lib_src\\uart.c	/^BOOL uart_putstring ( int n, U8 *buf )$/;\"	f\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\SDK2.0\\.tags_sorted_by_file:\n 5979  uart_getch	lib_src\\uart.c	/^BOOL uart_getch ( int n, char *ch )$/;\"	f\n 5980  uart_getdata	lib_src\\uart.c	/^int uart_getdata ( int n, U8 *buf, int bufmax )$/;\"	f\n 5981: uart_putch	lib_src\\uart.c	/^BOOL uart_putch ( int n, char ch )$/;\"	f\n 5982  uart_putdata	lib_src\\uart.c	/^BOOL uart_putdata ( int n, U8 *buf, int len )$/;\"	f\n 5983  uart_putstring	lib_src\\uart.c	/^BOOL uart_putstring ( int n, U8 *buf )$/;\"	f\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\SDK2.0\\include\\adstar\\uart.h:\n  134  BOOL uart_getch(int n,char* ch);\n  135  int uart_getdata(int n,U8* buf, int bufmax);//return data byte length\n  136: BOOL uart_putch(int n,char ch);\n  137  BOOL uart_putdata(int n,U8* buf, int len);\n  138  BOOL uart_putstring(int n,U8* buf);\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\SDK2.0\\lib_src\\uart.c:\n  387  	return i;\n  388  }\n  389: BOOL uart_putch ( int n, char ch )\n  390  {\n  391  	U32 uart_base = getbaseaddress ( n );\n  ...\n  441  \n  442  	for ( i = 0; i < len; i++ )\n  443: 		uart_putch ( n, buf[i] );\n  444  \n  445  	return TRUE;\n  ...\n  449  	while ( *buf )\n  450  	{\n  451: 		uart_putch ( n, *buf );\n  452  		buf++;\n  453  	}\n  ...\n  489  		while ( 1 )\n  490  		{\n  491: 			if ( uart_putch ( debugch, *str ) )\n  492  				break;\n  493  		}\n  494  \n  495  #else\n  496: 		uart_putch ( debugch, *str );\n  497  		if (ch4_switch==1)\n  498  		{\n  499: 			uart_putch ( 4, *str );\n  500  		}\n  501  #endif\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\k_cli.c:\n  236      while ( *str )\n  237      {\n  238:         // uart_putch ( 4, *str );\n  239:         uart_putch ( 0, *str );\n  240          str++;\n  241      }\n  ...\n  346  			if (uart_getch(0,&ch)) //receive\n  347  			{\n  348:                 //uart_putch(0,ch);\n  349                  //sb_uart_putch ( SB_S_ATM2, ch );\n  350  \n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\k_gps.c:\n  234      char init7[] = {0xB5,0x62,0x06,0x01,0x08,0x00,0xF1,0x00,0x00,0x01,0x01,0x00,0x00,0x00,0x02,0x34};\n  235  \n  236:     for (i=0;i<14;i++)  uart_putch(1,init0[i]);    delayms(100);   // *R_WDCNT=WATCHDOG_V;\n  237:     for (i=0;i<16;i++)  uart_putch(1,init1[i]);    delayms(100);   // *R_WDCNT=WATCHDOG_V;\n  238:     for (i=0;i<16;i++)  uart_putch(1,init2[i]);    delayms(100);   // *R_WDCNT=WATCHDOG_V;\n  239:     for (i=0;i<16;i++)  uart_putch(1,init3[i]);    delayms(100);   // *R_WDCNT=WATCHDOG_V;\n  240:     for (i=0;i<16;i++)  uart_putch(1,init4[i]);    delayms(100);   // *R_WDCNT=WATCHDOG_V;\n  241:     for (i=0;i<16;i++)  uart_putch(1,init5[i]);    delayms(100);   // *R_WDCNT=WATCHDOG_V;\n  242:     for (i=0;i<16;i++)  uart_putch(1,init6[i]);    delayms(100);   // *R_WDCNT=WATCHDOG_V;\n  243:     for (i=0;i<16;i++)  uart_putch(1,init7[i]);    delayms(100);\n  244  }\n  245  void gps_neo6q_init_pubx(void)\n  ...\n  464      {\n  465  #if 1 \n  466:         uart_putch(0,ch);\n  467  #endif\n  468  \n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\k_iridium.c:\n  437              iri_response[resp_idx++] = ch;\n  438  #if 1\n  439:             // uart_putch(0, ch);\n  440  #else\n  441              debugprintf(\"%02X \", ch);\n  ...\n 1017              // if (uart_getch(3, &ch))\n 1018              {\n 1019:                 uart_putch(0, ch);\n 1020              // if (iri_rcv_get(iri_port,&ch))\n 1021              // {\n ....\n 1062              if (wm_rcv_get(&ch))\n 1063              {\n 1064:                 uart_putch(0, ch);\n 1065  \n 1066                  if ((ch==',') )         // +ZIPSTAT: 1,1\n ....\n 1105                  {\n 1106                      ch = newMsg[i];\n 1107:                     uart_putch(PORT_WM215, ch);\n 1108:                     uart_putch(0, ch);\n 1109                  }\n 1110                  iridium_printf(\"\\r\\n\");\n ....\n 1119              if (wm_rcv_get(&ch))\n 1120              {\n 1121:                 uart_putch(0, ch);\n 1122  \n 1123                  if ((ch==',') )         // +ZIPSEND: 1,1\n ....\n 1220      if (uart_getch(PORT_WM215,&ch))\n 1221      {\n 1222:         // uart_putch(PORT_WM215,ch);\n 1223  \n 1224          iri1_rcv_q_put(ch);\n ....\n 1467              if (wm_rcv_get(&ch))\n 1468              {\n 1469:                 // uart_putch(0,ch);\n 1470  \n 1471                  iri_response[resp_idx++] = ch;\n ....\n 1538          //     if (uart_getch(3, &ch))\n 1539          //     {\n 1540:         //         uart_putch(0, ch);\n 1541          //     // if (UartGetCh(iri_port,&ch))\n 1542          //     // {\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\k_main.c:\n  184  	        if (uart_getch(3, &ch))\n  185  	        {\n  186: 	        	uart_putch(0, ch);\n  187  	        }\n  188  	        if (uart_getch(0, &ch))\n  189  	        {\n  190: 	        	uart_putch(3, ch);\n  191  	        }\n  192          }\n  ...\n  198  	        if (uart_getch(1, &ch))\n  199  	        {\n  200: 	        	uart_putch(0, ch);\n  201  	        }\n  202  	        if (uart_getch(0, &ch))\n  203  	        {\n  204: 	        	uart_putch(1, ch);\n  205  	        }\n  206          }\n  ...\n  212  	        if (uart_getch(2, &ch))\n  213  	        {\n  214: 	        	uart_putch(0, ch);\n  215  	        }\n  216  	        if (uart_getch(0, &ch))\n  217  	        {\n  218: 	        	uart_putch(2, ch);\n  219  	        }\n  220          }\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\k_misc.h:\n    2  \n    3  \n    4: #define UartPutCh	uart_putch \n    5  \n    6  #define OK		1\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\output\\koga2013.elf:\n    <binary>\n\n41 matches across 10 files\n",
 			"settings":
 			{
-				"buffer_size": 7422,
+				"buffer_size": 6051,
 				"line_ending": "Windows",
 				"name": "Find Results",
 				"scratch": true
 			}
 		},
 		{
-			"file": "source/k_sdc.h",
+			"file": "source/k_iridium.c",
 			"settings":
 			{
-				"buffer_size": 1015,
+				"buffer_size": 67783,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "source/k_main.c",
+			"file": "source/k_iridium.h",
 			"settings":
 			{
-				"buffer_size": 31839,
+				"buffer_size": 1329,
 				"line_ending": "Windows"
 			}
 		},
@@ -557,15 +557,7 @@
 			"file": "source/k_msg.c",
 			"settings":
 			{
-				"buffer_size": 22174,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "source/k_ct3919.c",
-			"settings":
-			{
-				"buffer_size": 5089,
+				"buffer_size": 23621,
 				"line_ending": "Windows"
 			}
 		},
@@ -573,7 +565,31 @@
 			"file": "source/k_gps.c",
 			"settings":
 			{
-				"buffer_size": 18481,
+				"buffer_size": 24134,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "source/k_gps.h",
+			"settings":
+			{
+				"buffer_size": 2139,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "source/k_includes.h",
+			"settings":
+			{
+				"buffer_size": 1877,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "source/k_config.h",
+			"settings":
+			{
+				"buffer_size": 1984,
 				"line_ending": "Windows"
 			}
 		}
@@ -659,13 +675,23 @@
 	],
 	"file_history":
 	[
+		"/C/work/GitHub/Drifter/SDK 1.6/projects/buoy1209/c1_main.c",
+		"/C/work/GitHub/Drifter/SDK 1.6/projects/buoy1209/c1_gps.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_includes.h",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_iridium.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_ct3919.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_twi.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/include/typedef.h",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_rtc.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/lib_src/twi.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_timer.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_sdc.h",
+		"/F/20150303_EB.txt",
 		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_ct3919.h",
 		"/F/30",
-		"/C/work/GitHub/Drifter/SDK 1.6/projects/buoy1209/c1_gps.c",
 		"/F/20150302_EB.txt",
 		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_sdc.c",
 		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_msg.c",
-		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_iridium.c",
 		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/lib_src/egl/image/loadbmp.c",
 		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/lib_src/soundmixer.c",
 		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/lib_src/mp3play.c",
@@ -683,11 +709,8 @@
 		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/lib_src/serialflash.c",
 		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_cli.c",
 		"/F/20150224_EB.txt",
-		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_includes.h",
 		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_gps.c",
 		"/C/work/projects/210_EchoBuoy/Firmware2/source/startup/trip_board.c",
-		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_sdc.h",
-		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_timer.c",
 		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/lib_src/fatfs/ff.c",
 		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_msg.h",
 		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_timer.h",
@@ -697,7 +720,6 @@
 		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_sysMCU.c",
 		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_misc.c",
 		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_cli.h",
-		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_ct3919.c",
 		"/F/se.dat",
 		"/F/gp.dat",
 		"/F/ct.dat",
@@ -710,8 +732,6 @@
 		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/lib_src/zlib-1.2.5/compress.c",
 		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_main.c.bak",
 		"/C/Users/kychoX1/Desktop/teraterm.log",
-		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/include/typedef.h",
-		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_rtc.c",
 		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/include/adstar/watchdogtimer.h",
 		"/C/work/projects/210_EchoBuoy/Firmware2/source/buoy_waves2.c",
 		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/include/egl/object/egl_progressbar.h",
@@ -782,11 +802,7 @@
 		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/atm2_1409.dat",
 		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/ct3919_1410.dat",
 		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/gps_1410.dat",
-		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/history_1410.dat",
-		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/hmp155_1410.dat",
-		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/mose_1410.dat",
-		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/pt100_1409.dat",
-		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/send_1409.dat"
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/history_1410.dat"
 	],
 	"find":
 	{
@@ -805,6 +821,28 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"uart_putch",
+			"gps_time",
+			"rtc_time",
+			"mon",
+			"gpa",
+			"hour",
+			"t1",
+			"get_gps_time",
+			"Hour",
+			"Day",
+			"Month",
+			"Year",
+			"Hour",
+			"get_gps_time",
+			"rtc_time",
+			"Data",
+			"is_gps_valid",
+			"make_msg_k1",
+			"fg_rtc_updated",
+			"ref_cnt_rmc",
+			"ref_cnt",
+			"gps_neo6q_init",
 			"100",
 			"sdc_saveDeferedMsg",
 			"sdc_saveDataToFile",
@@ -910,29 +948,7 @@
 			"E01_SHOCK",
 			"DEBUG_SENSOR_SHOCK",
 			"ctrl_sensor",
-			"cmdSensorControl",
-			"cmdSensorControl_1",
-			"cmdSensorControl",
-			"CONFIG_UART_TX_INTERRUPT",
-			"();\n",
-			"$PDTWL,MOT,HF,14,10,19,00,53,47.75",
-			"$PDTWL,MOT,HF,14,10,19,00,48,32.25,",
-			"$PDTWL,MOT,HF,14,10,19,00,14,48.75",
-			"$PDTWL,MOT,HF,14,10,19,00,03,55.75,",
-			"$PDTWL,MOT,HF,14,10,18,22,41,26.25,",
-			"MOT,HF,14,10,18,22,41,24.25,  -0.053",
-			"$PDTWL,POS,14,10,18,22,45,40.00,37,44.3712,N,130,35.0400,E,  26.0,0.9,1.4*1F",
-			"HF,14,10,18,22,41,26.25",
-			" \n",
-			"1",
-			"10",
-			"set_debug_channel",
-			"cat",
-			"SensorBakSize.b.mose",
-			"CMD_MV",
-			"cmd_mv",
-			"cmd_aa",
-			"cmd_sbr"
+			"cmdSensorControl"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -944,30 +960,30 @@
 		"reverse": false,
 		"show_context": true,
 		"use_buffer2": true,
-		"whole_word": false,
+		"whole_word": true,
 		"wrap": true
 	},
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 5,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "source/k_rtc.c",
+					"file": "source/k_main.c",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3956,
+						"buffer_size": 31882,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3505,
-								3505
+								15585,
+								15585
 							]
 						],
 						"settings":
@@ -975,65 +991,442 @@
 							"BracketHighlighterBusy": false,
 							"bh_regions":
 							[
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
 								"bh_angle_close",
 								"bh_angle_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
 								"bh_unmatched",
 								"bh_unmatched_center",
 								"bh_unmatched_open",
 								"bh_unmatched_close",
 								"bh_unmatched_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content"
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content"
 							],
 							"origin_encoding": "UTF-8",
 							"syntax": "Packages/C Improved/C Improved.tmLanguage",
 							"translate_tabs_to_spaces": false,
+							"vintage":
+							{
+								"_vintageous_glue_until_normal_mode": false,
+								"_vintageous_non_interactive": false,
+								"_vintageous_processing_notation": false,
+								"action": null,
+								"action_count": "",
+								"mode": "mode_normal",
+								"motion": null,
+								"motion_count": "",
+								"must_capture_register_name": false,
+								"normal_insert_count": "1",
+								"partial_sequence": "",
+								"register": "\"",
+								"sequence": "",
+								"xpos": 0
+							}
+						},
+						"translation.x": 0.0,
+						"translation.y": 17510.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6051,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										284,
+										294
+									],
+									[
+										319,
+										329
+									],
+									[
+										777,
+										787
+									],
+									[
+										810,
+										820
+									],
+									[
+										1219,
+										1229
+									],
+									[
+										1442,
+										1452
+									],
+									[
+										1586,
+										1596
+									],
+									[
+										1689,
+										1699
+									],
+									[
+										1792,
+										1802
+									],
+									[
+										1882,
+										1892
+									],
+									[
+										1961,
+										1971
+									],
+									[
+										2124,
+										2134
+									],
+									[
+										2163,
+										2173
+									],
+									[
+										2308,
+										2318
+									],
+									[
+										2597,
+										2607
+									],
+									[
+										2695,
+										2705
+									],
+									[
+										2793,
+										2803
+									],
+									[
+										2891,
+										2901
+									],
+									[
+										2989,
+										2999
+									],
+									[
+										3087,
+										3097
+									],
+									[
+										3185,
+										3195
+									],
+									[
+										3283,
+										3293
+									],
+									[
+										3419,
+										3429
+									],
+									[
+										3605,
+										3615
+									],
+									[
+										3778,
+										3788
+									],
+									[
+										3964,
+										3974
+									],
+									[
+										4156,
+										4166
+									],
+									[
+										4211,
+										4221
+									],
+									[
+										4392,
+										4402
+									],
+									[
+										4563,
+										4573
+									],
+									[
+										4726,
+										4736
+									],
+									[
+										4908,
+										4918
+									],
+									[
+										5141,
+										5151
+									],
+									[
+										5253,
+										5263
+									],
+									[
+										5388,
+										5398
+									],
+									[
+										5500,
+										5510
+									],
+									[
+										5635,
+										5645
+									],
+									[
+										5747,
+										5757
+									],
+									[
+										5900,
+										5910
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								4572,
+								4573
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content"
+							],
+							"detect_indentation": false,
+							"line_numbers": false,
+							"output_tag": 1,
+							"result_base_dir": "",
+							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage",
+							"vintage":
+							{
+								"action": null,
+								"action_count": "",
+								"mode": "mode_visual",
+								"motion": null,
+								"motion_count": "",
+								"must_capture_register_name": false,
+								"partial_sequence": "",
+								"register": "\"",
+								"sequence": "",
+								"xpos": 27
+							}
+						},
+						"translation.x": 0.0,
+						"translation.y": 2310.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "source/k_iridium.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 67783,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								31943,
+								31943
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content"
+							],
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/C Improved/C Improved.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true,
 							"vintage":
 							{
 								"action": null,
@@ -1049,297 +1442,27 @@
 							}
 						},
 						"translation.x": 0.0,
-						"translation.y": 3696.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7422,
-						"regions":
-						{
-							"match":
-							{
-								"flags": 112,
-								"regions":
-								[
-									[
-										291,
-										306
-									],
-									[
-										324,
-										339
-									],
-									[
-										754,
-										769
-									],
-									[
-										785,
-										800
-									],
-									[
-										1037,
-										1052
-									],
-									[
-										1217,
-										1232
-									],
-									[
-										1694,
-										1712
-									],
-									[
-										1730,
-										1748
-									],
-									[
-										2151,
-										2169
-									],
-									[
-										2185,
-										2203
-									],
-									[
-										2512,
-										2530
-									],
-									[
-										3131,
-										3149
-									],
-									[
-										3311,
-										3329
-									],
-									[
-										3537,
-										3555
-									],
-									[
-										3614,
-										3632
-									],
-									[
-										3691,
-										3709
-									],
-									[
-										3768,
-										3786
-									],
-									[
-										3845,
-										3863
-									],
-									[
-										3922,
-										3940
-									],
-									[
-										3999,
-										4017
-									],
-									[
-										4076,
-										4094
-									],
-									[
-										4216,
-										4234
-									],
-									[
-										4297,
-										4315
-									],
-									[
-										4381,
-										4399
-									],
-									[
-										4462,
-										4480
-									],
-									[
-										4667,
-										4685
-									],
-									[
-										4846,
-										4864
-									],
-									[
-										4996,
-										5014
-									],
-									[
-										5125,
-										5143
-									],
-									[
-										5220,
-										5238
-									],
-									[
-										5315,
-										5333
-									],
-									[
-										5566,
-										5584
-									],
-									[
-										6093,
-										6111
-									],
-									[
-										6129,
-										6147
-									],
-									[
-										6569,
-										6587
-									],
-									[
-										6603,
-										6621
-									],
-									[
-										6872,
-										6890
-									],
-									[
-										7027,
-										7045
-									],
-									[
-										7233,
-										7251
-									]
-								],
-								"scope": ""
-							}
-						},
-						"selection":
-						[
-							[
-								7046,
-								7046
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
-							[
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content"
-							],
-							"detect_indentation": false,
-							"line_numbers": false,
-							"output_tag": 3,
-							"result_base_dir": "",
-							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
-							"result_line_regex": "^ +([0-9]+):",
-							"scroll_past_end": true,
-							"syntax": "Packages/Default/Find Results.hidden-tmLanguage",
-							"vintage":
-							{
-								"action": null,
-								"action_count": "",
-								"mode": "mode_normal",
-								"motion": null,
-								"motion_count": "",
-								"must_capture_register_name": false,
-								"partial_sequence": "",
-								"register": "\"",
-								"sequence": "",
-								"xpos": 42
-							}
-						},
-						"translation.x": 0.0,
-						"translation.y": 2639.0,
+						"translation.y": 26222.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 5,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "source/k_sdc.h",
+					"buffer": 3,
+					"file": "source/k_iridium.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1015,
+						"buffer_size": 1329,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								736,
-								736
+								86,
+								76
 							]
 						],
 						"settings":
@@ -1347,51 +1470,31 @@
 							"BracketHighlighterBusy": false,
 							"bh_regions":
 							[
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
 								"bh_angle_close",
 								"bh_angle_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
 								"bh_tag",
 								"bh_tag_center",
 								"bh_tag_open",
 								"bh_tag_close",
 								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
 								"bh_unmatched",
 								"bh_unmatched_center",
 								"bh_unmatched_open",
@@ -1401,7 +1504,27 @@
 								"bh_c_define_center",
 								"bh_c_define_open",
 								"bh_c_define_close",
-								"bh_c_define_content"
+								"bh_c_define_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content"
 							],
 							"origin_encoding": "ASCII",
 							"syntax": "Packages/C Improved/C Improved.tmLanguage",
@@ -1409,122 +1532,17 @@
 							{
 								"action": null,
 								"action_count": "",
-								"mode": "mode_normal",
+								"mode": "mode_visual",
 								"motion": null,
 								"motion_count": "",
 								"must_capture_register_name": false,
 								"partial_sequence": "",
 								"register": "\"",
-								"sequence": "",
-								"xpos": 23
+								"sequence": ""
 							}
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "source/k_main.c",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 31839,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								28317,
-								28317
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
-							[
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content"
-							],
-							"origin_encoding": "UTF-8",
-							"syntax": "Packages/C Improved/C Improved.tmLanguage",
-							"translate_tabs_to_spaces": false,
-							"vintage":
-							{
-								"_vintageous_glue_until_normal_mode": false,
-								"action": null,
-								"action_count": "",
-								"mode": "mode_normal",
-								"motion": null,
-								"motion_count": "",
-								"must_capture_register_name": false,
-								"normal_insert_count": "1",
-								"partial_sequence": "",
-								"register": "\"",
-								"sequence": "",
-								"xpos": 55
-							}
-						},
-						"translation.x": 0.0,
-						"translation.y": 27000.0,
+						"translation.y": 638.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 4,
@@ -1536,15 +1554,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 22174,
+						"buffer_size": 23621,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								11162,
-								11162
+								6277,
+								6277
 							]
 						],
 						"settings":
@@ -1552,46 +1570,21 @@
 							"BracketHighlighterBusy": false,
 							"bh_regions":
 							[
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
 								"bh_angle_close",
 								"bh_angle_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
 								"bh_curly",
 								"bh_curly_center",
 								"bh_curly_open",
 								"bh_curly_close",
 								"bh_curly_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
 								"bh_default",
 								"bh_default_center",
 								"bh_default_open",
@@ -1602,11 +1595,36 @@
 								"bh_single_quote_open",
 								"bh_single_quote_close",
 								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
 								"bh_c_define",
 								"bh_c_define_center",
 								"bh_c_define_open",
 								"bh_c_define_close",
-								"bh_c_define_content"
+								"bh_c_define_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content"
 							],
 							"origin_encoding": "UTF-8",
 							"syntax": "Packages/C Improved/C Improved.tmLanguage",
@@ -1627,37 +1645,31 @@
 								"partial_sequence": "",
 								"register": "\"",
 								"sequence": "",
-								"xpos": 59
+								"xpos": 20
 							}
 						},
 						"translation.x": 0.0,
-						"translation.y": 7344.0,
+						"translation.y": 6036.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 1,
-			"sheets":
-			[
+				},
 				{
 					"buffer": 5,
-					"file": "source/k_ct3919.c",
+					"file": "source/k_gps.c",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5089,
+						"buffer_size": 24134,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2793,
-								2793
+								8160,
+								8160
 							]
 						],
 						"settings":
@@ -1665,63 +1677,64 @@
 							"BracketHighlighterBusy": false,
 							"bh_regions":
 							[
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
 								"bh_angle_close",
 								"bh_angle_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
 								"bh_unmatched",
 								"bh_unmatched_center",
 								"bh_unmatched_open",
 								"bh_unmatched_close",
 								"bh_unmatched_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content"
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content"
 							],
-							"origin_encoding": "ASCII",
+							"highlight_line": true,
+							"origin_encoding": "UTF-8",
 							"syntax": "Packages/C Improved/C Improved.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true,
@@ -1738,31 +1751,31 @@
 								"partial_sequence": "",
 								"register": "\"",
 								"sequence": "",
-								"xpos": 14
+								"xpos": 1
 							}
 						},
 						"translation.x": 0.0,
-						"translation.y": 3762.0,
+						"translation.y": 11286.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
 					"buffer": 6,
-					"file": "source/k_gps.c",
+					"file": "source/k_gps.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 18481,
+						"buffer_size": 2139,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3192,
-								3192
+								110,
+								110
 							]
 						],
 						"settings":
@@ -1770,66 +1783,64 @@
 							"BracketHighlighterBusy": false,
 							"bh_regions":
 							[
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
 								"bh_angle_close",
 								"bh_angle_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
 								"bh_unmatched",
 								"bh_unmatched_center",
 								"bh_unmatched_open",
 								"bh_unmatched_close",
 								"bh_unmatched_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content"
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content"
 							],
-							"origin_encoding": "UTF-8",
+							"origin_encoding": "ASCII",
 							"syntax": "Packages/C Improved/C Improved.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true,
 							"vintage":
 							{
 								"_vintageous_glue_until_normal_mode": true,
@@ -1843,14 +1854,221 @@
 								"partial_sequence": "",
 								"register": "\"",
 								"sequence": "",
-								"xpos": 0
+								"xpos": 23
 							}
 						},
 						"translation.x": 0.0,
-						"translation.y": 2772.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "source/k_includes.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1877,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								795,
+								788
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
+							],
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/C Improved/C Improved.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true,
+							"vintage":
+							{
+								"action": null,
+								"action_count": "",
+								"mode": "mode_visual",
+								"motion": null,
+								"motion_count": "",
+								"must_capture_register_name": false,
+								"partial_sequence": "",
+								"register": "\"",
+								"sequence": ""
+							}
+						},
+						"translation.x": 0.0,
+						"translation.y": 658.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "source/k_config.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1984,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								189,
+								189
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
+							],
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/C Improved/C Improved.tmLanguage",
+							"vintage":
+							{
+								"_vintageous_glue_until_normal_mode": true,
+								"_vintageous_non_interactive": false,
+								"_vintageous_processing_notation": false,
+								"action": null,
+								"action_count": "",
+								"mode": "mode_insert",
+								"motion": null,
+								"motion_count": "",
+								"must_capture_register_name": false,
+								"normal_insert_count": "1",
+								"partial_sequence": "",
+								"register": "\"",
+								"sequence": "",
+								"xpos": 41
+							}
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
 					"type": "text"
 				}
 			]
@@ -1873,18 +2091,11 @@
 				0,
 				1,
 				1
-			],
-			[
-				1,
-				0,
-				2,
-				1
 			]
 		],
 		"cols":
 		[
 			0.0,
-			0.5,
 			1.0
 		],
 		"rows":
@@ -1914,6 +2125,14 @@
 		"selected_items":
 		[
 			[
+				"kinc",
+				"source\\k_includes.h"
+			],
+			[
+				"con",
+				"source\\k_config.h"
+			],
+			[
 				"gps",
 				"source\\k_gps.c"
 			],
@@ -1928,10 +2147,6 @@
 			[
 				"rtc",
 				"source\\k_rtc.c"
-			],
-			[
-				"con",
-				"source\\k_config.h"
 			],
 			[
 				"iri",
@@ -2172,10 +2387,6 @@
 			[
 				"kt",
 				"source\\k_timer.h"
-			],
-			[
-				"kinc",
-				"source\\k_includes.h"
 			],
 			[
 				"timer",
@@ -2452,7 +2663,7 @@
 	"settings":
 	{
 		"_vintageous_last_char_search_command": "vi_t",
-		"_vintageous_last_character_search": "i",
+		"_vintageous_last_character_search": "1",
 		"_vintageous_reset_during_init": true,
 		"vintage":
 		{

@@ -1,8 +1,9 @@
 #pragma once
 
 
-#define Q_GPS_MAX  		(512)	//(1024*4)
-#define GPS_LINE_MAX  	100
+// #define Q_GPS_MAX  		(512)	//(1024*4)
+#define Q_GPS_MAX  		(1024*4)
+#define GPS_LINE_MAX  	200
 
 
 void gps_q_put(char ch);
@@ -14,6 +15,7 @@ u32 get_gps_q_len(void);
 void gps_neo6q_init(void);
 
 void get_gps_time( rtcTime *a_time);
+// rtcTime get_gps_time(void);
 
 int get_gps_lat_d(void);
 int get_gps_lat_m(void);
@@ -59,7 +61,7 @@ extern int d1_GpsHour;
 extern int d1_GpsMin;
 extern int d1_GpsSec;
 
-//extern rtcTime gps_time;
+extern rtcTime gps_time;
 
 //extern gps_data_T gps;
 
@@ -82,7 +84,19 @@ void task_gps(void);
 int is_gps_valid();
 void set_gps_valid();
 void clr_gps_valid();
+
+void set_gps_hasData(int a_value);
+int is_gps_hasData(void);
+
+void set_gps_hasTime(int a_value);
+int is_gps_hasTime(void);
 //void gps_neo6q_init(void);
 //void gps_neo6q_init_pubx(void);
 
+int get_gpsTimr_hour(void);
+int get_gpsTimr_min(void);
+int get_gpsTimr_sec (void);
+int get_gpsTimr_year(void);
+int get_gpsTimr_mon(void);
+int get_gpsTimr_day (void);
 

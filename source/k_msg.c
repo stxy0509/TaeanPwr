@@ -202,18 +202,67 @@ void init_echoData(void)
 void make_msg_second(void)
 {
     int i, bat1;
+    rtcTime t1;
 
-    // static int fg_valid_before = 1;
-    // static int sec_before = 99;
+
+    if (FALSE == is_gps_hasData())
+    {
+        return;
+    }
+    else
+    {
+        set_gps_hasData(FALSE);
+    }
+
+    if (FALSE == is_gps_hasTime())
+    {
+        // t1 = rtc_time; 
+        t1.year = rtc_time.year;
+        t1.mon  = rtc_time.mon ;
+        t1.day  = rtc_time.day ;
+        t1.hour = rtc_time.hour;
+        t1.min  = rtc_time.min ;
+        t1.sec  = rtc_time.sec ;
+        
+        // debugprintf("rtc_time: %02d:%02d:%02d\r\n",t1.hour,t1.min, t1.sec);
+    }
+    else
+    {
+        // get_gps_time(&t1);
+         rtc_time.year = t1.year = get_gpsTimr_year();
+         rtc_time.mon  = t1.mon  = get_gpsTimr_mon();
+         rtc_time.day  = t1.day  = get_gpsTimr_day();
+         rtc_time.hour = t1.hour = get_gpsTimr_hour();
+         rtc_time.min  = t1.min  = get_gpsTimr_min();
+         rtc_time.sec  = t1.sec  = get_gpsTimr_sec();
+        // debugprintf("gps_time: %02d:%02d:%02d\r\n",t1.hour,t1.min, t1.sec);
+
+        set_gps_hasTime(FALSE);
+    }
+    i = t1.sec;
+
+
+    if ( 0 == i) 
+    {
+        // debugprintf("It's time to send data : %02d:%02d:%02d\r\n",t1.hour,t1.min, t1.sec);
+        debugprintf("%02d:%02d:%02d\r\n",t1.hour,t1.min, t1.sec);
+        make_msg_k1();
+        init_echoData();
+    }
 
     measure_BAT_leval();
 
-    i = rtc_time.sec;
+
+
 
 #if 1
     echoData[i].gps_valid     = is_gps_valid();
     echoData[i].depth_valid   = is_ct_valid();
     echoData[i].temp_valid    = is_ct_valid();
+
+    clr_gps_valid();
+    set_ct_valid(FALSE);
+
 #else
     // test only
     echoData[i].gps_valid     = 0;
@@ -258,7 +307,7 @@ void make_msg_second(void)
     if (fg_sec_data_display==1)
     {
         bat1 = get_battery_level();
-        debugprintf("%04d/%02d/%02d,%02d:%02d:%02d,%02d%02d.%04d,%03d%02d.%04d,%2.1f,%2.1f,%2.1f\r\n", rtc_time.year, rtc_time.mon, rtc_time.day, rtc_time.hour, rtc_time.min, i, echoData[i].lat_d, echoData[i].lat_md, echoData[i].lat_mf, echoData[i].lon_d, echoData[i].lon_md, echoData[i].lon_mf, echoData[i].depth/10.0f, echoData[i].temp/10.0f, bat1/10.0f);
+        debugprintf("%04d/%02d/%02d,%02d:%02d:%02d,%02d%02d.%04d,%03d%02d.%04d,%2.1f,%2.1f,%2.1f\r\n", t1.year, t1.mon, t1.day, t1.hour, t1.min, i, echoData[i].lat_d, echoData[i].lat_md, echoData[i].lat_mf, echoData[i].lon_d, echoData[i].lon_md, echoData[i].lon_mf, echoData[i].depth/10.0f, echoData[i].temp/10.0f, bat1/10.0f);
     }
 
 #if 1
@@ -268,8 +317,8 @@ void make_msg_second(void)
                 char fname[20];
                 char wdata[100];
 
-                sprintf(fname, "%04d%02d%02d_EB.txt", rtc_time.year, rtc_time.mon, rtc_time.day);
-                sprintf(wdata, "%04d/%02d/%02d,%02d:%02d:%02d,%02d%02d.%04d,%03d%02d.%04d,%2.1f,%2.1f,%2.1f\r\n", rtc_time.year, rtc_time.mon, rtc_time.day, rtc_time.hour, rtc_time.min, i, echoData[i].lat_d, echoData[i].lat_md, echoData[i].lat_mf, echoData[i].lon_d, echoData[i].lon_md, echoData[i].lon_mf, echoData[i].depth/10.0f, echoData[i].temp/10.0f, bat1/10.0f);
+                sprintf(fname, "%04d%02d%02d_EB.txt", t1.year, t1.mon, t1.day);
+                sprintf(wdata, "%04d/%02d/%02d,%02d:%02d:%02d,%02d%02d.%04d,%03d%02d.%04d,%2.1f,%2.1f,%2.1f\r\n", t1.year, t1.mon, t1.day, t1.hour, t1.min, i, echoData[i].lat_d, echoData[i].lat_md, echoData[i].lat_mf, echoData[i].lon_d, echoData[i].lon_md, echoData[i].lon_mf, echoData[i].depth/10.0f, echoData[i].temp/10.0f, bat1/10.0f);
 
                 sdc_saveDataToFile(fname, wdata, &fsz);
             }

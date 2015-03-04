@@ -816,10 +816,16 @@ void m_time_orinted_evt_proc(void)
 	int t_day;	//, t;
 	static int sec_before = 99;
 
+
+	make_msg_second();
+
+
+
+
 	if (rtc_time.sec != sec_before)
 	{
 		sec_before = rtc_time.sec;
-#if 1
+#if 0
 		if (rtc_time.sec == 0)
 		{
 			debugprintf("It's time to send data : %02d:%02d:%02d\r\n",rtc_time.hour,rtc_time.min, rtc_time.sec);
