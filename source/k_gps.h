@@ -41,6 +41,7 @@ U32 tmr_GPS_data_display=0;
 rtcTime gps_time;
 
 gps_data_T gps;
+int fgGpsAll_print = 0;
 
 //-----------------------------------------------
 #else
@@ -70,6 +71,7 @@ extern ALIGN4 char gps_q_buf[];
 extern ALIGN4 char gps_line[];
 
 extern U32 tmr_GPS_data_display;
+extern int fgGpsAll_print;
 
 //-----------------------------------------------
 #endif

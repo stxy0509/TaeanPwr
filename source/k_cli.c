@@ -1117,6 +1117,16 @@ static void cmd_qq(void)
 
 static void cmd_ss(void)
 {
+    if (TRUE == fgGpsAll_print)
+    {
+        debugprintf("OFF\r\n");
+        fgGpsAll_print = FALSE;
+    }
+    else
+    {
+        debugprintf("ON\r\n");
+        fgGpsAll_print = TRUE;
+    }
 }
 
 static void cmd_uu(void)
@@ -2574,7 +2584,7 @@ void App_TestShInit ()
     // testSh_RegisterCmd ("mm", cmd_mm,    "temp command mm\r\n"); //
     // testSh_RegisterCmd ("qq", cmd_qq,    "temp command qq\r\n"); //
     // testSh_RegisterCmd ("rr", cmd_rr,    "temp command rr\r\n"); //
-    // testSh_RegisterCmd ("ss", cmd_ss,    "temp command ss\r\n"); //
+    testSh_RegisterCmd ("ss", cmd_ss,    "temp command ss\r\n"); //
     // testSh_RegisterCmd ("tt", cmd_tt,    "temp command tt\r\n"); //
     // testSh_RegisterCmd ("uu", cmd_uu,    "temp command uu\r\n"); //
     // testSh_RegisterCmd ("vv", cmd_vv,    "temp command vv\r\n"); //

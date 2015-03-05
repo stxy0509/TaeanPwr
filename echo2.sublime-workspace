@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"TR",
+				"TRUE"
+			],
+			[
+				"rtc",
+				"rtcTime"
+			],
+			[
 				"gps",
 				"gps_time"
 			],
@@ -22,10 +30,6 @@
 			[
 				"H",
 				"Hour"
-			],
-			[
-				"rtc",
-				"rtcTime"
 			],
 			[
 				"get",
@@ -510,10 +514,6 @@
 			[
 				"SB_UART_",
 				"SB_UART_IER"
-			],
-			[
-				"a",
-				"a_baud"
 			]
 		]
 	},
@@ -528,36 +528,10 @@
 			}
 		},
 		{
-			"contents": "Searching 377 files for \"uart_putch\" (whole word)\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\SDK2.0\\.tags:\n 6837  uart_getch	.\\lib_src\\uart.c	/^BOOL uart_getch ( int n, char *ch )$/;\"	f\n 6838  uart_getdata	.\\lib_src\\uart.c	/^int uart_getdata ( int n, U8 *buf, int bufmax )$/;\"	f\n 6839: uart_putch	.\\lib_src\\uart.c	/^BOOL uart_putch ( int n, char ch )$/;\"	f\n 6840  uart_putdata	.\\lib_src\\uart.c	/^BOOL uart_putdata ( int n, U8 *buf, int len )$/;\"	f\n 6841  uart_putstring	.\\lib_src\\uart.c	/^BOOL uart_putstring ( int n, U8 *buf )$/;\"	f\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\SDK2.0\\.tags_sorted_by_file:\n 5979  uart_getch	lib_src\\uart.c	/^BOOL uart_getch ( int n, char *ch )$/;\"	f\n 5980  uart_getdata	lib_src\\uart.c	/^int uart_getdata ( int n, U8 *buf, int bufmax )$/;\"	f\n 5981: uart_putch	lib_src\\uart.c	/^BOOL uart_putch ( int n, char ch )$/;\"	f\n 5982  uart_putdata	lib_src\\uart.c	/^BOOL uart_putdata ( int n, U8 *buf, int len )$/;\"	f\n 5983  uart_putstring	lib_src\\uart.c	/^BOOL uart_putstring ( int n, U8 *buf )$/;\"	f\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\SDK2.0\\include\\adstar\\uart.h:\n  134  BOOL uart_getch(int n,char* ch);\n  135  int uart_getdata(int n,U8* buf, int bufmax);//return data byte length\n  136: BOOL uart_putch(int n,char ch);\n  137  BOOL uart_putdata(int n,U8* buf, int len);\n  138  BOOL uart_putstring(int n,U8* buf);\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\SDK2.0\\lib_src\\uart.c:\n  387  	return i;\n  388  }\n  389: BOOL uart_putch ( int n, char ch )\n  390  {\n  391  	U32 uart_base = getbaseaddress ( n );\n  ...\n  441  \n  442  	for ( i = 0; i < len; i++ )\n  443: 		uart_putch ( n, buf[i] );\n  444  \n  445  	return TRUE;\n  ...\n  449  	while ( *buf )\n  450  	{\n  451: 		uart_putch ( n, *buf );\n  452  		buf++;\n  453  	}\n  ...\n  489  		while ( 1 )\n  490  		{\n  491: 			if ( uart_putch ( debugch, *str ) )\n  492  				break;\n  493  		}\n  494  \n  495  #else\n  496: 		uart_putch ( debugch, *str );\n  497  		if (ch4_switch==1)\n  498  		{\n  499: 			uart_putch ( 4, *str );\n  500  		}\n  501  #endif\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\k_cli.c:\n  236      while ( *str )\n  237      {\n  238:         // uart_putch ( 4, *str );\n  239:         uart_putch ( 0, *str );\n  240          str++;\n  241      }\n  ...\n  346  			if (uart_getch(0,&ch)) //receive\n  347  			{\n  348:                 //uart_putch(0,ch);\n  349                  //sb_uart_putch ( SB_S_ATM2, ch );\n  350  \n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\k_gps.c:\n  234      char init7[] = {0xB5,0x62,0x06,0x01,0x08,0x00,0xF1,0x00,0x00,0x01,0x01,0x00,0x00,0x00,0x02,0x34};\n  235  \n  236:     for (i=0;i<14;i++)  uart_putch(1,init0[i]);    delayms(100);   // *R_WDCNT=WATCHDOG_V;\n  237:     for (i=0;i<16;i++)  uart_putch(1,init1[i]);    delayms(100);   // *R_WDCNT=WATCHDOG_V;\n  238:     for (i=0;i<16;i++)  uart_putch(1,init2[i]);    delayms(100);   // *R_WDCNT=WATCHDOG_V;\n  239:     for (i=0;i<16;i++)  uart_putch(1,init3[i]);    delayms(100);   // *R_WDCNT=WATCHDOG_V;\n  240:     for (i=0;i<16;i++)  uart_putch(1,init4[i]);    delayms(100);   // *R_WDCNT=WATCHDOG_V;\n  241:     for (i=0;i<16;i++)  uart_putch(1,init5[i]);    delayms(100);   // *R_WDCNT=WATCHDOG_V;\n  242:     for (i=0;i<16;i++)  uart_putch(1,init6[i]);    delayms(100);   // *R_WDCNT=WATCHDOG_V;\n  243:     for (i=0;i<16;i++)  uart_putch(1,init7[i]);    delayms(100);\n  244  }\n  245  void gps_neo6q_init_pubx(void)\n  ...\n  464      {\n  465  #if 1 \n  466:         uart_putch(0,ch);\n  467  #endif\n  468  \n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\k_iridium.c:\n  437              iri_response[resp_idx++] = ch;\n  438  #if 1\n  439:             // uart_putch(0, ch);\n  440  #else\n  441              debugprintf(\"%02X \", ch);\n  ...\n 1017              // if (uart_getch(3, &ch))\n 1018              {\n 1019:                 uart_putch(0, ch);\n 1020              // if (iri_rcv_get(iri_port,&ch))\n 1021              // {\n ....\n 1062              if (wm_rcv_get(&ch))\n 1063              {\n 1064:                 uart_putch(0, ch);\n 1065  \n 1066                  if ((ch==',') )         // +ZIPSTAT: 1,1\n ....\n 1105                  {\n 1106                      ch = newMsg[i];\n 1107:                     uart_putch(PORT_WM215, ch);\n 1108:                     uart_putch(0, ch);\n 1109                  }\n 1110                  iridium_printf(\"\\r\\n\");\n ....\n 1119              if (wm_rcv_get(&ch))\n 1120              {\n 1121:                 uart_putch(0, ch);\n 1122  \n 1123                  if ((ch==',') )         // +ZIPSEND: 1,1\n ....\n 1220      if (uart_getch(PORT_WM215,&ch))\n 1221      {\n 1222:         // uart_putch(PORT_WM215,ch);\n 1223  \n 1224          iri1_rcv_q_put(ch);\n ....\n 1467              if (wm_rcv_get(&ch))\n 1468              {\n 1469:                 // uart_putch(0,ch);\n 1470  \n 1471                  iri_response[resp_idx++] = ch;\n ....\n 1538          //     if (uart_getch(3, &ch))\n 1539          //     {\n 1540:         //         uart_putch(0, ch);\n 1541          //     // if (UartGetCh(iri_port,&ch))\n 1542          //     // {\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\k_main.c:\n  184  	        if (uart_getch(3, &ch))\n  185  	        {\n  186: 	        	uart_putch(0, ch);\n  187  	        }\n  188  	        if (uart_getch(0, &ch))\n  189  	        {\n  190: 	        	uart_putch(3, ch);\n  191  	        }\n  192          }\n  ...\n  198  	        if (uart_getch(1, &ch))\n  199  	        {\n  200: 	        	uart_putch(0, ch);\n  201  	        }\n  202  	        if (uart_getch(0, &ch))\n  203  	        {\n  204: 	        	uart_putch(1, ch);\n  205  	        }\n  206          }\n  ...\n  212  	        if (uart_getch(2, &ch))\n  213  	        {\n  214: 	        	uart_putch(0, ch);\n  215  	        }\n  216  	        if (uart_getch(0, &ch))\n  217  	        {\n  218: 	        	uart_putch(2, ch);\n  219  	        }\n  220          }\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\k_misc.h:\n    2  \n    3  \n    4: #define UartPutCh	uart_putch \n    5  \n    6  #define OK		1\n\nC:\\work\\projects\\210_EchoBuoy\\Firmware2\\source\\output\\koga2013.elf:\n    <binary>\n\n41 matches across 10 files\n",
+			"file": "source/startup/trip_board.c",
 			"settings":
 			{
-				"buffer_size": 6051,
-				"line_ending": "Windows",
-				"name": "Find Results",
-				"scratch": true
-			}
-		},
-		{
-			"file": "source/k_iridium.c",
-			"settings":
-			{
-				"buffer_size": 67783,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "source/k_iridium.h",
-			"settings":
-			{
-				"buffer_size": 1329,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "source/k_msg.c",
-			"settings":
-			{
-				"buffer_size": 23621,
+				"buffer_size": 3374,
 				"line_ending": "Windows"
 			}
 		},
@@ -565,7 +539,15 @@
 			"file": "source/k_gps.c",
 			"settings":
 			{
-				"buffer_size": 24134,
+				"buffer_size": 24311,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "source/k_cli.c",
+			"settings":
+			{
+				"buffer_size": 68362,
 				"line_ending": "Windows"
 			}
 		},
@@ -573,7 +555,7 @@
 			"file": "source/k_gps.h",
 			"settings":
 			{
-				"buffer_size": 2139,
+				"buffer_size": 2190,
 				"line_ending": "Windows"
 			}
 		},
@@ -675,11 +657,14 @@
 	],
 	"file_history":
 	[
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_ct3919.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_iridium.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_iridium.h",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_msg.c",
+		"/F/20150304_EB.txt",
 		"/C/work/GitHub/Drifter/SDK 1.6/projects/buoy1209/c1_main.c",
 		"/C/work/GitHub/Drifter/SDK 1.6/projects/buoy1209/c1_gps.c",
 		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_includes.h",
-		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_iridium.c",
-		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_ct3919.c",
 		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_twi.c",
 		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/include/typedef.h",
 		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_rtc.c",
@@ -691,7 +676,6 @@
 		"/F/30",
 		"/F/20150302_EB.txt",
 		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_sdc.c",
-		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_msg.c",
 		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/lib_src/egl/image/loadbmp.c",
 		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/lib_src/soundmixer.c",
 		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/lib_src/mp3play.c",
@@ -724,7 +708,6 @@
 		"/F/gp.dat",
 		"/F/ct.dat",
 		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_config.h",
-		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_iridium.h",
 		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/lib_src/uart.c",
 		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/include/lib_config.h",
 		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/include/adstar/uart.h",
@@ -801,8 +784,7 @@
 		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/atm1_1409.dat",
 		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/atm2_1409.dat",
 		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/ct3919_1410.dat",
-		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/gps_1410.dat",
-		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/history_1410.dat"
+		"/C/work/projects/100_KOGA/KOGA14/KOGA2014 설치작업과정 DATA/2_E01/새 폴더/gps_1410.dat"
 	],
 	"find":
 	{
@@ -821,6 +803,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"clr_gps_valid",
 			"uart_putch",
 			"gps_time",
 			"rtc_time",
@@ -947,8 +930,7 @@
 			"E02_BAT_ADJUST",
 			"E01_SHOCK",
 			"DEBUG_SENSOR_SHOCK",
-			"ctrl_sensor",
-			"cmdSensorControl"
+			"ctrl_sensor"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -966,7 +948,7 @@
 	"groups":
 	[
 		{
-			"selected": 5,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -982,8 +964,8 @@
 						"selection":
 						[
 							[
-								15585,
-								15585
+								1270,
+								1270
 							]
 						],
 						"settings":
@@ -991,61 +973,61 @@
 							"BracketHighlighterBusy": false,
 							"bh_regions":
 							[
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
 								"bh_double_quote_close",
 								"bh_double_quote_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
 								"bh_regex",
 								"bh_regex_center",
 								"bh_regex_open",
 								"bh_regex_close",
-								"bh_regex_content"
+								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content"
 							],
 							"origin_encoding": "UTF-8",
 							"syntax": "Packages/C Improved/C Improved.tmLanguage",
@@ -1065,611 +1047,31 @@
 								"partial_sequence": "",
 								"register": "\"",
 								"sequence": "",
-								"xpos": 0
+								"xpos": 15
 							}
 						},
 						"translation.x": 0.0,
-						"translation.y": 17510.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6051,
-						"regions":
-						{
-							"match":
-							{
-								"flags": 112,
-								"regions":
-								[
-									[
-										284,
-										294
-									],
-									[
-										319,
-										329
-									],
-									[
-										777,
-										787
-									],
-									[
-										810,
-										820
-									],
-									[
-										1219,
-										1229
-									],
-									[
-										1442,
-										1452
-									],
-									[
-										1586,
-										1596
-									],
-									[
-										1689,
-										1699
-									],
-									[
-										1792,
-										1802
-									],
-									[
-										1882,
-										1892
-									],
-									[
-										1961,
-										1971
-									],
-									[
-										2124,
-										2134
-									],
-									[
-										2163,
-										2173
-									],
-									[
-										2308,
-										2318
-									],
-									[
-										2597,
-										2607
-									],
-									[
-										2695,
-										2705
-									],
-									[
-										2793,
-										2803
-									],
-									[
-										2891,
-										2901
-									],
-									[
-										2989,
-										2999
-									],
-									[
-										3087,
-										3097
-									],
-									[
-										3185,
-										3195
-									],
-									[
-										3283,
-										3293
-									],
-									[
-										3419,
-										3429
-									],
-									[
-										3605,
-										3615
-									],
-									[
-										3778,
-										3788
-									],
-									[
-										3964,
-										3974
-									],
-									[
-										4156,
-										4166
-									],
-									[
-										4211,
-										4221
-									],
-									[
-										4392,
-										4402
-									],
-									[
-										4563,
-										4573
-									],
-									[
-										4726,
-										4736
-									],
-									[
-										4908,
-										4918
-									],
-									[
-										5141,
-										5151
-									],
-									[
-										5253,
-										5263
-									],
-									[
-										5388,
-										5398
-									],
-									[
-										5500,
-										5510
-									],
-									[
-										5635,
-										5645
-									],
-									[
-										5747,
-										5757
-									],
-									[
-										5900,
-										5910
-									]
-								],
-								"scope": ""
-							}
-						},
-						"selection":
-						[
-							[
-								4572,
-								4573
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
-							[
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content"
-							],
-							"detect_indentation": false,
-							"line_numbers": false,
-							"output_tag": 1,
-							"result_base_dir": "",
-							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
-							"result_line_regex": "^ +([0-9]+):",
-							"scroll_past_end": true,
-							"syntax": "Packages/Default/Find Results.hidden-tmLanguage",
-							"vintage":
-							{
-								"action": null,
-								"action_count": "",
-								"mode": "mode_visual",
-								"motion": null,
-								"motion_count": "",
-								"must_capture_register_name": false,
-								"partial_sequence": "",
-								"register": "\"",
-								"sequence": "",
-								"xpos": 27
-							}
-						},
-						"translation.x": 0.0,
-						"translation.y": 2310.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "source/k_iridium.c",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 67783,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								31943,
-								31943
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
-							[
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content"
-							],
-							"origin_encoding": "UTF-8",
-							"syntax": "Packages/C Improved/C Improved.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true,
-							"vintage":
-							{
-								"action": null,
-								"action_count": "",
-								"mode": "mode_normal",
-								"motion": null,
-								"motion_count": "",
-								"must_capture_register_name": false,
-								"partial_sequence": "",
-								"register": "\"",
-								"sequence": "",
-								"xpos": 0
-							}
-						},
-						"translation.x": 0.0,
-						"translation.y": 26222.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "source/k_iridium.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1329,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								86,
-								76
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
-							[
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content"
-							],
-							"origin_encoding": "ASCII",
-							"syntax": "Packages/C Improved/C Improved.tmLanguage",
-							"vintage":
-							{
-								"action": null,
-								"action_count": "",
-								"mode": "mode_visual",
-								"motion": null,
-								"motion_count": "",
-								"must_capture_register_name": false,
-								"partial_sequence": "",
-								"register": "\"",
-								"sequence": ""
-							}
-						},
-						"translation.x": 0.0,
-						"translation.y": 638.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "source/k_msg.c",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 23621,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								6277,
-								6277
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
-							[
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content"
-							],
-							"origin_encoding": "UTF-8",
-							"syntax": "Packages/C Improved/C Improved.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true,
-							"vintage":
-							{
-								"_vintageous_glue_until_normal_mode": false,
-								"_vintageous_non_interactive": false,
-								"_vintageous_processing_notation": false,
-								"action": null,
-								"action_count": "",
-								"mode": "mode_normal",
-								"motion": null,
-								"motion_count": "",
-								"must_capture_register_name": false,
-								"normal_insert_count": "1",
-								"partial_sequence": "",
-								"register": "\"",
-								"sequence": "",
-								"xpos": 20
-							}
-						},
-						"translation.x": 0.0,
-						"translation.y": 6036.0,
+						"translation.y": 1188.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "source/k_gps.c",
+					"buffer": 1,
+					"file": "source/startup/trip_board.c",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 24134,
+						"buffer_size": 3374,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								8160,
-								8160
+								3374,
+								3374
 							]
 						],
 						"settings":
@@ -1677,26 +1079,16 @@
 							"BracketHighlighterBusy": false,
 							"bh_regions":
 							[
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
 								"bh_single_quote",
 								"bh_single_quote_center",
 								"bh_single_quote_open",
@@ -1707,31 +1099,143 @@
 								"bh_unmatched_open",
 								"bh_unmatched_close",
 								"bh_unmatched_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
 								"bh_regex",
 								"bh_regex_center",
 								"bh_regex_open",
 								"bh_regex_close",
 								"bh_regex_content"
+							],
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/C Improved/C Improved.tmLanguage",
+							"translate_tabs_to_spaces": false,
+							"vintage":
+							{
+								"action": null,
+								"action_count": "",
+								"mode": "mode_normal",
+								"motion": null,
+								"motion_count": "",
+								"must_capture_register_name": false,
+								"partial_sequence": "",
+								"register": "\"",
+								"sequence": "",
+								"xpos": 0
+							}
+						},
+						"translation.x": 0.0,
+						"translation.y": 2442.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "source/k_gps.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 24311,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								11966,
+								11966
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content"
 							],
 							"highlight_line": true,
 							"origin_encoding": "UTF-8",
@@ -1740,10 +1244,12 @@
 							"translate_tabs_to_spaces": true,
 							"vintage":
 							{
-								"_vintageous_glue_until_normal_mode": false,
+								"_vintageous_glue_until_normal_mode": true,
+								"_vintageous_non_interactive": false,
+								"_vintageous_processing_notation": false,
 								"action": null,
 								"action_count": "",
-								"mode": "mode_normal",
+								"mode": "mode_insert",
 								"motion": null,
 								"motion_count": "",
 								"must_capture_register_name": false,
@@ -1751,31 +1257,31 @@
 								"partial_sequence": "",
 								"register": "\"",
 								"sequence": "",
-								"xpos": 1
+								"xpos": 11
 							}
 						},
 						"translation.x": 0.0,
-						"translation.y": 11286.0,
+						"translation.y": 9537.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
-					"file": "source/k_gps.h",
+					"buffer": 3,
+					"file": "source/k_cli.c",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2139,
+						"buffer_size": 68362,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								110,
-								110
+								29868,
+								29868
 							]
 						],
 						"settings":
@@ -1783,61 +1289,166 @@
 							"BracketHighlighterBusy": false,
 							"bh_regions":
 							[
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
 								"bh_double_quote_close",
 								"bh_double_quote_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
 								"bh_regex",
 								"bh_regex_center",
 								"bh_regex_open",
 								"bh_regex_close",
-								"bh_regex_content"
+								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content"
+							],
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/C Improved/C Improved.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true,
+							"vintage":
+							{
+								"_vintageous_glue_until_normal_mode": true,
+								"action": null,
+								"action_count": "",
+								"mode": "mode_insert",
+								"motion": null,
+								"motion_count": "",
+								"must_capture_register_name": false,
+								"normal_insert_count": "1",
+								"partial_sequence": "",
+								"register": "\"",
+								"sequence": "",
+								"xpos": 0
+							}
+						},
+						"translation.x": 0.0,
+						"translation.y": 23947.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "source/k_gps.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2190,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1526,
+								1540
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content"
 							],
 							"origin_encoding": "ASCII",
 							"syntax": "Packages/C Improved/C Improved.tmLanguage",
@@ -1854,18 +1465,18 @@
 								"partial_sequence": "",
 								"register": "\"",
 								"sequence": "",
-								"xpos": 23
+								"xpos": 21
 							}
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 583.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 5,
 					"file": "source/k_includes.h",
 					"semi_transient": false,
 					"settings":
@@ -1963,11 +1574,11 @@
 						"translation.y": 658.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 6,
 					"file": "source/k_config.h",
 					"semi_transient": false,
 					"settings":
@@ -1979,8 +1590,8 @@
 						"selection":
 						[
 							[
-								189,
-								189
+								489,
+								489
 							]
 						],
 						"settings":
@@ -1988,61 +1599,61 @@
 							"BracketHighlighterBusy": false,
 							"bh_regions":
 							[
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
 								"bh_double_quote_close",
 								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
 								"bh_regex",
 								"bh_regex_center",
 								"bh_regex_open",
 								"bh_regex_close",
 								"bh_regex_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content"
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content"
 							],
 							"origin_encoding": "ASCII",
 							"syntax": "Packages/C Improved/C Improved.tmLanguage",
@@ -2061,14 +1672,14 @@
 								"partial_sequence": "",
 								"register": "\"",
 								"sequence": "",
-								"xpos": 41
+								"xpos": 40
 							}
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 330.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
+					"stack_index": 5,
 					"type": "text"
 				}
 			]
@@ -2125,6 +1736,10 @@
 		"selected_items":
 		[
 			[
+				"cli",
+				"source\\k_cli.c"
+			],
+			[
 				"kinc",
 				"source\\k_includes.h"
 			],
@@ -2159,10 +1774,6 @@
 			[
 				"mai",
 				"source\\k_main.c"
-			],
-			[
-				"cli",
-				"source\\k_cli.c"
 			],
 			[
 				"in",

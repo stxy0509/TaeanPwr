@@ -21,9 +21,15 @@ int is_alti_rawdata_display(void)
 void set_alti_rawdata_display(void)
 {
     if (fg_alti_rawdata_display==1)
+    {
+        debugprintf("OFF\r\n");
         fg_alti_rawdata_display = 0;
+    }
     else
+    {
+        debugprintf("ON\r\n");
         fg_alti_rawdata_display = 1;
+    }
 }
 
 

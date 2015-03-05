@@ -88,10 +88,17 @@ int is_gps_rawdata_display(void)
 void set_gps_rawdata_display(void)
 {
     if (fg_gps_rawdata_display==1)
+    {
+        debugprintf("OFF\r\n");
         fg_gps_rawdata_display = 0;
+    }
     else
+    {
+        debugprintf("ON\r\n");
         fg_gps_rawdata_display = 1;
+    }
 }
+
 
 
 extern SensorBakSize_Type SensorBakSize;
@@ -233,7 +240,7 @@ void gps_neo6q_init(void)
     char init6[] = {0xB5,0x62,0x06,0x01,0x08,0x00,0xF0,0x04,0x00,0x01,0x00,0x00,0x00,0x01,0x05,0x45};
     char init7[] = {0xB5,0x62,0x06,0x01,0x08,0x00,0xF1,0x00,0x00,0x01,0x01,0x00,0x00,0x00,0x02,0x34};
 
-    for (i=0;i<14;i++)  uart_putch(1,init0[i]);    delayms(100);   // *R_WDCNT=WATCHDOG_V;/
+    // for (i=0;i<14;i++)  uart_putch(1,init0[i]);    delayms(100);   // *R_WDCNT=WATCHDOG_V;/
     for (i=0;i<16;i++)  uart_putch(1,init1[i]);    delayms(100);   // *R_WDCNT=WATCHDOG_V;
     for (i=0;i<16;i++)  uart_putch(1,init2[i]);    delayms(100);   // *R_WDCNT=WATCHDOG_V;
     for (i=0;i<16;i++)  uart_putch(1,init3[i]);    delayms(100);   // *R_WDCNT=WATCHDOG_V;
@@ -462,8 +469,11 @@ void task_gps(void)
     if (uart_getch(1,&ch)) //receive
     // if (ch != -1)
     {
-#if 0 
-        uart_putch(0,ch);
+#if 1
+        if (TRUE == fgGpsAll_print)
+        {                     
+            uart_putch(0,ch);
+        }
 #endif
 
         //sensor_status.b.gps = 3;
@@ -540,6 +550,22 @@ void task_gps(void)
                                     set_rtc_sysclk_sync_req(0);  //fg_RTC_sync_req = 0;
                                 }
                                 set_gps_hasTime(TRUE);
+
+#if 0 
+            if (sdc_read_detectPin()==SDC_INSERTED)
+            {
+                u32 fsz;
+                char fname[20];
+                char wdata[100];
+
+                sprintf(fname, "%04d%02d%02d_EB.txt", rtc_time.year, rtc_time.mon, rtc_time.day);
+                sprintf(wdata, "%04d/%02d/%02d %02d:%02d:%02d %f,%f\r\n", gps_time.year, gps_time.mon, gps_time.day, gps_time.hour, gps_time.min, gps_time.sec, atof(&parsed_block[3][0]), atof(&parsed_block[5][0]));
+
+                sdc_saveDataToFile(fname, wdata, &fsz);
+            }
+#endif
+
+
                             }
                             else
                             {

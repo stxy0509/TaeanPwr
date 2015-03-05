@@ -10,16 +10,28 @@ int fg_min_data_display = 0;
 void set_secData_display(void)
 {
     if (fg_sec_data_display==0)
+    {
+        debugprintf("ON\r\n");
         fg_sec_data_display = 1;
+    }
     else
+    {
+        debugprintf("OFF\r\n");
         fg_sec_data_display = 0;
+    }
 }
 void set_minData_display(void)
 {
     if (fg_min_data_display==0)
+    {
+        debugprintf("ON\r\n");
         fg_min_data_display = 1;
+    }
     else
+    {
+        debugprintf("OFF\r\n");
         fg_min_data_display = 0;
+    }
 }
 
 
