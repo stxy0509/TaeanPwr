@@ -465,6 +465,15 @@ void task_gps(void)
         return;
     }
 
+    /*
+     * GPS 기능을 사용하지 않는다.
+     */
+    uart_getch(1,&ch);
+    return;
+
+
+
+
     // ch = gps_q_get();
     if (uart_getch(1,&ch)) //receive
     // if (ch != -1)
