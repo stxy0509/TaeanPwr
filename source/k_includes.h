@@ -92,7 +92,7 @@ typedef struct
 }rtcTime;
 
 // MSG-----------------------------------------------
-#define MSG_LENGTH		1150    //1024
+#define MSG_LENGTH		150    //1024
 
 // SD CARD-------------------------------------------
 #define FN_AIO		"ai.dat"

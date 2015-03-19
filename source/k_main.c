@@ -908,6 +908,7 @@ void m_time_orinted_evt_proc(void)
 		t_day = ( rtc_time.hour*60 + rtc_time.min);
 
 		//----------------< 매 2분마다  ---> RTC & sysTime sync >----------------
+		// if ( t_day%30 == 0)
 		if ( t_day%2 == 0)
 		{
 			set_rtc_sysclk_sync_req(1);
@@ -973,21 +974,23 @@ void m_time_orinted_evt_proc(void)
 		#endif
 
 
-		#if 0
+		#if 1
 		// 기상데이타, 저전압감시
-		if ( (t_day % env.interval) == 0)
+		// if ( (t_day % env.interval) == 0)
+		if ( (t_day % 2) == 0)
 		{
 			PRINT_TIME;
 			measure_BAT_leval();
 
 			// 기상데이타
-		    sdc_set_time_tag(SDC_TIME_TAG);
+		    // sdc_set_time_tag(SDC_TIME_TAG);
 			make_msg_k1();
 
 			chk_file_size();
 
 
 			// 저전압 감시
+/*			
 			if (get_battery_level() < C_LOW_BAT_LIMIT)
 			{
 				if (lowbat_interval == 0)
@@ -996,6 +999,7 @@ void m_time_orinted_evt_proc(void)
 					make_msg_kx('9');
 				}
 			}
+*/			
 		}
 		#endif
 

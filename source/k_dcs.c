@@ -56,7 +56,8 @@ void init_dcs_data(void)
 int is_dcs_valid(void)        {    return dcs.valid;}
 void set_dcs_valid(int a_val)    { dcs.valid = a_val;}
 double get_dcs_dir(void)      {return dcs.dir;}
-double get_dcs_speed(void)    {return dcs.speed;}
+// double get_dcs_speed(void)    {return dcs.speed;}
+double get_dcs_speed(void)    {return dcs.pitch;}
 
 /*
 409 byte
