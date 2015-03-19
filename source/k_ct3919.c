@@ -12,27 +12,6 @@ ALIGN4 char ct_line[100];
 
 extern SensorBakSize_Type SensorBakSize;
 
-
-static int fg_alti_rawdata_display = 0;
-int is_alti_rawdata_display(void)
-{
-    return fg_alti_rawdata_display;
-}
-void set_alti_rawdata_display(void)
-{
-    if (fg_alti_rawdata_display==1)
-    {
-        debugprintf("OFF\r\n");
-        fg_alti_rawdata_display = 0;
-    }
-    else
-    {
-        debugprintf("ON\r\n");
-        fg_alti_rawdata_display = 1;
-    }
-}
-
-
 char is_special_ch(char a_ch)
 {
 	switch (a_ch)
@@ -144,11 +123,73 @@ void init_ct_data(void)
 
 int is_ct_valid(void)   {    return ct.valid;}
 void set_ct_valid(int a_val)    { ct.valid = a_val;}
-int get_ct_cond(void)    {return ct.cond;}
-int get_ct_temp(void)    {return ct.temp;}
+double get_ct_cond(void)    {return ct.cond;}
+double get_ct_temp(void)    {return ct.temp;}
 
 
 void parsing_ct3919(char *a_str)
+{
+    char ct_data[6][20];
+    u8 i = 0;
+    u8 j = 0;
+    u8 k = 0;
+    //u8 retval = 0;
+    //U16 a_level;
+    char ch;
+    while (1)
+    {
+        ch = a_str[k++];
+
+        if ((ch== 0x0D) || (ch== 0x0A) || ch=='\0')
+        {
+            ct_data[i][j] = '\0';
+            break;
+        }
+        else if (ch=='\t')
+        {
+            ct_data[i][j] = '\0';
+            i++;
+            j=0;
+        }
+        else
+        {
+            if (ch != ' ')
+            {
+                ct_data[i][j++] = ch;
+            }
+        }
+    }
+
+#if 0
+   for (j=0; j<=i; j++)
+   {
+       debugprintf("%s\r\n",ct_data[j]);
+   }
+#endif
+   //PRINTLINE;
+
+
+
+    if (!strcmp(ct_data[1],"3919"))
+    {
+        double d1,d2;
+        d1 = atof(ct_data[3])*100.0f;
+        d2 = atof(ct_data[4])*10.0f;
+        ct.cond = d1;
+        ct.temp = d2;
+        ct.valid  = 1;
+
+        //PRINT_TIME;
+        debugprintf(" **** CT3919: %f(c), %f(t) \r\n\r\n", ct.cond, ct.temp);
+    }
+}
+
+
+
+
+
+//11.9760,  1.87518,  15.2111, 24 Feb 2012, 11:50:12
+void parsing_sbe(char *a_str)
 {
     char ct_data[6][20];
     u8 i = 0;
@@ -181,58 +222,28 @@ void parsing_ct3919(char *a_str)
         }
     }
 
-#if 0
-   for (j=0; j<=i; j++)
-   {
-       debugprintf("%s\r\n",ct_data[j]);
-   }
-#endif
-   //PRINTLINE;
-
-
-
-    if (!strcmp(ct_data[0],"$SDDPT"))
+    #if 0
+    for (j=0; j<=i; j++)
     {
-        int d1;
-        d1 = (int)(atof(ct_data[1])*10.0f);
-        // d2 = atof(ct_data[4])*10.0f;
+    debugprintf("%s\r\n",ct_data[j]);
+    }
+    #endif
+    //PRINTLINE;
+
+
+
+//    if (!strcmp(ct_data[1],"3919"))
+    {
+        double d1,d2;
+        d1 = atof(ct_data[1])*1000.0f;
+        d2 = atof(ct_data[0])*10.0f;
         ct.cond = d1;
-        // ct.temp = d2;
+        ct.temp = d2;
         ct.valid  = 1;
 
         //PRINT_TIME;
+        debugprintf(" **** CT_SBE: %f(c), %f(t) \r\n\r\n", ct.cond, ct.temp);
     }
-
-    if (!strcmp(ct_data[0],"$YXMTW"))
-    {
-        int d2;
-        // d2 = atof(ct_data[1])*10.0f;
-        d2 = (int)(atof(ct_data[1])*10.0f);
-        // ct.cond = d1;
-        ct.temp = d2;
-        ct.valid  = 1;
-    }
-
-    if (!strcmp(ct_data[0],"$SDMTW"))
-    {
-        int d2;
-        // d2 = atof(ct_data[1])*10.0f;
-        d2 = (int)(atof(ct_data[1])*10.0f);
-        // ct.cond = d1;
-        ct.temp = d2;
-        ct.valid  = 1;
-    }
-
-    // debugprintf(" **** Alti-meter: %d(c), %d(t) \r\n\r\n", ct.cond, ct.temp);
-}
-
-
-
-
-
-//11.9760,  1.87518,  15.2111, 24 Feb 2012, 11:50:12
-void parsing_sbe(char *a_str)
-{
 }
 
 
@@ -247,9 +258,11 @@ void task_ct3919(void)
 
     TM_watchCT3919 = 0;
 
+    ch = ct_q_get();
     if (fg_start_sensing == 0)  return;
 
-    if (uart_getch( PORT_ALTIMETER, &ch))
+
+    if (ch != -1)
     {
         //sensor_status.b.ct3919 = 3;
         sensor_status.w |= 3<<(3*2);
@@ -263,13 +276,28 @@ void task_ct3919(void)
                     ct_line[line_ptr++] = 0x0A;
                     ct_line[line_ptr] = '\0';
 
+                    debugstring("\r\n");
+                    debugstring(ct_line);
+                    //debugstring("\r\n");
 
-                    if (is_alti_rawdata_display() == 1)
+                    if (sdc_read_detectPin()==SDC_INSERTED)
                     {
-                        debugstring(ct_line);
+                        u32 fsz;
+                        //PRINTLINE;
+                        sdc_saveDataToFile(FN_CT3919, ct_line, &fsz);
+                        //PRINTVAR(fsz);
+                        if (fsz > FSZ_MAX)
+                        {
+                            SensorBakSize.b.ct3919 = 1;
+                        }
                     }
 
                     // parsing
+                    if (ref_cnt == 6)
+                    {
+                        parsing_sbe(ct_line);
+                    }
+                    else
                     {
                         parsing_ct3919(ct_line);
                     }

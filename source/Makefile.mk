@@ -31,7 +31,6 @@ LIBS	=	\
 
 SOURCES	 += startup/adStarInit.c
 SOURCES	 += startup/startup_adstar.s
-SOURCES	 += startup/trip_board.c
 SOURCES	 += k_cli.c
 SOURCES	 += k_main.c
 SOURCES	 += k_timer.c
@@ -41,12 +40,11 @@ SOURCES	 += k_iridium.c
 SOURCES	 += k_misc.c
 SOURCES	 += k_msg.c
 SOURCES	 += k_sdc.c
-SOURCES	 += k_ct3919.c
 SOURCES	 += k_gps.c
+SOURCES	 += k_dcs.c
 
 OBJECTS	 += ${OBJDIR}adStarInit.o
 OBJECTS	 += ${OBJDIR}startup_adstar.o
-OBJECTS	 += ${OBJDIR}trip_board.o
 OBJECTS	 += ${OBJDIR}k_cli.o
 OBJECTS	 += ${OBJDIR}k_main.o
 OBJECTS	 += ${OBJDIR}k_timer.o
@@ -56,12 +54,11 @@ OBJECTS	 += ${OBJDIR}k_iridium.o
 OBJECTS	 += ${OBJDIR}k_misc.o
 OBJECTS	 += ${OBJDIR}k_msg.o
 OBJECTS	 += ${OBJDIR}k_sdc.o
-OBJECTS	 += ${OBJDIR}k_ct3919.o
 OBJECTS	 += ${OBJDIR}k_gps.o
+OBJECTS	 += ${OBJDIR}k_dcs.o
 
 DEPS	 += ${OBJDIR}adStarInit.d
 DEPS	 += ${OBJDIR}startup_adstar.d
-DEPS	 += ${OBJDIR}trip_board.d
 DEPS	 += ${OBJDIR}k_cli.d
 DEPS	 += ${OBJDIR}k_main.d
 DEPS	 += ${OBJDIR}k_timer.d
@@ -71,8 +68,8 @@ DEPS	 += ${OBJDIR}k_iridium.d
 DEPS	 += ${OBJDIR}k_misc.d
 DEPS	 += ${OBJDIR}k_msg.d
 DEPS	 += ${OBJDIR}k_sdc.d
-DEPS	 += ${OBJDIR}k_ct3919.d
 DEPS	 += ${OBJDIR}k_gps.d
+DEPS	 += ${OBJDIR}k_dcs.d
 
 
 
@@ -130,7 +127,6 @@ endif
 
 -include ${OBJDIR}adStarInit.d
 -include ${OBJDIR}startup_adstar.d
--include ${OBJDIR}trip_board.d
 -include ${OBJDIR}k_cli.d
 -include ${OBJDIR}k_main.d
 -include ${OBJDIR}k_timer.d
@@ -140,8 +136,8 @@ endif
 -include ${OBJDIR}k_misc.d
 -include ${OBJDIR}k_msg.d
 -include ${OBJDIR}k_sdc.d
--include ${OBJDIR}k_ct3919.d
 -include ${OBJDIR}k_gps.d
+-include ${OBJDIR}k_dcs.d
 
 #============= TARGET ====================
 ${TARGET} : Makefile.mk ${OBJECTS} ${LIBS} startup/adstar_ram.ld
@@ -172,10 +168,6 @@ ${OBJDIR}adStarInit.o : startup/adStarInit.c
 ${OBJDIR}startup_adstar.o : startup/startup_adstar.s
 	@$(ECHO) 'Compile : $<'
 	$(ECHOMARK)$(CC) -Wa,$(ASFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
-
-${OBJDIR}trip_board.o : startup/trip_board.c
-	@$(ECHO) 'Compile : $<'
-	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
 
 ${OBJDIR}k_cli.o : k_cli.c
 	@$(ECHO) 'Compile : $<'
@@ -213,11 +205,11 @@ ${OBJDIR}k_sdc.o : k_sdc.c
 	@$(ECHO) 'Compile : $<'
 	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
 
-${OBJDIR}k_ct3919.o : k_ct3919.c
+${OBJDIR}k_gps.o : k_gps.c
 	@$(ECHO) 'Compile : $<'
 	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
 
-${OBJDIR}k_gps.o : k_gps.c
+${OBJDIR}k_dcs.o : k_dcs.c
 	@$(ECHO) 'Compile : $<'
 	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
 

@@ -29,7 +29,7 @@
 //-----------------------------------------------
 
 void print_string(int a_ch, const char* str);
-
+char is_special_ch(char a_ch);
 
 //void iridium_printf(const char * const fmt, ...);
 

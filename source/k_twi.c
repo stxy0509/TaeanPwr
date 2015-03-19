@@ -339,6 +339,18 @@ void rtc_settime(rtcTime* tm)
     //}  //init SEC   register, set START bit
 }
 
+void rtc_start(void)
+{
+    u8 tmp1,tmp2;
+    tmp1 = 10;
+    tmp2 = (tmp1/10 )*16 + (tmp1%10 );
+    //debugprintf("S: %d %x\r\n",tmp1,tmp2);
+    rtcc_wr((tmp2)|START_32KHZ,ADDR_SEC) ;
+    //}  //init SEC   register, set START bit
+}
+
+
+
 
 //................................................................................
 void ini_rtcc(void)                  // initialization of the RTCC(MCP79410)

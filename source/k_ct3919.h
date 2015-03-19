@@ -3,15 +3,13 @@
 
 #define Q_CT_MAX  1000
 
-#define PORT_ALTIMETER		2
-
 
 // typedef --------------------------------------------------------------------
 typedef struct _ct_data
 {
     u8 valid;
-    int cond;
-    int temp;
+    double cond;
+    double temp;
 } ct_data_T;
 
 
@@ -26,11 +24,8 @@ void ct_q_init(void);
 void ct_q_put(char ch);
 int is_ct_valid(void);
 void set_ct_valid(int a_val);
-int get_ct_cond(void);
-int get_ct_temp(void);
-
-void set_alti_rawdata_display(void);
-int is_alti_rawdata_display(void);
+double get_ct_cond(void);
+double get_ct_temp(void);
 
 
 //-----------------------------------------------

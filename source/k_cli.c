@@ -2525,6 +2525,7 @@ static void cmd_gps(void)
     set_gps_rawdata_display();
 }
 
+#if 0
 static void cmd_alti(void)
 {
     set_alti_rawdata_display();
@@ -2538,6 +2539,7 @@ static void cmd_min(void)
 {
     set_minData_display();
 }
+#endif
 
 
 static void cmd_get(void)
@@ -2567,9 +2569,12 @@ void App_TestShInit ()
     // testSh_RegisterCmd ("at", cmd_at,    "temp command aa\r\n"); //
     testSh_RegisterCmd ("mv", cmd_mv,    "temp command aa\r\n"); //
     testSh_RegisterCmd ("gps", cmd_gps,  "toggle GPS sensor data.\r\n"); //
+
+    #if 0
     testSh_RegisterCmd ("alti",cmd_alti, "toggle ALTI sensor data.\r\n"); //
     testSh_RegisterCmd ("sec", cmd_sec,  "toggle SEC data.\r\n"); //
     testSh_RegisterCmd ("min", cmd_min,  "toggle MIN data.\r\n"); //
+    #endif
 
     testSh_RegisterCmd ("chdir", cmd_chdir,  "sdc: chdir\r\n"); //
     // testSh_RegisterCmd ("dd", cmd_dd,    "temp command dd\r\n"); //

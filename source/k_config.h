@@ -1,8 +1,27 @@
+/*
+ *****************************************************************************
+ * Oceantech Co.
+ *     
+ * (c) Copyright 2015. 
+ * 		All Rights Reserved.
+ * 
+ * Filename         : k_config.h
+ * Programmer       : kycho (arapapa@gmail.com)
+ * Edited           : 2015. 3. 18
+ *****************************************************************************
+ */
+
+
+
 #pragma once
 
 
 // MAIN----------------------------------------------
-#define KOGA_VER_STRING "1.3  150305-1645"
+#define KOGA_VER_STRING "1.4  150316-1540"
+
+
+#define 		BUOY_ECHO						0
+#define 		BUOY_TAEAN_POWER_STATION		1
 
 
 #if 0
@@ -92,6 +111,11 @@
 #define BUOY_WEST
 #define C_LOW_BAT_LIMIT 220
 #endif
+
+#define COMM_INTERNAL       3
+
+
+#define COMM_CHANNEL     COMM_INTERNAL       // uart3 - 표준부이에서 내장형 모뎀과 연결되어 있다.
 
 
 /*-------------------------------------------------------

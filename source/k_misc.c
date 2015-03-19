@@ -21,6 +21,20 @@ void print_string(int a_ch, const char* str)
     }
 }
 
+char is_special_ch(char a_ch)
+{
+    switch (a_ch)
+    {
+        case 0x09:  //tab
+        case 0x0A:  //LF
+        case 0x0D:  //CR
+            return 0;
+            break;
+    }
+
+    if ((a_ch < 0x20)||(a_ch > 0x7E)) return 1;
+    return 0;
+}
 
 
 /*

@@ -116,6 +116,8 @@ char * make_msg_ky(char t_id, int a_result)
 
 
 //==========================================================================================================================
+#if 0   //BUOY_ECHO
+#
 
 int dp[][2]= {
     {   6,  3}, // 0
@@ -337,7 +339,6 @@ void make_msg_second(void)
 #endif
 
 }
-
 
 // char bin_header[7];
 
@@ -774,7 +775,7 @@ char * make_msg_k1(void)
 
 
 }
-
+#endif
 
 
 #if (BUOY_SPEC == 'D')

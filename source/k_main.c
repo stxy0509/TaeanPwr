@@ -1,3 +1,18 @@
+/*
+ *****************************************************************************
+ * Oceantech Co.
+ *     
+ * (c) Copyright 2015. 
+ * 		All Rights Reserved.
+ * 
+ * Filename         : k_main.c
+ * Programmer       : kycho (arapapa@gmail.com)
+ * Edited           : 2015. 3. 18
+ *****************************************************************************
+ */
+
+
+
 #define __K_MAIN_C__
 
 
@@ -5,6 +20,7 @@
 #include "k_includes.h"
 
 
+void boardinit(void);
 
 
 int is_checkTime4Send(void);
@@ -43,9 +59,17 @@ int fgReqTRBM_timeSync_1st = 2;
 
 int SettingMode = 1;	//
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//			int main()
-//.................................................................................
+
+
+/*
+*******************************************************************************
+*                  
+* FUNCTION       : main
+* DESCRIPTION    : main routine
+* ARGUMENTS      : None
+* RETURNS        : None
+*******************************************************************************
+*/
 int main()
 {
 	static u32 SettingModeTM_before= 0;
@@ -70,7 +94,7 @@ int main()
 // #endif
 
 	debugstring("\r\n================================================\r\n");
-	debugprintf(    "      Echo Buoy \r\n");
+	debugprintf(    "      Taean Power Station \r\n");
 	debugstring(    "------------------------------------------------\r\n");
 	// debugprintf(    "      Buoy : %s \r\n", BUOY_ID);
 	debugprintf(    "      Ver  : %s \r\n", KOGA_VER_STRING);
@@ -87,6 +111,7 @@ int main()
 
 	gps_neo6q_init();
 
+	rtc_start();
     // init iridium
     set_iri1_init(1);
 
@@ -117,7 +142,7 @@ int main()
         		{
 	        		debugstring("\r\n");
         			SettingMode = 0;						// normal mode
-		
+
 		            // sensor_q_init();
 		            // init_q();			// queue for SEND data
         		}
@@ -147,8 +172,15 @@ int main()
 			case 300:
 
 			case 400:
+#if MODULE_CT3919			
 				task_ct3919();		// Alti-meter
+#endif				
+
+#if MODULE_GPS				
 				task_gps();
+#endif
+
+				task_dcs();
 
 				if (SettingMode == 1)
 					break;
@@ -233,8 +265,14 @@ void sensor_q_init(void)
 {
 	//debugstring("\r\ninit ");
 
+#if MODULE_CT3919
 	ct_q_init();		//debugstring("CT ");
+#endif
+
+#if MODULE_GPS
     gps_q_init();		//debugstring("GPS ");
+#endif
+
 	wm_rcv_q_init();	//debugstring("WM-215 ");
 	// iri2_rcv_q_init();	debugstring("IRI2 ");
 
@@ -645,7 +683,7 @@ void m_boot_proc(void)
 		    set_sdc_mount(0);   // sdc init status = unmount
 
 
-			// set_debug_channel(4); 
+			// set_debug_channel(4);
 
 
 			// enable interrupt
@@ -655,7 +693,7 @@ void m_boot_proc(void)
             sensor_q_init();
             init_q();			// queue for SEND data
 
-	        // init_aio_data(); 
+	        // init_aio_data();
 
 
 // PRINTLINE;
@@ -742,8 +780,14 @@ void m_boot_proc(void)
 
 void m_sensor_proc(void)
 {
+#if MODULE_CT3919	
 	task_ct3919();		// Alti-meter
+#endif
+
+#if MODULE_GPS
 	task_gps();
+#endif
+
 }
 
 
@@ -817,7 +861,7 @@ void m_time_orinted_evt_proc(void)
 	static int sec_before = 99;
 
 
-	make_msg_second();
+	// make_msg_second();
 
 
 
@@ -834,7 +878,7 @@ void m_time_orinted_evt_proc(void)
 		}
 
 		make_msg_second();
-#endif	
+#endif
 	}
 
 
@@ -851,7 +895,7 @@ void m_time_orinted_evt_proc(void)
 			init_echoData();
 		}
 		make_msg_second();
-#endif		
+#endif
 	}
 
 
@@ -1446,6 +1490,135 @@ Reserved	'D'
 충돌		'F'
 시스템 Reset'R'
 */
+
+
+void boardinit(void)
+{
+	// ---0---
+	// Alternate Functions
+	//*R_PAF0 = 0x55ff;	//P0 0101 0101 1111 1111 - Test, Flash-boot, P03~P01
+	*R_PAF0 = 0x95ff;	//P0 1001 0101 1111 1111 - RX4, Flash-boot, P03~P01
+
+
+
+
+
+	// ---1---
+	// Alternate Functions
+	*R_PAF1 = 0xfd70;	//P1 1111 1101 0111 0000 - P17~P15, SDHC-CLK/CMD, P12, RX0/TX0
+
+	// Pin / Port mode
+	*R_GPIDIR(1) |= (1<<8);		// pin_mode
+
+	// direction
+	// nRESET (P1.6) : GPIO, output, PinMode
+	*R_GPODIR(1) |= (1<<5);
+	*R_GP1OHIGH |= (1<<5);		// init Level = H (reset ??태)
+
+	*R_GPODIR(1) |= (1<<6);
+	*R_GP1OHIGH |= (1<<6);		// init Level = H (reset ??태)
+
+	*R_GPIDIR(1) |= (1<<7);
+
+
+
+
+	// ---2---
+	// Alternate Functions
+	//*R_PAF2 = 0x55f5; 	//P2 0101 0101 1111 0101 - SDHC-D3~D0, P23~P20
+	*R_PAF2 = 0x55d5; 	//P2 0101 0101 1101 0101 - SDHC-D3~D0, P23, TX4, RX3, TX3
+
+
+	// ---3---
+	// Alternate Functions
+	*R_PAF3 = 0xffff; 	//P3 1111 1111 1111 1111 - P37~P30
+
+	// Pin / Port mode
+	*R_GPODIR(3) |= (1<<8);	// port mode
+
+	// direction
+	// Address(P3) : GPIO, Output, PortMode
+	*R_GPODIR(3) |= 0xFF;
+	// init Level
+	*R_GPDOUT(3) = 0xFF;
+
+
+
+	// ---4---
+	// Alternate Functions
+	*R_PAF4 = 0x55Af; 	//P4 0101 0101 1010 1111 - SPI-CS1/SCK1, TWI-SDA/SCL, RX1/TX1, P41, P40
+	//*R_PAF4 = 0x55ff; 	//P4 0101 0101 1010 1111 - SPI-CS1/SCK1, TWI-SDA/SCL, RX1/TX1, P41, P40
+
+	// Pin / Port mode
+	*R_GPIDIR(4) |= (1<<8);	// pin mode
+
+	// direction
+	//P4.1 : heartbeat (output / pin-mode)
+	*R_GPODIR(4) |= (1<<1);
+
+#if 1 	// for test
+	//P4.0 : for debug only (output / pin-mode)
+	*R_GPODIR(4) |= (1<<0);
+#endif
+
+
+	// ---5---
+	// Alternate Functions
+	*R_PAF5 = 0xf5f5; 	//P5 1111 0101 1111 0101 - P57~P56, EIRQ1, EIRQ0, P53~P52, SPI-MOSI1/MISO1
+
+	// Pin / Port mode
+	*R_GPIDIR(5) = (1<<8);	// pin mode
+
+	// direction
+	// nIOR (P5.7), nIOW (P5.6), nCS (P5.3) : GPIO, output, PinMode
+	*R_GPODIR(5)  |= (1<<7) | (1<<6) | (1<<3) | (1<<2);
+	*R_GPOHIGH(5) |= (1<<7) | (1<<6) | (1<<3) | (1<<2);
+
+	// INT1(P5.5), INT2(P5.4) : GPIO, input, PinMode, EINT
+	*R_GPIDIR(5) |= (1<<5) | (1<<4);
+	*R_EINTMOD = 0x33;		// Rising Edge Detect Register Set
+
+
+	// ---6---
+	// Alternate Functions
+	*R_PAF6 = 0xafd5; 	//P6 1010 1111 1101 0101 - P67~P63, JTAG
+	// Pin / Port mode
+	*R_GPIDIR(6) = (1<<8);	// pin mode
+// direction
+	// Data (P6.4), CLK (P6.3) : GPIO, output, PinMode
+	*R_GPODIR(6)  |= (1<<4) | (1<<3);
+	*R_GPOHIGH(6) |= (1<<4) | (1<<3);
+
+
+	// ---7---
+	// Alternate Functions
+	*R_PAF7 = 0x5575; 	//P7 0101 0101 0111 0101 - CFG4~0, P72, JTAG
+
+
+	// ---8---
+	// Alternate Functions
+	*R_PAF8 = 0xffff;  	//P8 1111 1111 1111 1111 - P87~P80
+
+	// Pin / Port mode
+	*R_GPODIR(8) = 0x100;	// port mode
+
+	// direction
+	*R_GPODIR(8) |= 0xFF;	// SB16C1058 address
+	// init Level
+	*R_GPDOUT(8) = 0xFF;
+
+
+
+	//--- UART ---
+	uart_config(0,115200,DATABITS_8,STOPBITS_1,UART_PARNONE);	// debug
+	uart_config(1,  9600,DATABITS_8,STOPBITS_1,UART_PARNONE);	// GPS
+	uart_config(2,  9600,DATABITS_8,STOPBITS_1,UART_PARNONE);	// Alti-meter
+	// uart_config(3,115200,DATABITS_8,STOPBITS_1,UART_PARNONE);	// CDMA (WM-215)
+	uart_config(3,  9600,DATABITS_8,STOPBITS_1,UART_PARNONE);	// CDMA (WM-800)
+
+	// uart_config(4,460800,DATABITS_8,STOPBITS_1,UART_PARNONE);	// WiFi
+
+}
 
 
 

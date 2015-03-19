@@ -52,7 +52,7 @@ extern U32 tick_cat;
 extern u32 TM_watchCT3919;
 // extern u32 TM_watchPTB210;
 // extern u32 TM_watchWAVE;
-// extern u32 TM_watchDCS;
+extern u32 TM_watchDCS;
 // extern u32 TM_watchHMP155;
 extern u32 TM_watchGPS;
 extern u32 TM_watchMAIN;

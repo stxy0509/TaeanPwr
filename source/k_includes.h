@@ -1,4 +1,36 @@
+/*
+ *****************************************************************************
+ * Oceantech Co. ltd.
+ *     
+ * (c) Copyright 2015. 
+ *      All Rights Reserved.
+ * 
+ * Filename         : k_include.h
+ * Programmer       : kycho (arapapa@gmail.com)
+ * Edited           : 2015. 3. 18
+ *****************************************************************************
+ */
+
+
+
 #pragma once
+
+/*
+ *****************************************************************************
+ * CONSTANT 
+ *****************************************************************************
+ */
+
+#define MODULE_WM800        1
+#define MODULE_TEMP_4050    1
+#define MODULE_GPS          1
+#define MODULE_WM215        0
+#define MODULE_CT3919       0 
+#define MODULE_MOSE         0
+
+#define CFG_C
+#define CFG_H
+
 
 #include "adstar.h"
 #include "k_config.h"
@@ -84,13 +116,22 @@ typedef struct
 
 // =============================================
 #include "k_main.h"
-// #include "k_aio.h"
-// #include "k_atm.h"
-#include "k_gps.h"
 #include "k_cli.h"
 #include "k_cli_func.h"
+
+
+// #include "k_aio.h"
+// #include "k_atm.h"
+
+#if      MODULE_GPS
+#include "k_gps.h"
+#endif
+
+#if      MODULE_CT3919
 #include "k_ct3919.h"
-// #include "k_dcs.h"
+#endif
+
+#include "k_dcs.h"
 // #include "k_hmp155.h"
 #include "k_iridium.h"
 #include "k_misc.h"

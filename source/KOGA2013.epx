@@ -8,7 +8,6 @@
     <Files>
         <Source Name="startup/adStarInit.c" />
         <Source Name="startup/startup_adstar.s" />
-        <Source Name="startup/trip_board.c" />
         <Source Name="k_cli.c" />
         <Source Name="k_main.c" />
         <Source Name="k_timer.c" />

@@ -38,7 +38,7 @@ u32 fgWATCHDOG_ResetTrigger;
 u32 TM_watchCT3919;
 // u32 TM_watchPTB210;
 // u32 TM_watchWAVE;
-// u32 TM_watchDCS;
+u32 TM_watchDCS;
 // u32 TM_watchHMP155;
 u32 TM_watchMAIN;
 u32 TM_watchGPS;
@@ -171,7 +171,7 @@ void timer0isr()
         if (++TM_watchCT3919  > WT_CT3919)  fgWATCHDOG_ResetTrigger += 0x04;
         // if (++TM_watchPTB210  > WT_PTB210)  fgWATCHDOG_ResetTrigger += 0x08;
          // if (++TM_watchHMP155 > WT_HMP155)  fgWATCHDOG_ResetTrigger += 0x10;
-        // if (++TM_watchDCS     > WT_DCS)     fgWATCHDOG_ResetTrigger += 0x20;
+        if (++TM_watchDCS     > WT_DCS)     fgWATCHDOG_ResetTrigger += 0x20;
         if (++TM_watchGPS     > WT_GPS)     fgWATCHDOG_ResetTrigger += 0x40;
         // if (++TM_watchMAIN    > WT_MAIN)    fgWATCHDOG_ResetTrigger += 0x80;
 
