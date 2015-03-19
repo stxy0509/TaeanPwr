@@ -161,7 +161,7 @@ char * make_msg_k1(void)
     strcat(s_msg, tmp_buf);
     
     // BAT
-    sprintf(tmp_buf,"%.1f,", get_battery_level());
+    sprintf(tmp_buf,"%.1f,", (float)(get_battery_level()/10.0f));
     strcat(s_msg, tmp_buf);
     // debugprintf("%s \r\n", s_msg);
 

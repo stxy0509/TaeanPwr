@@ -591,6 +591,7 @@ void measure_BAT_leval(void)
 			/* code */
 			val += ADC_Result;
 			// debugprintf("*** BAT : %x %x\r\n", ADC_Result, val);
+			
 			delayus(200);
 			if (count == (21+16) )
 			{
