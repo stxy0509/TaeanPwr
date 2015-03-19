@@ -123,7 +123,7 @@ void parsing_dcs(char *a_str)
        //dcs.roll = atof(p_data[10]);
 
        //PRINT_TIME;
-       debugprintf(" **** 4050: %f(temp)\r\n\r\n",  dcs.pitch);
+       // debugprintf(" **** 4050: %f(temp)\r\n\r\n",  dcs.pitch);
    }
 #endif
 }
@@ -174,7 +174,7 @@ void task_dcs(void)
                 dcs_line[line_ptr++] = 0x0D;
                 dcs_line[line_ptr++] = 0x0A;
                 dcs_line[line_ptr] = '\0';
-                debugstring("\r\n");
+                // debugstring("\r\n");
                 debugstring(dcs_line);
                 //debugstring("\r\n");
 

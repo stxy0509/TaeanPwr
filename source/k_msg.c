@@ -140,8 +140,8 @@ char * make_msg_k1(void)
 
 
     debugstring(    "-------------------------------\r\n");
-    debugstring(    "     make msg K1\r\n");
-    debugstring(    "-------------------------------\r\n");
+    // debugstring(    "     make msg K1\r\n");
+    // debugstring(    "-------------------------------\r\n");
 
 
     memset(s_msg,0,MSG_LENGTH);
@@ -183,7 +183,7 @@ char * make_msg_k1(void)
 
 
 
-PRINTVAR(strlen(s_msg));
+// PRINTVAR(strlen(s_msg));
 
 
     sensor_status.w = DFLT_SENSOR;
@@ -219,10 +219,10 @@ PRINTVAR(strlen(s_msg));
 
     //saveDeferredMsgFile();
 
-    debugprintf("q_put --> Q[%d]\r\n",is_q_dataNum());
     debugstring(s_msg);
     // debugstring(s_msg_c);
     debugstring("\r\n");
+    debugprintf("q_put --> Q[%d]\r\n",is_q_dataNum());
 
 
     strcat(s_msg, "\r\n");
@@ -286,7 +286,7 @@ char q_putData(void)
     }
     q_rear++;
     q_rear %= DEFERD_Q_MAX;
-    debugprintf("Q-put: f(%d) r(%d)",q_front,q_rear);
+    // debugprintf("Q-put: f(%d) r(%d)",q_front,q_rear);
     return 1;
 }
 
