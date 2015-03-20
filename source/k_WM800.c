@@ -1,9 +1,9 @@
-#include "k_config.h"
-#ifdef USE_WM800
+// #include "k_config.h"
 
 #define __K_IRIDIUM_C__
 
 #include "k_includes.h"
+#if MODULE_WM800
 
 #define poPwrIridiumON()
 #define poPwrIridiumOFF()
@@ -19,7 +19,7 @@ void iri2_rcv_q_put(char ch);
 char iri2_rcv_q_get(void);
 void iri2_rcv_q_init(void);
 
-int iridium_init(int a_option);
+// int iridium_init(int a_option);
 int sbdreg_check(int a_option);
 int sbdixa_check(int a_option);
 int sbdrb_check(int a_option);
@@ -69,7 +69,7 @@ void modem_rxbuf_print(void)
         {
             break;
         }
-        uart_putch( debug_port_no, ch);
+        uart_putch( 0, ch);
     }
 }
 
@@ -155,38 +155,6 @@ static int iri1_init = 1;
 int  get_iri1_init(void)        {   return iri1_init;   }
 void set_iri1_init(int a_val)   {   iri1_init = a_val;  }
 
-// static int iri2_init = 1;
-// int  get_iri2_init(void)        {   return iri2_init;   }
-// void set_iri2_init(int a_val)   {   iri2_init = a_val;  }
-
-// static int mt1_status = 0;
-// static int mt2_status = 0;
-// int  get_mt1_status(void)       {   return mt1_status;   }
-// int  get_mt2_status(void)       {   return mt2_status;   }
-// int  get_mt_status(void)
-// {
-    // if (iri_port == C_IRIDIUM_1)
-    // {
-    //     return mt1_status;
-    // }
-    // else
-    // {
-    //     return mt2_status;
-    // }
-// }
-// void set_mt1_status(int a_val)   {   mt1_status = a_val; }
-// void set_mt2_status(int a_val)   {   mt2_status = a_val; }
-// void set_mt_status(int a_val)
-// {
-//     if (iri_port == C_IRIDIUM_1)
-//     {
-//         mt1_status = a_val;
-//     }
-//     else
-//     {
-//         mt2_status = a_val;
-//     }
-// }
 
 static int ring1 = 0;
 // static int ring2 = 0;
@@ -216,7 +184,7 @@ void task_wm800(void)
     {
         case 0:
         case 50:
-            // 이리듐 초기화(전원투입 후)
+            // Modem 초기화(전원투입 후)
 
 
         case 100:
@@ -289,10 +257,10 @@ PRINTVAR(mutex_cdma);
             // power OFF
             if ((get_iri1_init() == 1))
             {
-                debugstring("--## IRIDIUM-1 POWER_OFF for initialize ##--\r\n"); //(+)130905
+                debugstring("--## MODEM POWER_OFF for initialize ##--\r\n"); //(+)130905
 //                cmdSensorControl(SYS_CMD_SENSOR_OFF, SYS_SENSOR_IRI1);
                 // cmdSensorControl(SYS_CMD_IRIDIUM_EXT_OFF, '1');                 //(+)130905
-                cmdSensorControl(SYS_CMD_IRIDIUM_EXT_ON, '1');                 //(+)130905
+                // cmdSensorControl(SYS_CMD_IRIDIUM_EXT_ON, '1');                 //(+)130905
             }
 
             if (iri_init_time_10sec == 1)
@@ -316,10 +284,11 @@ PRINTVAR(mutex_cdma);
             break;
         case 520:
             debugstring("--## IRIDIUM-1 POWER_ON ##--\r\n");                 //(+)130905
-            cmdSensorControl(SYS_CMD_SENSOR_ON, SYS_SENSOR_IRI1);
+            // cmdSensorControl(SYS_CMD_SENSOR_ON, SYS_SENSOR_IRI1);
             // cmdSensorControl(SYS_CMD_IRIDIUM_EXT_ON, '1');              //(+)130905
-            cmdSensorControl(SYS_CMD_IRIDIUM_EXT_OFF, '1');              //(+)130905
-            tick_iri0 = 10000/10;    //10000/10;   //10sec
+            // cmdSensorControl(SYS_CMD_IRIDIUM_EXT_OFF, '1');              //(+)130905
+            // tick_iri0 = 10000/10;    //10000/10;   //10sec
+            tick_iri0 = 1000/10;    //10000/10;   //10sec
             idx = 525;
             break;
         case 525:
@@ -925,6 +894,12 @@ int iridium_Process_1(int a_option)
 #endif
 
 
+char cdma_tel_no[15];
+char sms_tel_no[15]="01033533825";
+
+
+
+
 // char s_msg[320];
 char c_buf[50];
 u8 cdma_process_send(u8 a_option)
@@ -955,10 +930,10 @@ u8 cdma_process_send(u8 a_option)
    switch (idx)
     {
         case 0:
-            debugstring("----- ATZ\r\n");
-            retry_cnt = 0;
-            idx = 12;
-            break;
+            // debugstring("----- ATZ\r\n");
+            // retry_cnt = 0;
+            // idx = 12;
+            // break;
         case 12:
             PRINT_TIME;
             modem_rxbuf_clear();
@@ -973,6 +948,7 @@ u8 cdma_process_send(u8 a_option)
                 {
                     if (modem_rxbuf_substr("OK") > 0)
                     {
+PRINTLINE;
                         idx = 14;
                         break;
                     }
@@ -993,323 +969,60 @@ u8 cdma_process_send(u8 a_option)
             break;
 
         case 14:
+PRINTLINE;
             debugstring("----- ATE0\r\n");
             modem_rxbuf_clear();
             modem_printf("ATE0\r");
             tick_iri0 = 1500/10;
             idx = 15;
-            break;
+            // break;
         case 15:
-            if (tick_iri0==0)
-            {
-                debugstring("----- ATV1\r\n");
-                modem_rxbuf_clear();
-                modem_printf("ATV1\r");
-                tick_iri0 = TM_1SEC;
-                idx = 16;
-            }
-            break;
+PRINTLINE;
+            // if (tick_iri0==0)
+            // {
+            //     debugstring("----- ATV1\r\n");
+            //     modem_rxbuf_clear();
+            //     modem_printf("ATV1\r");
+            //     tick_iri0 = TM_1SEC;
+            //     idx = 16;
+            // }
+            // break;
         case 16:
-            if (tick_iri0==0)
-            {
-                debugstring("----- AT$NOTIFY\r\n");
-                modem_rxbuf_clear();
-                modem_printf("AT$NOTIFY=00000000\r");
-                tick_iri0 = 1500/10;
-                idx = 17;
-            }
-            break;
-        case 17:
-            if (tick_iri0==0)
-            {
-                debugstring("----- AT$ALERT\r\n");
-                modem_rxbuf_clear();
-                modem_printf("AT$ALERT=0,0,0,0,0,0,0,0,0,0,0\r");
-                tick_iri0 = 1500/10;
-                idx = 18;
-            }
-            break;
-
-        case 18:
-            if (tick_iri0==0)
-            {
-                //AT$SIOFLOW=1   // 흐름제어 없음
-                //debugstring("----- init cdma : (2) AT$SIOFLOW=1\r\n");
-                debugstring("----- AT$SIOFLOW\r\n");
-                modem_rxbuf_clear();
-                modem_printf("AT$SIOFLOW=1\r");
-                tick_iri0 = 2000/10;    // 2sec
-                idx = 19;
-            }
-            break;
-        case 19:
-            if (tick_iri0==0)
-            {
-                //AT$KEYE  // 전화 끊기
-                debugstring("----- AT$KEYE\r\n");
-                modem_rxbuf_clear();
-                modem_printf("AT$KEYE\r");
-                tick_iri0 = TM_10SEC;
-                idx = 20;
-            }
-            break;
-        case 20:
-            if ( (tick_iri0==0) || (modem_rxbuf_get_length() > 11) )
-            {
-                // tick_iri0 = TM_1SEC;
-                idx = 22;
-            }
-            break;
-        case 22:
-            // AT+CRM=251   //내장 TCP/IP를 사용
-            debugstring("----- AT+CRM\r\n");
-            modem_rxbuf_clear();
-            modem_printf("AT+CRM=251\r");
-            tick_iri0 = TM_5SEC;
-            buf_idx = 0;
-            idx = 24;
-            break;
-        case 24:
-            if ( (tick_iri0==0) || (modem_rxbuf_get_length() > 2) )
-            {
-                tick_iri0 = TM_1SEC;
-                idx = 26;
-            }
-            break;
-        case 26:
-            //wait 'OK'
-            if (tick_iri0==0)
-            {
-                modem_rxbuf_print();
-                //modem_rxbuf_printHex();
-
-                if (modem_rxbuf_substr("OK") > 0)
-                {
-                    //OK
-                    tick_iri0 = 1000/10;
-                }
-                idx = 28;
-            }
-            break;
-
-        case 28:
-            //AT$TCPCLOSE   //TCP socket close
-            debugstring("----- AT$TCPCLOSE\r\n");
-            modem_rxbuf_clear();
-            modem_printf("AT$TCPCLOSE\r");
-            tick_iri0 = TM_10SEC;
-            idx = 30;
-            break;
-        case 30:
-            if ( (tick_iri0==0) || (modem_rxbuf_get_length() > 11) )
-            {
-                tick_iri0 = TM_1SEC;
-                idx = 32;
-            }
-            break;
-        case 32:
-            if (tick_iri0==0)
-            {
-                /*
-                if (modem_rxbuf_get_length() > 0)
-                {
-                    modem_rxbuf_print();
-                    modem_rxbuf_printHex();
-                }
-                */
-                idx = 34;
-            }
-            break;
-
-        case 34:
-            // AT$TCPEXIT   //호 단절
-            debugstring("----- AT$TCPEXIT\r\n");
-            modem_rxbuf_clear();
-            modem_printf("AT$TCPEXIT\r");
-            tick_iri0 = TM_10SEC;
-            idx = 36;
-            break;
-        case 36:
-            if ( (tick_iri0==0) || (modem_rxbuf_get_length() > 5) )
-            {
-                tick_iri0 = TM_1SEC;
-                idx = 38;
-            }
-            break;
-        case 38:
-            if (tick_iri0==0)
-            {
-                /*
-                if (modem_rxbuf_get_length() > 0)
-                {
-                    modem_rxbuf_print();
-                    modem_rxbuf_printHex();
-                }
-                */
-                idx = 40;
-            }
-            break;
-
-        case 40:
-            // ATDT1501  //전화걸기
-            debugstring("----- ATDT1501\r\n");
-            modem_rxbuf_clear();
-            modem_printf("ATDT1501\r");
-            tick_iri0 = TM_30SEC;
-            buf_idx = 0;
-            idx = 45;
-            break;
-        case 45:
-            if ( (tick_iri0==0) || (modem_rxbuf_get_length() > 8) )
-            {
-                tick_iri0 = TM_1SEC;
-                idx = 50;
-            }
-            break;
-        case 50:
-            //wait 'CONNECT'
-            if (tick_iri0==0)
-            {
-                modem_rxbuf_print();
-                //modem_rxbuf_printHex();
-
-                if (modem_rxbuf_substr("CONNECT") > 0)
-                {
-                    idx = 60;
-                    break;
-                }
-                else
-                {
-                    // retry_cnt++;
-                    // if (retry_cnt == 5)
-                    // {
-/*
-                        st_tcpopen = 0;
-                        poPwrCdmaOFF();
-                        tick_iri0 = TM_1SEC;
-*/
-                    //     idx = 52;
-
-                    // }
-                    // else if (retry_cnt < 10)
-                    // {
-                    //     debugprintf("[ATDT1501] NG: timeout(%d/5)\r\n", retry_cnt);
-                    //     idx = 40;
-                    // }
-                    // else
-                    // {
-                        debugprintf( "[ATDT1501] NG: cdma connection error..\r\n" );
-                        idx = 900;
-                    // }
-                }
-            }
-            break;
-        case 52:
-/*
-            //1초동안 poPwrCdmaOFF
-            if (tick_iri0==0)
-            {
-                poPwrCdmaON();
-                idx = 54;
-            }
-            break;
-        case 54:
-            //5초동안 wait
-            if (tick_iri0==0)
-            {
-                cdma_process_init(0);
-                idx = 10;
-            }
-            break;
-*/
-//------------------------
-
-        case 55:
-        case 60:
-            //PRINTLINE;
-            st_tcpopen = 0;
-            modem_rxbuf_clear();
-// #ifdef CDMA_TEST_PORT
-            if (env.mode == 1)
-            {
-                // TEST IP,PORT
-                debugstring("-----[TEST] AT$TCPOPEN=1.214.193.186,5000\r\n");
-                modem_printf("AT$TCPOPEN=1.214.193.186,5000\r");        // 124.243.127.180,10000
-            }
-            else
-            {
-                // RELEASE IP,PORT
-                debugstring("-----[RELEASE] AT$TCPOPEN=124.243.127.180,5000\r\n");
-                modem_printf("AT$TCPOPEN=124.243.127.180,5000\r");
-                        modem_printf("AT$TCPOPEN=124.243.127.180,5000\r");
-                        // modem_printf("AT$TCPOPEN=124.243.127.180,5000\r");
-}
-// #endif
-            tick_iri0 = TM_20SEC;
-            buf_idx = 0;
-            idx = 65;
-            break;
-        case 65:
-            if ( (tick_iri0==0) || (modem_rxbuf_get_length() > 8) )
-            {
-                tick_iri0 = TM_1SEC;
-                idx = 70;
-            }
-            break;
-        case 70:
-            if (tick_iri0==0)
-            {
-                modem_rxbuf_print();
-                //modem_rxbuf_printHex();
-
-                if (modem_rxbuf_substr("$TCPOPEN") > 0)
-                {
-                    //PRINTLINE;
-
-                    idx = 75;
-                    break;
-                }
-                //}
-                else
-                {
-                    // if (++retry_cnt < 5)
-                    // {
-                    //     debugprintf("[AT$TCPOPEN] NG: timeout(%d/5)\r\n", retry_cnt);
-                    //     //PRINTLINE;
-
-                    //     idx = 60;
-                    // }
-                    // else
-                    // {
-                        debugprintf( "[AT$TCPOPEN] NG: cdma connection error..\r\n" );
-                        //PRINTLINE;
-
-                        idx = 900;
-                    // }
-                }
-            }
-            break;
 
         case 75:
         case 80:
 // AT$TCPWRITE=
 
-            //PRINTLINE;
-            //debugprintf("%s",s_msg);
-            {
-                //debugprintf("%s\r\n",s_msg);
-                char *p;
-                p = &s_msg[0];
-                while(*p)
-                {
-                        uart_putch(debug_port_no, *p);
-                        p++;
-                }
-                debugstring("\r\n");
-            }
+PRINTLINE;
+            debugprintf("%s\r\n",s_msg);
+PRINTLINE;
 
             modem_rxbuf_clear();
-            modem_printf("AT$TCPWRITE=");
+            // modem_printf("AT$SMSMO=");
+PRINTLINE;
+
+
+            {
+                char buf[35];
+                modem_rxbuf_clear();
+                modem_printf("AT$SMSMO=");
+                debugprintf("AT$SMSMO=");
+PRINTLINE;
+
+                sprintf(buf, "%s,",sms_tel_no);  //01033533825,01041988498,4098,,,,7265736574\r");
+                modem_printf(buf);  //01033533825,01041988498,4098,,,,7265736574\r");
+                debugprintf(buf);  //01033533825,01041988498,4098,,,,7265736574\r");
+PRINTLINE;
+
+                sprintf(buf, "%s,4098,,,,",cdma_tel_no);  //01033533825,01041988498,4098,,,,7265736574\r");
+                modem_printf(buf);  //01033533825,01041988498,4098,,,,7265736574\r");
+                debugprintf(buf);  //01033533825,01041988498,4098,,,,7265736574\r");
+PRINTLINE;
+
+            }
+
+
+#if 1
             i=0;
             for (;;)
             {
@@ -1326,82 +1039,37 @@ u8 cdma_process_send(u8 a_option)
                     modem_printf(tbuf);
                 }
             }
-            debugprintf("\r");
             modem_printf("\r");
+            debugprintf("\r\n");
+#endif
 
-            tick_iri0 = TM_10SEC;
+
+            tick_iri0 = TM_5SEC;
             //PRINTLINE;
 
+PRINTLINE;
             idx = 85;
             break;
         case 85:
-            if ( (tick_iri0==0) || (modem_rxbuf_get_length() > 8) )
+            if ( (tick_iri0==0) )
             {
                 tick_iri0 = TM_1SEC;
                 //PRINTLINE;
 
+PRINTLINE;
                 idx = 90;
             }
             break;
 
         case 90:
-            //wait '$TCPSENDDONE'------------------
-            if (tick_iri0 == 0)
-            {
-                modem_rxbuf_print();
-                //modem_rxbuf_printHex();
-                if (modem_rxbuf_substr("$TCPSENDDONE") > 0)
-                {
-/*
-                    //send success
-                    q_pop();
-                    debugprintf("q_pop --> Q[%d]\r\n",is_q_dataNum());
-
-                    if (is_q_empty()==0)
-                    {
-                        //PRINTLINE;
-
-                        saveDeferredMsgFile();
-                    }
-                    else
-                    {
-                        //PRINTLINE;
-
-                        clearDeferedMsgFile();
-                    }
-*/
-
-                    tick_iri0 = TM_1SEC;
-                    idx = 95;
-                }
-                else
-                {
-                    // if (++retry_cnt < 5)
-                    // {
-                    //     debugprintf("[AT$TCPWRITE] NG: timeout(%d/5)\r\n", retry_cnt);
-                    //     tick_iri0 = TM_5SEC;
-                    //     idx = 92;
-                    // }
-                    // else
-                    // {
-                        debugprintf( "[AT$TCPWRITE] NG: cdma connection error..\r\n" );
-                        idx = 900;
-                    // }
-                }
-            }
-            break;
         case 92:
-            if (tick_iri0 == 0)
-            {
-                idx = 80;
-            }
-            break;
         case 95:
             if (tick_iri0==0)
             {
                 // if (is_q_empty())
                 {
                     debugstring("q: empty --> stop sending...\r\n");
+PRINTLINE;
                     idx = 100;
                 }
                 /*else
@@ -1413,69 +1081,12 @@ u8 cdma_process_send(u8 a_option)
             break;
 
         case 100:
-// AT$TCPCLOSE------------------
-            debugstring("----- AT$TCPCLOSE\r\n");
-            modem_rxbuf_clear();
-            modem_printf("AT$TCPCLOSE\r");
-            tick_iri0 = TM_10SEC;
-            idx = 105;
-            break;
         case 105:
-            if ( (tick_iri0==0) || (modem_rxbuf_get_length() > 8) )
-            {
-                tick_iri0 = TM_1SEC;
-                idx = 110;
-            }
-            break;
-
         case 110:
-            //wait '$TCPCLOSED'
-            if (tick_iri0==0)
-            {
-                    //modem_rxbuf_print();
-                    //modem_rxbuf_printHex();
-
-                    if (modem_rxbuf_substr("$TCPCLOSED") > 0)
-                    {
-                        idx = 112;
-                    }
-            }
-            break;
-
         case 112:
-// AT$TCPEXIT   //호 단절
-            debugstring("----- AT$TCPEXIT\r\n");
-            modem_rxbuf_clear();
-            modem_printf("AT$TCPEXIT\r");
-            tick_iri0 = 10000/10;
-            idx = 113;
-            break;
         case 113:
-            if ( (tick_iri0==0) || (modem_rxbuf_get_length() > 17) )
-            {
-                tick_iri0 = 1000/10;
-                idx = 114;
-            }
-            break;
         case 114:
-            if (tick_iri0==0)
-            {
-                if (modem_rxbuf_get_length() > 0)
-                {
-                    //modem_rxbuf_print();
-                    //modem_rxbuf_printHex();
-                }
-                idx = 115;
-            }
-            break;
-
         case 115:
-            if (tick_iri0==0)
-            {
-                idx = 120;
-            }
-            break;
-
         case 120:
             ret_val = 1;
             break;
@@ -1492,11 +1103,8 @@ u8 cdma_process_send(u8 a_option)
 
 //static int result_no = 999;
 //static int sbdring = 0;
-char result_s[30];
-char result_sbd[50];
-
-char cdma_tel_no[15];
-char sms_tel_no[15];
+//char result_s[30];
+// char result_sbd[50];
 
 
 void task_wm800_rcv(void)
@@ -1510,7 +1118,7 @@ void task_wm800_rcv(void)
     if (uart_getch(COMM_CHANNEL, &ch))
     {
 
-#if 1
+#if 0
         // PRINTLINE;
         uart_putch(0, ch);
         // debugprintf("%X\r\n",ch);
@@ -1528,9 +1136,30 @@ void task_wm800_rcv(void)
         {
             switch (noti_buf_idx)
             {
-                case 0:
+                case 0:             // $
                     break;
-                case 1:
+                case 1:             // $00x, $01x, $02x, $03x, $04x, $05x,
+                    switch(ch)
+                    {
+                        case '0':
+                        case '1':
+                        case '2':
+                        case '3':
+                        case '4':
+                        case '5':
+                            noti_buf[noti_buf_idx++] = ch;
+                            noti_buf[noti_buf_idx] = '\0';
+                            saveToBuf = 0;
+                            break;
+                        default:
+                            modem_rxbuf[modem_rxbuf_idx++] = '$';
+                            modem_rxbuf[modem_rxbuf_idx++] = ch;
+                            modem_rxbuf[modem_rxbuf_idx] = '\0';
+                            noti_buf_idx = 0;
+                            saveToBuf = 0;
+                            break;
+                    }
+#if 0
                     if (ch == '0')
                     {
                         noti_buf[noti_buf_idx++] = ch;
@@ -1545,7 +1174,10 @@ void task_wm800_rcv(void)
                         noti_buf_idx = 0;
                         saveToBuf = 0;
                     }
+#endif                    
                     break;
+                case 2:
+
                 default:
                     if (noti_buf_idx < 28)
                     {
@@ -1593,7 +1225,7 @@ void task_cdma_sms(void)
 {
     cdma_process_sms(1);
 
-    TM_watchSMS = 0;
+    // TM_watchSMS = 0;
 }
 
 
@@ -1750,7 +1382,7 @@ u8 wm800_process_init(u8 a_option)
     switch (idx)
     {
         case 0:
-// PRINTVAR(idx);
+PRINTLINE;
             debugstring("----- init cdma : (1) atz\r\n");
             retry_cnt = 0;
             idx = 5;
@@ -1758,6 +1390,7 @@ u8 wm800_process_init(u8 a_option)
 
         case 5:
 // PRINTVAR(idx);
+PRINTLINE;
 
             modem_rxbuf_clear();
             modem_printf("ATZ\r");
@@ -1780,6 +1413,7 @@ u8 wm800_process_init(u8 a_option)
                     {
                         idx = 12;
                         break;
+PRINTLINE;
                     }
                 }
                 // 여기서 retry 하는 이유는 cdma 전원투입후 안정화 시간을 기다리는 것이 목적이다.
@@ -1829,7 +1463,15 @@ u8 wm800_process_init(u8 a_option)
 
         case 16:
             modem_rxbuf_clear();
-            modem_printf("AT$NOTIFY=00000000\r");
+            modem_printf("AT$NOTIFY=11101000\r");
+                                                    // 0 ON  Ready
+                                                    // 1 ON  Out of service
+                                                    // 2 ON  Battery Voltage
+                                                    // 3 OFF Protocol revision
+                                                    // 4 ON  RSSI
+                                                    // 5 OFF Reserved
+                                                    // 6 OFF Reserved
+                                                    // 7 OFF Power save mode start/exit
             tick_iri1 = 1500/10;
             idx = 17;
             break;
@@ -1843,7 +1485,7 @@ u8 wm800_process_init(u8 a_option)
 
         case 18:
             modem_rxbuf_clear();
-            modem_printf("AT$ALERT=0,0,0,0,0,0,0,0,0,0,0\r");
+            modem_printf("AT$ALERT=0,0,0,0,0,0,0,0,0,0,0\r");   // 경고음 OFF
             tick_iri1 = 1500/10;
             idx = 19;
             break;
@@ -1965,62 +1607,62 @@ u8 wm800_process_init(u8 a_option)
             break;
 
         case 70:
-            //AT$TCPCLOSE   //TCP socket close
-            //debugstring("----- init cdma : (4) AT$TCPCLOSE\r\n");
-            modem_rxbuf_clear();
-            modem_printf("AT$TCPCLOSE\r");
-            tick_iri1 = TM_10SEC;
-            idx = 75;
-            break;
+            // //AT$TCPCLOSE   //TCP socket close
+            // //debugstring("----- init cdma : (4) AT$TCPCLOSE\r\n");
+            // modem_rxbuf_clear();
+            // modem_printf("AT$TCPCLOSE\r");
+            // tick_iri1 = TM_10SEC;
+            // idx = 75;
+            // break;
         case 75:
-            if ( (tick_iri1==0) || (modem_rxbuf_get_length() > 11) )
-            {
-                tick_iri1 = TM_1SEC;
-                idx = 80;
-            }
-            break;
+            // if ( (tick_iri1==0) || (modem_rxbuf_get_length() > 11) )
+            // {
+            //     tick_iri1 = TM_1SEC;
+            //     idx = 80;
+            // }
+            // break;
         case 80:
-            if (tick_iri1==0)
-            {
-                /*
-                if (modem_rxbuf_get_length() > 0)
-                {
-                    modem_rxbuf_print();
-                    modem_rxbuf_printHex();
-                }
-                */
-                idx = 90;
-            }
-            break;
+            // if (tick_iri1==0)
+            // {
+            //     /*
+            //     if (modem_rxbuf_get_length() > 0)
+            //     {
+            //         modem_rxbuf_print();
+            //         modem_rxbuf_printHex();
+            //     }
+            //     */
+            //     idx = 90;
+            // }
+            // break;
 
         case 90:
-            // AT$TCPEXIT   //호 단절
-            //debugstring("----- init cdma : (5) AT$TCPEXIT\r\n");
-            modem_rxbuf_clear();
-            modem_printf("AT$TCPEXIT\r");
-            tick_iri1 = TM_10SEC;
-            idx = 95;
-            break;
+            // // AT$TCPEXIT   //호 단절
+            // //debugstring("----- init cdma : (5) AT$TCPEXIT\r\n");
+            // modem_rxbuf_clear();
+            // modem_printf("AT$TCPEXIT\r");
+            // tick_iri1 = TM_10SEC;
+            // idx = 95;
+            // break;
         case 95:
-            if ( (tick_iri1==0) || (modem_rxbuf_get_length() > 5) )
-            {
-                tick_iri1 = TM_1SEC;
-                idx = 100;
-            }
-            break;
+            // if ( (tick_iri1==0) || (modem_rxbuf_get_length() > 5) )
+            // {
+            //     tick_iri1 = TM_1SEC;
+            //     idx = 100;
+            // }
+            // break;
         case 100:
-            if (tick_iri1==0)
-            {
-                /*
-                if (modem_rxbuf_get_length() > 0)
-                {
-                    modem_rxbuf_print();
-                    modem_rxbuf_printHex();
-                }
-                */
-                idx = 110;
-            }
-            break;
+            // if (tick_iri1==0)
+            // {
+            //     /*
+            //     if (modem_rxbuf_get_length() > 0)
+            //     {
+            //         modem_rxbuf_print();
+            //         modem_rxbuf_printHex();
+            //     }
+            //     */
+            //     idx = 110;
+            // }
+            // break;
         case 110:
             ret_val = 1;
             break;
@@ -2033,292 +1675,8 @@ u8 wm800_process_init(u8 a_option)
 
 
 
-int iridium_init(int a_option)
-{
-    static int idx = 0;
-    static int resp_idx = 0;
-    static int retry_cnt = 0;
-    static int at_cnt = 0;;
-    char ch;
-    // int i;
-    int ret_val = 999;
-
-    switch (a_option)
-    {
-        case 1:
-            // 새로 시작
-            idx = 0;
-            break;
-        case 2:
-            idx = 100;
-            break;
-        case 0:
-            // idx는 현재값을 유지하고...---> 상태체크용.
-            //break;  <--- 불필요...
-        default:
-            break;
-    }
-
-
-    switch (idx)
-    {
-        //ATV1 ------------------------------------------------ATV1
-        case 0:
-            at_cnt = 0;
-            // debugprintf("\r\nIridium-[%d] init start.\r\n", ((iri_port==C_IRIDIUM_1) ? 1:2) );
-            idx = 450;
-            break;
-
-        case 450:
-            resp_idx = 0;
-            debugprintf("AT ---> ");
-            iridium_printf("AT\r");
-            tick_iri0 = 1000/10;    //1000/10;   //1sec
-            idx = 500;
-            break;
-        case 500:
-            //wait 'OK'
-            // if (UartGetCh(iri_port,&ch))
-            ch = iri1_rcv_q_get();
-            if (ch != -1)
-            {
-                // debugprintf("%c", ch);
-                iri_response[resp_idx++] = ch;
-                if ( (ch=='K') || (ch=='0') )
-                {
-                    debugprintf("[OK]\r\n");
-                    idx = 505;
-                }
-            }
-            if (tick_iri0==0)
-            {
-                idx = 505;
-            }
-            break;
-
-        case 505:
-            at_cnt++;
-            if (at_cnt >5)
-            {
-                idx = 550;
-            }
-            else
-            {
-                idx = 450;
-            }
-            break;
-
-        case 550:
-            //PRINT_TIME;
-            debugprintf("ATV0 ---> ");
-
-            resp_idx = 0;
-            //iridium_printf("ATV1\r");
-            iridium_printf("ATV0\r");
-            tick_iri0 = 5000/10;    //10000/10;   //10sec
-            idx = 2;
-            break;
-
-        case 2:
-            //wait 'OK'
-            // if (UartGetCh(iri_port,&ch))
-            // if (UartGetCh(iri_port,&ch))
-            ch = iri1_rcv_q_get();
-            if (ch != -1)
-            {
-                iri_response[resp_idx++] = ch;
-                // debugprintf("%c",ch);
-                if ( (ch=='K') || (ch=='0'))
-                {
-                    debugprintf("[OK]\r\n");
-                    idx = 20;
-                }
-            }
-            else if (tick_iri0==0)
-            {
-                debugprintf("[NG]\r\n");
-                idx = 999;
-            }
-            break;
-
-            //ATE0 ------------------------------------------------ATE0
-        case 20:
-            debugstring("ATE0 ---> ");
-
-            //PRINT_TIME;
-            iridium_printf("ATE0\r");
-            tick_iri0 = 5000/10;    //5sec
-            idx = 25;
-            break;
-        case 25:
-            //wait 'OK'
-            // if (UartGetCh(iri_port,&ch))
-            // if (UartGetCh(iri_port,&ch))
-            ch = iri1_rcv_q_get();
-            if (ch != -1)
-            {
-                // debugprintf("%c",ch);
-                if (( ch=='K') || (ch=='0') )
-                {
-                    debugprintf("[OK]\r\n");
-                    idx = 30;
-                }
-            }
-            else if (tick_iri0==0)
-            {
-                debugprintf("[NG]\r\n");
-                //debugstring("ATE0 NG\r\n");
-                idx = 999;
-            }
-            break;
-
-            //AT&K0 ------------------------------------------------AT&K0
-        case 30:
-            // for (i=0;i<10;i++) UartGetCh(iri_port,&ch);
-            iri1_rcv_q_init();
-
-            debugstring("AT&K0 ---> ");
-
-            //PRINT_TIME;
-            iridium_printf("AT&K0\r");
-            tick_iri0 = 5000/10;    //5sec
-            idx = 35;
-            break;
-        case 35:
-            //wait 'OK'
-            // if (UartGetCh(iri_port,&ch))
-            // if (UartGetCh(iri_port,&ch))
-            ch = iri1_rcv_q_get();
-            if (ch != -1)
-            {
-                // debugprintf("%c",ch);
-                if ( (ch=='K') || (ch=='0') )
-                {
-                    debugprintf("[OK]\r\n");
-                    idx = 40;
-                    //idx = 50;
-                }
-            }
-            else if (tick_iri0==0)
-            {
-                debugprintf("[NG]\r\n");
-                //debugstring("AT&K0 NG\r\n");
-                idx = 999;
-            }
-            break;
-
-            //AT&D0 ------------------------------------------------AT&D0
-        case 40:
-            // for (i=0;i<10;i++) iri1_rcv_q_get(ch);//UartGetCh(iri_port,&ch);
-            iri1_rcv_q_init();
-            debugstring("AT&D0 ---> ");
-
-            //PRINT_TIME;
-            iridium_printf("AT&D0\r");
-            tick_iri0 = 5000/10;    //5sec
-            idx = 45;
-            break;
-        case 45:
-            //wait 'OK'
-            // if (UartGetCh(iri_port,&ch))
-            ch = iri1_rcv_q_get();
-            if (ch!= -1)
-            {
-                // debugprintf("%c",ch);
-                if ((ch=='K') || (ch=='0') )
-                {
-                    debugprintf("[OK]\r\n");
-                    idx = 50;
-                }
-            }
-            else if (tick_iri0==0)
-            {
-                //PRINT_TIME;
-                debugprintf("[NG]\r\n");
-                // debugstring("----AT&D0 NG\r\n");
-                idx = 999;
-            }
-            break;
-
-            // ------------------------------------------------------ATS0=2
-            //  자동응답 Autoanswer.
-        case 50:
-            // for (i=0;i<10;i++) UartGetCh(iri_port,&ch);
-            iri1_rcv_q_init();
-
-            debugstring("ATS0=2 ---> ");
-
-            //PRINT_TIME;
-            iridium_printf("ATS0=2\r");
-            tick_iri0 = 5000/10;    //5sec
-            idx = 55;
-            break;
-        case 55:
-            //wait 'OK'
-            // if (UartGetCh(iri_port,&ch))
-            ch = iri1_rcv_q_get();
-            if (ch!= -1)
-            {
-                // debugprintf("%c",ch);
-                if ((ch=='K') || (ch=='0') )
-                {
-                    debugprintf("[OK]\r\n");
-                    idx = 56;
-                    //initial RETRY_CNT:  in case of 'CSQ=0'
-                    retry_cnt = 0;
-                }
-            }
-            else if (tick_iri0==0)
-            {
-                debugprintf("[NG]\r\n");
-                // debugstring("----ATS0=2 NG\r\n");
-                idx = 999;
-            }
-            break;
-
-            // ---------------------------------------------------AT+SBDMTA=1
-            //  Enable or disable ring indications for SBD Ring Alerts.
-            //      1 : Enable ring indication (default).
-        case 56:
-            // for (i=0;i<10;i++) UartGetCh(iri_port,&ch);
-            iri1_rcv_q_init();
-
-            debugstring("AT+SBDMTA=1 ---> ");
-
-            //PRINT_TIME;
-            iridium_printf("AT+SBDMTA=1\r");
-            tick_iri0 = 5000/10;    //5sec
-            idx = 57;
-            break;
-        case 57:
-            //wait 'OK'
-            // if (UartGetCh(iri_port,&ch))
-            ch = iri1_rcv_q_get();
-            if (ch!= -1)
-            {
-                // debugprintf("%c",ch);
-                if ((ch=='K') || (ch=='0') )
-                {
-                    debugprintf("[OK]\r\n");
-                    idx = 60;
-                }
-            }
-            else if (tick_iri0==0)
-            {
-                debugprintf("[NG]\r\n");
-                // debugstring("----AT+SBDMTA=1 NG\r\n");
-                idx = 999;
-            }
-            break;
-
-        case 60:
-        case 999:
-        default:
-            ret_val = 1;
-            break;
-    }
-    return(ret_val);
-}
+// int iridium_init(int a_option)
+// {}
 
 
 //--------------------------------------------------------------
@@ -2365,58 +1723,58 @@ void ctrl_sensor_set_env(char a_id, char a_code)
 
 void ctrl_sensor(char a_id, char a_code)
 {
-    char cmd = '1';
-    //'0' : Reset, '1' : On, '2' : Off
+    // char cmd = '1';
+    // //'0' : Reset, '1' : On, '2' : Off
 
-    switch (a_code)
-    {
-        case '0':   cmd = '4';  break;  // reset
-        case '1':   cmd = '1';  break;  // on
-        case '2':   cmd = '0';  break;  // off
-    }
+    // switch (a_code)
+    // {
+    //     case '0':   cmd = '4';  break;  // reset
+    //     case '1':   cmd = '1';  break;  // on
+    //     case '2':   cmd = '0';  break;  // off
+    // }
 
-    debugstring("+++ control : ");
-    switch(a_id)
-    {
-        case '0': debugstring("AIO");    break;
-        case '1': debugstring("MOSE");   break;
-        case '3': debugstring("CT3919"); break;
-        case '5': debugstring("DCS");    break;
-        case '7': debugstring("GPS");    break;
-        case '8': debugstring("ATM1");   break;
-        case '9': debugstring("ATM2");   break;
-        case 'b':
-        case 'B': debugstring("HMP155"); break;
-        case 'c':
-        case 'C': debugstring("PTB210"); break;
-        case 'f':
-        case 'F': debugstring("SHOCK"); break;
-        case 'r':
-        case 'R': debugstring("SYSTEM"); break;
-    }
-    if      (a_code == '0')      debugstring(" RESET");
-    else if (a_code == '1')      debugstring(" ON");
-    else if (a_code == '2')      debugstring(" OFF");
-    debugstring("\r\n");
+    // debugstring("+++ control : ");
+    // switch(a_id)
+    // {
+    //     case '0': debugstring("AIO");    break;
+    //     case '1': debugstring("MOSE");   break;
+    //     case '3': debugstring("CT3919"); break;
+    //     case '5': debugstring("DCS");    break;
+    //     case '7': debugstring("GPS");    break;
+    //     case '8': debugstring("ATM1");   break;
+    //     case '9': debugstring("ATM2");   break;
+    //     case 'b':
+    //     case 'B': debugstring("HMP155"); break;
+    //     case 'c':
+    //     case 'C': debugstring("PTB210"); break;
+    //     case 'f':
+    //     case 'F': debugstring("SHOCK"); break;
+    //     case 'r':
+    //     case 'R': debugstring("SYSTEM"); break;
+    // }
+    // if      (a_code == '0')      debugstring(" RESET");
+    // else if (a_code == '1')      debugstring(" ON");
+    // else if (a_code == '2')      debugstring(" OFF");
+    // debugstring("\r\n");
 
-    switch(a_id)
-    {
-        case '0': cmdSensorControl(cmd, SYS_SENSOR_AIO);    break;
-        case '1': cmdSensorControl(cmd, SYS_SENSOR_MOSE);   break;
-        case '3': cmdSensorControl(cmd, SYS_SENSOR_CT3919); break;
-        case '5': cmdSensorControl(cmd, SYS_SENSOR_DCS);    break;
-        case '7': cmdSensorControl(cmd, SYS_SENSOR_GPS);    break;
-        case '8': cmdSensorControl(cmd, SYS_SENSOR_ATM1);   break;
-        case '9': cmdSensorControl(cmd, SYS_SENSOR_ATM2);   break;
-        case 'b':
-        case 'B': cmdSensorControl(cmd, SYS_SENSOR_HMP155); break;
-        case 'c':
-        case 'C': cmdSensorControl(cmd, SYS_SENSOR_PTB210); break;
-        case 'f':
-        case 'F': cmdSensorControl(cmd, SYS_SENSOR_SHOCK); break;
-        case 'r':
-        case 'R': cmdSensorControl('8', '0');               break;
-    }
+    // switch(a_id)
+    // {
+    //     case '0': cmdSensorControl(cmd, SYS_SENSOR_AIO);    break;
+    //     case '1': cmdSensorControl(cmd, SYS_SENSOR_MOSE);   break;
+    //     case '3': cmdSensorControl(cmd, SYS_SENSOR_CT3919); break;
+    //     case '5': cmdSensorControl(cmd, SYS_SENSOR_DCS);    break;
+    //     case '7': cmdSensorControl(cmd, SYS_SENSOR_GPS);    break;
+    //     case '8': cmdSensorControl(cmd, SYS_SENSOR_ATM1);   break;
+    //     case '9': cmdSensorControl(cmd, SYS_SENSOR_ATM2);   break;
+    //     case 'b':
+    //     case 'B': cmdSensorControl(cmd, SYS_SENSOR_HMP155); break;
+    //     case 'c':
+    //     case 'C': cmdSensorControl(cmd, SYS_SENSOR_PTB210); break;
+    //     case 'f':
+    //     case 'F': cmdSensorControl(cmd, SYS_SENSOR_SHOCK); break;
+    //     case 'r':
+    //     case 'R': cmdSensorControl('8', '0');               break;
+    // }
 }
 
 
@@ -2574,12 +1932,15 @@ PRINTLINE;
                 char buf[35];
                 modem_rxbuf_clear();
                 modem_printf("AT$SMSMO=");
+                debugprintf("AT$SMSMO=");
 
                 sprintf(buf, "%s,",sms_tel_no);  //01033533825,01041988498,4098,,,,7265736574\r");
                 modem_printf(buf);  //01033533825,01041988498,4098,,,,7265736574\r");
+                debugprintf(buf);  //01033533825,01041988498,4098,,,,7265736574\r");
 
                 sprintf(buf, "%s,4098,,,,7265736574\r",cdma_tel_no);  //01033533825,01041988498,4098,,,,7265736574\r");
                 modem_printf(buf);  //01033533825,01041988498,4098,,,,7265736574\r");
+                debugprintf(buf);  //01033533825,01041988498,4098,,,,7265736574\r");
 
                 tick_sms = TM_5SEC;
                 idx = 52;
@@ -2601,7 +1962,11 @@ PRINTVAR(mutex_cdma);
             {
                 // reset
 PRINTLINE;
-                ctrl_sensor('R', '0');
+                // ctrl_sensor('R', '0');
+
+                mutex_cdma = 0;
+                idx = 0;
+
             }
             break;
 
@@ -2613,5 +1978,5 @@ PRINTLINE;
 
 
 
-#endif  //ifdef USE_IRIDIUM
+#endif  //if MODULE_WM800
 

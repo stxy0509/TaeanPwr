@@ -36,11 +36,11 @@ SOURCES	 += k_main.c
 SOURCES	 += k_timer.c
 SOURCES	 += k_twi.c
 SOURCES	 += k_rtc.c
-SOURCES	 += k_iridium.c
 SOURCES	 += k_misc.c
 SOURCES	 += k_msg.c
 SOURCES	 += k_sdc.c
 SOURCES	 += k_gps.c
+SOURCES	 += k_WM800.c
 SOURCES	 += k_dcs.c
 
 OBJECTS	 += ${OBJDIR}adStarInit.o
@@ -50,11 +50,11 @@ OBJECTS	 += ${OBJDIR}k_main.o
 OBJECTS	 += ${OBJDIR}k_timer.o
 OBJECTS	 += ${OBJDIR}k_twi.o
 OBJECTS	 += ${OBJDIR}k_rtc.o
-OBJECTS	 += ${OBJDIR}k_iridium.o
 OBJECTS	 += ${OBJDIR}k_misc.o
 OBJECTS	 += ${OBJDIR}k_msg.o
 OBJECTS	 += ${OBJDIR}k_sdc.o
 OBJECTS	 += ${OBJDIR}k_gps.o
+OBJECTS	 += ${OBJDIR}k_WM800.o
 OBJECTS	 += ${OBJDIR}k_dcs.o
 
 DEPS	 += ${OBJDIR}adStarInit.d
@@ -64,11 +64,11 @@ DEPS	 += ${OBJDIR}k_main.d
 DEPS	 += ${OBJDIR}k_timer.d
 DEPS	 += ${OBJDIR}k_twi.d
 DEPS	 += ${OBJDIR}k_rtc.d
-DEPS	 += ${OBJDIR}k_iridium.d
 DEPS	 += ${OBJDIR}k_misc.d
 DEPS	 += ${OBJDIR}k_msg.d
 DEPS	 += ${OBJDIR}k_sdc.d
 DEPS	 += ${OBJDIR}k_gps.d
+DEPS	 += ${OBJDIR}k_WM800.d
 DEPS	 += ${OBJDIR}k_dcs.d
 
 
@@ -132,11 +132,11 @@ endif
 -include ${OBJDIR}k_timer.d
 -include ${OBJDIR}k_twi.d
 -include ${OBJDIR}k_rtc.d
--include ${OBJDIR}k_iridium.d
 -include ${OBJDIR}k_misc.d
 -include ${OBJDIR}k_msg.d
 -include ${OBJDIR}k_sdc.d
 -include ${OBJDIR}k_gps.d
+-include ${OBJDIR}k_WM800.d
 -include ${OBJDIR}k_dcs.d
 
 #============= TARGET ====================
@@ -189,10 +189,6 @@ ${OBJDIR}k_rtc.o : k_rtc.c
 	@$(ECHO) 'Compile : $<'
 	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
 
-${OBJDIR}k_iridium.o : k_iridium.c
-	@$(ECHO) 'Compile : $<'
-	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
-
 ${OBJDIR}k_misc.o : k_misc.c
 	@$(ECHO) 'Compile : $<'
 	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
@@ -206,6 +202,10 @@ ${OBJDIR}k_sdc.o : k_sdc.c
 	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
 
 ${OBJDIR}k_gps.o : k_gps.c
+	@$(ECHO) 'Compile : $<'
+	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
+
+${OBJDIR}k_WM800.o : k_WM800.c
 	@$(ECHO) 'Compile : $<'
 	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
 

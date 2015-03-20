@@ -1,7 +1,7 @@
 #pragma once
 
-#include "k_config.h"
-#ifdef USE_WM800
+// #include "k_config.h"
+// #ifdef USE_WM800
 
 
 
@@ -88,5 +88,5 @@ u32 get_iri1_rcv_len(void);
 
 void ctrl_sensor(char a_id, char a_code);
 
-#endif  //ifdef USE_IRIDIUM
+// #endif  //ifdef USE_IRIDIUM
 

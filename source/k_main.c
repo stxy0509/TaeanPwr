@@ -175,15 +175,7 @@ int main()
 			case 300:
 
 			case 400:
-#if MODULE_CT3919			
-				task_ct3919();		// Alti-meter
-#endif				
-
-#if MODULE_GPS				
-				task_gps();
-#endif
-
-				task_dcs();
+				m_sensor_proc();
 
 				if (SettingMode == 1)
 					break;
@@ -196,7 +188,9 @@ int main()
 					// m_env_orinted_evt_proc();
 			    	m_system_robust_proc();		// heartbeat, watchdog
 
-#ifndef  MODEM_TEST_ONLY	 	/* WM-211 */
+			    	m_communication_proc();
+
+#if 0 //ndef  MODEM_TEST_ONLY	 	/* WM-211 */
 				    // task_iridium();
 				    // task_iri_rcv();
 
@@ -276,7 +270,7 @@ void sensor_q_init(void)
     gps_q_init();		//debugstring("GPS ");
 #endif
 
-	wm_rcv_q_init();	//debugstring("WM-215 ");
+	// wm_rcv_q_init();	//debugstring("WM-215 ");
 	// iri2_rcv_q_init();	debugstring("IRI2 ");
 
 	//debugstring(" queue..\r\n");
@@ -784,14 +778,26 @@ void m_boot_proc(void)
 
 void m_sensor_proc(void)
 {
-#if MODULE_CT3919	
-	task_ct3919();		// Alti-meter
-#endif
+	#if MODULE_CT3919			
+		task_ct3919();
+	#endif				
 
-#if MODULE_GPS
-	task_gps();
-#endif
+	#if MODULE_GPS				
+		task_gps();
+	#endif
 
+	#if MODULE_TEMP_4050
+		task_dcs();		// AADI 4050처리를 기존 dcs 처리루틴을 수정하여 사용하였다.
+	#endif
+}
+
+void m_communication_proc(void)
+{
+	#if MODULE_WM800
+		task_wm800();
+		task_wm800_rcv();
+		task_cdma_sms();
+	#endif
 }
 
 
@@ -801,7 +807,6 @@ void m_system_robust_proc(void)
     //if (main_idx >= 220)
 
     if (get_fgFW_updating())	return;	// 131008
-
 
 
     // {
@@ -910,9 +915,9 @@ void m_time_orinted_evt_proc(void)
 
 		//----------------< 매 2분마다  ---> RTC & sysTime sync >----------------
 		// if ( t_day%30 == 0)
-		if ( t_day%2 == 0)
+		// if ( t_day%2 == 0)
 		{
-			set_rtc_sysclk_sync_req(1);
+			// set_rtc_sysclk_sync_req(1);
 		}
 
 
@@ -978,7 +983,7 @@ void m_time_orinted_evt_proc(void)
 		#if 1
 		// 기상데이타, 저전압감시
 		// if ( (t_day % env.interval) == 0)
-		if ( (t_day % 2) == 0)
+		// if ( (t_day % 2) == 0)
 		{
 			PRINT_TIME;
 			measure_BAT_leval();

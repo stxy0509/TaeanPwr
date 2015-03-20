@@ -34,6 +34,9 @@ extern U32 tick_s2;
 extern U32 tick_s3;
 
 extern U32 tick_iri0;
+extern U32 tick_iri1;
+extern U32 tick_sms;
+
 extern U32 tick_pt100;
 extern U32 tick_SHT;
 extern U32 tick_fileTx;

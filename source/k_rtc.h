@@ -12,7 +12,7 @@
 // 	int	year;
 // }rtcTime;
 
-#define PRINT_TIME	(rtc_isSecUpdate(),debugprintf("\r\n%04d.%02d.%02d %02d:%02d:%02d ",rtc_time.year, rtc_time.mon, rtc_time.day, rtc_time.hour,rtc_time.min,rtc_time.sec)/*,debugprintf("%s, %d\r\n",__FILE__,__LINE__)*/)
+#define PRINT_TIME	(rtc_isSecUpdate(), debugprintf("\r\n%04d.%02d.%02d %02d:%02d:%02d\r\n",rtc_time.year, rtc_time.mon, rtc_time.day, rtc_time.hour,rtc_time.min,rtc_time.sec)/*,debugprintf("%s, %d\r\n",__FILE__,__LINE__)*/)
 
 
 

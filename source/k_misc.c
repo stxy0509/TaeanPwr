@@ -11,11 +11,11 @@ void print_string(int a_ch, const char* str)
 #ifdef CONFIG_UART_TX_INTERRUPT
         while (1)
         {
-            if (UartPutCh(a_ch,*str))
+            if (uart_putch(a_ch,*str))
                 break;
         }
 #else
-        UartPutCh(a_ch,*str);
+        uart_putch(a_ch,*str);
 #endif
         str++;
     }

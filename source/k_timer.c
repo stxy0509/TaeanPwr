@@ -15,6 +15,9 @@ U32 tick_s3=0;
 U32 tick_SHT=0;
 
 U32 tick_iri0=0;
+U32 tick_iri1=0;
+U32 tick_sms=0;
+
 U32 tick_pt100=0;
 U32 tick_cat=0;
 
@@ -125,6 +128,8 @@ void timer0isr()
     if (tick_s3>0) tick_s3--;
 
     if (tick_iri0>0) tick_iri0--;
+    if (tick_iri1>0) tick_iri1--;
+    if (tick_sms>0) tick_sms--;
     // if (tick_pt100>0) tick_pt100--;
     // if (tick_SHT>0) tick_SHT--;
 

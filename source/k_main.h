@@ -118,6 +118,10 @@ void sysWDT_init(void);
 void sysWDT_CntClear(void);
 
 
+// Local Function
+void m_communication_proc(void);
+
+
 //-----------------------------------------------
 #else
 //-----------------------------------------------

@@ -123,17 +123,21 @@ typedef struct
 // #include "k_aio.h"
 // #include "k_atm.h"
 
-#if      MODULE_GPS
+// #if      MODULE_GPS
 #include "k_gps.h"
-#endif
+// #endif
 
-#if      MODULE_CT3919
+// #if      MODULE_CT3919
 #include "k_ct3919.h"
-#endif
+// #endif
+
+// #if     MODULE_WM800
+#include "k_wm800.h"
+// #endif
 
 #include "k_dcs.h"
 // #include "k_hmp155.h"
-#include "k_iridium.h"
+// #include "k_iridium.h"
 #include "k_misc.h"
 // #include "k_mose.h"
 #include "k_msg.h"

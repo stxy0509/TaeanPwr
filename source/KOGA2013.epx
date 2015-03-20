@@ -13,12 +13,12 @@
         <Source Name="k_timer.c" />
         <Source Name="k_twi.c" />
         <Source Name="k_rtc.c" />
-        <Source Name="k_iridium.c" />
         <Source Name="k_misc.c" />
         <Source Name="k_msg.c" />
         <Source Name="k_sdc.c" />
-        <Source Name="k_ct3919.c" />
         <Source Name="k_gps.c" />
+        <Source Name="k_WM800.c" />
+        <Source Name="k_dcs.c" />
         <Header Name="k_cli.h" />
         <Header Name="k_cli_func.h" />
         <Header Name="k_misc.h" />
@@ -28,7 +28,6 @@
         <Header Name="k_twi.h" />
         <Header Name="k_sdc.h" />
         <Header Name="k_rtc.h" />
-        <Header Name="k_iridium.h" />
         <Header Name="k_msg.h" />
         <Header Name="../SDK2.0/include/fatfs/diskio.h" />
         <Header Name="../SDK2.0/include/fatfs/ff.h" />
@@ -47,9 +46,10 @@
         <Header Name="../SDK2.0/include/adstar/watchdogtimer.h" />
         <Header Name="../SDK2.0/include/typedef.h" />
         <Header Name="../SDK2.0/include/adstar.h" />
-        <Header Name="k_ct3919.h" />
         <Header Name="k_gps.h" />
         <Header Name="k_config.h" />
+        <Header Name="k_WM800.h" />
+        <Header Name="k_dcs.h" />
         <LinkScript Name="startup/adstar_ram.ld" />
         <Library Name="../SDK2.0/lib/libadStar.a" />
     </Files>
