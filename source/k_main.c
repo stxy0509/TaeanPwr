@@ -984,7 +984,8 @@ void m_time_orinted_evt_proc(void)
 		#if 1
 		// 기상데이타, 저전압감시
 		// if ( (t_day % env.interval) == 0)
-		// if ( (t_day % 2) == 0)
+		// if ( (t_day % env.interval) == 0)
+		if ( (t_day % 5) == 0)
 		{
 			PRINT_TIME;
 			measure_BAT_leval();

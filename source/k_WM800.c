@@ -212,7 +212,7 @@ void task_wm800(void)
                 if (mutex_cdma == 0)
                 {
                     mutex_cdma = 1;
-PRINTVAR(mutex_cdma);
+// PRINTVAR(mutex_cdma);
 
                     debugstring(    "-------------------------------\r\n");
                     debugstring(    "     Send msg \r\n");
@@ -257,7 +257,7 @@ PRINTVAR(mutex_cdma);
             // power OFF
             if ((get_iri1_init() == 1))
             {
-                debugstring("--## MODEM POWER_OFF for initialize ##--\r\n"); //(+)130905
+                // debugstring("--## MODEM POWER_OFF for initialize ##--\r\n"); //(+)130905
 //                cmdSensorControl(SYS_CMD_SENSOR_OFF, SYS_SENSOR_IRI1);
                 // cmdSensorControl(SYS_CMD_IRIDIUM_EXT_OFF, '1');                 //(+)130905
                 // cmdSensorControl(SYS_CMD_IRIDIUM_EXT_ON, '1');                 //(+)130905
@@ -283,7 +283,7 @@ PRINTVAR(mutex_cdma);
             }
             break;
         case 520:
-            debugstring("--## IRIDIUM-1 POWER_ON ##--\r\n");                 //(+)130905
+            // debugstring("--## IRIDIUM-1 POWER_ON ##--\r\n");                 //(+)130905
             // cmdSensorControl(SYS_CMD_SENSOR_ON, SYS_SENSOR_IRI1);
             // cmdSensorControl(SYS_CMD_IRIDIUM_EXT_ON, '1');              //(+)130905
             // cmdSensorControl(SYS_CMD_IRIDIUM_EXT_OFF, '1');              //(+)130905
@@ -373,7 +373,7 @@ PRINTVAR(mutex_cdma);
                         debugprintf("\r\nSBD status :%d - send error\r\n",iri_retval);
 
                         mutex_cdma = 0;
-PRINTVAR(mutex_cdma);
+// PRINTVAR(mutex_cdma);
 
                         // q_pop();
                         // for (i=0;i<MSG_LENGTH; i++)
@@ -391,7 +391,7 @@ PRINTVAR(mutex_cdma);
                         debugprintf("\r\nSBD status :%d - send success\r\n",iri_retval);
 
                         mutex_cdma = 0;
-PRINTVAR(mutex_cdma);
+// PRINTVAR(mutex_cdma);
 
                         // if (fgMsgC_ready==1)
                         // {
@@ -951,7 +951,7 @@ u8 cdma_process_send(u8 a_option)
                 {
                     if (modem_rxbuf_substr("OK") > 0)
                     {
-PRINTLINE;
+// PRINTLINE;
                         idx = 14;
                         break;
                     }
@@ -972,7 +972,7 @@ PRINTLINE;
             break;
 
         case 14:
-PRINTLINE;
+// PRINTLINE;
             debugstring("----- ATE0\r\n");
             modem_rxbuf_clear();
             modem_printf("ATE0\r");
@@ -980,7 +980,7 @@ PRINTLINE;
             idx = 15;
             // break;
         case 15:
-PRINTLINE;
+// PRINTLINE;
             // if (tick_iri0==0)
             // {
             //     debugstring("----- ATV1\r\n");
@@ -996,31 +996,31 @@ PRINTLINE;
         case 80:
 // AT$TCPWRITE=
 
-PRINTLINE;
+// PRINTLINE;
             debugprintf("%s\r\n",s_msg);
-PRINTLINE;
+// PRINTLINE;
 
             modem_rxbuf_clear();
             // modem_printf("AT$SMSMO=");
-PRINTLINE;
+// PRINTLINE;
 
 
             {
                 char buf[35];
                 modem_rxbuf_clear();
                 modem_printf("AT$SMSMO=");
-                debugprintf("AT$SMSMO=");
-PRINTLINE;
+                // debugprintf("AT$SMSMO=");
+// PRINTLINE;
 
                 sprintf(buf, "%s,",sms_tel_no);  //01033533825,01041988498,4098,,,,7265736574\r");
                 modem_printf(buf);  //01033533825,01041988498,4098,,,,7265736574\r");
-                debugprintf(buf);  //01033533825,01041988498,4098,,,,7265736574\r");
-PRINTLINE;
+                // debugprintf(buf);  //01033533825,01041988498,4098,,,,7265736574\r");
+// PRINTLINE;
 
                 sprintf(buf, "%s,4098,,,,",cdma_tel_no);  //01033533825,01041988498,4098,,,,7265736574\r");
                 modem_printf(buf);  //01033533825,01041988498,4098,,,,7265736574\r");
-                debugprintf(buf);  //01033533825,01041988498,4098,,,,7265736574\r");
-PRINTLINE;
+                // debugprintf(buf);  //01033533825,01041988498,4098,,,,7265736574\r");
+// PRINTLINE;
 
             }
 
@@ -1050,7 +1050,7 @@ PRINTLINE;
             tick_iri0 = TM_5SEC;
             //PRINTLINE;
 
-PRINTLINE;
+// PRINTLINE;
             idx = 85;
             break;
         case 85:
@@ -1059,7 +1059,7 @@ PRINTLINE;
                 tick_iri0 = TM_1SEC;
                 //PRINTLINE;
 
-PRINTLINE;
+// PRINTLINE;
                 idx = 90;
             }
             break;
@@ -1071,8 +1071,8 @@ PRINTLINE;
             {
                 // if (is_q_empty())
                 {
-                    debugstring("q: empty --> stop sending...\r\n");
-PRINTLINE;
+                    // debugstring("q: empty --> stop sending...\r\n");
+// PRINTLINE;
                     idx = 100;
                 }
                 /*else
@@ -1156,13 +1156,13 @@ void parsing_wm800(char *a_str)
         if ((ch== 0x0D) || (ch== 0x0A) || (ch=='\0') )
         {
             wm_data[i][j] = '\0';
-            debugprintf("[%d]%s\r\n",i,wm_data[i]);
+            // debugprintf("[%d]%s\r\n",i,wm_data[i]);
             break;
         }
         else if ((ch=='\t') || (ch==':') || (ch==','))
         {
             wm_data[i][j] = '\0';
-            debugprintf("[%d]%s\r\n",i,wm_data[i]);
+            // debugprintf("[%d]%s\r\n",i,wm_data[i]);
             i++;
             j=0;
         }
@@ -1189,55 +1189,81 @@ void parsing_wm800(char *a_str)
     if (wm_data[0][0]=='$')
     {
         // debugstring("NOTI $$$\r\n");
+        u32 noti = atoi( &(wm_data[0][1]) );
+        switch (noti)
+        {
+            case 0:
+                debugprintf("CDMA power ON.\r\n");
+                break;
+            case 6:
+                debugprintf("SMS send - OK..\r\n");
+                break;
+            case 7:
+                debugprintf("SMS send - FAIL.\r\n");
+                break;
+            case 15:        // RSSI
+                {
+                    u32 rssi_idx = atoi( &(wm_data[1][0]) );
+                    switch(rssi_idx)
+                    {
+                        case 0:    lblRSSI = -128; break;
+                        case 1:    lblRSSI = -108; break;
+                        case 2:    lblRSSI = -102; break;
+                        case 3:    lblRSSI = -96;  break;
+                        case 4:    lblRSSI = -90;  break;
+                        case 5:    lblRSSI = -84;  break;
+                        case 6:    lblRSSI = -78;  break;
+                        default:   lblRSSI = -70;  break;
+                    }
+                    debugprintf("RSSI : %d\r\n", lblRSSI);
+                }
+                break;
+        }
     }
 
     // if (strlen(&((wm_data[0][0]))) == 1)
+    switch (wmCmdType)
     {
-        switch (wmCmdType)
-        {
-            case 0:         // 'OK'를 기다린다.
-                if (strlen(&((wm_data[0][0]))) == 1)
+        case 0:         // 'OK'를 기다린다.
+            if (strlen(&((wm_data[0][0]))) == 1)
+            {
+                wm800rcv.resultCode = '0';
+                // PRINTVAR(wm800rcv.resultCode);
+            }
+            break;
+        case 1:         // at$phonenum? --> 01020149049,1020149049
+            if (i==1)
+            {
+                wm800rcv.resultCode = '0';
+                strcpy(cdma_tel_no, &(wm_data[0][0]));
+            }
+            break;
+        case 2:         // at$bwmodem? --> 010-4173-8495,1041738495,3.9,0,20150323184402MON,000001,
+            if (i>3)
+            {
+                if (strlen( &(wm_data[4][0]) )==17)
                 {
                     wm800rcv.resultCode = '0';
-                    PRINTVAR(wm800rcv.resultCode);
-                }
-                break;
-            case 1:         // at$phonenum? --> 01020149049,1020149049
-                if (i==1)
-                {
-                    wm800rcv.resultCode = '0';
-                    strcpy(cdma_tel_no, &(wm_data[1][0]));
-                }
-                break;
-            case 2:         // at$bwmodem? --> 010-4173-8495,1041738495,3.9,0,20150323184402MON,000001,
-                if (i>3)
-                {
-                    if (strlen( &(wm_data[4][0]) )==17)
                     {
-                        wm800rcv.resultCode = '0';
-                        {
-                            rtcTime t1;
+                        rtcTime t1;
 
-                            t1.sec = (wm_data[4][12]-'0')*10 + (wm_data[4][13]-'0');
-                            t1.min =  (wm_data[4][10]-'0')*10 + (wm_data[4][11]-'0');
-                            t1.hour =  (wm_data[4][8]-'0')*10 + (wm_data[4][9]-'0');
+                        t1.sec = (wm_data[4][12]-'0')*10 + (wm_data[4][13]-'0');
+                        t1.min =  (wm_data[4][10]-'0')*10 + (wm_data[4][11]-'0');
+                        t1.hour =  (wm_data[4][8]-'0')*10 + (wm_data[4][9]-'0');
 
-                            t1.day =  (wm_data[4][6]-'0')*10 + (wm_data[4][7]-'0');
-                            t1.week = 0;
-                            t1.mon =  (wm_data[4][4]-'0')*10 + (wm_data[4][5]-'0');
-                            t1.year = (wm_data[4][2]-'0')*10 + (wm_data[4][3]-'0') + 2000;
-                            rtc_settime(&t1);
-                        }
+                        t1.day =  (wm_data[4][6]-'0')*10 + (wm_data[4][7]-'0');
+                        t1.week = 0;
+                        t1.mon =  (wm_data[4][4]-'0')*10 + (wm_data[4][5]-'0');
+                        t1.year = (wm_data[4][2]-'0')*10 + (wm_data[4][3]-'0') + 2000;
+                        rtc_settime(&t1);
                     }
                 }
-                break;
+            }
+            break;
 
-            default:
-                break;
-        }
-        
-    } 
-
+        default:
+            break;
+    }
 }
 
 
@@ -1255,7 +1281,7 @@ void task_wm800_rcv(void)
 
         if (0 == is_special_ch(ch))
         {
-            uart_putch(0,ch);
+            // uart_putch(0,ch);
             // debugprintf("<%02X:%c>", ch, ch);
 
             switch(ch)
@@ -1562,7 +1588,7 @@ u8 wm800_process_init(u8 a_option)
     {
         case 0:
 // PRINTLINE;
-            debugstring("----- init cdma : (1) atz\r\n");
+            // debugstring("----- init cdma : (1) atz\r\n");
             retry_cnt = 0;
             idx = 5;
             break;
@@ -1659,7 +1685,7 @@ u8 wm800_process_init(u8 a_option)
 
             wmCmdType = 0;
             modem_printf("AT$NOTIFY=11101000\r");
-            debugprintf("AT$NOTIFY=11101000\r\n");
+            // debugprintf("AT$NOTIFY=11101000\r\n");
                                                     // 0 ON  Ready
                                                     // 1 ON  Out of service
                                                     // 2 ON  Battery Voltage
@@ -1693,7 +1719,7 @@ u8 wm800_process_init(u8 a_option)
 
             wmCmdType = 0;
             modem_printf("AT$ALERT=0,0,0,0,0,0,0,0,0,0,0\r");   // 경고음 OFF
-            debugprintf("AT$ALERT=0,0,0,0,0,0,0,0,0,0,0\r");   // 경고음 OFF
+            // debugprintf("AT$ALERT=0,0,0,0,0,0,0,0,0,0,0\r");   // 경고음 OFF
             tick_iri1 = 1500/10;
             idx = 19;
             break;
@@ -1722,7 +1748,7 @@ u8 wm800_process_init(u8 a_option)
 
             wmCmdType = 0;
             modem_printf("AT$SIOFLOW=1\r");
-            debugprintf("AT$SIOFLOW=1\r");
+            // debugprintf("AT$SIOFLOW=1\r");
             tick_iri1 = 2000/10;    // 2sec
             idx = 40;
             break;
@@ -1755,7 +1781,7 @@ u8 wm800_process_init(u8 a_option)
 
             wmCmdType = 1;
             modem_printf("AT$PHONENUM?\r");
-            debugprintf("AT$PHONENUM?\r");
+            // debugprintf("AT$PHONENUM?\r");
             // tick_iri1 = 5000/10;    // 2sec
             tick_iri1 = 10000/10;    // 2sec
             idx = 44;
@@ -1786,7 +1812,7 @@ u8 wm800_process_init(u8 a_option)
 
             wmCmdType = 2;
             modem_printf("AT$BWMODEM?\r");
-            debugprintf("AT$BWMODEM?\r");
+            // debugprintf("AT$BWMODEM?\r");
             // tick_iri1 = 5000/10;    // 2sec
             tick_iri1 = 10000/10;    // 2sec
             idx = 48;
@@ -1819,7 +1845,7 @@ u8 wm800_process_init(u8 a_option)
             if (tick_iri1==0)
             {
                 //AT$KEYE  // 전화 끊기
-                debugstring("----- init cdma : (3) AT$KEYE\r\n");
+                // debugstring("----- init cdma : (3) AT$KEYE\r\n");
                 modem_rxbuf_clear();
                 modem_printf("AT$KEYE\r");
                 tick_iri1 = TM_10SEC;

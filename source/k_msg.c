@@ -157,7 +157,7 @@ char * make_msg_k1(void)
     // debugprintf("%s\r\n", s_msg);
 
     // CDMA RSSI
-    sprintf(tmp_buf,"%d,",(-84));
+    sprintf(tmp_buf,"%d,",lblRSSI);
     strcat(s_msg, tmp_buf);
     
     // BAT

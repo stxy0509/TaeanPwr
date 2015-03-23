@@ -31,6 +31,7 @@ typedef enum {
 //int iri_port = C_IRIDIUM_1;
 // int iri_port = C_IRIDIUM_2;
 
+int lblRSSI = -84;
 
 //-----------------------------------------------
 #else
@@ -38,6 +39,8 @@ typedef enum {
 
 extern int iri_current_state;
 extern int iri_port;
+
+extern int lblRSSI;
 
 //-----------------------------------------------
 #endif
