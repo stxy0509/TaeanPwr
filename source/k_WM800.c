@@ -894,8 +894,9 @@ int iridium_Process_1(int a_option)
 #endif
 
 
-char cdma_tel_no[15];
-char sms_tel_no[15]="01033533825";
+char cdma_tel_no[15];                   // 송신기 번호
+// char sms_tel_no[15]="01033533825";
+char sms_tel_no[15]="01020143428";      // 수신기 번호
 
 
 
@@ -933,11 +934,13 @@ u8 cdma_process_send(u8 a_option)
             // debugstring("----- ATZ\r\n");
             // retry_cnt = 0;
             // idx = 12;
-            // break;
+            idx = 80;
+            break;
         case 12:
             PRINT_TIME;
             modem_rxbuf_clear();
-            modem_printf("ATZ\r");
+            // modem_printf("ATZ\r");
+            modem_printf("ATV0\r");
             tick_iri0 = TM_2SEC;
             idx = 13;
             break;
@@ -1136,7 +1139,7 @@ void wm800rcv_init(void)
 
 void parsing_wm800(char *a_str)
 {
-    char wm_data[6][20];
+    ALIGN4 char wm_data[20][20];
     u8 i = 0;
     u8 j = 0;
     u8 k = 0;
@@ -1153,11 +1156,13 @@ void parsing_wm800(char *a_str)
         if ((ch== 0x0D) || (ch== 0x0A) || (ch=='\0') )
         {
             wm_data[i][j] = '\0';
+            debugprintf("[%d]%s\r\n",i,wm_data[i]);
             break;
         }
         else if ((ch=='\t') || (ch==':') || (ch==','))
         {
             wm_data[i][j] = '\0';
+            debugprintf("[%d]%s\r\n",i,wm_data[i]);
             i++;
             j=0;
         }
@@ -1172,7 +1177,7 @@ void parsing_wm800(char *a_str)
 
 
 
-#if 1
+#if 0
     for (j=0; j<=i; j++)
     {
         debugprintf("[%d]%s\r\n",j,wm_data[j]);
@@ -1183,18 +1188,50 @@ void parsing_wm800(char *a_str)
     // $XXX : Noti parsing
     if (wm_data[0][0]=='$')
     {
-        debugstring("NOTI $$$\r\n");
+        // debugstring("NOTI $$$\r\n");
     }
 
-    if (strlen(&((wm_data[0][0]))) == 1)
+    // if (strlen(&((wm_data[0][0]))) == 1)
     {
         switch (wmCmdType)
         {
             case 0:         // 'OK'를 기다린다.
-                wm800rcv.resultCode = '0';
-                PRINTVAR(wm800rcv.resultCode);
-
+                if (strlen(&((wm_data[0][0]))) == 1)
+                {
+                    wm800rcv.resultCode = '0';
+                    PRINTVAR(wm800rcv.resultCode);
+                }
                 break;
+            case 1:         // at$phonenum? --> 01020149049,1020149049
+                if (i==1)
+                {
+                    wm800rcv.resultCode = '0';
+                    strcpy(cdma_tel_no, &(wm_data[1][0]));
+                }
+                break;
+            case 2:         // at$bwmodem? --> 010-4173-8495,1041738495,3.9,0,20150323184402MON,000001,
+                if (i>3)
+                {
+                    if (strlen( &(wm_data[4][0]) )==17)
+                    {
+                        wm800rcv.resultCode = '0';
+                        {
+                            rtcTime t1;
+
+                            t1.sec = (wm_data[4][12]-'0')*10 + (wm_data[4][13]-'0');
+                            t1.min =  (wm_data[4][10]-'0')*10 + (wm_data[4][11]-'0');
+                            t1.hour =  (wm_data[4][8]-'0')*10 + (wm_data[4][9]-'0');
+
+                            t1.day =  (wm_data[4][6]-'0')*10 + (wm_data[4][7]-'0');
+                            t1.week = 0;
+                            t1.mon =  (wm_data[4][4]-'0')*10 + (wm_data[4][5]-'0');
+                            t1.year = (wm_data[4][2]-'0')*10 + (wm_data[4][3]-'0') + 2000;
+                            rtc_settime(&t1);
+                        }
+                    }
+                }
+                break;
+
             default:
                 break;
         }
@@ -1218,7 +1255,7 @@ void task_wm800_rcv(void)
 
         if (0 == is_special_ch(ch))
         {
-            // uart_putch(0,ch);
+            uart_putch(0,ch);
             // debugprintf("<%02X:%c>", ch, ch);
 
             switch(ch)
@@ -1524,7 +1561,7 @@ u8 wm800_process_init(u8 a_option)
     switch (idx)
     {
         case 0:
-PRINTLINE;
+// PRINTLINE;
             debugstring("----- init cdma : (1) atz\r\n");
             retry_cnt = 0;
             idx = 5;
@@ -1532,7 +1569,7 @@ PRINTLINE;
 
         case 5:
 // PRINTVAR(idx);
-PRINTLINE;
+// PRINTLINE;
 
             modem_rxbuf_clear();
             // modem_printf("ATZ\r");
@@ -1540,9 +1577,9 @@ PRINTLINE;
 
             wm800rcv_init();
             wmCmdType = 0;
-            
+
             modem_printf("ATV0\r");
-            debugprintf("ATZ-->");
+            // debugprintf("ATZ-->");
             // iridium_printf("ATZ\r");
             tick_iri1 = 2000/10;
             idx = 10;
@@ -1561,7 +1598,7 @@ PRINTLINE;
                     {
                         idx = 12;
                         break;
-PRINTLINE;
+// PRINTLINE;
                     }
                 }
                 // 여기서 retry 하는 이유는 cdma 전원투입후 안정화 시간을 기다리는 것이 목적이다.
@@ -1581,20 +1618,19 @@ PRINTLINE;
             {
                 if (wm800rcv.resultCode == WM_OK)
                 {
-                    // modem_rxbuf_print();
-                    // modem_rxbuf_printHex();
-
-                    // if (modem_rxbuf_substr("OK") > 0)
-                    {
-                        idx = 12;
-                        // break;
-                    }
+                    wm800rcv.resultCode = 99;
+                    idx = 12;
+// PRINTLINE;
                 }
             }
             break;
 
         case 12:
             modem_rxbuf_clear();
+
+            wm800rcv_init();
+            wmCmdType = 0;
+
             modem_printf("ATE0\r");
             // debugprintf("ATE0-->");
             tick_iri1 = 1500/10;
@@ -1607,11 +1643,23 @@ PRINTLINE;
                 // modem_rxbuf_printHex();
                 idx = 16;
             }
+            else
+            {
+                if (wm800rcv.resultCode == WM_OK)
+                {
+                    wm800rcv.resultCode = 99;
+                    idx = 16;
+// PRINTLINE;
+                }
+            }
             break;
 
         case 16:
             modem_rxbuf_clear();
+
+            wmCmdType = 0;
             modem_printf("AT$NOTIFY=11101000\r");
+            debugprintf("AT$NOTIFY=11101000\r\n");
                                                     // 0 ON  Ready
                                                     // 1 ON  Out of service
                                                     // 2 ON  Battery Voltage
@@ -1629,11 +1677,23 @@ PRINTLINE;
                 modem_rxbuf_print();
                 idx = 18;
             }
+            else
+            {
+                if (wm800rcv.resultCode == WM_OK)
+                {
+                    wm800rcv.resultCode = 99;
+                    idx = 18;
+// PRINTLINE;
+                }
+            }
             break;
 
         case 18:
             modem_rxbuf_clear();
+
+            wmCmdType = 0;
             modem_printf("AT$ALERT=0,0,0,0,0,0,0,0,0,0,0\r");   // 경고음 OFF
+            debugprintf("AT$ALERT=0,0,0,0,0,0,0,0,0,0,0\r");   // 경고음 OFF
             tick_iri1 = 1500/10;
             idx = 19;
             break;
@@ -1643,6 +1703,15 @@ PRINTLINE;
                 modem_rxbuf_print();
                 idx = 20;
             }
+            else
+            {
+                if (wm800rcv.resultCode == WM_OK)
+                {
+                    wm800rcv.resultCode = 99;
+                    idx = 20;
+// PRINTLINE;
+                }
+            }
             break;
 
         case 20:
@@ -1650,7 +1719,10 @@ PRINTLINE;
             //AT$SIOFLOW=1   // 흐름제어 없음
             //debugstring("----- init cdma : (2) AT$SIOFLOW=1\r\n");
             modem_rxbuf_clear();
+
+            wmCmdType = 0;
             modem_printf("AT$SIOFLOW=1\r");
+            debugprintf("AT$SIOFLOW=1\r");
             tick_iri1 = 2000/10;    // 2sec
             idx = 40;
             break;
@@ -1667,58 +1739,80 @@ PRINTLINE;
                 */
                 idx = 42;
             }
+            else
+            {
+                if (wm800rcv.resultCode == WM_OK)
+                {
+                    wm800rcv.resultCode = 99;
+                    idx = 42;
+// PRINTLINE;
+                }
+            }
             break;
         case 42:
             // phone number
             modem_rxbuf_clear();
+
+            wmCmdType = 1;
             modem_printf("AT$PHONENUM?\r");
-            tick_iri1 = 5000/10;    // 2sec
+            debugprintf("AT$PHONENUM?\r");
+            // tick_iri1 = 5000/10;    // 2sec
+            tick_iri1 = 10000/10;    // 2sec
             idx = 44;
             break;
+
         case 44:
+            if ( (tick_iri1==0)  )
+            {
+// PRINTLINE;
+               idx = 46;
+               tick_iri1 = 500/10;
+// PRINTLINE;
+            }
+            else
+            {
+                if (wm800rcv.resultCode == WM_OK)
+                {
+                    debugprintf("phone_No: %s\r\n", cdma_tel_no);
+                    wm800rcv.resultCode = 99;
+                    idx = 46;
+                }
+            }
+            break;
+
+        case 46:
+            // phone number
+            modem_rxbuf_clear();
+
+            wmCmdType = 2;
+            modem_printf("AT$BWMODEM?\r");
+            debugprintf("AT$BWMODEM?\r");
+            // tick_iri1 = 5000/10;    // 2sec
+            tick_iri1 = 10000/10;    // 2sec
+            idx = 48;
+            break;
+
+        case 48:
             if ( (tick_iri1==0)  )
             {
 // PRINTLINE;
                idx = 50;
                tick_iri1 = 500/10;
+// PRINTLINE;
             }
             else
             {
-                if ( modem_rxbuf_get_length() > 30 )
+                if (wm800rcv.resultCode == WM_OK)
                 {
-// PRINTLINE;
-                    modem_rxbuf_print()
-;
-                    {
-                        int i,j=0;
-                        char ch1;
-
-                        for(i=15; i<30; i++)
-                        {
-                           ch1 = modem_rxbuf[i];
-                           // uart_putch(0, ch1);
-                           // debugprintf("%d: %x\r\n",i,ch1);
-//                            if ( (ch1 == ',') )
-                           if ( (ch1 == ',') )
-                           {
-                               cdma_tel_no[j] = '\0';
-                               debugprintf("PHONE_NO: %s\r\n", cdma_tel_no);
-                               idx = 50;
-                               break;
-                           }
-                           else
-                           {
-// PRINTLINE;
-                               cdma_tel_no[j] = ch1;
-                               j++;
-                           }
-                        }
-                        idx = 50;
-                        tick_iri1 = 500/10;
-                    }
+                    //debugprintf("phone_No: %s\r\n", cdma_tel_no);
+                    PRINT_TIME;
+                    wm800rcv.resultCode = 99;
+                    idx = 50;
                 }
             }
             break;
+
+
 
 
         case 50:

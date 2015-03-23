@@ -207,7 +207,8 @@ int main()
 
 
 
-#ifdef  MODEM_TEST_ONLY	 	/* WM-211 */
+#if 0 //def  MODEM_TEST_ONLY	 	/* WM-211 */
+        while(1)
         {
         	char ch;
 	        if (uart_getch(3, &ch))
