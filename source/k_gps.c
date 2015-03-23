@@ -459,8 +459,7 @@ void task_gps(void)
 
     if (get_gps_q_len() > 500)
     {
-        //debugstring("gps_q : overflow --> init..\r\n");
-
+        debugstring("gps_q : overflow --> init..\r\n");
         gps_q_init();
         return;
     }

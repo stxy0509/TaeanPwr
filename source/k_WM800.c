@@ -1099,15 +1099,160 @@ PRINTLINE;
 
 
 
-
+// enum WM800_RETCODE  
+// {
+#define WM_OK           '0'       
+#define WM_CONNECT      '1'    
+#define WM_RING         '2'       
+#define WM_NO_CARRIER   '3'
+#define WM_ERROR        '4'      
+#define WM_NO_DIATONE   '6'
+#define WM_BUSY         '7'
+#define WM_NO_ANSWER    '8'
+// } wm800_retCode;
 
 //static int result_no = 999;
 //static int sbdring = 0;
 //char result_s[30];
 // char result_sbd[50];
 
+#define MODEM_LINE_MAX  (4*40)          // 160 Byte
+ALIGN4 char modem_line[MODEM_LINE_MAX];
+
+
+typedef struct  {
+    int  resultCode;    // OK, CONNECT, RING, NO CARRIER, ERROR, NO DIAL TONE, BUSY, NO ANSWER
+                        //  0,       1,    2,          3,     4,            6,    7,         8
+} wmResponse_T;
+
+
+wmResponse_T wm800rcv;
+u32 wmCmdType = 0;
+
+void wm800rcv_init(void)
+{
+    wm800rcv.resultCode = 0;
+}
+
+void parsing_wm800(char *a_str)
+{
+    char wm_data[6][20];
+    u8 i = 0;
+    u8 j = 0;
+    u8 k = 0;
+    char ch;
+
+
+
+
+
+    while (1)
+    {
+        ch = a_str[k++];
+
+        if ((ch== 0x0D) || (ch== 0x0A) || (ch=='\0') )
+        {
+            wm_data[i][j] = '\0';
+            break;
+        }
+        else if ((ch=='\t') || (ch==':') || (ch==','))
+        {
+            wm_data[i][j] = '\0';
+            i++;
+            j=0;
+        }
+        else
+        {
+            if (ch != ' ')
+            {
+                wm_data[i][j++] = ch;
+            }
+        }
+    }
+
+
+
+#if 1
+    for (j=0; j<=i; j++)
+    {
+        debugprintf("[%d]%s\r\n",j,wm_data[j]);
+    }
+#endif
+    //PRINTLINE;
+
+    // $XXX : Noti parsing
+    if (wm_data[0][0]=='$')
+    {
+        debugstring("NOTI $$$\r\n");
+    }
+
+    if (strlen(&((wm_data[0][0]))) == 1)
+    {
+        switch (wmCmdType)
+        {
+            case 0:         // 'OK'를 기다린다.
+                wm800rcv.resultCode = '0';
+                PRINTVAR(wm800rcv.resultCode);
+
+                break;
+            default:
+                break;
+        }
+        
+    } 
+
+}
+
 
 void task_wm800_rcv(void)
+{
+    static int line_ptr = 0;
+    char ch;
+
+    // static char noti_buf[30];
+    // static int noti_buf_idx = 0;
+
+
+    if (uart_getch(COMM_CHANNEL, &ch))
+    {
+
+        if (0 == is_special_ch(ch))
+        {
+            // uart_putch(0,ch);
+            // debugprintf("<%02X:%c>", ch, ch);
+
+            switch(ch)
+            {
+                // case 0x0A:
+                case 0x0D:
+                    modem_line[line_ptr++] = 0x0D;
+                    modem_line[line_ptr++] = 0x0A;
+                    modem_line[line_ptr] = '\0';
+
+                    // debugstring("\r\n");
+                    // debugprintf("\r\n<-%s->\r\n",modem_line);
+
+                    // parsing
+                    parsing_wm800(modem_line);
+                    line_ptr = 0;
+                    break;
+
+                // case 0x0D:
+                case 0x0A:
+                case '\0':
+                    //skip
+                    break;
+
+                default:
+                    modem_line[line_ptr++] = ch;
+                    break;
+            }
+        }
+    }
+}
+
+
+void task_wm800_rcvold_old(void)
 {
     char ch;
     int saveToBuf = 1;
@@ -1138,15 +1283,10 @@ void task_wm800_rcv(void)
             {
                 case 0:             // $
                     break;
-                case 1:             // $00x, $01x, $02x, $03x, $04x, $05x,
+                case 1:             // $0xx, $1x, $2x, $03x, $04x, $05x,
                     switch(ch)
                     {
                         case '0':
-                        case '1':
-                        case '2':
-                        case '3':
-                        case '4':
-                        case '5':
                             noti_buf[noti_buf_idx++] = ch;
                             noti_buf[noti_buf_idx] = '\0';
                             saveToBuf = 0;
@@ -1159,24 +1299,26 @@ void task_wm800_rcv(void)
                             saveToBuf = 0;
                             break;
                     }
-#if 0
-                    if (ch == '0')
-                    {
-                        noti_buf[noti_buf_idx++] = ch;
-                        noti_buf[noti_buf_idx] = '\0';
-                        saveToBuf = 0;
-                    }
-                    else
-                    {
-                        modem_rxbuf[modem_rxbuf_idx++] = '$';
-                        modem_rxbuf[modem_rxbuf_idx++] = ch;
-                        modem_rxbuf[modem_rxbuf_idx] = '\0';
-                        noti_buf_idx = 0;
-                        saveToBuf = 0;
-                    }
-#endif                    
                     break;
-                case 2:
+                case 2:             // #000, $001, $002, $006, $ 007, $008, $013, $015, $024
+                    switch(ch)
+                    {
+                        case '0':
+                        case '1':
+                        case '2':
+                            noti_buf[noti_buf_idx++] = ch;
+                            noti_buf[noti_buf_idx] = '\0';
+                            saveToBuf = 0;
+                            break;
+                        default:
+                            modem_rxbuf[modem_rxbuf_idx++] = noti_buf[0];
+                            modem_rxbuf[modem_rxbuf_idx++] = noti_buf[1];
+                            modem_rxbuf[modem_rxbuf_idx++] = ch;
+                            modem_rxbuf[modem_rxbuf_idx] = '\0';
+                            noti_buf_idx = 0;
+                            saveToBuf = 0;
+                            break;
+                    }
 
                 default:
                     if (noti_buf_idx < 28)
@@ -1393,7 +1535,13 @@ PRINTLINE;
 PRINTLINE;
 
             modem_rxbuf_clear();
-            modem_printf("ATZ\r");
+            // modem_printf("ATZ\r");
+            // modem_printf("ATE0\r");
+
+            wm800rcv_init();
+            wmCmdType = 0;
+            
+            modem_printf("ATV0\r");
             debugprintf("ATZ-->");
             // iridium_printf("ATZ\r");
             tick_iri1 = 2000/10;
@@ -1429,25 +1577,25 @@ PRINTLINE;
                     idx = 900;
                 }
             }
-            // else
-            // {
-            //     if (modem_rxbuf_get_length() > 0)
-            //     {
-            //         modem_rxbuf_print();
-            //         // modem_rxbuf_printHex();
+            else
+            {
+                if (wm800rcv.resultCode == WM_OK)
+                {
+                    // modem_rxbuf_print();
+                    // modem_rxbuf_printHex();
 
-            //         if (modem_rxbuf_substr("OK") > 0)
-            //         {
-            //             idx = 12;
-            //             // break;
-            //         }
-            //     }
-            // }
+                    // if (modem_rxbuf_substr("OK") > 0)
+                    {
+                        idx = 12;
+                        // break;
+                    }
+                }
+            }
             break;
 
         case 12:
             modem_rxbuf_clear();
-            modem_printf("ATE1\r");
+            modem_printf("ATE0\r");
             // debugprintf("ATE0-->");
             tick_iri1 = 1500/10;
             idx = 13;
