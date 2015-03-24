@@ -53,34 +53,36 @@ typedef union
 typedef struct
 {
     u16     init_flag;
-    char      s0;
-    char      s1;
-    char      s2;
-    char      s3;
-    char      s4;
-    char      s5;
-    char      s6;
-    char      s7;
-    char      s8;
-    char      s9;
-    char      sa;
-    char      sb;
-    char      sc;
-    char      sd;
-    char      se;
-    char      sf;
-    char      sr;
     u8      interval;
-    double  ref_lat;
-    double  ref_lon;
-    u8      ref_flag;
-    u8      ref_distance;
-    u16     ref_shock;
-    u8      mode;
+    u8      mode;           // 4byte
+    // char      s0;
+    // char      s1;
+    // char      s2;
+    // char      s3;
+    // char      s4;
+    // char      s5;
+    // char      s6;
+    // char      s7;
+    // char      s8;
+    // char      s9;
+    // char      sa;
+    // char      sb;
+    // char      sc;
+    // char      sd;
+    // char      se;
+    // char      sf;
+    // char      sr;
+    // double  ref_lat;
+    // double  ref_lon;
+    // u8      ref_flag;
+    // u8      ref_distance;
+    // u16     ref_shock;
 
-    u16     id;
-    u16     port;
-    char    ip[20];
+    char     id[8];
+    // u16     port;
+    char    dest_no1[20];
+    char    dest_no2[20];
+    char    tel_no[20];
 } env_data_T;
 
 

@@ -403,8 +403,8 @@ static void get_cmd()
                             case 5505:  env_set_interval(120);  break;
                             // 기준위치 해제
                             case 5551:
-                                env.ref_flag = 0;
-                                env_save();
+                                // env.ref_flag = 0;
+                                // env_save();
                                 // debugstring("env.ref_flag is cleared.\r\n");
                                 wifistring("env.ref_flag is cleared.\r\n");
                                 break;
@@ -1398,6 +1398,84 @@ static void cmd_set(void)
             // case '1':   setEnableHeartbeat(1);  break;
         }
     }
+    else if ( (!strncmp( args[1], "interval", 8)) ||
+              (!strncmp( args[1], "int", 3)) )
+    {
+        if (argc<3)
+        {
+            debugstring ("  ex) set int 1~60\r\n");
+            return;
+        }
+        {
+            int k = atoi(args[2]);
+            if ( (k>=1) && (k<=60))
+            {
+                env.interval = (u8)k;
+                env_save();
+                debugprintf("set : interval = %d\r\n", k);
+            }
+        }
+    }
+    else if ( (!strncmp( args[1], "mode", 4)) ||
+         (!strncmp( args[1], "md", 2)) )
+    {
+        if (argc<3)
+        {
+            debugstring ("  ex) set mode 1~2\r\n");
+            return;
+        }
+        {
+            int k = atoi(args[2]);
+// PRINTVAR(k);            
+            switch(k)
+            {
+                case 1:
+                case 2:
+                    env.mode = (u8)k;
+                    env_save();
+                    debugprintf("set : mode = %d\r\n", k);
+                    break;
+                default:
+                    debugprintf("ex) set mode 1~2\r\n", k);
+                    break;
+            }
+        }
+    }
+    else if ( (!strncmp( args[1], "tel1", 4)) /* || (!strncmp( args[2], "shk", 3)) */)
+    {
+        if (argc<3)
+        {
+            debugstring ("  ex) set tel1 01033533825\r\n");
+            return;
+        }
+        strcpy(env.dest_no1, args[2]);
+        env_save();
+        debugprintf("set : tel1 = %s\r\n", env.dest_no1);
+    }
+    else if ( (!strncmp( args[1], "tel2", 4)) /* || (!strncmp( args[2], "shk", 3)) */)
+    {
+        if (argc<3)
+        {
+            debugstring ("  ex) set tel1 01033533825\r\n");
+            return;
+        }
+        strcpy(env.dest_no2, args[2]);
+        env_save();
+        debugprintf("set : tel2 = %s\r\n", env.dest_no2);
+    }
+    else if ( (!strncmp( args[1], "id", 2)) /* || (!strncmp( args[2], "shk", 3)) */)
+    {
+        if (argc<3)
+        {
+            debugstring ("  ex) set id H\r\n");
+            return;
+        }
+        strcpy(env.id, args[2]);
+        env_save();
+        debugprintf("set : id = %s\r\n", env.id);
+    }
+
+
     else if ( (!strncmp( args[1], "env", 3)))
     {
         if ( (!strncmp( args[2], "interval", 8)) ||
@@ -1456,7 +1534,7 @@ static void cmd_set(void)
                 int k = atoi(args[3]);
                 //switch(k)
                 {
-                    env.ref_shock = k;
+                    // env.ref_shock = k;
                     debugprintf("set : env.ref_shock = %d\r\n", k);
                     //break;
                 }
@@ -1473,7 +1551,7 @@ static void cmd_set(void)
                 int k = atoi(args[3]);
                 //switch(k)
                 {
-                    env.port = k;
+                    // env.port = k;
                     debugprintf("set : env.port = %04d\r\n", k);
                     //break;
                 }
@@ -1490,7 +1568,7 @@ static void cmd_set(void)
                 int k = atoi(args[3]);
                 //switch(k)
                 {
-                    env.id = k;
+                    // env.id = k;
                     debugprintf("set : env.id = %03d\r\n", k);
                     //break;
                 }
@@ -1507,8 +1585,8 @@ static void cmd_set(void)
                 //int k = atoi(args[3]);
                 //switch(k)
                 {
-                    strcpy(env.ip, args[3]);
-                    debugprintf("set : env.ip = %s\r\n", args[3]);
+                    // strcpy(env.ip, args[3]);
+                    // debugprintf("set : env.ip = %s\r\n", args[3]);
                     //break;
                 }
             }
@@ -2555,6 +2633,11 @@ static void cmd_get(void)
         measure_BAT_leval();
         debugprintf("bat : %03d\r\n", get_battery_level());
     }
+    else if ( (!strncmp( args[1], "all", 3)))
+    {
+        env_print();
+    }
+
 }
 
 void App_TestShInit ()

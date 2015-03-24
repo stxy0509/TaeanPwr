@@ -72,22 +72,22 @@ u32 update_sensor_status(u32 a_status)
     // debugprintf("status=%08X ", status);
 
     //'0'=Reset, '1'=On, '2'=Off
-    if (env.s0 == '2')  {   status &= ~(u32)(3);   }   //aio
-    if (env.s1 == '2')  {   status &= ~(u32)(3<<(1*2));   }   //mose
-    // if (env.s2 == '2')  {   status &= ~(u32)(3);   }   //--
-    if (env.s3 == '2')  {   status &= ~(u32)(3<<(3*2));   }   //ct
-    //if (env.s4 == '2')  {   status &= ~(u32)(3);   }   //--
-    if (env.s5 == '2')  {   status &= ~(u32)(3<<(5*2));   }   //dcs
-    //if (env.s6 == '2')  {   status &= ~(u32)(3);   }   //--
-    if (env.s7 == '2')  {   status &= ~(u32)(3<<(7*2));   }   //gps
-    if (env.s8 == '2')  {   status &= ~(u32)(3<<(8*2));   }   //atm1
-    if (env.s9 == '2')  {   status &= ~(u32)(3<<(9*2));   }   //atm2
-    //if (env.sa == '2')  {   status &= ~(u32)(3);   }   //--
-    if (env.sb == '2')  {   status &= ~(u32)(3<<(11*2));   }   //hmp
-    if (env.sc == '2')  {   status &= ~(u32)(3<<(12*2));   }   //ptb
-    //if (env.sd == '2')  {   status &= ~(u32)(3);   }   //--
-    //if (env.se == '2')  {   status &= ~(u32)(3);   }   //--
-    if (env.sf == '2')  {   status &= ~(u32)(3<<(15*2));   }   //shock
+    // if (env.s0 == '2')  {   status &= ~(u32)(3);   }   //aio
+    // if (env.s1 == '2')  {   status &= ~(u32)(3<<(1*2));   }   //mose
+    // // if (env.s2 == '2')  {   status &= ~(u32)(3);   }   //--
+    // if (env.s3 == '2')  {   status &= ~(u32)(3<<(3*2));   }   //ct
+    // //if (env.s4 == '2')  {   status &= ~(u32)(3);   }   //--
+    // if (env.s5 == '2')  {   status &= ~(u32)(3<<(5*2));   }   //dcs
+    // //if (env.s6 == '2')  {   status &= ~(u32)(3);   }   //--
+    // if (env.s7 == '2')  {   status &= ~(u32)(3<<(7*2));   }   //gps
+    // if (env.s8 == '2')  {   status &= ~(u32)(3<<(8*2));   }   //atm1
+    // if (env.s9 == '2')  {   status &= ~(u32)(3<<(9*2));   }   //atm2
+    // //if (env.sa == '2')  {   status &= ~(u32)(3);   }   //--
+    // if (env.sb == '2')  {   status &= ~(u32)(3<<(11*2));   }   //hmp
+    // if (env.sc == '2')  {   status &= ~(u32)(3<<(12*2));   }   //ptb
+    // //if (env.sd == '2')  {   status &= ~(u32)(3);   }   //--
+    // //if (env.se == '2')  {   status &= ~(u32)(3);   }   //--
+    // if (env.sf == '2')  {   status &= ~(u32)(3<<(15*2));   }   //shock
 
     // debugprintf("%08X\r\n", status);
     return (status);

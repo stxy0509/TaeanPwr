@@ -40,8 +40,8 @@ SOURCES	 += k_misc.c
 SOURCES	 += k_msg.c
 SOURCES	 += k_sdc.c
 SOURCES	 += k_gps.c
-SOURCES	 += k_WM800.c
 SOURCES	 += k_dcs.c
+SOURCES	 += k_WM800.c
 
 OBJECTS	 += ${OBJDIR}adStarInit.o
 OBJECTS	 += ${OBJDIR}startup_adstar.o
@@ -54,8 +54,8 @@ OBJECTS	 += ${OBJDIR}k_misc.o
 OBJECTS	 += ${OBJDIR}k_msg.o
 OBJECTS	 += ${OBJDIR}k_sdc.o
 OBJECTS	 += ${OBJDIR}k_gps.o
-OBJECTS	 += ${OBJDIR}k_WM800.o
 OBJECTS	 += ${OBJDIR}k_dcs.o
+OBJECTS	 += ${OBJDIR}k_WM800.o
 
 DEPS	 += ${OBJDIR}adStarInit.d
 DEPS	 += ${OBJDIR}startup_adstar.d
@@ -68,8 +68,8 @@ DEPS	 += ${OBJDIR}k_misc.d
 DEPS	 += ${OBJDIR}k_msg.d
 DEPS	 += ${OBJDIR}k_sdc.d
 DEPS	 += ${OBJDIR}k_gps.d
-DEPS	 += ${OBJDIR}k_WM800.d
 DEPS	 += ${OBJDIR}k_dcs.d
+DEPS	 += ${OBJDIR}k_WM800.d
 
 
 
@@ -136,8 +136,8 @@ endif
 -include ${OBJDIR}k_msg.d
 -include ${OBJDIR}k_sdc.d
 -include ${OBJDIR}k_gps.d
--include ${OBJDIR}k_WM800.d
 -include ${OBJDIR}k_dcs.d
+-include ${OBJDIR}k_WM800.d
 
 #============= TARGET ====================
 ${TARGET} : Makefile.mk ${OBJECTS} ${LIBS} startup/adstar_ram.ld
@@ -205,11 +205,11 @@ ${OBJDIR}k_gps.o : k_gps.c
 	@$(ECHO) 'Compile : $<'
 	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
 
-${OBJDIR}k_WM800.o : k_WM800.c
+${OBJDIR}k_dcs.o : k_dcs.c
 	@$(ECHO) 'Compile : $<'
 	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
 
-${OBJDIR}k_dcs.o : k_dcs.c
+${OBJDIR}k_WM800.o : k_WM800.c
 	@$(ECHO) 'Compile : $<'
 	$(ECHOMARK)$(CC) $(CFLAGS) $(INCDIR) -c -fmessage-length=0 -MMD -MP -MF"$(@:.o=.d)" -MT"$(@:.o=.d)" -o "$@" "$<"
 

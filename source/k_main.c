@@ -103,7 +103,7 @@ int main()
 
     // 환경변수 복원
     env_read();
-    if (env.init_flag != 0x1235)
+    if (env.init_flag != 0x1236)
     {
     	env_init();
     	env_save();
@@ -1249,33 +1249,42 @@ void chk_file_size(void)
 void env_init(void)
 {
 	debugstring("env: init\r\n");
-    env.init_flag = 0x1235;
+    env.init_flag = 0x1236;
 
-    env.s0 = '1';		//'0'=Reset, '1'=On, '2'=Off
-    env.s1 = '1';
-    env.s2 = '1';
-    env.s3 = '1';
-    env.s4 = '1';
-    env.s5 = '1';
-    env.s6 = '1';
-    env.s7 = '1';
-    env.s8 = '1';
-    env.s9 = '1';
-    env.sa = '1';
-    env.sb = '1';
-    env.sc = '1';
-    env.sd = '1';
-    env.se = '1';
-    env.sf = '1';
-    env.sr = '1';
+    // env.s0 = '1';		//'0'=Reset, '1'=On, '2'=Off
+    // env.s1 = '1';
+    // env.s2 = '1';
+    // env.s3 = '1';
+    // env.s4 = '1';
+    // env.s5 = '1';
+    // env.s6 = '1';
+    // env.s7 = '1';
+    // env.s8 = '1';
+    // env.s9 = '1';
+    // env.sa = '1';
+    // env.sb = '1';
+    // env.sc = '1';
+    // env.sd = '1';
+    // env.se = '1';
+    // env.sf = '1';
+    // env.sr = '1';
 
-    env.interval = 30;		// 전송주기 (10, 20, 30, 60, 120)
-    env.ref_lat = 0.0f;
-    env.ref_lon = 0.0f;
-    env.ref_flag = 0;		// 기준위치 설정유무
-    env.ref_distance = 10;	// 1km // 1(100m)~100(10km)
-    env.ref_shock = 180;	// 0 ~ 999
-    env.mode = 0;			// 지진모드= 2: 해제		3: 설정
+    env.interval = (u8)30;		// 전송주기 (10, 20, 30, 60, 120)
+    // env.ref_lat = 0.0f;
+    // env.ref_lon = 0.0f;
+    // env.ref_flag = 0;		// 기준위치 설정유무
+    // env.ref_distance = 10;	// 1km // 1(100m)~100(10km)
+    // env.ref_shock = 180;	// 0 ~ 999
+    env.mode = (u8)1;			// 송신모드= 1: 한군데		2: 두군데
+
+    strcpy(&(env.dest_no1[0]), "01033533825");
+    strcpy(&(env.dest_no2[0]), "01033533825");
+
+    strcpy(&(env.tel_no[0]),   "01033533825");
+    
+    strcpy(&(env.id[0]),   "H");
+
+
 #if 0
     // 부이마다 다른 고유의 설정이고 초기값의 개념이 없으므로 초기화하면 안된다.
     env.id = 002;
@@ -1299,6 +1308,14 @@ void env_read(void)
 
 void env_print(void)
 {
+
+    debugprintf("\r\n ID         : %s", env.id);
+    debugprintf("\r\n Tel 1      : %s", env.dest_no1);
+    debugprintf("\r\n Tel 2      : %s", env.dest_no2);
+    debugprintf("\r\n Mode       : %d", env.mode);
+    debugprintf("\r\n Interval   : %d\r\n", env.interval);
+
+
 	// debugprintf("sizeof(env)=%d\r\n",sizeof(env));
 
     // debugprintf("env.init_flag : %x\r\n", env.init_flag);// = 0x55AA;
@@ -1326,31 +1343,30 @@ void env_print(void)
     // debugprintf("env.ref_shock    : %d\r\n", env.ref_shock);// = 180;	// 0 ~ 999
     // debugprintf("env.mode         : %d\r\n", env.mode);// = 2;			// 지진모드= 2: 해제		3: 설정
 
-    debugprintf("\r\n\r\nenv.id         : %03d\r\n", env.id);// = 2;			// 지진모드= 2: 해제		3: 설정
-    debugprintf("env.ip         : %s\r\n", env.ip);// = 2;			// 지진모드= 2: 해제		3: 설정
-    debugprintf("env.port       : %04d\r\n", env.port);// = 2;			// 지진모드= 2: 해제		3: 설정
+    // debugprintf("env.ip         : %s\r\n", env.ip);// = 2;			// 지진모드= 2: 해제		3: 설정
+    // debugprintf("env.port       : %04d\r\n", env.port);// = 2;			// 지진모드= 2: 해제		3: 설정
     // debugprintf("env.alti       : %d\r\n", env.interval);//terval = 30;		// 전송주기 (10, 20, 30, 60, 120)
 
 }
 
 void env_set_id(int a_id)
 {
-	env.id = (u16)a_id;
+	// env.id = (u16)a_id;
 	debugprintf("env: set_id (%d)\r\n", a_id);
 	env_save();
 }
 
 void env_set_port(int a_port)
 {
-	env.port = (u16)a_port;
+	// env.port = (u16)a_port;
 	debugprintf("env: set_port (%d)\r\n", a_port);
 	env_save();
 }
 
 void env_set_ip(char* a_ip)
 {
-	strcpy(env.ip, a_ip);
-	debugprintf("env: set_ip (%s)\r\n", env.ip);
+	// strcpy(env.ip, a_ip);
+	// debugprintf("env: set_ip (%s)\r\n", env.ip);
 	env_save();
 }
 
@@ -1359,16 +1375,16 @@ void env_set_ip(char* a_ip)
 
 void env_set_pos(double a_lat, double a_lon)
 {
-	env.ref_lat = a_lat;
-	env.ref_lon = a_lon;
-	env.ref_flag = 1;
+	// env.ref_lat = a_lat;
+	// env.ref_lon = a_lon;
+	// env.ref_flag = 1;
 	debugprintf("env: set_pos (%f, %d)\r\n", a_lat, a_lon);
 	env_save();
 }
 
 void env_set_distance(int a_dist)
 {
-	env.ref_distance = a_dist;
+	// env.ref_distance = a_dist;
 	debugprintf("env: set_distance (%d)\r\n", a_dist);
 	env_save();
 }
@@ -1382,7 +1398,7 @@ void env_set_interval(int a_dist)
 
 void env_set_shock(int a_shock)
 {
-	env.ref_shock = a_shock;
+	// env.ref_shock = a_shock;
 	debugprintf("env: set_shock (%d)\r\n", a_shock);
 	env_save();
 }

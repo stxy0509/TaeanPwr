@@ -370,7 +370,7 @@ void task_wm800(void)
                 switch (iri_retval)
                 {
                     case 0: //err
-                        debugprintf("\r\nSBD status :%d - send error\r\n",iri_retval);
+                        // debugprintf("\r\nSBD status :%d - send error\r\n",iri_retval);
 
                         mutex_cdma = 0;
 // PRINTVAR(mutex_cdma);
@@ -388,7 +388,7 @@ void task_wm800(void)
                         break;
 
                     case 1:
-                        debugprintf("\r\nSBD status :%d - send success\r\n",iri_retval);
+                        // debugprintf("\r\nSBD status :%d - send success\r\n",iri_retval);
 
                         mutex_cdma = 0;
 // PRINTVAR(mutex_cdma);
@@ -424,10 +424,10 @@ void task_wm800(void)
                         break;
 
                     case 2:
-                        debugprintf("\r\nSBD status :%d - Timeout...\r\n",iri_retval);
+                        // debugprintf("\r\nSBD status :%d - Timeout...\r\n",iri_retval);
 
                         mutex_cdma = 0;
-PRINTVAR(mutex_cdma);
+// PRINTVAR(mutex_cdma);
                         // q_pop();
                         // for (i=0;i<MSG_LENGTH; i++)
                         // {
@@ -895,8 +895,8 @@ int iridium_Process_1(int a_option)
 
 
 char cdma_tel_no[15];                   // 송신기 번호
-// char sms_tel_no[15]="01033533825";
-char sms_tel_no[15]="01020143428";      // 수신기 번호
+char sms_tel_no[15]="01033533825";
+// char sms_tel_no[15]="01020143428";      // 수신기 번호
 
 
 
@@ -1255,7 +1255,12 @@ void parsing_wm800(char *a_str)
                         t1.week = 0;
                         t1.mon =  (wm_data[4][4]-'0')*10 + (wm_data[4][5]-'0');
                         t1.year = (wm_data[4][2]-'0')*10 + (wm_data[4][3]-'0') + 2000;
-                        rtc_settime(&t1);
+
+                        if (t1.year >= 2015)
+                        {
+                            rtc_settime(&t1);
+                            set_rtc_sysclk_sync_req(0);     // request set & sync to clk source( GPS / IRIDIUM / MOSE )
+                        }
                     }
                 }
             }
@@ -1966,26 +1971,26 @@ void ctrl_sensor_set_env(char a_id, char a_code)
 {
     if (a_code == '0')  return;
 
-    switch(a_id)
-    {
-        case '0': env.s0 = a_code;  break;
-        case '1': env.s1 = a_code;  break;
-        case '3': env.s3 = a_code;  break;
-        case '5': env.s5 = a_code;  break;
-        case '7': env.s7 = a_code;  break;
-        case '8': env.s8 = a_code;  break;
-        case '9': env.s9 = a_code;  break;
-        case 'a':
-        case 'A': env.sa = a_code;  break;
-        case 'b':
-        case 'B': env.sb = a_code;  break;
-        case 'c':
-        case 'C': env.sc = a_code;  break;
-        case 'e':
-        case 'E': env.se = a_code;  break;
-        case 'f':
-        case 'F': env.sf = a_code;  break;
-    }
+    // switch(a_id)
+    // {
+    //     case '0': env.s0 = a_code;  break;
+    //     case '1': env.s1 = a_code;  break;
+    //     case '3': env.s3 = a_code;  break;
+    //     case '5': env.s5 = a_code;  break;
+    //     case '7': env.s7 = a_code;  break;
+    //     case '8': env.s8 = a_code;  break;
+    //     case '9': env.s9 = a_code;  break;
+    //     case 'a':
+    //     case 'A': env.sa = a_code;  break;
+    //     case 'b':
+    //     case 'B': env.sb = a_code;  break;
+    //     case 'c':
+    //     case 'C': env.sc = a_code;  break;
+    //     case 'e':
+    //     case 'E': env.se = a_code;  break;
+    //     case 'f':
+    //     case 'F': env.sf = a_code;  break;
+    // }
     env_save();
 }
 
