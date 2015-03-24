@@ -1317,8 +1317,8 @@ void env_print(void)
 
     debugprintf("\r\n ID         : %s", env.id);
     debugprintf("\r\n Tel 1      : %s", env.dest_no1);
-    debugprintf("\r\n Tel 2      : %s", env.dest_no2);
-    debugprintf("\r\n Mode       : %d", env.mode);
+    // debugprintf("\r\n Tel 2      : %s", env.dest_no2);
+    // debugprintf("\r\n Mode       : %d", env.mode);
     debugprintf("\r\n Interval   : %d\r\n", env.interval);
 
 

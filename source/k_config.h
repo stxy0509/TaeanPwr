@@ -17,7 +17,7 @@
 
 
 // MAIN----------------------------------------------
-#define KOGA_VER_STRING "1.52  150324-1224"
+#define KOGA_VER_STRING "1.52  150324-1614"
 
 
 #define 		BUOY_ECHO						0

@@ -1018,12 +1018,29 @@ void testSh_RegisterCmd (char *cmd, void (*fn)(int argc, int *argv), char *help_
 
 static void cmd_help()
 {
-	int i;
+    debugstring("--- HELP [태안화력]-----------------------------\r\n");
+    debugstring("0. 현재 설정상태 확인\r\n");
+    debugstring("     cmd: get all \r\n\r\n");
+    debugstring("1. ID 설정\r\n");
+    debugstring("     cmd: set id [부이ID]\r\n");
+    debugstring("      ex: set id H \r\n\r\n");
+    debugstring("2. 수신기 번호 설정\r\n");
+    debugstring("     cmd: set tel1 [수신측 전화번호]\r\n");
+    debugstring("      ex: set tel1 01033533825 \r\n\r\n");
+    debugstring("3. 전송주기 설정\r\n");
+    debugstring("     cmd: set int [전송부기(분)]\r\n");
+    debugstring("      ex: set int 30  --> 30분 간격으로 전송 \r\n");
+    debugstring("------------------------------------------------\r\n");
+
+
+
+/*	int i;
 
 	for (i=0; i<(cmd_cnt); i++)
 	{
 		debugstring (cmd_registry[i].help_str);
 	}
+*/
 }
 
 
@@ -1382,6 +1399,7 @@ static void cmd_set(void)
     }
 
     //debugprintf("\r\nenv : %s", args[1]);
+
 
     if ( (!strncmp( args[1], "heartbeat", 9)) ||
          (!strncmp( args[1], "hb", 2)) )
@@ -2635,7 +2653,9 @@ static void cmd_get(void)
     }
     else if ( (!strncmp( args[1], "all", 3)))
     {
+    debugstring("------------------------------------------------");
         env_print();
+    debugstring("------------------------------------------------\r\n");
     }
 
 }
