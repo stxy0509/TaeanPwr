@@ -147,11 +147,12 @@ char * make_msg_k1(void)
     memset(s_msg,0,MSG_LENGTH);
 
     // Header
-    strcpy(s_msg, "#H11,");
+    strcpy(s_msg, "#");
+    strcat(s_msg, env.id);
 
     // date time
     rtc_isSecUpdate();
-    sprintf(tmp_buf,"%02d%02d%02d%02d%02d00,",rtc_time.year%100,rtc_time.mon,rtc_time.day,rtc_time.hour,rtc_time.min);
+    sprintf(tmp_buf,"11,%02d%02d%02d%02d%02d00,",rtc_time.year%100,rtc_time.mon,rtc_time.day,rtc_time.hour,rtc_time.min);
     strcat(s_msg, tmp_buf);
 
     // debugprintf("%s\r\n", s_msg);

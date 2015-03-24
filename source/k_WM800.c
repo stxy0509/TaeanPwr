@@ -27,6 +27,41 @@ int sbdrb_check(int a_option);
 
 
 
+// enum WM800_RETCODE  
+// {
+#define WM_OK           '0'       
+#define WM_CONNECT      '1'    
+#define WM_RING         '2'       
+#define WM_NO_CARRIER   '3'
+#define WM_ERROR        '4'      
+#define WM_NO_DIATONE   '6'
+#define WM_BUSY         '7'
+#define WM_NO_ANSWER    '8'
+// } wm800_retCode;
+
+//static int result_no = 999;
+//static int sbdring = 0;
+//char result_s[30];
+// char result_sbd[50];
+
+#define MODEM_LINE_MAX  (4*40)          // 160 Byte
+ALIGN4 char modem_line[MODEM_LINE_MAX];
+
+
+typedef struct  {
+    int resultCode;    // OK, CONNECT, RING, NO CARRIER, ERROR, NO DIAL TONE, BUSY, NO ANSWER
+                       //  0,       1,    2,          3,     4,            6,    7,         8
+    int sms_tx_success;
+} wmResponse_T;
+
+
+wmResponse_T wm800rcv;
+u32 wmCmdType = 0;
+
+
+
+
+
 // u8 fg_sms_arrived = 0;
 u8 mutex_cdma = 0;
 u8 fg_telno_get_ok = 0;
@@ -1001,6 +1036,7 @@ u8 cdma_process_send(u8 a_option)
 // PRINTLINE;
 
             modem_rxbuf_clear();
+            wm800rcv.sms_tx_success = 99;
             // modem_printf("AT$SMSMO=");
 // PRINTLINE;
 
@@ -1012,14 +1048,12 @@ u8 cdma_process_send(u8 a_option)
                 // debugprintf("AT$SMSMO=");
 // PRINTLINE;
 
-                sprintf(buf, "%s,",sms_tel_no);  //01033533825,01041988498,4098,,,,7265736574\r");
-                modem_printf(buf);  //01033533825,01041988498,4098,,,,7265736574\r");
-                // debugprintf(buf);  //01033533825,01041988498,4098,,,,7265736574\r");
+                sprintf(buf, "%s,",env.dest_no1);  //01033533825,01041988498,4098,,,,7265736574\r");
+                modem_printf(buf);  
 // PRINTLINE;
 
                 sprintf(buf, "%s,4098,,,,",cdma_tel_no);  //01033533825,01041988498,4098,,,,7265736574\r");
-                modem_printf(buf);  //01033533825,01041988498,4098,,,,7265736574\r");
-                // debugprintf(buf);  //01033533825,01041988498,4098,,,,7265736574\r");
+                modem_printf(buf);  
 // PRINTLINE;
 
             }
@@ -1047,7 +1081,7 @@ u8 cdma_process_send(u8 a_option)
 #endif
 
 
-            tick_iri0 = TM_5SEC;
+            tick_iri0 = TM_10SEC;
             //PRINTLINE;
 
 // PRINTLINE;
@@ -1056,11 +1090,22 @@ u8 cdma_process_send(u8 a_option)
         case 85:
             if ( (tick_iri0==0) )
             {
-                tick_iri0 = TM_1SEC;
-                //PRINTLINE;
-
-// PRINTLINE;
-                idx = 90;
+                // Timeout !!
+                idx = 900;
+            }
+            else
+            {
+                if ( 0 == wm800rcv.sms_tx_success)
+                {
+                    // fail
+                    idx = 900;
+                }
+                else if ( 1== wm800rcv.sms_tx_success)
+                {
+                    // success
+                    ret_val = 1;
+                    idx = 100;
+                }
             }
             break;
 
@@ -1100,37 +1145,6 @@ u8 cdma_process_send(u8 a_option)
     return(ret_val);
 }
 
-
-
-// enum WM800_RETCODE  
-// {
-#define WM_OK           '0'       
-#define WM_CONNECT      '1'    
-#define WM_RING         '2'       
-#define WM_NO_CARRIER   '3'
-#define WM_ERROR        '4'      
-#define WM_NO_DIATONE   '6'
-#define WM_BUSY         '7'
-#define WM_NO_ANSWER    '8'
-// } wm800_retCode;
-
-//static int result_no = 999;
-//static int sbdring = 0;
-//char result_s[30];
-// char result_sbd[50];
-
-#define MODEM_LINE_MAX  (4*40)          // 160 Byte
-ALIGN4 char modem_line[MODEM_LINE_MAX];
-
-
-typedef struct  {
-    int  resultCode;    // OK, CONNECT, RING, NO CARRIER, ERROR, NO DIAL TONE, BUSY, NO ANSWER
-                        //  0,       1,    2,          3,     4,            6,    7,         8
-} wmResponse_T;
-
-
-wmResponse_T wm800rcv;
-u32 wmCmdType = 0;
 
 void wm800rcv_init(void)
 {
@@ -1196,9 +1210,11 @@ void parsing_wm800(char *a_str)
                 debugprintf("CDMA power ON.\r\n");
                 break;
             case 6:
+                wm800rcv.sms_tx_success = 1;
                 debugprintf("SMS send - OK..\r\n");
                 break;
             case 7:
+                wm800rcv.sms_tx_success = 0;
                 debugprintf("SMS send - FAIL.\r\n");
                 break;
             case 15:        // RSSI

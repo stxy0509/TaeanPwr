@@ -2,7 +2,7 @@
 
 
 
-#define	DEFERD_Q_MAX	1500
+#define	DEFERD_Q_MAX	50
 
 
 struct _echoData {

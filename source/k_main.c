@@ -88,6 +88,15 @@ int main()
 	sysWDT_init();
 
 
+    // 환경변수 복원
+    env_read();
+    if (env.init_flag != 0x1236)
+    {
+    	env_init();
+    	env_save();
+    }
+
+
 // #ifdef DEBUG_CH_0
 // #else
 //     set_debug_channel(4);
@@ -96,18 +105,15 @@ int main()
 	debugstring("\r\n================================================\r\n");
 	debugprintf(    "      Taean Power Station \r\n");
 	debugstring(    "------------------------------------------------\r\n");
-	// debugprintf(    "      Buoy : %s \r\n", BUOY_ID);
-	debugprintf(    "      Ver  : %s \r\n", KOGA_VER_STRING);
+	debugprintf(    "       Ver : %s \r\n", KOGA_VER_STRING);
+    debugprintf(    "        ID : %s \r\n", env.id);
+    debugprintf(    "       Tel : %s \r\n", env.dest_no1);
+    // debugprintf(    "      Tel 2: %s\r\n", env.dest_no2);
+    // debugprintf(    "      Mode : %d\r\n", env.mode);
+    debugprintf(    "  Interval : %d \r\n", env.interval);
 	debugstring(    "================================================\r\n\r\n");
 
 
-    // 환경변수 복원
-    env_read();
-    if (env.init_flag != 0x1236)
-    {
-    	env_init();
-    	env_save();
-    }
 
 	gps_neo6q_init();
 
@@ -985,7 +991,7 @@ void m_time_orinted_evt_proc(void)
 		// 기상데이타, 저전압감시
 		// if ( (t_day % env.interval) == 0)
 		// if ( (t_day % env.interval) == 0)
-		if ( (t_day % 5) == 0)
+		if ( (t_day % env.interval) == 0)
 		{
 			PRINT_TIME;
 			measure_BAT_leval();
