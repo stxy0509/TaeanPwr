@@ -51,4 +51,5 @@ void set_dcs_valid(int a_val);
 double get_dcs_dir(void);     
 double get_dcs_speed(void);   
 
+char * get_4050_temp(void);		// (+)150518
 

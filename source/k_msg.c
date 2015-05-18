@@ -174,7 +174,8 @@ char * make_msg_k1(void)
     if (is_dcs_valid()==1)
     {
         sprintf(tmp_buf,"%.3f",get_dcs_speed());    // dcs.pitch == temperature
-        strcat(s_msg, tmp_buf);
+        // strcat(s_msg, tmp_buf);                  // (-)150518
+        strcat(s_msg, get_4050_temp());             // (+)150518
         set_dcs_valid(0);
         init_dcs_data();
     }

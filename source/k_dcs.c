@@ -59,6 +59,14 @@ double get_dcs_dir(void)      {return dcs.dir;}
 // double get_dcs_speed(void)    {return dcs.speed;}
 double get_dcs_speed(void)    {return dcs.pitch;}
 
+//---->                             // (+)150518
+char temp_4050[40]={0,};        
+char * get_4050_temp(void)
+{
+    return ( &(temp_4050[0]) );
+}
+// <<<--------------
+
 /*
 409 byte
 MEASUREMENT 4420    365 Abs Speed(cm/s) 1.344260E+01    Direction(Deg.M)    5.714996E+01    North(cm/s) 7.291832E+00    East(cm/s)  1.129304E+01    Heading(Deg.M)  2.596979E+02    Tilt X(Deg) 1.480422E+00    Tilt Y(Deg) -1.554279E+00   SP Std(cm/s)    9.355846E+01    Strength(dB)    -3.597727E+01   Ping Count  150 Abs Tilt(Deg)   1.239204E+01    Max Tilt(Deg)   5.400383E+01    Std Tilt(Deg)   1.033722E+01
@@ -120,6 +128,7 @@ void parsing_dcs(char *a_str)
        // dcs.dir = atof(p_data[4]);
        // dcs.speed = 0.0f;  //atof(p_data[4])*10;
        dcs.pitch = atof(p_data[4]);
+       strcpy( &temp_4050[0], &(p_data[4][0]) );    // (+)150518
        //dcs.roll = atof(p_data[10]);
 
        //PRINT_TIME;
