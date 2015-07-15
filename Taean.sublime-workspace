@@ -1,0 +1,2987 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"temp",
+				"temp_4050"
+			],
+			[
+				"sms",
+				"sms_tx_success"
+			],
+			[
+				"dest",
+				"dest_no1"
+			],
+			[
+				"PRIN",
+				"PRINTVAR"
+			],
+			[
+				"env_",
+				"env_print"
+			],
+			[
+				"des",
+				"dest_no1"
+			],
+			[
+				"int",
+				"interval"
+			],
+			[
+				"deb",
+				"debugprintf(\"%s"
+			],
+			[
+				"u",
+				"u32"
+			],
+			[
+				"PRINT",
+				"PRINT_TIME"
+			],
+			[
+				"PR",
+				"PRINTVAR"
+			],
+			[
+				"type",
+				"typedef"
+			],
+			[
+				"MO",
+				"MODULE_WM800"
+			],
+			[
+				"ret",
+				"return"
+			],
+			[
+				"BUOY",
+				"BUOY_ECHO"
+			],
+			[
+				"MOD",
+				"MODULE_GPS"
+			],
+			[
+				"Mou",
+				"MODULE_GPS"
+			],
+			[
+				"de",
+				"debugprintf(\"error"
+			],
+			[
+				"ato",
+				"atof"
+			],
+			[
+				"par",
+				"parsed_block"
+			],
+			[
+				"TR",
+				"TRUE"
+			],
+			[
+				"rtc",
+				"rtcTime"
+			],
+			[
+				"gps",
+				"gps_time"
+			],
+			[
+				"get_gpsTimr_m",
+				"get_gpsTimr_mon"
+			],
+			[
+				"M",
+				"Month"
+			],
+			[
+				"Y",
+				"Year"
+			],
+			[
+				"H",
+				"Hour"
+			],
+			[
+				"get",
+				"get_gps_time"
+			],
+			[
+				"gp",
+				"gps_time"
+			],
+			[
+				"mak",
+				"make_msg_k1"
+			],
+			[
+				"set_gp",
+				"set_gps_hasData"
+			],
+			[
+				"is_gps",
+				"is_gps_hasData"
+			],
+			[
+				"m",
+				"min"
+			],
+			[
+				"evt",
+				"evt_chged_min"
+			],
+			[
+				"rtc_seta",
+				"rtc_isSecUpdate"
+			],
+			[
+				"env",
+				"env)=%d\\r\\n"
+			],
+			[
+				"s",
+				"s_stage"
+			],
+			[
+				"t",
+				"temp"
+			],
+			[
+				"p",
+				"parsed_block"
+			],
+			[
+				"lat",
+				"lat_mf"
+			],
+			[
+				"lon",
+				"lon_mf"
+			],
+			[
+				"T",
+				"TM_20SEC"
+			],
+			[
+				"uart",
+				"uart_putch"
+			],
+			[
+				"sta",
+				"s_stage"
+			],
+			[
+				"ms",
+				"m_stage"
+			],
+			[
+				"s_",
+				"s_stage"
+			],
+			[
+				"uar",
+				"uart_putch"
+			],
+			[
+				"wm",
+				"wm_rcv_q_init"
+			],
+			[
+				"mod",
+				"MODEM"
+			],
+			[
+				"dep",
+				"depth_valid"
+			],
+			[
+				"ec",
+				"echoData"
+			],
+			[
+				"la",
+				"lat_md"
+			],
+			[
+				"l",
+				"lon_mf"
+			],
+			[
+				"debug",
+				"debugprintf"
+			],
+			[
+				"se",
+				"sec"
+			],
+			[
+				"PRI",
+				"PRINT_TIME"
+			],
+			[
+				"cat",
+				"cat_fid"
+			],
+			[
+				"def",
+				"default"
+			],
+			[
+				"SI",
+				"SITE_TY_B101"
+			],
+			[
+				"B",
+				"BUOY_ID"
+			],
+			[
+				"comb",
+				"compass_heading_before"
+			],
+			[
+				"com",
+				"compass_heading"
+			],
+			[
+				"qu",
+				"queryReq_M0"
+			],
+			[
+				"_",
+				"_28673_M_00100_34785"
+			],
+			[
+				"in",
+				"init_flag"
+			],
+			[
+				"re",
+				"req_init"
+			],
+			[
+				"val",
+				"val_SR10"
+			],
+			[
+				"i",
+				"idx_Clk"
+			],
+			[
+				"tick_1",
+				"tick_1ms"
+			],
+			[
+				"USE",
+				"USE_MOSE"
+			],
+			[
+				"tic",
+				"tick_start"
+			],
+			[
+				"ti",
+				"tick_s2"
+			],
+			[
+				"BA",
+				"BAT_20"
+			],
+			[
+				"sh",
+				"shock_line"
+			],
+			[
+				"e",
+				"e30_idx"
+			],
+			[
+				"y",
+				"year-2000"
+			],
+			[
+				"ca",
+				"calculated_humidity_true"
+			],
+			[
+				"wif",
+				"wifiprintf"
+			],
+			[
+				"rcv",
+				"rcv_cnt"
+			],
+			[
+				"wi",
+				"wifi_cmd"
+			],
+			[
+				"cmd_st",
+				"cmd_str4"
+			],
+			[
+				"pr",
+				"pressure"
+			],
+			[
+				"init",
+				"init_dpData"
+			],
+			[
+				"dp",
+				"dp_stk"
+			],
+			[
+				"at",
+				"atm1_data"
+			],
+			[
+				"BU",
+				"BUOY_SPEC"
+			],
+			[
+				"f",
+				"f_lat"
+			],
+			[
+				"a_",
+				"a_result"
+			],
+			[
+				"c_",
+				"c_code"
+			],
+			[
+				"file",
+				"fileSize"
+			],
+			[
+				"fi",
+				"fileSize"
+			],
+			[
+				"SH_PIN_DATA_",
+				"SH_PIN_DATA_INPUT"
+			],
+			[
+				"en",
+				"enableHeartbeat"
+			],
+			[
+				"deg",
+				"debugprintf"
+			],
+			[
+				"po",
+				"pos_cnt"
+			],
+			[
+				"do",
+				"double"
+			],
+			[
+				"pos",
+				"pos_valid"
+			],
+			[
+				"d",
+				"double"
+			],
+			[
+				"ref",
+				"ref_lon"
+			],
+			[
+				"set",
+				"set_mt_status"
+			],
+			[
+				"iri_",
+				"iri_port"
+			],
+			[
+				"f_",
+				"f_lon"
+			],
+			[
+				"get_sb",
+				"get_sbdring2"
+			],
+			[
+				"tm",
+				"tm_chk_sbdreg"
+			],
+			[
+				"ri",
+				"ring1"
+			],
+			[
+				"C",
+				"C_IRIDIUM_1"
+			],
+			[
+				"mo",
+				"mo_status"
+			],
+			[
+				"ini",
+				"init_flag"
+			],
+			[
+				"mose",
+				"mose_lat"
+			],
+			[
+				"t_",
+				"t_lon"
+			],
+			[
+				"ch",
+				"ch4_switch"
+			],
+			[
+				"SDC",
+				"SDC_TIME_TAG"
+			],
+			[
+				"debu",
+				"debugprintf"
+			],
+			[
+				"sb2_",
+				"sb2_ok_cnt"
+			],
+			[
+				"sb",
+				"sb1_ok_cnt"
+			],
+			[
+				"sb2",
+				"sb2_ok_cnt"
+			],
+			[
+				"pre",
+				"pressure_a"
+			],
+			[
+				"ws",
+				"ws_a"
+			],
+			[
+				"m_",
+				"m_system_robust_proc"
+			],
+			[
+				"main_",
+				"main_step_000"
+			],
+			[
+				"mai",
+				"main_step_001"
+			],
+			[
+				"BAT",
+				"BAT_STEP"
+			],
+			[
+				"v",
+				"valid"
+			],
+			[
+				"b",
+				"buoyNo"
+			],
+			[
+				"TM_watchMO",
+				"TM_watchMOSE1"
+			],
+			[
+				"WT_M",
+				"WT_MOSE1"
+			],
+			[
+				"is",
+				"is_special_ch_aio"
+			],
+			[
+				"P",
+				"PRINTVAR"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "source/k_main.c",
+			"settings":
+			{
+				"buffer_size": 36793,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "source/k_dcs.c",
+			"settings":
+			{
+				"buffer_size": 4776,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "source/k_WM800.h",
+			"settings":
+			{
+				"buffer_size": 1789,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "source/k_includes.h",
+			"settings":
+			{
+				"buffer_size": 2768,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "source/k_gps.c",
+			"settings":
+			{
+				"buffer_size": 25036,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "source/k_cli.c",
+			"settings":
+			{
+				"buffer_size": 71506,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "source/k_msg.c",
+			"settings":
+			{
+				"buffer_size": 9167,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "Searching 379 files for \"env.id\"\n\nC:\\work\\projects\\214_TaeanPower\\Firmware2\\source\\k_cli.c:\n 1489              return;\n 1490          }\n 1491:         strcpy(env.id, args[2]);\n 1492          env_save();\n 1493:         debugprintf(\"set : id = %s\\r\\n\", env.id);\n 1494      }\n 1495  \n ....\n 1587                  //switch(k)\n 1588                  {\n 1589:                     // env.id = k;\n 1590:                     debugprintf(\"set : env.id = %03d\\r\\n\", k);\n 1591                      //break;\n 1592                  }\n\nC:\\work\\projects\\214_TaeanPower\\Firmware2\\source\\k_main.c:\n  107  	debugstring(    \"------------------------------------------------\\r\\n\");\n  108  	debugprintf(    \"       Ver : %s \\r\\n\", KOGA_VER_STRING);\n  109:     debugprintf(    \"        ID : %s \\r\\n\", env.id);\n  110      debugprintf(    \"       Tel : %s \\r\\n\", env.dest_no1);\n  111      // debugprintf(    \"      Tel 2: %s\\r\\n\", env.dest_no2);\n  ...\n 1289      strcpy(&(env.tel_no[0]),   \"01033533825\");\n 1290      \n 1291:     strcpy(&(env.id[0]),   \"H\");\n 1292  \n 1293  \n 1294  #if 0\n 1295      // 부이마다 다른 고유의 설정이고 초기값의 개념이 없으므로 초기화하면 안된다.\n 1296:     env.id = 002;\n 1297      env.port = 5555;\n 1298      strcpy(env.ip,\"124.243.127.180\");\n ....\n 1316  {\n 1317  \n 1318:     debugprintf(\"\\r\\n ID         : %s\", env.id);\n 1319      debugprintf(\"\\r\\n Tel 1      : %s\", env.dest_no1);\n 1320      // debugprintf(\"\\r\\n Tel 2      : %s\", env.dest_no2);\n ....\n 1358  void env_set_id(int a_id)\n 1359  {\n 1360: 	// env.id = (u16)a_id;\n 1361  	debugprintf(\"env: set_id (%d)\\r\\n\", a_id);\n 1362  	env_save();\n\nC:\\work\\projects\\214_TaeanPower\\Firmware2\\source\\k_msg.c:\n  149      // Header\n  150      strcpy(s_msg, \"#\");\n  151:     strcat(s_msg, env.id);\n  152  \n  153      // date time\n\nC:\\work\\projects\\214_TaeanPower\\Firmware2\\source\\output\\koga2013.elf:\n    <binary>\n\nC:\\work\\projects\\214_TaeanPower\\Firmware2\\source\\output\\koga2013.elf.bin:\n    <binary>\n\n12 matches across 5 files\n",
+			"settings":
+			{
+				"buffer_size": 1948,
+				"line_ending": "Windows",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "source/k_dcs.h",
+			"settings":
+			{
+				"buffer_size": 1119,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "source/k_msg.h",
+			"settings":
+			{
+				"buffer_size": 3576,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "source/k_WM800.c",
+			"settings":
+			{
+				"buffer_size": 58479,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "source/k_timer.h",
+			"settings":
+			{
+				"buffer_size": 1554,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "source/k_main.h",
+			"settings":
+			{
+				"buffer_size": 4582,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "Packages/Python/Python.sublime-build",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"pcr",
+				"Package Control: Remove Package"
+			],
+			[
+				"gits",
+				"Git: Status"
+			],
+			[
+				"gitst",
+				"Git: Status"
+			],
+			[
+				"pci",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"pi",
+				"Package Control: Install Package"
+			],
+			[
+				"pin",
+				"Package Control: Install Package"
+			],
+			[
+				"sublime",
+				"Preferences: SublimeLinter Settings – User"
+			],
+			[
+				"sublimelinter",
+				"Preferences: SublimeLinter Settings – Default"
+			],
+			[
+				"ca",
+				"File: Close All"
+			],
+			[
+				":help",
+				"Set Syntax: Shell Script (Bash)"
+			],
+			[
+				":w",
+				":w - Save"
+			]
+		],
+		"width": 464.0
+	},
+	"console":
+	{
+		"height": 111.0,
+		"history":
+		[
+			"a",
+			"a=3",
+			"2",
+			"ctags -R -f .tags",
+			"exit"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/work/projects/214_TaeanPower/Firmware2/SDK2.0",
+		"/C/work/projects/214_TaeanPower/Firmware2/source"
+	],
+	"file_history":
+	[
+		"/C/work/projects/214_TaeanPower/Firmware2/patch.txt",
+		"/C/work/projects/214_TaeanPower/Firmware2/source/k_config.h",
+		"/C/work/projects/214_TaeanPower/Firmware2/source/k_WM800.c",
+		"/C/work/projects/214_TaeanPower/Firmware2/source/k_cli.c",
+		"/C/work/projects/214_TaeanPower/Firmware2/source/k_rtc.c",
+		"/C/work/projects/220_TaeanPower/Firmware2/source/k_WM800.h",
+		"/C/work/projects/220_TaeanPower/Firmware2/source/k_WM800.c",
+		"/C/work/projects/220_TaeanPower/Firmware2/source/k_ct3919.c",
+		"/C/work/projects/220_TaeanPower/Firmware2/source/k_cli.h",
+		"/C/work/projects/220_TaeanPower/Firmware2/source/k_config.c",
+		"/C/work/projects/220_TaeanPower/Firmware2/source/k_config.h",
+		"/C/work/projects/220_TaeanPower/Firmware2/source/k_gps.c",
+		"/C/work/projects/220_TaeanPower/Firmware2/source/k_gps.h",
+		"/C/work/projects/220_TaeanPower/Firmware2/source/k_msg.c",
+		"/C/work/projects/220_TaeanPower/Firmware2/source/k_cli.c",
+		"/C/work/projects/220_TaeanPower/Firmware2/source/k_main.h",
+		"/C/work/projects/220_TaeanPower/Firmware2/SDK2.0/lib_src/zlib-1.2.5/configure",
+		"/C/work/projects/220_TaeanPower/Firmware2/SDK2.0/lib_src/zlib-1.2.5/compress.c",
+		"/C/work/projects/220_TaeanPower/Firmware2/source/k_main.c",
+		"/C/work/projects/220_TaeanPower/Firmware2/SDK2.0/include/typedef.h",
+		"/C/work/projects/220_TaeanPower/Firmware2/SDK2.0/include/egl/egl_config.h",
+		"/C/work/projects/220_TaeanPower/Firmware2/source/k_misc.c",
+		"/C/work/projects/220_TaeanPower/Firmware2/source/k_timer.h",
+		"/C/work/projects/220_TaeanPower/Firmware2/source/k_timer.c",
+		"/C/work/projects/220_TaeanPower/Firmware2/source/k_includes.h",
+		"/C/Users/kychoX1/Desktop/150320-0936.log",
+		"/C/work/projects/220_TaeanPower/Firmware2/SDK2.0/include/etc_driver/DS1307.h",
+		"/C/work/projects/220_TaeanPower/Firmware2/SDK2.0/lib_src/zlib-1.2.5/zlib.3",
+		"/C/work/projects/220_TaeanPower/Firmware2/SDK2.0/lib_src/egl/font/cp/cc950.c",
+		"/C/Users/kychoX1/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/C/Users/kychoX1/Desktop/150320-0936 - 복사본 (2).log",
+		"/C/work/projects/220_TaeanPower/Firmware2/source/k_rtc.h",
+		"/C/work/projects/220_TaeanPower/Firmware2/source/k_twi.c",
+		"/C/work/projects/220_TaeanPower/Firmware2/source/k_rtc.c",
+		"/C/work/projects/220_TaeanPower/Firmware2/source/k_misc.h",
+		"/C/work/projects/220_TaeanPower/Firmware2/source/k_dcs.c",
+		"/C/work/projects/220_TaeanPower/Firmware2/source/k_dcs.h",
+		"/C/work/projects/220_TaeanPower/Firmware2/source/k_iridium.h",
+		"/C/work/projects/220_TaeanPower/Firmware2/source/k_iridium.c",
+		"/C/work/GitHub/KOGA14/source/k_msg.c",
+		"/C/work/GitHub/KOGA14/source/k_ct3919.c",
+		"/C/work/projects/220_TaeanPower/Firmware2/source/startup/trip_board.c",
+		"/C/work/projects/220_TaeanPower/Firmware2/source/startup/adStarInit.c",
+		"/C/work/projects/800_통신모듈/WM-215/SMS.py",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_main.h",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_msg.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_config.h",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_includes.h",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_gps.h",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_ct3919.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_cli.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_main.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/startup/trip_board.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_gps.c",
+		"/F/20150305_EB.txt",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_iridium.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_iridium.h",
+		"/F/20150304_EB.txt",
+		"/C/work/GitHub/Drifter/SDK 1.6/projects/buoy1209/c1_main.c",
+		"/C/work/GitHub/Drifter/SDK 1.6/projects/buoy1209/c1_gps.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_twi.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/include/typedef.h",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_rtc.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/lib_src/twi.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_timer.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_sdc.h",
+		"/F/20150303_EB.txt",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_ct3919.h",
+		"/F/30",
+		"/F/20150302_EB.txt",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_sdc.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/lib_src/egl/image/loadbmp.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/lib_src/soundmixer.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/lib_src/mp3play.c",
+		"/C/work/projects/210_EchoBuoy/문서/20150227_GPS오류분석/20150226_EB(SD).txt",
+		"/C/work/projects/210_EchoBuoy/문서/20150227_GPS오류분석/20150227_EB(SD).txt",
+		"/C/work/projects/210_EchoBuoy/문서/20150227_GPS오류분석/View_20150227.dat",
+		"/C/work/projects/210_EchoBuoy/문서/20150227_GPS오류분석/0005_20150226.dat",
+		"/C/work/projects/210_EchoBuoy/문서/20150227_GPS오류분석/View_20150226.dat",
+		"/F/20150227_EB.txt",
+		"/C/work/projects/210_EchoBuoy/문서/20150227_GPS오류분석/0005_20150227.dat",
+		"/Z/30.팀_개인/02. 기술팀/ECHO.BUOY/20150226.dat",
+		"/C/work/projects/210_EchoBuoy/문서/20150227_GPS오류분석/View_20140610.dat",
+		"/C/Users/kychoX1/AppData/Roaming/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/lib_src/serialflash.c",
+		"/F/20150224_EB.txt",
+		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/lib_src/fatfs/ff.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_msg.h",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_timer.h",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_sysMCU.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_misc.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_cli.h",
+		"/F/se.dat",
+		"/F/gp.dat",
+		"/F/ct.dat",
+		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/lib_src/uart.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/include/lib_config.h",
+		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/include/adstar/uart.h",
+		"/C/Users/kychoX1/Desktop/wm211-150121.log",
+		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/lib_src/zlib-1.2.5/compress.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_main.c.bak",
+		"/C/Users/kychoX1/Desktop/teraterm.log",
+		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/include/adstar/watchdogtimer.h",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/buoy_waves2.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/include/egl/object/egl_progressbar.h",
+		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/include/adstar/gpio.h",
+		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/include/fatfs/ffconf.h",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/mose/fftpack.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/lib_src/zlib-1.2.5/FAQ",
+		"/C/work/GitHub/Drifter/SDK 1.6/include/cantus/uart.h",
+		"/C/Users/kychoX1/Desktop/teraterm - 복사본 (2).log",
+		"/C/Users/kychoX1/Desktop/teraterm - 복사본.log",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_mose.c",
+		"/C/work/projects/900_MCU/adchips/adStar/SDK_v2.0.0/example/WatchDog1/main.c",
+		"/C/work/projects/900_MCU/adchips/adStar/SDK_v2.0.0/example/WatchDog2/main.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/include/adstar.h",
+		"/C/work/projects/210_EchoBuoy/Firmware2/source/k_aio.c",
+		"/C/work/projects/210_EchoBuoy/Firmware2/SDK2.0/startup/stk_board.c",
+		"/E/GitHub/KOGA14/source/k_ct3919.c",
+		"/E/GitHub/KOGA14/source/k_main.c",
+		"/E/GitHub/KOGA14/source/k_dcs.c",
+		"/E/GitHub/KOGA14/source/k_aio.c",
+		"/E/GitHub/KOGA14/source/k_main.h",
+		"/E/GitHub/KOGA14/source/k_mose.c",
+		"/E/GitHub/KOGA14/source/k_sb16c1058.c",
+		"/E/GitHub/KOGA14/source/k_config.h",
+		"/C/Users/YOUNGKIL/Desktop/W03.log",
+		"/C/Users/YOUNGKIL/Desktop/log.log"
+	],
+	"find":
+	{
+		"height": 36.0
+	},
+	"find_in_files":
+	{
+		"height": 90.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"env.id",
+			"cmd_get",
+			"cmd_set",
+			"task",
+			"wm800rcv",
+			"task_",
+			"set_iri1_init",
+			"get_rtc_sysclk_sync_req",
+			"sms_tel",
+			"sms",
+			"sms_tel_no",
+			"parsed_block",
+			"gps_time",
+			"cdma_process_send",
+			"3825",
+			"ATV1",
+			"wmCmdType",
+			"bwmodem",
+			"env",
+			"$00",
+			"$0",
+			"$00",
+			"ct",
+			"CT",
+			"ct",
+			"gps_line",
+			"result_s",
+			"result_sbd",
+			"sms_tel_no",
+			"cdma_tel_no",
+			"sms_tel_no",
+			"wm_rcv_q_init",
+			"tick_iri1",
+			"cdma_process_send",
+			"debug_port_no",
+			"set_iri1_init",
+			"iridium_init",
+			"Ready",
+			"iri_event",
+			"UartPutCh",
+			"make_msg_k1",
+			"measure_BAT_leval",
+			"rtc_settime",
+			"RTC set_time",
+			"TM_watchDCS",
+			"is_special_ch",
+			"	switch (idx)\n",
+			"is_ct_valid",
+			"critical",
+			"COMM_CHANNEL",
+			"d1_GpsLatitude",
+			"sdc_saveDataToFile(fname,",
+			"sdc_saveDataToFile(fname, wdata, &fsz);",
+			"gps_neo6q_init",
+			"rtc",
+			"rtc_time",
+			"clr_gps_valid",
+			"uart_putch",
+			"gps_time",
+			"rtc_time",
+			"mon",
+			"gpa",
+			"hour",
+			"t1",
+			"get_gps_time",
+			"Hour",
+			"Day",
+			"Month",
+			"Year",
+			"Hour",
+			"get_gps_time",
+			"rtc_time",
+			"Data",
+			"is_gps_valid",
+			"make_msg_k1",
+			"fg_rtc_updated",
+			"ref_cnt_rmc",
+			"ref_cnt",
+			"gps_neo6q_init",
+			"100",
+			"sdc_saveDeferedMsg",
+			"sdc_saveDataToFile",
+			"sdc_saveSendMsg",
+			"f_open",
+			"make_msg_second",
+			"2015-02-27 08:19:04",
+			"2015-02-27 08:20:04",
+			"EB005",
+			"echoData[i].temp",
+			"echoData[i].depth",
+			"echoData[i].lon_mf",
+			"int",
+			"SensorBakSize.b.gps",
+			"fwbuf",
+			"get_cm",
+			"f_mount",
+			"f_mkfs",
+			"setEnableHeartbeat",
+			"syscmd",
+			"setHeartbeatEvent",
+			"lat_m",
+			"lat_md",
+			"lat_d",
+			"gps_valid",
+			"+",
+			"measure_BAT_leval",
+			"get_battery_level",
+			"measure_BAT_leval",
+			"bat",
+			"depth_valid",
+			"0",
+			"2222",
+			"return",
+			"at",
+			"u32",
+			"40",
+			"idx",
+			"CONFIG_UART_RX_INTERRUPT",
+			"uart_rx_int_enable",
+			"BAT_val",
+			"init",
+			"uart_getch",
+			"iri1_rcv_q_init",
+			"iri_init_time_10sec",
+			"1242",
+			"set_iri2_init",
+			"iri_rcv_get",
+			"UartGetCh"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"folders":
+	[
+		{
+			"path": "C:\\work\\projects\\214_TaeanPower\\Firmware2\\SDK2.0"
+		},
+		{
+			"path": "C:\\work\\projects\\214_TaeanPower\\Firmware2\\source"
+		}
+	],
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "source/k_main.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 36793,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								19046,
+								19046
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"clone_numbers": 1,
+							"git_savvy.file_path": "C:\\work\\projects\\220_TaeanPower\\Firmware2\\source\\k_main.c",
+							"git_savvy.repo_path": "C:/work/projects/220_TaeanPower/Firmware2",
+							"history_list_is_closing": true,
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/C Improved/C Improved.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 22253.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "source/k_dcs.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4776,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								618,
+								618
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content"
+							],
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/C Improved/C Improved.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 737.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "source/k_WM800.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1789,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1003,
+								1003
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content"
+							],
+							"git_savvy.file_path": "C:\\work\\projects\\220_TaeanPower\\Firmware2\\source\\k_WM800.h",
+							"git_savvy.repo_path": "C:/work/projects/220_TaeanPower/Firmware2",
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/C Improved/C Improved.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 420.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "source/k_includes.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2768,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2368,
+								2368
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content"
+							],
+							"git_savvy.file_path": "C:\\work\\projects\\220_TaeanPower\\Firmware2\\source\\k_includes.h",
+							"git_savvy.repo_path": "C:/work/projects/220_TaeanPower/Firmware2",
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/C Improved/C Improved.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2160.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 13,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "source/k_gps.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 25036,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								19014,
+								19014
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
+							],
+							"git_savvy.file_path": "C:\\work\\projects\\220_TaeanPower\\Firmware2\\source\\k_gps.c",
+							"git_savvy.repo_path": "C:/work/projects/220_TaeanPower/Firmware2",
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/C Improved/C Improved.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 10301.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 5,
+					"file": "source/k_cli.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 71506,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								68423,
+								68423
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
+							],
+							"clone_numbers": 1,
+							"git_savvy.file_path": "C:\\work\\projects\\220_TaeanPower\\Firmware2\\source\\k_cli.c",
+							"git_savvy.repo_path": "C:/work/projects/220_TaeanPower/Firmware2",
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/C Improved/C Improved.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 41686.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "source/k_msg.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9167,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3104,
+								3093
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"git_savvy.file_path": "C:\\work\\projects\\220_TaeanPower\\Firmware2\\source\\k_msg.c",
+							"git_savvy.repo_path": "C:/work/projects/220_TaeanPower/Firmware2",
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/C Improved/C Improved.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3589.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1948,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										158,
+										164
+									],
+									[
+										251,
+										257
+									],
+									[
+										377,
+										383
+									],
+									[
+										435,
+										441
+									],
+									[
+										778,
+										784
+									],
+									[
+										1013,
+										1019
+									],
+									[
+										1129,
+										1135
+									],
+									[
+										1286,
+										1292
+									],
+									[
+										1481,
+										1487
+									],
+									[
+										1708,
+										1714
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								1716,
+								1716
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content"
+							],
+							"default_dir": "C:\\work\\projects\\214_TaeanPower\\Firmware2\\SDK2.0",
+							"detect_indentation": false,
+							"line_numbers": false,
+							"output_tag": 1,
+							"result_base_dir": "",
+							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 221.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "source/k_dcs.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1119,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1117,
+								1117
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content"
+							],
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/C Improved/C Improved.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 51.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "source/k_msg.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3576,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								38,
+								38
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content"
+							],
+							"git_savvy.file_path": "C:\\work\\projects\\220_TaeanPower\\Firmware2\\source\\k_msg.h",
+							"git_savvy.repo_path": "C:/work/projects/220_TaeanPower/Firmware2",
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/C Improved/C Improved.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "source/k_WM800.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 58479,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								26901,
+								26901
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
+							],
+							"clone_numbers": 1,
+							"git_savvy.file_path": "C:\\work\\projects\\220_TaeanPower\\Firmware2\\source\\k_WM800.c",
+							"git_savvy.repo_path": "C:/work/projects/220_TaeanPower/Firmware2",
+							"history_list_is_closing": true,
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/C Improved/C Improved.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 17023.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "source/k_timer.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1554,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								180,
+								172
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content"
+							],
+							"git_savvy.file_path": "C:\\work\\projects\\220_TaeanPower\\Firmware2\\source\\k_timer.h",
+							"git_savvy.repo_path": "C:/work/projects/220_TaeanPower/Firmware2",
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/C Improved/C Improved.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 0,
+					"file": "source/k_main.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 36793,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								27976,
+								27976
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content"
+							],
+							"clone_numbers": 1,
+							"git_savvy.file_path": "C:\\work\\projects\\220_TaeanPower\\Firmware2\\source\\k_main.c",
+							"git_savvy.repo_path": "C:/work/projects/220_TaeanPower/Firmware2",
+							"history_list_is_closing": true,
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/C Improved/C Improved.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 25632.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "source/k_main.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4582,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2779,
+								2855
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content"
+							],
+							"git_savvy.file_path": "C:\\work\\projects\\220_TaeanPower\\Firmware2\\source\\k_main.h",
+							"git_savvy.repo_path": "C:/work/projects/220_TaeanPower/Firmware2",
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/C Improved/C Improved.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 909.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 36.0
+	},
+	"input":
+	{
+		"height": 29.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.5,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": false,
+	"output.GitSavvy":
+	{
+		"height": 106.0
+	},
+	"output.exec":
+	{
+		"height": 88.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 112.0
+	},
+	"pinned_build_system": "",
+	"project": "",
+	"replace":
+	{
+		"height": 52.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"dcs",
+				"source\\k_dcs.h"
+			],
+			[
+				"cli",
+				"source\\k_cli.c"
+			],
+			[
+				"wm",
+				"source\\k_WM800.h"
+			],
+			[
+				"wm8",
+				"source\\k_WM800.c"
+			],
+			[
+				"ma",
+				"source\\k_main.c"
+			],
+			[
+				"kmsg",
+				"source\\k_msg.c"
+			],
+			[
+				"inc",
+				"source\\k_includes.h"
+			],
+			[
+				"kcon",
+				"source\\k_config.h"
+			],
+			[
+				"cl",
+				"source\\k_cli.c"
+			],
+			[
+				"conf",
+				"source\\k_config.h"
+			],
+			[
+				"config",
+				"source\\k_config.c"
+			],
+			[
+				"msg",
+				"source\\k_msg.c"
+			],
+			[
+				"gps",
+				"source\\k_gps.c"
+			],
+			[
+				"50",
+				"SDK2.0\\lib_src\\egl\\font\\cp\\cc950.c"
+			],
+			[
+				"ct",
+				"source\\k_ct3919.c"
+			],
+			[
+				"tim",
+				"source\\k_timer.h"
+			],
+			[
+				"main",
+				"source\\k_main.h"
+			],
+			[
+				"rtc",
+				"source\\k_rtc.c"
+			],
+			[
+				"incl",
+				"source\\k_includes.h"
+			],
+			[
+				"gp",
+				"source\\k_gps.c"
+			],
+			[
+				"kinc",
+				"source\\k_includes.h"
+			],
+			[
+				"iri",
+				"source\\k_iridium.c"
+			],
+			[
+				"ms",
+				"source\\k_msg.c"
+			],
+			[
+				"con",
+				"source\\k_config.h"
+			],
+			[
+				"mai",
+				"source\\k_main.c"
+			],
+			[
+				"in",
+				"source\\k_includes.h"
+			],
+			[
+				"kcli",
+				"source\\k_cli.c"
+			],
+			[
+				"ktim",
+				"source\\k_timer.c"
+			],
+			[
+				"kin",
+				"source\\k_includes.h"
+			],
+			[
+				"gps.h",
+				"source\\k_gps.h"
+			],
+			[
+				"ir",
+				"source\\k_iridium.c"
+			],
+			[
+				"uart",
+				"SDK2.0\\lib_src\\uart.c"
+			],
+			[
+				"ffcon",
+				"SDK2.0\\include\\fatfs\\ffconf.h"
+			],
+			[
+				"uar",
+				"SDK2.0\\lib_src\\uart.c"
+			],
+			[
+				"tri",
+				"source\\startup\\trip_board.c"
+			],
+			[
+				"kms",
+				"source\\k_msg.c"
+			],
+			[
+				"msg.",
+				"source\\k_msg.h"
+			],
+			[
+				"confi",
+				"source\\k_config.h"
+			],
+			[
+				"adst",
+				"SDK2.0\\include\\adstar.h"
+			],
+			[
+				"sb",
+				"source\\k_sb16c1058.c"
+			],
+			[
+				"mo",
+				"source\\k_mose.c"
+			],
+			[
+				"aio",
+				"source\\k_aio.c"
+			],
+			[
+				"bu",
+				"source\\buoy_waves2.c"
+			],
+			[
+				"kmose",
+				"source\\k_mose.c"
+			],
+			[
+				"clih",
+				"source\\k_cli.h"
+			],
+			[
+				"ti",
+				"source\\k_timer.h"
+			],
+			[
+				"atm",
+				"source\\k_atm.c"
+			],
+			[
+				"hmp",
+				"source\\k_hmp155.c"
+			],
+			[
+				"sho",
+				"source\\k_shock.c"
+			],
+			[
+				"mos",
+				"source\\k_mose.c"
+			],
+			[
+				"wa",
+				"source\\buoy_waves2.c"
+			],
+			[
+				"wave",
+				"source\\obj\\buoy_waves2.d"
+			],
+			[
+				"kdch",
+				"source\\k_dcs.h"
+			],
+			[
+				"ksr",
+				"source\\k_SR10.h"
+			],
+			[
+				"k_.h",
+				"source\\k_aio.h"
+			],
+			[
+				"ptb",
+				"source\\k_ptb210.c"
+			],
+			[
+				"ksb",
+				"source\\k_sb16c1058.c"
+			],
+			[
+				"kptb",
+				"source\\k_ptb210.c"
+			],
+			[
+				"kaio",
+				"source\\k_aio.c"
+			],
+			[
+				"lm",
+				"source\\k_LMP90100.c"
+			],
+			[
+				"sr",
+				"source\\k_SR10.c"
+			],
+			[
+				"lmp",
+				"source\\k_LMP90100.c"
+			],
+			[
+				"kma",
+				"source\\k_main.c"
+			],
+			[
+				"kwm",
+				"source\\k_WM800.h"
+			],
+			[
+				"kwc",
+				"source\\k_WM800.c"
+			],
+			[
+				"rdc",
+				"source\\k_rdcp.c"
+			],
+			[
+				"rdcp",
+				"source\\c4_rdcp.c"
+			],
+			[
+				"kct",
+				"source\\k_ct3919.c"
+			],
+			[
+				"pt",
+				"source\\k_ptb210.c"
+			],
+			[
+				"kti",
+				"source\\k_timer.h"
+			],
+			[
+				"kmai",
+				"source\\k_main.c"
+			],
+			[
+				"kt",
+				"source\\k_timer.h"
+			],
+			[
+				"timer",
+				"source\\k_timer.c"
+			],
+			[
+				"mose",
+				"source\\k_mose.h"
+			],
+			[
+				"16",
+				"source\\k_sb16c1058.c"
+			],
+			[
+				"kir",
+				"source\\k_iridium.h"
+			],
+			[
+				"k_in",
+				"source\\k_includes.h"
+			],
+			[
+				"k_w",
+				"source\\k_WM800.c"
+			],
+			[
+				"kg",
+				"source\\k_gps.c"
+			],
+			[
+				"kht",
+				"source\\k_HT01.h"
+			],
+			[
+				"kgp",
+				"source\\k_gps.c"
+			],
+			[
+				"ksh",
+				"source\\k_shock.c"
+			],
+			[
+				"ksho",
+				"source\\k_shock.c"
+			],
+			[
+				"kmain",
+				"source\\k_main.c"
+			],
+			[
+				"kat",
+				"source\\k_atm.c"
+			],
+			[
+				"ai",
+				"source\\k_aio.c"
+			],
+			[
+				"kai",
+				"source\\k_aio.c"
+			],
+			[
+				"km",
+				"source\\k_msg.c"
+			],
+			[
+				"kmo",
+				"source\\k_mose.h"
+			],
+			[
+				"ks",
+				"source\\k_sdc.c"
+			],
+			[
+				"katm",
+				"source\\k_atm.c"
+			],
+			[
+				"kdc",
+				"source\\k_dcs.c"
+			],
+			[
+				"kh",
+				"source\\k_hmp155.c"
+			],
+			[
+				"khm",
+				"source\\k_hmp155.c"
+			],
+			[
+				"trip",
+				"source\\startup\\trip_board.c"
+			],
+			[
+				"ki",
+				"source\\k_iridium.c"
+			],
+			[
+				"kmainh",
+				"source\\k_main.h"
+			],
+			[
+				"kclic",
+				"source\\k_cli.c"
+			],
+			[
+				"b",
+				"source\\buoy_waves2.c"
+			],
+			[
+				"kiri",
+				"source\\k_iridium.c"
+			],
+			[
+				"kc",
+				"source\\k_cli.h"
+			],
+			[
+				"sh11",
+				"source\\k_sh11.c"
+			],
+			[
+				"sh",
+				"source\\k_shock.c"
+			],
+			[
+				"kmsh",
+				"source\\k_msg.h"
+			],
+			[
+				"ktih",
+				"source\\k_timer.h"
+			],
+			[
+				"kmos",
+				"source\\k_mose.c"
+			],
+			[
+				"ksdc",
+				"source\\k_sdc.c"
+			],
+			[
+				"kmaih",
+				"source\\k_main.h"
+			],
+			[
+				"kclih",
+				"source\\k_cli.h"
+			],
+			[
+				"kwi",
+				"source\\k_wifi.c"
+			],
+			[
+				"k",
+				"source\\k_ct3919.c"
+			],
+			[
+				"kw",
+				"source\\k_wifi.c"
+			],
+			[
+				"at",
+				"source\\k_atm.c"
+			],
+			[
+				"kincl",
+				"source\\k_includes.h"
+			],
+			[
+				"mainh",
+				"source\\k_main.h"
+			],
+			[
+				"eglcon",
+				"SDK2.0\\include\\egl\\egl_config.h"
+			],
+			[
+				"stk",
+				"SDK2.0\\include\\stk_board.h"
+			],
+			[
+				"libc",
+				"SDK2.0\\include\\lib_config.h"
+			],
+			[
+				"kgps",
+				"source\\k_gps.h"
+			],
+			[
+				"155",
+				"source\\k_hmp155.c"
+			],
+			[
+				"ktimh",
+				"source\\k_timer.h"
+			],
+			[
+				"ksys",
+				"source\\k_sysMCU.h"
+			],
+			[
+				"kptbc",
+				"source\\k_ptb210.c"
+			],
+			[
+				"shh",
+				"source\\k_shock.h"
+			],
+			[
+				"kmsgc",
+				"source\\k_msg.c"
+			],
+			[
+				"kmsgh",
+				"source\\k_msg.h"
+			],
+			[
+				"kmaic",
+				"source\\k_main.c"
+			],
+			[
+				"timec",
+				"source\\k_timer.c"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"E:\\GitHub\\StBuoy\\stBuoy.sublime-project"
+			]
+		],
+		"width": 646.0
+	},
+	"select_symbol":
+	{
+		"height": 392.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 392.0
+	},
+	"selected_group": 1,
+	"settings":
+	{
+		"vintage":
+		{
+		}
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": false,
+	"side_bar_width": 202.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+		"max_columns": 2
+	}
+}
